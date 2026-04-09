@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle2, ShieldCheck, Smartphone, Mail, FileText, Users, ArrowRight, PhoneCall, HeartHandshake } from 'lucide-react';
+import { CheckCircle2, ShieldCheck, Smartphone, Mail, FileText, Users, ArrowRight, PhoneCall, HeartHandshake, Video, Calendar, Star } from 'lucide-react';
 import JoinModal from '../components/JoinModal';
 
 export default function Home() {
@@ -29,28 +29,29 @@ export default function Home() {
               Friendly Digital Help for <span className="text-teal-600">Senior Citizens</span> in the UK
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-10 leading-relaxed max-w-3xl mx-auto">
-              We help older adults with smartphones, WhatsApp, emails, online forms, video calls, scam awareness, and everyday digital support — with patience, simplicity, and care.
+              Senior Ease helps older adults with everyday technology — from smartphones and WhatsApp to video calls, emails, online forms, reminders, and digital confidence support.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
               <Link
                 to="/pricing"
                 className="bg-teal-600 text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-teal-700 transition-colors shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
               >
-                View Membership Plans <ArrowRight size={20} />
+                Choose Your Plan <ArrowRight size={20} />
               </Link>
               <button
                 onClick={() => setIsJoinModalOpen(true)}
                 className="bg-white text-gray-900 border-2 border-gray-200 px-8 py-4 rounded-full font-medium text-lg hover:border-gray-300 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
               >
-                <PhoneCall size={20} /> Book a Free Call
+                <PhoneCall size={20} /> Book a Free Intro Call
               </button>
             </div>
             
             {/* Trust Strip */}
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-gray-500 uppercase tracking-wide">
-              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Non-medical support service</span>
-              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Family-friendly monthly plans</span>
-              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Simple, patient and reliable help</span>
+              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Simple monthly plans</span>
+              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Friendly support</span>
+              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> No long-term contracts</span>
+              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> UK-focused service</span>
             </div>
           </div>
         </div>
@@ -128,17 +129,22 @@ export default function Home() {
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">What We Can Help With</h2>
-            <p className="text-xl text-gray-600">Practical, patient assistance for the digital tasks that matter most.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">What SeniorEase Helps With</h2>
+            <p className="text-xl text-gray-600 mb-4">SeniorEase provides friendly, patient, non-medical digital support for senior citizens and their families.
+We help with common everyday tasks such as:</p>
+            <p className="text-lg text-teal-700 font-medium">Our service is designed to make everyday technology easier, simpler, and less stressful for older adults.</p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: Smartphone, title: 'Smartphone Help', desc: 'Support with basic phone use, settings, contacts, reminders, apps, and everyday device issues.' },
-              { icon: Users, title: 'WhatsApp & Video Calls', desc: 'Help with messages, voice notes, family group chats, photos, and video calls with loved ones.' },
-              { icon: Mail, title: 'Email & Login Support', desc: 'Assistance with reading emails, resetting passwords, understanding account access, and avoiding suspicious emails.' },
+              { icon: Smartphone, title: 'Smartphone and tablet Help', desc: 'Support with basic phone use, settings, contacts, reminders, apps, and everyday device issues.' },
+              { icon: Users, title: 'WhatsApp & messaging support ', desc: 'Help with messages, voice notes, family group chats, photos, and video calls with loved ones.' },
+              { icon: Video, title: 'Video Call Setup & Troubleshooting', desc: 'Step-by-step guidance for Zoom, FaceTime, and Skype so you can easily connect with family and friends without technical frustration.' },
+              { icon: Mail, title: 'Email & Login Guidance', desc: 'Assistance with reading emails, resetting passwords, understanding account access, and avoiding suspicious emails.' },
+              { icon: Calendar, title: 'Appointment & Reminder Support', desc: 'Help setting up digital calendars, medical appointment reminders, and daily alarms to keep your schedule organized.' },
               { icon: ShieldCheck, title: 'Scam Awareness Guidance', desc: 'General support to help identify suspicious messages, fake calls, phishing attempts, and online scams.' },
-              { icon: FileText, title: 'Online Form Help', desc: 'Simple guidance with forms, website navigation, online accounts, and digital admin tasks.' },
+              { icon: FileText, title: 'Online Form and Account assistance ', desc: 'Simple guidance with forms, website navigation, online accounts, and digital admin tasks.' },
+              { icon: Star, title: 'Everyday Digital Confidence Support', desc: 'Patient, ongoing encouragement to help you build confidence and overcome the fear of making mistakes with technology.' },
               { icon: HeartHandshake, title: 'Family Support Add-On', desc: 'Ideal for adult children who want extra support and reassurance for a parent or loved one.' }
             ].map((service, i) => (
               <div key={i} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
@@ -159,8 +165,58 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Who SeniorEase Is For */}
+      <section className="py-24 bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Who SeniorEase Is For</h2>
+              <p className="text-xl text-gray-600">Senior Ease is designed for:</p>
+            </div>
+
+            <div className="space-y-6 mb-12">
+              <div className="flex items-start gap-4 bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                <div className="bg-teal-100 text-teal-600 p-3 rounded-full shrink-0 mt-1">
+                  <CheckCircle2 size={24} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Senior citizens who want patient help with everyday technology</h3>
+                  <p className="text-gray-600">We provide step-by-step, jargon-free guidance so you can use your devices with confidence.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                <div className="bg-teal-100 text-teal-600 p-3 rounded-full shrink-0 mt-1">
+                  <CheckCircle2 size={24} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Families who want extra reassurance for a parent or loved one</h3>
+                  <p className="text-gray-600">Give yourself peace of mind knowing your loved ones have a friendly, reliable place to turn for tech support.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                <div className="bg-teal-100 text-teal-600 p-3 rounded-full shrink-0 mt-1">
+                  <CheckCircle2 size={24} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Older adults who feel confused, frustrated, or left behind by modern apps and devices</h3>
+                  <p className="text-gray-600">You don't have to figure it out alone. We're here to patiently walk you through any digital hurdle.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-teal-50 border border-teal-100 rounded-3xl p-8 text-center">
+              <p className="text-xl text-teal-900 font-medium leading-relaxed">
+                Whether it’s help using WhatsApp, joining a video call, understanding a suspicious message, or navigating an online form — we’re here to make things easier.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Why Choose Us */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-teal-900 rounded-[3rem] p-8 md:p-16 overflow-hidden relative">
             <div className="absolute top-0 right-0 w-64 h-64 bg-teal-800 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2"></div>
@@ -169,15 +225,20 @@ export default function Home() {
             <div className="relative z-10">
               <div className="text-center max-w-3xl mx-auto mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Why Families Choose SeniorEase</h2>
+                <p className="text-xl text-teal-100 leading-relaxed">
+                  We know that technology can feel overwhelming — especially when everyday tasks become more digital. Senior Ease is designed to provide calm, practical support without pressure, jargon, or confusion.
+                </p>
               </div>
               
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {[
-                  { title: 'Patient & Easy to Understand', desc: 'We explain things simply and calmly, without technical jargon.' },
-                  { title: 'Designed for Seniors', desc: 'Our support is built specifically for older adults and their everyday digital needs.' },
-                  { title: 'Peace of Mind for Families', desc: 'Adult children can feel reassured knowing their parent has friendly help available when needed.' },
-                  { title: 'Ongoing Monthly Support', desc: 'Not just one-off help — a reliable support membership for recurring everyday issues.' },
-                  { title: 'Safe, Clear & Trustworthy', desc: 'We focus on practical digital help and clear communication, with no confusing promises.' }
+                  { title: 'Friendly, Respectful Support', desc: 'We treat every older adult with patience and dignity, explaining things simply without any confusing technical jargon.' },
+                  { title: 'Clear Monthly Plans', desc: 'Simple, transparent pricing with no hidden surprises, setup fees, or unexpected charges.' },
+                  { title: 'UK-Focused Support Model', desc: 'Our service is tailored to the needs of UK seniors, understanding local services, apps, and common concerns.' },
+                  { title: 'Help via Phone, WhatsApp & Email', desc: 'We offer support through the channels you already use and feel most comfortable with.' },
+                  { title: 'Family-Friendly Communication', desc: 'We keep adult children in the loop when needed, providing peace of mind for the whole family.' },
+                  { title: 'Easy Cancellation', desc: 'No long-term contracts. You can easily cancel your membership at any time before your next billing date.' },
+                  { title: 'Privacy-First Approach', desc: 'We maintain clear support boundaries, never asking for sensitive financial details or passwords, ensuring your data stays safe.' }
                 ].map((reason, i) => (
                   <div key={i} className="bg-white/10 backdrop-blur-sm p-8 rounded-3xl border border-white/10">
                     <h3 className="text-xl font-bold text-white mb-4">{reason.title}</h3>
@@ -202,13 +263,13 @@ export default function Home() {
               to="/pricing"
               className="bg-teal-600 text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-teal-700 transition-colors shadow-lg"
             >
-              View Plans
+              Choose your Plans
             </Link>
             <button
               onClick={() => setIsJoinModalOpen(true)}
               className="bg-white text-gray-900 border-2 border-gray-200 px-8 py-4 rounded-full font-medium text-lg hover:border-gray-300 hover:bg-gray-50 transition-colors"
             >
-              Book a Free Call
+              Book a Free Intro Call
             </button>
           </div>
         </div>

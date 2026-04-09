@@ -1,38 +1,28 @@
 import { Link } from 'react-router-dom';
-import { MousePointerClick, PhoneCall, ClipboardCheck, PlayCircle, CalendarHeart, Unlock } from 'lucide-react';
+import { MousePointerClick, PlayCircle, PhoneCall, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export default function HowItWorks() {
   const steps = [
     {
       icon: <MousePointerClick className="w-8 h-8 text-teal-600" />,
-      title: "1. Choose Your Plan",
-      description: "Review our simple, transparent pricing plans and select the one that best fits your needs or the needs of your loved one. Whether it's occasional help or regular monthly support, we have a plan for you."
-    },
-    {
-      icon: <PhoneCall className="w-8 h-8 text-teal-600" />,
-      title: "2. Book an Onboarding Call",
-      description: "Once you've selected a plan, you'll be invited to book a friendly, no-obligation onboarding call. This is a relaxed chat to get to know each other and understand exactly what kind of digital help is needed."
-    },
-    {
-      icon: <ClipboardCheck className="w-8 h-8 text-teal-600" />,
-      title: "3. We Confirm Your Needs",
-      description: "During our call, we'll discuss your specific devices, current challenges, and goals. We'll confirm that our service is the right fit and tailor our approach to provide the most effective, personalized support."
+      title: "Step 1 – Choose a Plan",
+      description: "Pick the level of support that suits you or your loved one."
     },
     {
       icon: <PlayCircle className="w-8 h-8 text-teal-600" />,
-      title: "4. Service Starts",
-      description: "After confirming your needs and completing the simple registration process, your membership officially begins. You'll receive a welcome pack with all the details on how to reach us whenever you need help."
+      title: "Step 2 – Get Started",
+      description: "We’ll explain how support works and how to contact us."
     },
     {
-      icon: <CalendarHeart className="w-8 h-8 text-teal-600" />,
-      title: "5. Monthly Support Provided",
-      description: "Enjoy peace of mind with our ongoing support. Reach out via phone, WhatsApp, or email whenever you need help with your smartphone, tablet, emails, online forms, or general digital confidence."
+      icon: <PhoneCall className="w-8 h-8 text-teal-600" />,
+      title: "Step 3 – Ask for Help",
+      description: "Customers can contact us during support hours for eligible support requests."
     },
     {
-      icon: <Unlock className="w-8 h-8 text-teal-600" />,
-      title: "6. Cancel Anytime",
-      description: "We believe in keeping things simple and fair. There are no long-term contracts, lock-ins, or hidden fees. If you ever feel you no longer need our support, you can easily cancel your membership before your next billing date."
+      icon: <ShieldCheck className="w-8 h-8 text-teal-600" />,
+      title: "Step 4 – Stay More Confident Online",
+      description: "We help make everyday technology easier and less stressful over time."
     }
   ];
 
