@@ -119,7 +119,7 @@ export default function Layout() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white pt-16 pb-8 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 lg:gap-12 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-8 lg:gap-12 mb-12">
             <div className="col-span-1 md:col-span-2">
               <Link to="/" className="flex items-center gap-2 mb-6 inline-flex">
                 <div className="bg-teal-500 text-white p-2 rounded-xl">
@@ -138,13 +138,31 @@ export default function Layout() {
             <div>
               <h3 className="text-lg font-semibold mb-6 text-white">Quick Links</h3>
               <ul className="space-y-4">
-                {navLinks.map((link) => (
+                {navLinks.slice(0, 4).map((link) => (
                   <li key={link.name}>
                     <Link to={link.path} className="text-gray-400 hover:text-white transition-colors">
                       {link.name}
                     </Link>
                   </li>
                 ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold mb-6 text-white opacity-0 hidden md:block">More Links</h3>
+              <ul className="space-y-4">
+                {navLinks.slice(4).map((link) => (
+                  <li key={link.name}>
+                    <Link to={link.path} className="text-gray-400 hover:text-white transition-colors">
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link to="/account" className="text-teal-400 hover:text-teal-300 font-medium transition-colors">
+                    My Account
+                  </Link>
+                </li>
               </ul>
             </div>
 

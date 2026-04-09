@@ -1,7 +1,11 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle2, ShieldCheck, Smartphone, Mail, FileText, Users, ArrowRight, PhoneCall, HeartHandshake } from 'lucide-react';
+import JoinModal from '../components/JoinModal';
 
 export default function Home() {
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
@@ -34,12 +38,12 @@ export default function Home() {
               >
                 View Membership Plans <ArrowRight size={20} />
               </Link>
-              <Link
-                to="/contact"
+              <button
+                onClick={() => setIsJoinModalOpen(true)}
                 className="bg-white text-gray-900 border-2 border-gray-200 px-8 py-4 rounded-full font-medium text-lg hover:border-gray-300 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
               >
                 <PhoneCall size={20} /> Book a Free Call
-              </Link>
+              </button>
             </div>
             
             {/* Trust Strip */}
@@ -200,15 +204,18 @@ export default function Home() {
             >
               View Plans
             </Link>
-            <Link
-              to="/contact"
+            <button
+              onClick={() => setIsJoinModalOpen(true)}
               className="bg-white text-gray-900 border-2 border-gray-200 px-8 py-4 rounded-full font-medium text-lg hover:border-gray-300 hover:bg-gray-50 transition-colors"
             >
               Book a Free Call
-            </Link>
+            </button>
           </div>
         </div>
       </section>
+
+      {/* Join Modal */}
+      <JoinModal isOpen={isJoinModalOpen} onClose={() => setIsJoinModalOpen(false)} />
     </div>
   );
 }

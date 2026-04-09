@@ -288,12 +288,15 @@ export default function Pricing() {
           className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Need Help Choosing a Plan?</h2>
-          <Link
-            to="/contact"
+          <button
+            onClick={() => {
+              setSelectedPlan(null);
+              setIsModalOpen(true);
+            }}
             className="inline-block bg-teal-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-teal-700 hover:scale-105 transition-all duration-300 shadow-lg"
           >
             Book a Free Call
-          </Link>
+          </button>
         </motion.div>
       </section>
 

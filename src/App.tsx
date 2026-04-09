@@ -16,6 +16,7 @@ import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 import Refund from './pages/Refund';
 import SLA from './pages/SLA';
+import MyAccount from './pages/MyAccount';
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="privacy" element={<Privacy />} />
           <Route path="refund" element={<Refund />} />
           <Route path="sla" element={<SLA />} />
+          <Route path="account" element={<MyAccount />} />
         </Route>
       </Routes>
     </Router>

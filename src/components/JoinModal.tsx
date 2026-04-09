@@ -26,6 +26,8 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
     // Simulate API call and ID generation
     setTimeout(() => {
       const newId = `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      // Generate a mock secure password
+      const newPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-2).toUpperCase();
       setCustomerId(newId);
       
       // --- BACKEND SIMULATION ---
@@ -33,6 +35,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
       // which would then use SendGrid/AWS SES to email support@senioreaseuk.co.uk
       const customerData = {
         customerId: newId,
+        generatedPassword: newPassword,
         fullName: formData.get('fullName'),
         email: formData.get('email'),
         phone: formData.get('phone'),
@@ -48,6 +51,12 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
       console.log('Subject: New Customer Registration - ' + newId);
       console.log('Data:', JSON.stringify(customerData, null, 2));
       console.log('Action Required: Generate Stripe Invoice and send to customer.');
+      console.log('=====================================');
+      
+      console.log('=== EMAIL TO CUSTOMER SIMULATION ===');
+      console.log(`To: ${userEmail}`);
+      console.log('Subject: Welcome to SeniorEase - Your Account Details');
+      console.log(`Body: Your Unique Customer ID is ${newId} and your temporary password is ${newPassword}`);
       console.log('=====================================');
 
       setIsSubmitting(false);
@@ -75,7 +84,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
       <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-full">
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <h2 className="text-2xl font-bold text-gray-900">
-            {plan ? `Join ${plan.name} Plan` : 'Join SeniorEase'}
+            {plan ? `Join ${plan.name} Plan` : 'Book a Free Call'}
           </h2>
           <button 
             onClick={handleClose}
@@ -91,9 +100,9 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-teal-50 text-teal-600 mb-6">
                 <CheckCircle2 size={40} />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Registration Sent!</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Request Sent!</h3>
               <p className="text-gray-600 mb-8 text-lg">
-                Your details have been securely sent to our team. We've generated your unique Customer ID.
+                Your details have been securely sent to our team. We've generated your unique Customer ID and Password.
               </p>
               
               <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 mb-8">
@@ -104,14 +113,14 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
               <div className="flex items-start gap-3 text-left bg-teal-50 p-4 rounded-xl border border-teal-100 mb-4">
                 <ShieldCheck className="text-teal-600 shrink-0 mt-0.5" size={20} />
                 <p className="text-teal-900 text-sm">
-                  We have sent a confirmation email to <span className="font-bold">{email}</span>.
+                  We have sent your <span className="font-bold">Unique Customer ID</span> and <span className="font-bold">Password</span> to <span className="font-bold">{email}</span>. You can use these to log into 'My Account'.
                 </p>
               </div>
 
               <div className="flex items-start gap-3 text-left bg-blue-50 p-4 rounded-xl border border-blue-100">
                 <Info className="text-blue-600 shrink-0 mt-0.5" size={20} />
                 <p className="text-blue-900 text-sm">
-                  <span className="font-bold">Next Steps:</span> Our team is processing your request. You will shortly receive an invoice and a secure payment link via email to activate your {plan ? plan.name : 'membership'}.
+                  <span className="font-bold">Next Steps:</span> Our team is processing your request. {plan ? `You will shortly receive an invoice and a secure payment link via email to activate your ${plan.name}.` : 'We will contact you shortly to schedule your free call.'}
                 </p>
               </div>
 
@@ -125,7 +134,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
               <p className="text-gray-600 mb-6">
-                Please fill in your details below. Our team will process your registration and email you a secure payment link to activate your membership.
+                {plan ? 'Please fill in your details below. Our team will process your registration and email you a secure payment link to activate your membership.' : 'Please fill in your details below. Our team will contact you shortly to schedule your free call.'}
               </p>
 
               {plan && (
@@ -173,10 +182,12 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
               </div>
 
               <div className="pt-4">
-                <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200 text-xs text-gray-600 leading-relaxed">
-                  <span className="font-bold block mb-1">Subscription Consent</span>
-                  By subscribing, you agree to recurring monthly billing until cancelled. You may cancel before your next billing date. By starting your membership immediately, you request that we begin providing the service during the cancellation period, which may affect your right to a full refund once service access begins.
-                </div>
+                {plan && (
+                  <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200 text-xs text-gray-600 leading-relaxed">
+                    <span className="font-bold block mb-1">Subscription Consent</span>
+                    By subscribing, you agree to recurring monthly billing until cancelled. You may cancel before your next billing date. By starting your membership immediately, you request that we begin providing the service during the cancellation period, which may affect your right to a full refund once service access begins.
+                  </div>
+                )}
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
@@ -188,7 +199,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                       Processing...
                     </>
                   ) : (
-                    'Complete Registration'
+                    plan ? 'Complete Registration' : 'Request Free Call'
                   )}
                 </button>
               </div>
