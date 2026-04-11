@@ -198,7 +198,7 @@ export default function MyAccount() {
               
               <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl mb-8">
                 <p className="text-amber-800 font-medium text-center">
-                  The Refund amount will be process in next 15 days.
+                  The Refund amount will be process in next 3 days.
                 </p>
               </div>
               

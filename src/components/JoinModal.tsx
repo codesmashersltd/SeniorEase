@@ -185,7 +185,10 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                 {plan && (
                   <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200 text-xs text-gray-600 leading-relaxed">
                     <span className="font-bold block mb-1">Subscription Consent</span>
-                    By subscribing, you agree to recurring monthly billing until cancelled. You may cancel before your next billing date. By starting your membership immediately, you request that we begin providing the service during the cancellation period, which may affect your right to a full refund once service access begins.
+                    By subscribing, you agree to recurring monthly billing until cancelled. You may cancel before your next billing date. By starting your membership immediately, you request that we begin providing the service during the cancellation period, which may affect your right to a full refund once service access begins.If Payment done through BACS Direct Debit then the service will start only after receiving the Payment
+                    
+                    <span className="font-bold block mt-3 mb-1">Disclaimer:</span>
+                    Senior Ease provides friendly digital assistance and everyday support for senior citizens in the UK. We do not provide medical, emergency, legal, financial, or regulated care services.
                   </div>
                 )}
                 <button 

@@ -19,7 +19,7 @@ export default function Contact() {
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight">Contact Us</h1>
           <p className="text-2xl text-teal-600 font-medium mb-6">We’re here to help you get started</p>
           <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-            If you’d like to learn more about SeniorEase or discuss the right plan, feel free to get in touch. Whether you’re looking for support for yourself or a loved one, we’ll be happy to help you understand how our membership works.
+            If you have any questions about our services, memberships, or support options, we’d be happy to help.
           </p>
         </div>
       </section>
@@ -113,7 +113,7 @@ export default function Contact() {
                 </div>
 
                 <button type="submit" className="w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md">
-                  Send Message
+                  Contact Us 
                 </button>
               </form>
             </div>

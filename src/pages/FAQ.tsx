@@ -4,57 +4,45 @@ import { HelpCircle, ArrowRight } from 'lucide-react';
 export default function FAQ() {
   const faqs = [
     {
-      q: "What is SeniorEase?",
-      a: "SeniorEase is a monthly digital support membership for senior citizens in the UK. We provide friendly help with everyday technology and online tasks."
+      q: "What does Senior Ease help with?",
+      a: "Senior Ease helps with everyday digital tasks such as smartphones, WhatsApp, emails, video calls, online forms, reminders, and general digital confidence support."
     },
     {
-      q: "Is this a medical or care service?",
-      a: "No. We are not a medical, emergency, or personal care service. We provide non-medical digital help and everyday support only."
+      q: "Is Senior Ease a care or medical service?",
+      a: "No. Senior Ease is not a medical, emergency, nursing, or regulated care service. We provide friendly digital assistance and everyday support only."
     },
     {
-      q: "Who is this service for?",
-      a: "Our service is designed for senior citizens, older adults who need digital help, and families supporting elderly parents or loved ones."
+      q: "How do the monthly plans work?",
+      a: "Our plans are billed monthly and renew automatically until cancelled. Each plan includes a different level of support access and service features."
     },
     {
-      q: "Can I buy a plan for my parent or relative?",
-      a: "Yes. Many customers choose a membership for a parent, grandparent, or loved one."
+      q: "How do I cancel my membership?",
+      a: "You can request cancellation before your next billing date by contacting us using the contact details on our website."
     },
     {
-      q: "What kind of things can you help with?",
-      a: "We can help with smartphones, WhatsApp, emails, video calls, online forms, basic account access guidance, and scam awareness support."
+      q: "Can a family member purchase a plan on behalf of a loved one?",
+      a: "Yes. A family member or authorised person may subscribe on behalf of a senior citizen where appropriate."
+    },
+    {
+      q: "What if I need more help than my plan includes?",
+      a: "If you need more support than your current plan allows, we may recommend upgrading to a more suitable plan."
     },
     {
       q: "Do you offer emergency support?",
-      a: "No. We do not provide emergency or urgent support services."
-    },
-    {
-      q: "Do you guarantee protection from scams?",
-      a: "No. We provide general scam awareness guidance and digital safety support, but we do not guarantee prevention or recovery."
-    },
-    {
-      q: "How do members request support?",
-      a: "Members will receive guidance after signup on how to request help and contact support."
-    },
-    {
-      q: "Can I cancel my plan?",
-      a: "Yes. You can request cancellation in line with our cancellation policy."
-    },
-    {
-      q: "Do you support all devices?",
-      a: "We aim to help with common everyday devices and digital tasks, but support may vary depending on the issue."
+      a: "No. Senior Ease is not an emergency service. If urgent help is needed, customers should contact the appropriate emergency or professional service."
     }
   ];
 
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="bg-white py-24 border-b border-gray-100">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-teal-50 text-teal-600 mb-6">
+      <section className="relative text-white py-32 overflow-hidden bg-teal-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-teal-800 text-teal-100 mb-6">
             <HelpCircle size={32} />
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight">Frequently Asked Questions</h1>
-          <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">Frequently Asked Questions</h1>
+          <p className="text-xl text-teal-100 leading-relaxed max-w-2xl mx-auto">
             Helpful answers about how SeniorEase works
           </p>
         </div>

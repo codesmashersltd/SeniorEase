@@ -128,7 +128,7 @@ export default function Layout() {
                 <span className="font-bold text-2xl tracking-tight text-white">SeniorEase</span>
               </Link>
               <p className="text-gray-400 text-lg mb-6 max-w-md leading-relaxed">
-                Friendly digital help and everyday support for senior citizens in the UK.
+                Senior Ease provides friendly digital support and everyday technology help for senior citizens in the UK.
               </p>
               <p className="text-gray-500 text-sm max-w-md">
                 SeniorEase is a monthly subscription service providing non-medical digital assistance and everyday admin support for UK senior citizens. Services include smartphone help, WhatsApp and email support, online account guidance, scam awareness assistance, and scheduled support calls.
@@ -181,6 +181,9 @@ export default function Layout() {
                 <li>
                   <Link to="/sla" className="text-gray-400 hover:text-white transition-colors">Service Level Agreement</Link>
                 </li>
+                <li>
+                  <Link to="/disclaimer" className="text-gray-400 hover:text-white transition-colors">Disclaimer</Link>
+                </li>
               </ul>
             </div>
 
@@ -206,8 +209,8 @@ export default function Layout() {
           <div className="pt-8 border-t border-gray-800 text-center md:text-left text-gray-500 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
             <p>&copy; {new Date().getFullYear()} SeniorEase. All rights reserved.</p>
             <div className="max-w-2xl text-xs text-gray-600 text-center md:text-right space-y-2">
-              <p>If you have a billing question, please contact us first and we'll do our best to help.</p>
-              <p>SeniorEase provides general digital assistance and everyday support only. We do not provide medical, emergency, legal, or financial services.</p>
+              <p>Monthly plans renew automatically until cancelled. Please review our legal and billing policies before subscribing.</p>
+              <p>Senior Ease provides friendly digital support and everyday technology help for senior citizens in the UK.</p>
             </div>
           </div>
         </div>

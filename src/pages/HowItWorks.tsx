@@ -86,6 +86,13 @@ export default function HowItWorks() {
               </div>
             </motion.div>
           ))}
+          
+          <motion.div 
+            variants={itemVariants}
+            className="text-center text-sm text-gray-600 bg-gray-50 p-4 rounded-xl border border-gray-200 mt-8"
+          >
+            <span className="font-semibold">Note:</span> Support is provided according to the selected plan and our published service standards.
+          </motion.div>
         </motion.div>
 
         <motion.div 

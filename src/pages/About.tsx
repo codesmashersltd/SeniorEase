@@ -55,6 +55,9 @@ export default function About() {
             className="prose prose-lg text-gray-600 mx-auto"
           >
             <motion.p variants={fadeInUp} className="mb-6 text-xl leading-relaxed">
+              Senior Ease was created to help make everyday technology feel less overwhelming for older adults and their families. As more parts of life move online, many senior citizens are left feeling confused, frustrated, or unsupported when it comes to using phones, apps, emails, online forms, and digital communication tools. Senior Ease exists to provide friendly, patient, practical help that makes everyday digital life easier to manage.
+            </motion.p>
+            <motion.p variants={fadeInUp} className="mb-6 text-xl leading-relaxed">
               Everyday life now depends more than ever on smartphones, apps, emails, online accounts, and digital communication. From booking a doctor's appointment to staying in touch with grandchildren, the world has moved online.
             </motion.p>
             <motion.p variants={fadeInUp} className="mb-6 text-xl leading-relaxed">
@@ -82,6 +85,23 @@ export default function About() {
                 ))}
               </ul>
             </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Support for Seniors. Peace of Mind for Families. */}
+      <section className="py-24 bg-teal-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={staggerContainer}
+          >
+            <motion.h2 variants={fadeInUp} className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Support for Seniors. Peace of Mind for Families.</motion.h2>
+            <motion.p variants={fadeInUp} className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+              Senior Ease is designed not only for older adults, but also for families who want extra reassurance for a loved one. Whether it’s help with WhatsApp, video calls, online forms, or simply feeling more confident with everyday technology, we aim to provide support that feels calm, practical, and easy to access.
+            </motion.p>
           </motion.div>
         </div>
       </section>
