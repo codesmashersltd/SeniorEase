@@ -1,7 +1,32 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, Clock, MessageSquare, ArrowRight } from 'lucide-react';
+import { Mail, Phone, Clock, MessageSquare, ArrowRight, CheckCircle2, X } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
 export default function Contact() {
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    // Simulate sending an email to the support mailbox
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    console.log('=== NEW CONTACT FORM SUBMISSION ===');
+    console.log('To: support@senioreaseuk.co.uk (To be configured on go-live)');
+    console.log('Subject: New Website Enquiry');
+    console.log('Name:', formData.get('name'));
+    console.log('Email:', formData.get('email'));
+    console.log('Phone:', formData.get('phone'));
+    console.log('Enquiry Type:', formData.get('enquiryType'));
+    console.log('Message:', formData.get('message'));
+    console.log('===================================');
+
+    setShowSuccessModal(true);
+    form.reset();
+  };
+
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
@@ -81,25 +106,25 @@ export default function Contact() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
               <p className="text-gray-600 mb-8">Please fill in the form below and we’ll get back to you as soon as possible.</p>
               
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                  <input type="text" id="name" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow" placeholder="Your name" />
+                  <input required name="name" type="text" id="name" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow" placeholder="Your name" />
                 </div>
                 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                  <input type="email" id="email" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow" placeholder="your@email.com" />
+                  <input required name="email" type="email" id="email" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow" placeholder="your@email.com" />
                 </div>
 
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                  <input type="tel" id="phone" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow" placeholder="Your phone number" />
+                  <input required name="phone" type="tel" id="phone" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow" placeholder="Your phone number" />
                 </div>
 
                 <div>
                   <label htmlFor="enquiryType" className="block text-sm font-medium text-gray-700 mb-2">Are you enquiring for yourself or a family member?</label>
-                  <select id="enquiryType" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow bg-white">
+                  <select required name="enquiryType" id="enquiryType" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow bg-white">
                     <option value="">Please select...</option>
                     <option value="self">For myself</option>
                     <option value="family">For a family member</option>
@@ -109,7 +134,7 @@ export default function Contact() {
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Your Message</label>
-                  <textarea id="message" rows={4} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow resize-none" placeholder="How can we help?"></textarea>
+                  <textarea required name="message" id="message" rows={4} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow resize-none" placeholder="How can we help?"></textarea>
                 </div>
 
                 <button type="submit" className="w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md">
@@ -134,6 +159,51 @@ export default function Contact() {
           </Link>
         </div>
       </section>
+
+      {/* Success Modal */}
+      <AnimatePresence>
+        {showSuccessModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm"
+              onClick={() => setShowSuccessModal(false)}
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full"
+            >
+              <button 
+                onClick={() => setShowSuccessModal(false)}
+                className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X size={24} />
+              </button>
+              
+              <div className="flex flex-col items-center text-center">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-teal-50 text-teal-600 mb-6">
+                  <CheckCircle2 size={40} />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Request Sent!</h3>
+                <p className="text-gray-600 mb-8 text-lg font-medium leading-relaxed">
+                  Our team will get in touch with you within 24 hours. Thank you for your patience.
+                </p>
+                
+                <button
+                  onClick={() => setShowSuccessModal(false)}
+                  className="w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md"
+                >
+                  Done
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

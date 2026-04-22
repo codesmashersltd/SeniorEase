@@ -46,9 +46,23 @@ export default function Pricing() {
           className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
         >
           <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">Simple Plans</h1>
-          <p className="text-xl md:text-2xl text-teal-100 leading-relaxed max-w-3xl mx-auto font-medium">
+          <p className="text-xl md:text-2xl text-teal-100 leading-relaxed max-w-3xl mx-auto font-medium mb-10">
             Choose the level of support that suits you or your loved one best. Our plans are designed to provide calm, practical digital help on a monthly basis.
           </p>
+          
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-white font-bold text-lg md:text-xl bg-teal-800/80 inline-flex px-8 py-4 md:py-5 rounded-2xl md:rounded-full border border-teal-600/50 backdrop-blur-md shadow-2xl">
+            <span className="flex items-center gap-2.5">
+              <CheckCircle2 size={24} className="text-teal-300" /> Cancel Anytime
+            </span>
+            <span className="hidden md:inline text-teal-500/80 text-2xl">•</span>
+            <span className="flex items-center gap-2.5">
+              <CheckCircle2 size={24} className="text-teal-300" /> No Hidden Fees
+            </span>
+            <span className="hidden md:inline text-teal-500/80 text-2xl">•</span>
+            <span className="flex items-center gap-2.5">
+              <CheckCircle2 size={24} className="text-teal-300" /> No Setup Costs
+            </span>
+          </div>
         </motion.div>
       </section>
 
@@ -70,12 +84,12 @@ export default function Pricing() {
               className="bg-white rounded-3xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-200 p-8 flex flex-col relative"
             >
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2 uppercase tracking-wide">Essential</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2 uppercase tracking-wide">Essential SaaS</h2>
                 <div className="flex items-baseline gap-1 mb-4">
                   <span className="text-4xl font-bold text-gray-900">£9.99</span>
                   <span className="text-gray-500 font-medium">/ month</span>
                 </div>
-                <p className="text-gray-600 font-medium">Perfect for occasional help with everyday digital tasks</p>
+                <p className="text-gray-600 font-medium">Basic software platform access for occasional help</p>
               </div>
               
               <div className="mb-8 flex-grow">
@@ -123,12 +137,12 @@ export default function Pricing() {
               </motion.div>
               
               <div className="mb-8 mt-2">
-                <h2 className="text-2xl font-bold text-white mb-2 uppercase tracking-wide">Plus</h2>
+                <h2 className="text-2xl font-bold text-white mb-2 uppercase tracking-wide">Plus SaaS</h2>
                 <div className="flex items-baseline gap-1 mb-4">
                   <span className="text-4xl font-bold text-white">£17.99</span>
                   <span className="text-teal-200 font-medium">/ month</span>
                 </div>
-                <p className="text-teal-100 font-medium">Ideal for seniors who need more regular monthly support</p>
+                <p className="text-teal-100 font-medium">Full portal access for seniors who need more regular support</p>
               </div>
               
               <div className="mb-8 flex-grow">
@@ -169,12 +183,12 @@ export default function Pricing() {
               className="bg-white rounded-3xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-200 p-8 flex flex-col relative"
             >
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2 uppercase tracking-wide">Family Care</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2 uppercase tracking-wide">Family Portal</h2>
                 <div className="flex items-baseline gap-1 mb-4">
                   <span className="text-4xl font-bold text-gray-900">£29.99</span>
                   <span className="text-gray-500 font-medium">/ month</span>
                 </div>
-                <p className="text-gray-600 font-medium">Designed for families who want ongoing support for a loved one</p>
+                <p className="text-gray-600 font-medium">Multi-user software access designed for families to support a loved one</p>
               </div>
               
               <div className="mb-8 flex-grow">
@@ -267,7 +281,7 @@ export default function Pricing() {
           </div>
           
           <motion.div variants={fadeInUp} className="text-center text-sm text-gray-600 bg-gray-50 p-4 rounded-xl border border-gray-200">
-            <p>All plans are billed monthly and renew automatically until cancelled. You may cancel before your next billing date. Please review our Refund & Cancellation Policy and Terms & Conditions before subscribing. If Payment done through BACS Direct Debit then the service will start only after receiving the Payment.  Please see our <Link to="/refund" className="text-teal-600 hover:underline">Refund & Cancellation Policy</Link> for full details.</p>
+            <p>All plans are billed monthly and renew automatically until cancelled. You may cancel before your next billing date. Please review our Refund & Cancellation Policy and Terms & Conditions before subscribing. Please see our <Link to="/refund" className="text-teal-600 hover:underline">Refund & Cancellation Policy</Link> for full details. If Payment done through BACS Direct Debit then the service will start only after receiving the Payment. </p>
           </motion.div>
         </motion.div>
       </section>

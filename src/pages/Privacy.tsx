@@ -13,12 +13,12 @@ export default function Privacy() {
           <p className="font-medium mb-8">Phone: [Insert Phone Number]</p>
 
           <p className="mb-4">At Senior Ease, we respect your privacy and are committed to protecting your personal information.</p>
-          <p className="mb-4">This Privacy Policy explains how we collect, use, store, and protect personal information when you use our website, contact us, or subscribe to our services.</p>
-          <p className="mb-8">By using our website or services, you acknowledge this Privacy Policy.</p>
+          <p className="mb-4">This Privacy Policy explains how we collect, use, store, and protect personal information when you use our SaaS platform, website, secure portal, contact us, or subscribe to our software services.</p>
+          <p className="mb-8">By using our platform or software services, you acknowledge this Privacy Policy.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. Who We Are</h2>
-          <p className="mb-4">Senior Ease provides friendly digital help and everyday support services for senior citizens in the United Kingdom.</p>
-          <p className="font-medium">Our services may include help with:</p>
+          <p className="mb-4">Senior Ease provides a Software as a Service (SaaS) platform, secure dashboard access, and friendly digital help for senior citizens in the United Kingdom.</p>
+          <p className="font-medium">Our software tools and services may include help with:</p>
           <ul className="list-disc pl-6 mb-4">
             <li>smartphones and tablets</li>
             <li>WhatsApp and messaging</li>

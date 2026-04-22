@@ -157,11 +157,22 @@ export default function Services() {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
         >
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">Our Services</h1>
-          <p className="text-2xl text-teal-300 font-medium mb-6">Simple, friendly help for everyday digital life</p>
-          <p className="text-xl text-teal-100 leading-relaxed max-w-3xl mx-auto">
-            SeniorEase offers patient, ongoing support for the common technology and online tasks that many seniors face every month. We're here to make the digital world feel a little smaller and a lot friendlier.
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">Software Features</h1>
+          <p className="text-2xl text-teal-300 font-medium mb-6">Simple, friendly SaaS tools for everyday digital life</p>
+          <p className="text-xl text-teal-100 leading-relaxed max-w-3xl mx-auto mb-10">
+            SeniorEase's proprietary SaaS platform offers patient, ongoing support tracking, dashboard access, and ticketing for the common technology and online tasks that many seniors face every month. We're here to make the digital world feel a little smaller and a lot friendlier.
           </p>
+
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 text-white font-bold text-lg md:text-xl bg-teal-800/80 inline-flex px-8 py-4 rounded-3xl md:rounded-full border border-teal-600/50 backdrop-blur-md shadow-2xl">
+            <span className="text-teal-200 font-medium md:mr-2">Our team connects and resolves your queries via:</span>
+            <span className="flex items-center gap-2">
+              <Video size={24} className="text-teal-300" /> Zoom
+            </span>
+            <span className="hidden md:inline text-teal-500/80 text-xl">•</span>
+            <span className="flex items-center gap-2">
+              <Smartphone size={24} className="text-teal-300" /> WhatsApp
+            </span>
+          </div>
         </motion.div>
       </section>
 

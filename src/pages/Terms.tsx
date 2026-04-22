@@ -11,13 +11,13 @@ export default function Terms() {
           <p className="font-medium">Contact Email: [Insert Email]</p>
           <p className="font-medium mb-8">Contact Phone: [Insert Phone Number]</p>
 
-          <p className="mb-4">Welcome to Senior Ease. These Terms & Conditions explain how our website, memberships, and support services work.</p>
-          <p className="mb-4">By using our website, contacting us, or subscribing to any of our services, you agree to these Terms & Conditions.</p>
-          <p className="mb-8">If you do not agree with these Terms, please do not use our website or services.</p>
+          <p className="mb-4">Welcome to the Senior Ease Software as a Service (SaaS) Platform. These Terms & Conditions explain how our software platform, digital portal, memberships, and support ticketing services work.</p>
+          <p className="mb-4">By using our platform, contacting us, or subscribing to any of our SaaS, you agree to these Terms & Conditions.</p>
+          <p className="mb-8">If you do not agree with these Terms, please do not use our platform or software services.</p>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. About Senior Ease</h2>
-          <p className="mb-4">Senior Ease provides non-medical digital help and everyday support services for senior citizens in the United Kingdom.</p>
-          <p className="mb-4">Our services are designed to help with everyday technology and online tasks, such as:</p>
+          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. About Senior Ease SaaS</h2>
+          <p className="mb-4">Senior Ease provides a proprietary Software as a Service (SaaS) platform, secure dashboard tools, and non-medical digital help for senior citizens in the United Kingdom.</p>
+          <p className="mb-4">Our software tools are designed to help with everyday technology and online tasks, providing a portal to manage:</p>
           <ul className="list-disc pl-6 mb-4">
             <li>smartphone and tablet help</li>
             <li>WhatsApp and messaging support</li>

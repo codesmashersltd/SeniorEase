@@ -55,7 +55,7 @@ export default function About() {
             className="prose prose-lg text-gray-600 mx-auto"
           >
             <motion.p variants={fadeInUp} className="mb-6 text-xl leading-relaxed">
-              Senior Ease was created to help make everyday technology feel less overwhelming for older adults and their families. As more parts of life move online, many senior citizens are left feeling confused, frustrated, or unsupported when it comes to using phones, apps, emails, online forms, and digital communication tools. Senior Ease exists to provide friendly, patient, practical help that makes everyday digital life easier to manage.
+              Senior Ease was created to provide a Software as a Service (SaaS) platform that makes everyday technology feel less overwhelming for older adults and their families. As more parts of life move online, many senior citizens are left feeling confused, frustrated, or unsupported when it comes to using phones, apps, emails, online forms, and digital communication tools. Senior Ease exists to provide secure tools, a centralized dashboard, and practical help that makes everyday digital life easier to manage.
             </motion.p>
             <motion.p variants={fadeInUp} className="mb-6 text-xl leading-relaxed">
               Everyday life now depends more than ever on smartphones, apps, emails, online accounts, and digital communication. From booking a doctor's appointment to staying in touch with grandchildren, the world has moved online.
@@ -64,7 +64,7 @@ export default function About() {
               For many older adults, this rapid shift can feel frustrating, confusing, or stressful. Passwords get lost, scam messages cause anxiety, and simple tasks can suddenly feel like insurmountable hurdles.
             </motion.p>
             <motion.p variants={fadeInUp} className="mb-12 text-xl leading-relaxed font-medium text-gray-800">
-              At SeniorEase, we created a simple monthly support service to help make everyday technology easier, calmer, and less intimidating. We are the patient, friendly voice on the end of the phone when things go wrong.
+              At SeniorEase, we created a comprehensive SaaS platform and support subscription to help make everyday technology easier, calmer, and less intimidating. We provide the software tools and the patient, friendly voice on the end of the phone when things go wrong.
             </motion.p>
             
             <motion.div variants={fadeInUp} className="bg-teal-50 p-10 rounded-3xl mb-8 border border-teal-100 shadow-sm">

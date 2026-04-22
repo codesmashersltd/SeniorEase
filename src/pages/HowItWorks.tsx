@@ -5,24 +5,44 @@ import { motion } from 'motion/react';
 export default function HowItWorks() {
   const steps = [
     {
-      icon: <MousePointerClick className="w-8 h-8 text-teal-600" />,
-      title: "Step 1 – Choose a Plan",
-      description: "Pick the level of support that suits you or your loved one."
+      icon: <MousePointerClick className="w-10 h-10 text-teal-600" />,
+      title: "Step 1 – Choose Your SaaS Plan",
+      description: "Select the software subscription tier that best matches the support level you need. Whether you're looking for occasional tech help or comprehensive family tracking, our platform has you covered.",
+      bullets: [
+        "Review our transparent pricing tiers.",
+        "Select between Essential SaaS, Plus SaaS, or Family Portal.",
+        "Sign up securely through our automated checkout platform."
+      ]
     },
     {
-      icon: <PlayCircle className="w-8 h-8 text-teal-600" />,
-      title: "Step 2 – Get Started",
-      description: "We’ll explain how support works and how to contact us."
+      icon: <PlayCircle className="w-10 h-10 text-teal-600" />,
+      title: "Step 2 – Access the Secure Portal",
+      description: "Once registered, you will instantly receive your unique Portal Access ID and password via email so you can log into your personal, secure dashboard.",
+      bullets: [
+        "Log in to 'My Account' using your new credentials.",
+        "Complete a brief, guided software onboarding process.",
+        "Review your available dashboard features and support ticketing system."
+      ]
     },
     {
-      icon: <PhoneCall className="w-8 h-8 text-teal-600" />,
-      title: "Step 3 – Ask for Help",
-      description: "Customers can contact us during support hours for eligible support requests."
+      icon: <PhoneCall className="w-10 h-10 text-teal-600" />,
+      title: "Step 3 – Request Support via Dashboard",
+      description: "Whenever you encounter a technical issue, use our platform to file a ticket. Our friendly, UK-based customer success team will immediately handle your request.",
+      bullets: [
+        "Easily submit requests directly from the web portal, email, or WhatsApp.",
+        "Track the progress of your digital support ticket in real-time.",
+        "Connect via phone or scheduled video calls for patient, step-by-step guidance."
+      ]
     },
     {
-      icon: <ShieldCheck className="w-8 h-8 text-teal-600" />,
-      title: "Step 4 – Stay More Confident Online",
-      description: "We help make everyday technology easier and less stressful over time."
+      icon: <ShieldCheck className="w-10 h-10 text-teal-600" />,
+      title: "Step 4 – Build Digital Confidence",
+      description: "Over time, our SaaS platform empowers senior citizens to navigate their devices with ease, turning overwhelming technology into simple, everyday tools.",
+      bullets: [
+        "Access educational resources and scam awareness alerts.",
+        "Gain independence with regular, patient instruction.",
+        "Families get peace of mind knowing loved ones are fully supported."
+      ]
     }
   ];
 
@@ -54,9 +74,9 @@ export default function HowItWorks() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">How It Works</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">How the Platform Works</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Getting started with Senior Ease is simple and straightforward. Here is our step-by-step process to getting you the digital support you need.
+            Getting started with the Senior Ease software platform is simple and straightforward. Here is our step-by-step process for onboarding and requesting digital support.
           </p>
         </motion.div>
 
@@ -82,7 +102,15 @@ export default function HowItWorks() {
               </div>
               <div className="relative">
                 <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-teal-700 transition-colors duration-300">{step.title}</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">{step.description}</p>
+                <p className="text-gray-600 text-lg leading-relaxed mb-4">{step.description}</p>
+                <ul className="space-y-2 mt-4">
+                  {step.bullets.map((bullet, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-teal-500 mt-2.5 shrink-0"></div>
+                      <span className="text-gray-700">{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </motion.div>
           ))}
@@ -91,7 +119,7 @@ export default function HowItWorks() {
             variants={itemVariants}
             className="text-center text-sm text-gray-600 bg-gray-50 p-4 rounded-xl border border-gray-200 mt-8"
           >
-            <span className="font-semibold">Note:</span> Support is provided according to the selected plan and our published service standards.
+            <span className="font-semibold">Note:</span> Ticketing limits and dashboard access are evaluated according to your active SaaS subscription plan.
           </motion.div>
         </motion.div>
 

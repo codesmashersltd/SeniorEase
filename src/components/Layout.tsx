@@ -9,9 +9,10 @@ export default function Layout() {
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
   const location = useLocation();
 
-  // Close menu when route changes
+  // Close menu and scroll to top when route changes
   useEffect(() => {
     setIsMenuOpen(false);
+    window.scrollTo(0, 0);
   }, [location.pathname]);
 
   const navLinks = [
@@ -22,6 +23,7 @@ export default function Layout() {
     { name: 'Pricing', path: '/pricing' },
     { name: 'FAQ', path: '/faq' },
     { name: 'Contact', path: '/contact' },
+    { name: 'Login', path: '/account' },
   ];
 
   return (
@@ -37,7 +39,7 @@ export default function Layout() {
                 </div>
                 <div>
                   <span className="font-bold text-2xl tracking-tight text-gray-900 block leading-none">SeniorEase</span>
-                  <span className="text-xs text-gray-500 font-medium tracking-wide uppercase">Digital Support</span>
+                  <span className="text-xs text-gray-500 font-medium tracking-wide uppercase">SaaS Platform</span>
                 </div>
               </Link>
             </div>
@@ -119,7 +121,7 @@ export default function Layout() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white pt-16 pb-8 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-8 lg:gap-12 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-7 gap-8 lg:gap-10 mb-12">
             <div className="col-span-1 md:col-span-2">
               <Link to="/" className="flex items-center gap-2 mb-6 inline-flex">
                 <div className="bg-teal-500 text-white p-2 rounded-xl">
@@ -128,10 +130,10 @@ export default function Layout() {
                 <span className="font-bold text-2xl tracking-tight text-white">SeniorEase</span>
               </Link>
               <p className="text-gray-400 text-lg mb-6 max-w-md leading-relaxed">
-                Senior Ease provides friendly digital support and everyday technology help for senior citizens in the UK.
+                Senior Ease provides a software platform with friendly digital support tracking and everyday technology tools for senior citizens in the UK.
               </p>
               <p className="text-gray-500 text-sm max-w-md">
-                SeniorEase is a monthly subscription service providing non-medical digital assistance and everyday admin support for UK senior citizens. Services include smartphone help, WhatsApp and email support, online account guidance, scam awareness assistance, and scheduled support calls.
+                SeniorEase is a Software as a Service (SaaS) monthly subscription platform providing non-medical digital assistance tools and everyday admin support. Platform tools include smartphone help resources, communication support, secure portal guidance, scam awareness tracking, and a support ticketing system.
               </p>
             </div>
             
@@ -151,7 +153,7 @@ export default function Layout() {
             <div>
               <h3 className="text-lg font-semibold mb-6 text-white opacity-0 hidden md:block">More Links</h3>
               <ul className="space-y-4">
-                {navLinks.slice(4).map((link) => (
+                {navLinks.slice(4, 7).map((link) => (
                   <li key={link.name}>
                     <Link to={link.path} className="text-gray-400 hover:text-white transition-colors">
                       {link.name}
@@ -170,19 +172,31 @@ export default function Layout() {
               <h3 className="text-lg font-semibold mb-6 text-white">Legal</h3>
               <ul className="space-y-4">
                 <li>
-                  <Link to="/terms" className="text-gray-400 hover:text-white transition-colors">Terms & Conditions</Link>
+                  <a href="/terms" className="text-gray-300 hover:text-white transition-colors">Terms & Conditions</a>
                 </li>
                 <li>
-                  <Link to="/privacy" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
+                  <a href="/sla" className="text-gray-300 hover:text-white transition-colors">Service Level Agreement</a>
                 </li>
                 <li>
-                  <Link to="/refund" className="text-gray-400 hover:text-white transition-colors">Refund / Cancellation</Link>
+                  <a href="/disclaimer" className="text-gray-300 hover:text-white transition-colors">Disclaimer</a>
                 </li>
                 <li>
-                  <Link to="/sla" className="text-gray-400 hover:text-white transition-colors">Service Level Agreement</Link>
+                  <Link to="/nhs-standards" className="text-gray-300 hover:text-white transition-colors">NHS Standards</Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold mb-6 text-white">Policies</h3>
+              <ul className="space-y-4">
+                <li>
+                  <a href="/privacy" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</a>
                 </li>
                 <li>
-                  <Link to="/disclaimer" className="text-gray-400 hover:text-white transition-colors">Disclaimer</Link>
+                  <Link to="/gdpr" className="text-gray-300 hover:text-white transition-colors">GDPR Compliance</Link>
+                </li>
+                <li>
+                  <a href="/refund" className="text-gray-300 hover:text-white transition-colors">Refund / Cancellation</a>
                 </li>
               </ul>
             </div>
@@ -206,11 +220,11 @@ export default function Layout() {
             </div>
           </div>
           
-          <div className="pt-8 border-t border-gray-800 text-center md:text-left text-gray-500 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="pt-8 border-t border-gray-800 text-center md:text-left text-gray-400 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
             <p>&copy; {new Date().getFullYear()} SeniorEase. All rights reserved.</p>
-            <div className="max-w-2xl text-xs text-gray-600 text-center md:text-right space-y-2">
-              <p>Monthly plans renew automatically until cancelled. Please review our legal and billing policies before subscribing.</p>
-              <p>Senior Ease provides friendly digital support and everyday technology help for senior citizens in the UK.</p>
+            <div className="max-w-2xl text-xs text-gray-400 text-center md:text-right space-y-2">
+              <p>Monthly SaaS plans renew automatically until cancelled. Please review our legal and software billing policies before subscribing.</p>
+              <p>Senior Ease provides a software platform with friendly digital support tracking and everyday technology tools for senior citizens in the UK.</p>
             </div>
           </div>
         </div>

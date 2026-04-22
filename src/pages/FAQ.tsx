@@ -4,16 +4,16 @@ import { HelpCircle, ArrowRight } from 'lucide-react';
 export default function FAQ() {
   const faqs = [
     {
-      q: "What does Senior Ease help with?",
-      a: "Senior Ease helps with everyday digital tasks such as smartphones, WhatsApp, emails, video calls, online forms, reminders, and general digital confidence support."
+      q: "What does the Senior Ease SaaS Platform help with?",
+      a: "The Senior Ease SaaS Platform helps track and manage everyday digital tasks such as smartphones, WhatsApp, emails, video calls, online forms, reminders, and general digital confidence support via our secure portal."
     },
     {
       q: "Is Senior Ease a care or medical service?",
-      a: "No. Senior Ease is not a medical, emergency, nursing, or regulated care service. We provide friendly digital assistance and everyday support only."
+      a: "No. Senior Ease is strictly a Software as a Service (SaaS). We provide software tools, dashboards, and friendly digital assistance only. We are not a medical, emergency, nursing, or regulated care provider."
     },
     {
-      q: "How do the monthly plans work?",
-      a: "Our plans are billed monthly and renew automatically until cancelled. Each plan includes a different level of support access and service features."
+      q: "How do the SaaS monthly plans work?",
+      a: "Our software subscriptions are billed monthly and renew automatically until cancelled. Each software plan includes a different level of portal access and ticketing features."
     },
     {
       q: "How do I cancel my membership?",

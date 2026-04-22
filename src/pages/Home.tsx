@@ -26,10 +26,10 @@ export default function Home() {
               <span>Friendly UK-based assistance</span>
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 tracking-tight mb-8 leading-[1.1]">
-              Friendly Digital Help for <span className="text-teal-600">Senior Citizens</span> in the UK
+              Friendly Digital Support Platform for <span className="text-teal-600">Senior Citizens</span> in the UK
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-10 leading-relaxed max-w-3xl mx-auto">
-              Senior Ease helps older adults with everyday technology — from smartphones and WhatsApp to video calls, emails, online forms, reminders, and digital confidence support.
+              Senior Ease is a Software as a Service (SaaS) platform that helps older adults with everyday technology — combining intuitive secure software with friendly digital confidence support.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
               <Link
@@ -48,9 +48,9 @@ export default function Home() {
             
             {/* Trust Strip */}
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-gray-500 uppercase tracking-wide">
-              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Simple monthly plans</span>
-              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Friendly support</span>
-              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> No long-term contracts</span>
+              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Secure SaaS Platform</span>
+              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Friendly digital support</span>
+              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Monthly software subscription</span>
               <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> UK-focused service</span>
             </div>
           </div>
@@ -62,7 +62,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Technology should make life easier — not more stressful.</h2>
           <p className="text-xl text-gray-700 mb-6 leading-relaxed">
-            At SeniorEase, we provide calm, friendly, ongoing support for senior citizens who need help with phones, apps, online tasks, and everyday digital problems.
+            At SeniorEase, our dedicated Software as a Service (SaaS) platform provides calm, friendly, ongoing support tools for senior citizens who need help with phones, apps, online tasks, and everyday digital problems.
           </p>
           <p className="text-xl text-gray-700 leading-relaxed">
             Whether it’s using WhatsApp, spotting suspicious messages, joining a video call, or getting help with an online form, we’re here to make things simpler.
@@ -75,12 +75,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">How We Help Seniors Feel More Confident Online</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">How Our SaaS Platform Helps Seniors Feel More Confident Online</h2>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                 Many everyday tasks now happen online — from messages and emails to appointments, accounts, and family video calls.
               </p>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                For many seniors, that can feel confusing or overwhelming. SeniorEase provides simple monthly support to help with:
+                For many seniors, that can feel confusing or overwhelming. SeniorEase's proprietary software platform and dashboard provide simple monthly access to help with:
               </p>
               <ul className="space-y-4 mb-10">
                 {[
@@ -98,7 +98,7 @@ export default function Home() {
                 ))}
               </ul>
               <div className="bg-teal-50 p-6 rounded-2xl border border-teal-100">
-                <p className="text-teal-900 font-semibold text-lg">Friendly help when it’s needed — without the stress.</p>
+                <p className="text-teal-900 font-semibold text-lg">Secure dashboard access & friendly help when it’s needed — without the stress.</p>
               </div>
             </div>
             <div className="relative">
@@ -129,10 +129,10 @@ export default function Home() {
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">What SeniorEase Helps With</h2>
-            <p className="text-xl text-gray-600 mb-4">SeniorEase provides friendly, patient, non-medical digital support for senior citizens and their families.
-We help with common everyday tasks such as:</p>
-            <p className="text-lg text-teal-700 font-medium">Our service is designed to make everyday technology easier, simpler, and less stressful for older adults.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">What SeniorEase SaaS Platform Provides</h2>
+            <p className="text-xl text-gray-600 mb-4">SeniorEase is a powerful Software as a Service (SaaS) platform providing digital dashboard tools and non-medical digital support for senior citizens and their families.
+Through our portal, you can request help with common everyday tasks such as:</p>
+            <p className="text-lg text-teal-700 font-medium">Our software platform is designed to make everyday technology easier, simpler, and less stressful for older adults.</p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -170,8 +170,8 @@ We help with common everyday tasks such as:</p>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Who SeniorEase Is For</h2>
-              <p className="text-xl text-gray-600">Senior Ease is designed for:</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Who Our Software Is For</h2>
+              <p className="text-xl text-gray-600">The Senior Ease SaaS Platform is designed for:</p>
             </div>
 
             <div className="space-y-6 mb-12">

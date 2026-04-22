@@ -15,7 +15,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const userEmail = formData.get('email') as string;
@@ -23,45 +23,43 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
     
     setIsSubmitting(true);
 
-    // Simulate API call and ID generation
-    setTimeout(() => {
+    try {
       const newId = `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-      // Generate a mock secure password
-      const newPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-2).toUpperCase();
       setCustomerId(newId);
-      
-      // --- BACKEND SIMULATION ---
-      // In a real app, this data would be sent to your Express backend
-      // which would then use SendGrid/AWS SES to email support@senioreaseuk.co.uk
-      const customerData = {
-        customerId: newId,
-        generatedPassword: newPassword,
-        fullName: formData.get('fullName'),
-        email: formData.get('email'),
-        phone: formData.get('phone'),
-        address: formData.get('address'),
-        city: formData.get('city'),
-        postcode: formData.get('postcode'),
-        planName: plan ? plan.name : 'General Registration (No specific plan selected)',
-        planPrice: plan ? plan.price : 'N/A'
-      };
-      
-      console.log('=== BACKEND SUBMISSION SIMULATION ===');
-      console.log('To: support@senioreaseuk.co.uk');
-      console.log('Subject: New Customer Registration - ' + newId);
-      console.log('Data:', JSON.stringify(customerData, null, 2));
-      console.log('Action Required: Generate Stripe Invoice and send to customer.');
-      console.log('=====================================');
-      
-      console.log('=== EMAIL TO CUSTOMER SIMULATION ===');
-      console.log(`To: ${userEmail}`);
-      console.log('Subject: Welcome to SeniorEase - Your Account Details');
-      console.log(`Body: Your Unique Customer ID is ${newId} and your temporary password is ${newPassword}`);
-      console.log('=====================================');
+
+      // Call our background Stripe integration endpoint
+      if (plan) {
+        const response = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            planName: plan.name,
+            planPrice: plan.price,
+            customerEmail: userEmail,
+            customerId: newId,
+            fullName: formData.get('fullName')
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (data.url) {
+          // A real session was created via Stripe, redirect user to actual Stripe checkout:
+          window.location.href = data.url;
+          return; // stop execution so it redirects
+        }
+      } else {
+        // Fallback delay for non-plan "free call" requests
+        await new Promise(resolve => setTimeout(resolve, 800));
+      }
 
       setIsSubmitting(false);
       setIsSuccess(true);
-    }, 1500);
+    } catch (err) {
+      console.error('Payment intent error:', err);
+      setIsSubmitting(false);
+      alert('Error initializing Stripe payment. Please try again.');
+    }
   };
 
   const handleClose = () => {
@@ -100,33 +98,40 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-teal-50 text-teal-600 mb-6">
                 <CheckCircle2 size={40} />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Request Sent!</h3>
-              <p className="text-gray-600 mb-8 text-lg">
-                Your details have been securely sent to our team. We've generated your unique Customer ID and Password.
-              </p>
               
-              <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 mb-8">
-                <p className="text-sm text-gray-500 font-medium uppercase tracking-wider mb-2">Your Customer ID</p>
-                <p className="text-3xl font-bold text-teal-600 tracking-widest">{customerId}</p>
-              </div>
-
-              <div className="flex items-start gap-3 text-left bg-teal-50 p-4 rounded-xl border border-teal-100 mb-4">
-                <ShieldCheck className="text-teal-600 shrink-0 mt-0.5" size={20} />
-                <p className="text-teal-900 text-sm">
-                  We have sent your <span className="font-bold">Unique Customer ID</span> and <span className="font-bold">Password</span> to <span className="font-bold">{email}</span>. You can use these to log into 'My Account'.
-                </p>
-              </div>
-
-              <div className="flex items-start gap-3 text-left bg-blue-50 p-4 rounded-xl border border-blue-100">
-                <Info className="text-blue-600 shrink-0 mt-0.5" size={20} />
-                <p className="text-blue-900 text-sm">
-                  <span className="font-bold">Next Steps:</span> Our team is processing your request. {plan ? `You will shortly receive an invoice and a secure payment link via email to activate your ${plan.name}.` : 'We will contact you shortly to schedule your free call.'}
-                </p>
-              </div>
-
+              {plan ? (
+                <>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Registration Received!</h3>
+                  <div className="bg-gray-50 rounded-xl p-6 mb-6 text-left border border-gray-100">
+                    <p className="text-gray-600 mb-4 text-sm">
+                      Thank you for subscribing! We are provisioning your software profile right now.
+                    </p>
+                    <div className="mb-6">
+                      <span className="text-sm text-gray-500 font-medium block mb-2">Your Unique Customer ID:</span>
+                      <span className="font-mono text-xl font-bold text-teal-700 bg-teal-100/50 px-4 py-2 rounded-lg border border-teal-200 inline-block">
+                        {customerId}
+                      </span>
+                    </div>
+                    <div className="flex gap-4 p-4 bg-white rounded-xl border border-gray-100 shadow-sm">
+                      <ShieldCheck className="text-teal-500 shrink-0" size={24} />
+                      <p className="text-sm text-gray-600 leading-relaxed m-0">
+                        We have sent an email to <span className="font-semibold text-gray-900">{email}</span> with your secure temporary password and a Stripe invoice to activate your plan.
+                      </p>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Request Sent!</h3>
+                  <p className="text-gray-600 mb-8 text-lg font-medium leading-relaxed">
+                    Our team will get in touch with you within the next 24 hrs. Thank you for your Patience.
+                  </p>
+                </>
+              )}
+              
               <button
                 onClick={handleClose}
-                className="mt-8 w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md"
+                className="mt-4 w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md"
               >
                 Done
               </button>
@@ -134,7 +139,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
               <p className="text-gray-600 mb-6">
-                {plan ? 'Please fill in your details below. Our team will process your registration and email you a secure payment link to activate your membership.' : 'Please fill in your details below. Our team will contact you shortly to schedule your free call.'}
+                {plan ? 'Please fill in your details below. Our team will process your registration and email you a secure payment link to activate your software membership and dashboard access.' : 'Please fill in your details below. Our team will contact you shortly to schedule your free setup call.'}
               </p>
 
               {plan && (

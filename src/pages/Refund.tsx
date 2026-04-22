@@ -12,13 +12,13 @@ export default function Refund() {
           <p className="font-medium">Contact Email: [Insert Email Address]</p>
           <p className="font-medium mb-8">Contact Phone: [Insert Phone Number]</p>
 
-          <p className="mb-4">At Senior Ease, we aim to keep our services simple, clear, and fair.</p>
-          <p className="mb-4">This Refund & Cancellation Policy explains how monthly memberships, service cancellations, and refund requests are handled.</p>
-          <p className="mb-8">By subscribing to our services, you agree to this policy.</p>
+          <p className="mb-4">At Senior Ease, we aim to keep our Software as a Service (SaaS) subscriptions simple, clear, and fair.</p>
+          <p className="mb-4">This Refund & Cancellation Policy explains how monthly software platform memberships, service cancellations, and refund requests are handled.</p>
+          <p className="mb-8">By subscribing to our software platform or dashboard services, you agree to this policy.</p>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. About Our Service</h2>
-          <p className="mb-4">Senior Ease provides friendly digital help and everyday support services for senior citizens in the United Kingdom.</p>
-          <p className="font-medium">Our services may include:</p>
+          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. About Our Platform</h2>
+          <p className="mb-4">Senior Ease provides a software platform, secure portal, and friendly digital help for senior citizens in the United Kingdom.</p>
+          <p className="font-medium">Our portal and SaaS tools may track and support:</p>
           <ul className="list-disc pl-6 mb-4">
             <li>smartphone help</li>
             <li>WhatsApp support</li>

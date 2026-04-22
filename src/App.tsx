@@ -18,11 +18,18 @@ import Refund from './pages/Refund';
 import SLA from './pages/SLA';
 import Disclaimer from './pages/Disclaimer';
 import MyAccount from './pages/MyAccount';
+import GDPR from './pages/GDPR';
+import NHSStandards from './pages/NHSStandards';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 export default function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/admin" element={<AdminLogin />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
@@ -37,6 +44,8 @@ export default function App() {
           <Route path="sla" element={<SLA />} />
           <Route path="disclaimer" element={<Disclaimer />} />
           <Route path="account" element={<MyAccount />} />
+          <Route path="gdpr" element={<GDPR />} />
+          <Route path="nhs-standards" element={<NHSStandards />} />
         </Route>
       </Routes>
     </Router>
