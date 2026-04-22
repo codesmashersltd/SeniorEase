@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LogIn, User, AlertCircle, CheckCircle2, X, LogOut, Info } from 'lucide-react';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 export default function MyAccount() {
   const [customerName, setCustomerName] = useState('');
@@ -54,10 +56,28 @@ export default function MyAccount() {
     setShowCancelModal(false);
   };
 
-  const handleRequestHelp = (serviceName: string) => {
-    const randomTicketNumber = Math.floor(100000 + Math.random() * 900000);
-    setGeneratedTicket(`TKT-${randomTicketNumber}`);
-    setShowTicketModal(true);
+  const handleRequestHelp = async (serviceName: string) => {
+    try {
+      const randomTicketNumber = Math.floor(100000 + Math.random() * 900000);
+      const ticketStr = `TKT-${randomTicketNumber}`;
+      setGeneratedTicket(ticketStr);
+      
+      await addDoc(collection(db, 'tickets'), {
+        name: customerName || 'Account User',
+        email: customerName ? `${customerName.replace(/\\s+/g, '').toLowerCase()}@member.local` : 'member@local.com',
+        phone: 'Logged in Member',
+        enquiryType: serviceName,
+        message: `Member Dashboard Support Request [${ticketStr}]: ${serviceName}`,
+        status: 'Open',
+        source: 'Dashboard',
+        createdAt: serverTimestamp()
+      });
+
+      setShowTicketModal(true);
+    } catch (err) {
+      console.error(err);
+      alert('Unable to generate ticket at this time. Please try again.');
+    }
   };
 
   return (

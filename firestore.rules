@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} { allow read, write: if false; }
+    
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() { return isSignedIn() && request.auth.token.email == 'yashkumars@gmail.com'; }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    function isValidTicket(data) {
+      return data.keys().hasAll(['name', 'email', 'phone', 'enquiryType', 'message', 'status', 'createdAt', 'source'])
+        && data.keys().size() == 8
+        && data.name is string && data.name.size() <= 100 && data.name.size() > 0
+        && data.email is string && data.email.size() <= 150
+        && data.phone is string && data.phone.size() <= 30
+        && data.enquiryType is string && data.enquiryType.size() <= 50
+        && data.message is string && data.message.size() <= 3000
+        && data.status is string && data.status in ['Open', 'In Progress', 'Resolved', 'Closed']
+        && data.source is string && data.source in ['Contact Us', 'Join Now', 'Dashboard']
+        && data.createdAt == request.time;
+    }
+
+    match /tickets/{ticketId} {
+      allow create: if isValidTicket(incoming());
+      allow read: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+  }
+}

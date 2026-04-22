@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { X, CheckCircle2, Loader2, ShieldCheck, Info } from 'lucide-react';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 interface JoinModalProps {
   isOpen: boolean;
@@ -19,6 +21,8 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const userEmail = formData.get('email') as string;
+    const userPhone = formData.get('phone') as string;
+    const userName = formData.get('fullName') as string;
     setEmail(userEmail);
     
     setIsSubmitting(true);
@@ -26,6 +30,18 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
     try {
       const newId = `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
       setCustomerId(newId);
+
+      // Save as lead/joinee ticket in Firestore
+      await addDoc(collection(db, 'tickets'), {
+        name: userName,
+        email: userEmail,
+        phone: userPhone,
+        enquiryType: plan ? `Selected Plan: ${plan.name}` : 'Book Intro Call',
+        message: plan ? `User wants to purchase ${plan.name} at ${plan.price}` : 'Intro call requested',
+        status: 'Open',
+        source: 'Join Now',
+        createdAt: serverTimestamp()
+      });
 
       // Call our background Stripe integration endpoint
       if (plan) {
@@ -37,7 +53,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
             planPrice: plan.price,
             customerEmail: userEmail,
             customerId: newId,
-            fullName: formData.get('fullName')
+            fullName: userName
           })
         });
         
@@ -56,9 +72,9 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
       setIsSubmitting(false);
       setIsSuccess(true);
     } catch (err) {
-      console.error('Payment intent error:', err);
+      console.error('Payment/Form intent error:', err);
       setIsSubmitting(false);
-      alert('Error initializing Stripe payment. Please try again.');
+      alert('Error initializing request. Please try again.');
     }
   };
 

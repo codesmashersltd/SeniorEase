@@ -13,6 +13,9 @@ import {
   HeartHandshake
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import { db, auth } from '../../lib/firebase';
 
 import { 
   BarChart, 
@@ -40,12 +43,6 @@ const mockRenewals = [
   { id: 'SE-345678', name: 'Michael Brown', plan: 'Essential SaaS', renewalDate: '2024-05-28', status: 'Pending', amount: '£9.99' },
 ];
 
-const mockTickets = [
-  { ticketId: 'TKT-849201', customerId: 'SE-345678', customerName: 'Michael Brown', service: 'Email Setup', status: 'Open', date: '2024-04-20' },
-  { ticketId: 'TKT-129384', customerId: 'SE-123456', customerName: 'John Doe', service: 'Device Configuration', status: 'In Progress', date: '2024-04-19' },
-  { ticketId: 'TKT-564738', customerId: 'SE-789012', customerName: 'Sarah Smith', service: 'Video Call Help', status: 'Resolved', date: '2024-04-15' },
-];
-
 const revenueData = [
   { name: 'Jan', received: 1200, inProgress: 150, failed: 0 },
   { name: 'Feb', received: 1500, inProgress: 200, failed: 50 },
@@ -56,15 +53,62 @@ const revenueData = [
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('customers');
+  const [tickets, setTickets] = useState<any[]>([]);
+  const [dbError, setDbError] = useState<string | null>(null);
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('isAdminLoggedIn');
     if (!isLoggedIn) {
       navigate('/admin');
+      return;
     }
+    
+    let unsubscribeSnapshot: (() => void) | null = null;
+
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setDbError(null);
+        // Only fetch tickets once the user's Auth context is reliably restored by Firebase
+        const q = query(collection(db, 'tickets'), orderBy('createdAt', 'desc'));
+        unsubscribeSnapshot = onSnapshot(q, (querySnapshot) => {
+          const ticketsData: any[] = [];
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            ticketsData.push({
+              id: doc.id,
+              ticketId: `TKT-${doc.id.substring(0, 6).toUpperCase()}`,
+              customerName: data.name,
+              email: data.email,
+              service: data.enquiryType,
+              status: data.status,
+              source: data.source || 'Contact Us',
+              date: data.createdAt?.toDate().toLocaleDateString() || 'Just now',
+              message: data.message
+            });
+          });
+          setTickets(ticketsData);
+        }, (error) => {
+          console.error("Live Ticket Read Error:", error);
+          if (error.message.includes('Missing or insufficient permissions')) {
+            setDbError(`Permission Denied: Your logged in email (${user.email}) is not authorized as an admin in Firestore Rules.`);
+          } else {
+            setDbError(error.message);
+          }
+        });
+      } else {
+        // Not logged in via Firebase
+        navigate('/admin');
+      }
+    });
+
+    return () => {
+      unsubscribeAuth();
+      if (unsubscribeSnapshot) unsubscribeSnapshot();
+    };
   }, [navigate]);
 
   const handleLogout = () => {
+    auth.signOut();
     localStorage.removeItem('isAdminLoggedIn');
     navigate('/admin');
   };
@@ -186,6 +230,7 @@ export default function AdminDashboard() {
         );
 
       case 'tickets':
+        const supportTickets = tickets.filter(t => t.source === 'Dashboard');
         return (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200 bg-gray-50/50">
@@ -203,15 +248,98 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 text-sm">
-                  {mockTickets.map((ticket, index) => (
+                  {dbError ? (
+                    <tr>
+                      <td colSpan={5} className="px-6 py-8 text-center text-red-500 font-medium">
+                        {dbError}
+                      </td>
+                    </tr>
+                  ) : supportTickets.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
+                        No support tickets found from member dashboards.
+                      </td>
+                    </tr>
+                  ) : null}
+                  {supportTickets.map((ticket, index) => (
                     <tr key={index} className="hover:bg-gray-50/50 transition-colors">
                       <td className="px-6 py-4 font-mono font-bold text-teal-700">{ticket.ticketId}</td>
                       <td className="px-6 py-4">
                         <div className="font-bold text-gray-900">{ticket.customerName}</div>
-                        <div className="font-mono text-xs text-gray-500 mt-0.5">{ticket.customerId}</div>
+                        <div className="font-mono text-xs text-gray-500 mt-0.5">{ticket.email}</div>
                       </td>
-                      <td className="px-6 py-4 text-gray-700">{ticket.service}</td>
+                      <td className="px-6 py-4 text-gray-700">
+                        <div className="font-medium">{ticket.service}</div>
+                        <div className="text-xs text-gray-500 mt-1 max-w-xs truncate">{ticket.message}</div>
+                      </td>
                       <td className="px-6 py-4 text-gray-500">{ticket.date}</td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold ${
+                          ticket.status === 'Open' ? 'bg-red-100 text-red-800' :
+                          ticket.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                          'bg-gray-100 text-gray-800'
+                        }`}>
+                          {ticket.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        );
+
+      case 'joinees':
+        const joineeTickets = tickets.filter(t => t.source !== 'Dashboard');
+        return (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50/50 flex justify-between items-center">
+              <h3 className="text-lg font-bold text-gray-900">New Joinees (Leads & Enquiries)</h3>
+              <span className="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">New Leads</span>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 text-xs uppercase tracking-wider">
+                    <th className="px-6 py-4 font-medium">Enquiry ID</th>
+                    <th className="px-6 py-4 font-medium">Customer</th>
+                    <th className="px-6 py-4 font-medium">Details</th>
+                    <th className="px-6 py-4 font-medium">Date / Source</th>
+                    <th className="px-6 py-4 font-medium">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 text-sm">
+                  {dbError ? (
+                    <tr>
+                      <td colSpan={5} className="px-6 py-8 text-center text-red-500 font-medium">
+                        {dbError}
+                      </td>
+                    </tr>
+                  ) : joineeTickets.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
+                        No new leads or enquiries found. When someone fills out the contact or join form, it will appear here.
+                      </td>
+                    </tr>
+                  ) : null}
+                  {joineeTickets.map((ticket, index) => (
+                    <tr key={index} className="hover:bg-gray-50/50 transition-colors">
+                      <td className="px-6 py-4 font-mono font-bold text-teal-700">{ticket.ticketId}</td>
+                      <td className="px-6 py-4">
+                        <div className="font-bold text-gray-900">{ticket.customerName}</div>
+                        <div className="font-mono text-xs text-gray-500 mt-0.5">{ticket.email}</div>
+                      </td>
+                      <td className="px-6 py-4 text-gray-700">
+                        <div className="font-medium">{ticket.service}</div>
+                        <div className="text-xs text-gray-500 mt-1 max-w-xs truncate">{ticket.message}</div>
+                      </td>
+                      <td className="px-6 py-4 text-gray-500">
+                        <div>{ticket.date}</div>
+                        <span className="inline-flex mt-1 items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 uppercase">
+                          {ticket.source}
+                        </span>
+                      </td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold ${
                           ticket.status === 'Open' ? 'bg-red-100 text-red-800' :
@@ -272,6 +400,15 @@ export default function AdminDashboard() {
             <Ticket size={20} />
             Support Tickets
           </button>
+          <button 
+            onClick={() => setActiveTab('joinees')}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${
+              activeTab === 'joinees' ? 'bg-teal-600 text-white shadow-md' : 'hover:bg-gray-800 hover:text-white'
+            }`}
+          >
+            <Users size={20} />
+            New Joinee
+          </button>
         </nav>
 
         <div className="p-4 border-t border-gray-800">
@@ -286,9 +423,9 @@ export default function AdminDashboard() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col min-w-0">
         {/* Mobile Header */}
-        <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between md:hidden">
+        <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between md:hidden -mx-0">
           <div className="flex items-center gap-2">
             <div className="bg-teal-600 p-1.5 rounded-xl">
               <HeartHandshake size={16} className="text-white" />
@@ -301,7 +438,7 @@ export default function AdminDashboard() {
         </header>
 
         {/* Mobile Tabs */}
-        <div className="bg-white border-b border-gray-200 px-2 flex overflow-x-auto md:hidden">
+        <div className="bg-white border-b border-gray-200 px-2 flex overflow-x-auto md:hidden no-scrollbar">
           <button 
             onClick={() => setActiveTab('customers')}
             className={`px-4 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'customers' ? 'border-teal-600 text-teal-600' : 'border-transparent text-gray-500'}`}
@@ -319,6 +456,12 @@ export default function AdminDashboard() {
             className={`px-4 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'tickets' ? 'border-teal-600 text-teal-600' : 'border-transparent text-gray-500'}`}
           >
             Tickets
+          </button>
+          <button 
+            onClick={() => setActiveTab('joinees')}
+            className={`px-4 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'joinees' ? 'border-teal-600 text-teal-600' : 'border-transparent text-gray-500'}`}
+          >
+            New Joinee
           </button>
         </div>
 

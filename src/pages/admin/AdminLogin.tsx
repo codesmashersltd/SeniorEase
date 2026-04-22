@@ -2,20 +2,31 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Shield, Lock, User, HeartHandshake } from 'lucide-react';
 import { motion } from 'motion/react';
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { auth } from '../../lib/firebase';
 
 export default function AdminLogin() {
-  const [adminId, setAdminId] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (adminId === 'admin' && password === 'admin123') {
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const provider = new GoogleAuthProvider();
+      // Enforce Google Sign-In for Admin
+      await signInWithPopup(auth, provider);
+      
       localStorage.setItem('isAdminLoggedIn', 'true');
       navigate('/admin/dashboard');
-    } else {
-      setError('Invalid Admin ID or Password');
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || 'Error occurred during login');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -29,7 +40,7 @@ export default function AdminLogin() {
           SeniorEase Admin
         </h2>
         <p className="mt-2 text-center text-sm text-gray-400">
-          Sign in to access the management dashboard
+          Sign in to access the secure management dashboard
         </p>
       </div>
 
@@ -40,48 +51,7 @@ export default function AdminLogin() {
           className="bg-gray-800 py-8 px-4 shadow-2xl sm:rounded-2xl sm:px-10 border border-gray-700"
         >
           <form className="space-y-6" onSubmit={handleLogin}>
-            <div>
-              <label htmlFor="adminId" className="block text-sm font-medium text-gray-300">
-                Admin ID
-              </label>
-              <div className="mt-2 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-gray-500" />
-                </div>
-                <input
-                  id="adminId"
-                  name="adminId"
-                  type="text"
-                  required
-                  value={adminId}
-                  onChange={(e) => setAdminId(e.target.value)}
-                  className="block w-full pl-10 bg-gray-900 border border-gray-700 rounded-xl py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all sm:text-sm"
-                  placeholder="Enter Admin ID"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300">
-                Password
-              </label>
-              <div className="mt-2 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-500" />
-                </div>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 bg-gray-900 border border-gray-700 rounded-xl py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all sm:text-sm"
-                  placeholder="••••••••"
-                />
-              </div>
-            </div>
-
+            
             {error && (
               <div className="text-red-400 text-sm font-medium text-center bg-red-900/20 py-2 rounded-lg border border-red-900/50">
                 {error}
@@ -91,14 +61,15 @@ export default function AdminLogin() {
             <div>
               <button
                 type="submit"
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-teal-600 hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 focus:ring-offset-gray-900 transition-all"
+                disabled={isSubmitting}
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-teal-600 hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 focus:ring-offset-gray-900 transition-all disabled:bg-teal-800 disabled:cursor-not-allowed"
               >
-                Sign in to Dashboard
+                {isSubmitting ? 'Authenticating...' : 'Sign in securely with Google'}
               </button>
             </div>
             
             <div className="mt-4 text-center text-xs text-gray-500">
-              <p>Demo Credentials: ID: admin | Pass: admin123</p>
+              <p>Admin access requires authorized Google identity verification.</p>
             </div>
           </form>
         </motion.div>

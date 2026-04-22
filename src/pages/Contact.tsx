@@ -2,29 +2,40 @@ import { Link } from 'react-router-dom';
 import { Mail, Phone, Clock, MessageSquare, ArrowRight, CheckCircle2, X } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 export default function Contact() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
-    // Simulate sending an email to the support mailbox
     const form = e.currentTarget;
     const formData = new FormData(form);
     
-    console.log('=== NEW CONTACT FORM SUBMISSION ===');
-    console.log('To: support@senioreaseuk.co.uk (To be configured on go-live)');
-    console.log('Subject: New Website Enquiry');
-    console.log('Name:', formData.get('name'));
-    console.log('Email:', formData.get('email'));
-    console.log('Phone:', formData.get('phone'));
-    console.log('Enquiry Type:', formData.get('enquiryType'));
-    console.log('Message:', formData.get('message'));
-    console.log('===================================');
+    try {
+      await addDoc(collection(db, 'tickets'), {
+        name: formData.get('name') as string,
+        email: formData.get('email') as string,
+        phone: formData.get('phone') as string,
+        enquiryType: formData.get('enquiryType') as string,
+        message: formData.get('message') as string,
+        status: 'Open',
+        source: 'Contact Us',
+        createdAt: serverTimestamp()
+      });
 
-    setShowSuccessModal(true);
-    form.reset();
+      setShowSuccessModal(true);
+      form.reset();
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      alert('There was an issue sending your message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -137,8 +148,12 @@ export default function Contact() {
                   <textarea required name="message" id="message" rows={4} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow resize-none" placeholder="How can we help?"></textarea>
                 </div>
 
-                <button type="submit" className="w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md">
-                  Contact Us 
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md disabled:bg-teal-400 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? 'Sending...' : 'Contact Us'}
                 </button>
               </form>
             </div>
