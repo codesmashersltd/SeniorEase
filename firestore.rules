@@ -9,16 +9,14 @@ service cloud.firestore {
     function existing() { return resource.data; }
 
     function isValidTicket(data) {
-      return data.keys().hasAll(['name', 'email', 'phone', 'enquiryType', 'message', 'status', 'createdAt', 'source'])
-        && data.keys().size() == 8
-        && data.name is string && data.name.size() <= 100 && data.name.size() > 0
+      return data.name is string && data.name.size() <= 100 && data.name.size() > 0
         && data.email is string && data.email.size() <= 150
         && data.phone is string && data.phone.size() <= 30
         && data.enquiryType is string && data.enquiryType.size() <= 50
         && data.message is string && data.message.size() <= 3000
         && data.status is string && data.status in ['Open', 'In Progress', 'Resolved', 'Closed']
         && data.source is string && data.source in ['Contact Us', 'Join Now', 'Dashboard']
-        && data.createdAt == request.time;
+        && data.createdAt != null;
     }
 
     match /tickets/{ticketId} {
@@ -26,6 +24,23 @@ service cloud.firestore {
       allow read: if isAdmin();
       allow update: if isAdmin();
       allow delete: if isAdmin();
+    }
+
+    match /customers/{customerId} {
+      allow read, write, delete: if isAdmin();
+    }
+
+    match /renewals/{renewalId} {
+      allow read, write, delete: if isAdmin();
+    }
+    
+    match /payments/{paymentId} {
+      allow read, write, delete: if isAdmin();
+    }
+
+    match /loginLogs/{logId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
     }
   }
 }

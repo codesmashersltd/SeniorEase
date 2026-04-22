@@ -14,15 +14,16 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [customerId, setCustomerId] = useState('');
   const [email, setEmail] = useState('');
+  const [checkoutUrl, setCheckoutUrl] = useState('');
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const userEmail = formData.get('email') as string;
-    const userPhone = formData.get('phone') as string;
-    const userName = formData.get('fullName') as string;
+    const userEmail = (formData.get('email') as string) || '';
+    const userPhone = (formData.get('phone') as string) || '';
+    const userName = (formData.get('fullName') as string) || 'No Name Provided';
     setEmail(userEmail);
     
     setIsSubmitting(true);
@@ -31,8 +32,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
       const newId = `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
       setCustomerId(newId);
 
-      // Save as lead/joinee ticket in Firestore
-      await addDoc(collection(db, 'tickets'), {
+      const ticketPayload = {
         name: userName,
         email: userEmail,
         phone: userPhone,
@@ -41,7 +41,11 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
         status: 'Open',
         source: 'Join Now',
         createdAt: serverTimestamp()
-      });
+      };
+      console.log('Attempting to add ticket:', ticketPayload);
+
+      // Save as lead/joinee ticket in Firestore
+      await addDoc(collection(db, 'tickets'), ticketPayload);
 
       // Call our background Stripe integration endpoint
       if (plan) {
@@ -60,9 +64,9 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
         const data = await response.json();
         
         if (data.url) {
-          // A real session was created via Stripe, redirect user to actual Stripe checkout:
-          window.location.href = data.url;
-          return; // stop execution so it redirects
+          // A real session was created via Stripe, capture the URL but DO NOT REDIRECT YET
+          // so the user can see their Setup instructions and customer ID first!
+          setCheckoutUrl(data.url);
         }
       } else {
         // Fallback delay for non-plan "free call" requests
@@ -71,10 +75,10 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
 
       setIsSubmitting(false);
       setIsSuccess(true);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Payment/Form intent error:', err);
       setIsSubmitting(false);
-      alert('Error initializing request. Please try again.');
+      alert(`Error initializing request: ${err.message || 'Please try again.'}`);
     }
   };
 
@@ -83,6 +87,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
     setIsSubmitting(false);
     setCustomerId('');
     setEmail('');
+    setCheckoutUrl('');
     onClose();
   };
 
@@ -145,12 +150,21 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                 </>
               )}
               
-              <button
-                onClick={handleClose}
-                className="mt-4 w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md"
-              >
-                Done
-              </button>
+              {checkoutUrl ? (
+                <button
+                  onClick={() => window.location.href = checkoutUrl}
+                  className="mt-4 w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md flex items-center justify-center gap-2"
+                >
+                  Proceed to Payment <ShieldCheck size={20} />
+                </button>
+              ) : (
+                <button
+                  onClick={handleClose}
+                  className="mt-4 w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md"
+                >
+                  Done
+                </button>
+              )}
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">

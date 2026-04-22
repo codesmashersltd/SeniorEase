@@ -17,22 +17,25 @@ export default function Contact() {
     const formData = new FormData(form);
     
     try {
-      await addDoc(collection(db, 'tickets'), {
-        name: formData.get('name') as string,
-        email: formData.get('email') as string,
-        phone: formData.get('phone') as string,
-        enquiryType: formData.get('enquiryType') as string,
-        message: formData.get('message') as string,
+      const ticketPayload = {
+        name: (formData.get('name') as string) || 'No Name',
+        email: (formData.get('email') as string) || '',
+        phone: (formData.get('phone') as string) || '',
+        enquiryType: (formData.get('enquiryType') as string) || 'General',
+        message: (formData.get('message') as string) || 'No Message',
         status: 'Open',
         source: 'Contact Us',
         createdAt: serverTimestamp()
-      });
+      };
+      console.log('Sending Contact Ticket:', ticketPayload);
+      
+      await addDoc(collection(db, 'tickets'), ticketPayload);
 
       setShowSuccessModal(true);
       form.reset();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error adding document: ", error);
-      alert('There was an issue sending your message. Please try again.');
+      alert(`There was an issue sending your message: ${error.message || 'Please try again.'}`);
     } finally {
       setIsSubmitting(false);
     }

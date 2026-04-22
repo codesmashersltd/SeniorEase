@@ -21,7 +21,7 @@ export default function MyAccount() {
   const [fpCustomerId, setFpCustomerId] = useState('');
   const [fpSuccess, setFpSuccess] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (customerName.trim() === '' || customerId.trim() === '' || password.trim() === '') {
       setError('Please enter your Name, Unique Customer ID, and Password.');
@@ -30,6 +30,16 @@ export default function MyAccount() {
     // Mock login success
     setError('');
     setIsLoggedIn(true);
+
+    try {
+      await addDoc(collection(db, 'loginLogs'), {
+        customerName: customerName,
+        customerId: customerId,
+        timestamp: serverTimestamp()
+      });
+    } catch (err) {
+      console.error("Error logging user session:", err);
+    }
   };
 
   const handleForgotPassword = (e: React.FormEvent) => {
