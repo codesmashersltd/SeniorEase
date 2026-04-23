@@ -353,7 +353,7 @@ export default function MyAccount() {
                       <div className="absolute top-0 right-0 w-24 h-24 bg-teal-50 rounded-bl-full -mr-12 -mt-12 group-hover:bg-teal-100 transition-colors"></div>
                       <h3 className="font-bold text-lg text-gray-900 group-hover:text-teal-700 transition-colors relative z-10">{service}</h3>
                       <button 
-                        onClick={() => handleRequestHelp(service)}
+                        onClick={() => handleRequestLearning(service)}
                         className="mt-6 text-sm font-bold text-teal-600 bg-teal-50 py-3 px-4 rounded-xl group-hover:bg-teal-600 group-hover:text-white transition-all relative z-10 w-full text-center shadow-sm"
                       >
                         Request Learning

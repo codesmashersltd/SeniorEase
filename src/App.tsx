@@ -22,6 +22,7 @@ import GDPR from './pages/GDPR';
 import NHSStandards from './pages/NHSStandards';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import MobileAppGuide from './pages/MobileAppGuide';
 
 export default function App() {
   return (
@@ -46,6 +47,7 @@ export default function App() {
           <Route path="account" element={<MyAccount />} />
           <Route path="gdpr" element={<GDPR />} />
           <Route path="nhs-standards" element={<NHSStandards />} />
+          <Route path="mobile-app" element={<MobileAppGuide />} />
         </Route>
       </Routes>
     </Router>

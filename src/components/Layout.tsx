@@ -161,6 +161,11 @@ export default function Layout() {
                   </li>
                 ))}
                 <li>
+                  <Link to="/mobile-app" className="text-gray-400 hover:text-white transition-colors">
+                    Mobile App Guide
+                  </Link>
+                </li>
+                <li>
                   <Link to="/account" className="text-teal-400 hover:text-teal-300 font-medium transition-colors">
                     My Account
                   </Link>
