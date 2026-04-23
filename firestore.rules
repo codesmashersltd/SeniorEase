@@ -15,7 +15,7 @@ service cloud.firestore {
         && data.enquiryType is string && data.enquiryType.size() <= 50
         && data.message is string && data.message.size() <= 3000
         && data.status is string && data.status in ['Open', 'In Progress', 'Resolved', 'Closed']
-        && data.source is string && data.source in ['Contact Us', 'Join Now', 'Dashboard']
+        && data.source is string && data.source in ['Contact Us', 'Join Now', 'Dashboard', 'Mobile App', 'Checkout']
         && data.createdAt != null;
     }
 
