@@ -56,10 +56,13 @@ export default function MobileDashboard() {
   };
 
   const handleRequestLearning = async (serviceName) => {
+    const ticketStr = \`TKT-\${Math.floor(100000 + Math.random() * 900000)}\`;
+    setGeneratedTicket(ticketStr);
+    
+    // Instantly show the success popup for better UX!
+    setShowTicketModal(true);
+
     try {
-      const ticketStr = \`TKT-\${Math.floor(100000 + Math.random() * 900000)}\`;
-      setGeneratedTicket(ticketStr);
-      
       // Integrates perfectly with the admin dashboard
       await addDoc(collection(db, 'tickets'), {
         name: customerName || 'Account User',
@@ -71,9 +74,9 @@ export default function MobileDashboard() {
         source: 'Mobile App',
         createdAt: serverTimestamp()
       });
-
-      setShowTicketModal(true);
     } catch (err) {
+      console.log('Ticket Error:', err);
+      setShowTicketModal(false);
       Alert.alert('Error', 'Unable to generate ticket at this time. Please try again.');
     }
   };

@@ -230,10 +230,10 @@ export default function AdminDashboard() {
         const paymentsReceived = renewals.filter(r => r.status === 'Paid').length;
         const paymentsInProgress = renewals.filter(r => r.status === 'In Progress').length;
         
-        const openSupport = tickets.filter(t => t.source === 'Dashboard' && (t.status === 'Open' || t.status === 'In Progress')).length;
-        const closedSupport = tickets.filter(t => t.source === 'Dashboard' && (t.status === 'Closed' || t.status === 'Resolved')).length;
-        const openJoinee = tickets.filter(t => t.source !== 'Dashboard' && (t.status === 'Open' || t.status === 'In Progress')).length;
-        const closedJoinee = tickets.filter(t => t.source !== 'Dashboard' && (t.status === 'Closed' || t.status === 'Resolved')).length;
+        const openSupport = tickets.filter(t => (t.source === 'Dashboard' || t.source === 'Mobile App') && (t.status === 'Open' || t.status === 'In Progress')).length;
+        const closedSupport = tickets.filter(t => (t.source === 'Dashboard' || t.source === 'Mobile App') && (t.status === 'Closed' || t.status === 'Resolved')).length;
+        const openJoinee = tickets.filter(t => (t.source === 'Contact Us' || t.source === 'Join Now' || t.source === 'Checkout') && (t.status === 'Open' || t.status === 'In Progress')).length;
+        const closedJoinee = tickets.filter(t => (t.source === 'Contact Us' || t.source === 'Join Now' || t.source === 'Checkout') && (t.status === 'Closed' || t.status === 'Resolved')).length;
 
         const statCards = [
           { title: "Total Customers", value: totalCustomers, icon: <Users size={24} className="text-teal-600" /> },
@@ -461,7 +461,7 @@ export default function AdminDashboard() {
         );
 
       case 'tickets':
-        const supportTickets = tickets.filter(t => t.source === 'Dashboard');
+        const supportTickets = tickets.filter(t => t.source === 'Dashboard' || t.source === 'Mobile App');
         const filteredSupportTickets = supportTickets.filter(t => 
           t.customerName?.toLowerCase().includes(searchQuery.toLowerCase()) || 
           t.ticketId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -520,7 +520,12 @@ export default function AdminDashboard() {
                         <div className="font-medium">{ticket.service}</div>
                         <div className="text-xs text-gray-500 mt-1 max-w-xs truncate">{ticket.message}</div>
                       </td>
-                      <td className="px-6 py-4 text-gray-500">{ticket.date}</td>
+                      <td className="px-6 py-4 text-gray-500">
+                        <div>{ticket.date}</div>
+                        <span className={`inline-flex mt-1 items-center px-2 py-0.5 rounded text-[10px] font-bold ${ticket.source === 'Mobile App' ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-600'} uppercase`}>
+                          {ticket.source}
+                        </span>
+                      </td>
                       <td className="px-6 py-4">
                         <select
                           value={ticket.status}
@@ -552,7 +557,7 @@ export default function AdminDashboard() {
         );
 
       case 'joinees':
-        const joineeTickets = tickets.filter(t => t.source !== 'Dashboard');
+        const joineeTickets = tickets.filter(t => t.source !== 'Dashboard' && t.source !== 'Mobile App');
         const filteredJoinees = joineeTickets.filter(t => 
           t.customerName?.toLowerCase().includes(searchQuery.toLowerCase()) || 
           t.ticketId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
