@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { HelpCircle, ArrowRight } from 'lucide-react';
+import { LearningCircle, ArrowRight } from 'lucide-react';
 
 export default function FAQ() {
   const faqs = [
     {
-      q: "What does the Senior Ease SaaS Platform help with?",
-      a: "The Senior Ease SaaS Platform helps track and manage everyday digital tasks such as smartphones, WhatsApp, emails, video calls, online forms, reminders, and general digital confidence support via our secure portal."
+      q: "What does the Senior Ease SaaS Platform educate on?",
+      a: "The Senior Ease SaaS Platform educates on everyday digital tasks such as smartphones, WhatsApp, emails, video calls, online forms, reminders, and general digital confidence support via our secure portal."
     },
     {
       q: "Is Senior Ease a care or medical service?",
@@ -24,12 +24,12 @@ export default function FAQ() {
       a: "Yes. A family member or authorised person may subscribe on behalf of a senior citizen where appropriate."
     },
     {
-      q: "What if I need more help than my plan includes?",
+      q: "What if I need more education than my plan includes?",
       a: "If you need more support than your current plan allows, we may recommend upgrading to a more suitable plan."
     },
     {
       q: "Do you offer emergency support?",
-      a: "No. Senior Ease is not an emergency service. If urgent help is needed, customers should contact the appropriate emergency or professional service."
+      a: "No. Senior Ease is not an emergency service. If urgent learning is needed, customers should contact the appropriate emergency or professional service."
     }
   ];
 

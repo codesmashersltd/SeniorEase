@@ -16,10 +16,10 @@ export default function Terms() {
           <p className="mb-8">If you do not agree with these Terms, please do not use our platform or software services.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. About Senior Ease SaaS</h2>
-          <p className="mb-4">Senior Ease provides a proprietary Software as a Service (SaaS) platform, secure dashboard tools, and non-medical digital help for senior citizens in the United Kingdom.</p>
-          <p className="mb-4">Our software tools are designed to help with everyday technology and online tasks, providing a portal to manage:</p>
+          <p className="mb-4">Senior Ease provides a proprietary Software as a Service (SaaS) platform, secure dashboard tools, and non-medical digital learning for senior citizens in the United Kingdom.</p>
+          <p className="mb-4">Our software tools are designed to educate on everyday technology and online tasks, providing a portal to manage:</p>
           <ul className="list-disc pl-6 mb-4">
-            <li>smartphone and tablet help</li>
+            <li>smartphone and tablet learning</li>
             <li>WhatsApp and messaging support</li>
             <li>email assistance</li>
             <li>online form guidance</li>
@@ -52,7 +52,7 @@ export default function Terms() {
             <li>guaranteed fraud prevention or scam recovery</li>
           </ul>
           
-          <p className="mb-4">If you need urgent help, medical support, or emergency assistance, you should contact the appropriate emergency or professional service immediately.</p>
+          <p className="mb-4">If you need urgent learning, medical support, or emergency assistance, you should contact the appropriate emergency or professional service immediately.</p>
           <p className="mb-8 font-bold">For emergencies in the UK, call 999.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">3. Eligibility</h2>
@@ -166,17 +166,17 @@ export default function Terms() {
           </ul>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">9. Customer Responsibilities</h2>
-          <p className="mb-4 font-medium">To help us support you properly, you agree to:</p>
+          <p className="mb-4 font-medium">To allow us support you properly, you agree to:</p>
           <ul className="list-disc pl-6 mb-4">
             <li>provide accurate and honest information</li>
             <li>follow reasonable guidance given during support</li>
             <li>keep your own passwords and personal details secure</li>
-            <li>seek specialist or emergency help where appropriate</li>
+            <li>seek specialist or emergency learning where appropriate</li>
             <li>avoid sharing sensitive information unless necessary for the support request</li>
           </ul>
           
           <p className="mb-4">You are responsible for the final decisions you make regarding your own devices, accounts, online actions, and personal matters.</p>
-          <p className="mb-8">Where we help explain online messages, suspicious communications, or digital activity, you remain responsible for deciding what action to take.</p>
+          <p className="mb-8">Where we educate by explaining online messages, suspicious communications, or digital activity, you remain responsible for deciding what action to take.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">10. Third-Party Services and Platforms</h2>
           <p className="mb-4 font-medium">Many support requests involve third-party services such as:</p>
@@ -196,7 +196,7 @@ export default function Terms() {
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">11. Scam Awareness and Online Safety Guidance</h2>
           <p className="mb-4">Senior Ease may provide general scam awareness and digital safety guidance as part of our service.</p>
           
-          <p className="mb-4 font-medium">This may include helping customers recognise:</p>
+          <p className="mb-4 font-medium">This may include educating customers recognise:</p>
           <ul className="list-disc pl-6 mb-4">
             <li>suspicious texts</li>
             <li>phishing emails</li>
@@ -216,7 +216,7 @@ export default function Terms() {
           <p className="mb-8">If you think a scam or fraud incident has already occurred, you should contact the relevant bank, payment provider, or official authority immediately.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">12. Appointments, Reminders, and Admin Support</h2>
-          <p className="mb-4 font-medium">Where we provide reminder support or help with appointments, forms, or online admin tasks:</p>
+          <p className="mb-4 font-medium">Where we provide reminder support or educate on appointments, forms, or online admin tasks:</p>
           <ul className="list-disc pl-6 mb-4">
             <li>this is offered as a general support convenience service only</li>
             <li>you remain responsible for checking deadlines, appointments, and official confirmations</li>

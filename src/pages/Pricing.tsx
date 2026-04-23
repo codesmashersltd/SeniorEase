@@ -47,7 +47,7 @@ export default function Pricing() {
         >
           <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">Simple Plans</h1>
           <p className="text-xl md:text-2xl text-teal-100 leading-relaxed max-w-3xl mx-auto font-medium mb-10">
-            Choose the level of support that suits you or your loved one best. Our plans are designed to provide calm, practical digital help on a monthly basis.
+            Choose the level of support that suits you or your loved one best. Our plans are designed to provide calm, practical digital learning on a monthly basis.
           </p>
           
           <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-white font-bold text-lg md:text-xl bg-teal-800/80 inline-flex px-8 py-4 md:py-5 rounded-2xl md:rounded-full border border-teal-600/50 backdrop-blur-md shadow-2xl">
@@ -89,7 +89,7 @@ export default function Pricing() {
                   <span className="text-4xl font-bold text-gray-900">£9.99</span>
                   <span className="text-gray-500 font-medium">/ month</span>
                 </div>
-                <p className="text-gray-600 font-medium">Basic software platform access for occasional help</p>
+                <p className="text-gray-600 font-medium">Basic software platform access for occasional learning</p>
               </div>
               
               <div className="mb-8 flex-grow">
@@ -98,7 +98,7 @@ export default function Pricing() {
                   {[
                     'Up to 2 support requests per month',
                     'Support via phone, WhatsApp, or email ',
-                    'Help with common digital issues ',
+                    'Education on common digital issues ',
                     'Access during standard support hours ',
                     'General scam awareness guidance'
                   ].map((feature, i) => (
@@ -152,7 +152,7 @@ export default function Pricing() {
                     'Up to 5 support requests per month',
                     'Support via phone, WhatsApp, or email ',
                     'Email and login assistance',
-                    'Ongoing help with common digital tasks ',
+                    'Ongoing educate on common digital tasks ',
                     'Scam awareness guidance',
                     '1 scheduled support call per month'
                   ].map((feature, i) => (
@@ -165,7 +165,7 @@ export default function Pricing() {
               </div>
               
               <div className="bg-teal-800/50 p-4 rounded-xl mb-8 border border-teal-700/50">
-                <p className="text-sm text-teal-100"><span className="font-bold text-white">Best for:</span> Seniors who need regular monthly help with everyday digital tasks.</p>
+                <p className="text-sm text-teal-100"><span className="font-bold text-white">Best for:</span> Seniors who need regular monthly educate on everyday digital tasks.</p>
               </div>
               
               <button 
@@ -200,7 +200,7 @@ export default function Pricing() {
                     '1 monthly check-in ',
                     'Family support coordination where applicable ',
                     'Video call setup assistance',
-                    'Help with digital confidence, reminders, and communication tasks'
+                    'Educate on digital confidence, reminders, and communication tasks'
                   ].map((feature, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <CheckCircle2 size={20} className="text-teal-600 shrink-0 mt-0.5" />
@@ -267,7 +267,7 @@ export default function Pricing() {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 size={18} className="text-teal-600 mt-0.5 shrink-0" /> 
-                  <span>Support is provided for general digital help and everyday online tasks</span>
+                  <span>Support is provided for general digital learning and everyday online tasks</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 size={18} className="text-teal-600 mt-0.5 shrink-0" /> 

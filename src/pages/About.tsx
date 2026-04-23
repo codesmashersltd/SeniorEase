@@ -28,7 +28,7 @@ export default function About() {
         >
           <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">About SeniorEase</h1>
           <p className="text-xl md:text-2xl text-teal-100 leading-relaxed max-w-3xl mx-auto">
-            Helping senior citizens feel more confident, comfortable, and supported in today’s fast-paced digital world.
+            Educating senior citizens feel more confident, comfortable, and supported in today’s fast-paced digital world.
           </p>
         </motion.div>
       </section>
@@ -55,7 +55,7 @@ export default function About() {
             className="prose prose-lg text-gray-600 mx-auto"
           >
             <motion.p variants={fadeInUp} className="mb-6 text-xl leading-relaxed">
-              Senior Ease was created to provide a Software as a Service (SaaS) platform that makes everyday technology feel less overwhelming for older adults and their families. As more parts of life move online, many senior citizens are left feeling confused, frustrated, or unsupported when it comes to using phones, apps, emails, online forms, and digital communication tools. Senior Ease exists to provide secure tools, a centralized dashboard, and practical help that makes everyday digital life easier to manage.
+              Senior Ease was created to provide a Software as a Service (SaaS) platform that makes everyday technology feel less overwhelming for older adults and their families. As more parts of life move online, many senior citizens are left feeling confused, frustrated, or unsupported when it comes to using phones, apps, emails, online forms, and digital communication tools. Senior Ease exists to provide secure tools, a centralized dashboard, and practical learning that makes everyday digital life easier to manage.
             </motion.p>
             <motion.p variants={fadeInUp} className="mb-6 text-xl leading-relaxed">
               Everyday life now depends more than ever on smartphones, apps, emails, online accounts, and digital communication. From booking a doctor's appointment to staying in touch with grandchildren, the world has moved online.
@@ -100,7 +100,7 @@ export default function About() {
           >
             <motion.h2 variants={fadeInUp} className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Support for Seniors. Peace of Mind for Families.</motion.h2>
             <motion.p variants={fadeInUp} className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-              Senior Ease is designed not only for older adults, but also for families who want extra reassurance for a loved one. Whether it’s help with WhatsApp, video calls, online forms, or simply feeling more confident with everyday technology, we aim to provide support that feels calm, practical, and easy to access.
+              Senior Ease is designed not only for older adults, but also for families who want extra reassurance for a loved one. Whether it’s educate on WhatsApp, video calls, online forms, or simply feeling more confident with everyday technology, we aim to provide support that feels calm, practical, and easy to access.
             </motion.p>
           </motion.div>
         </div>
@@ -126,11 +126,11 @@ export default function About() {
               </div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Mission</h2>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Our mission is to provide friendly, non-medical digital help that gives senior citizens more confidence and gives families more peace of mind. We want to bridge the digital divide with empathy and patience.
+                Our mission is to provide friendly, non-medical digital learning that gives senior citizens more confidence and gives families more peace of mind. We want to bridge the digital divide with empathy and patience.
               </p>
               <p className="text-lg text-gray-900 mb-6 font-bold">We’re here to support everyday digital tasks such as:</p>
               <ul className="space-y-4">
-                {['Smartphone & Tablet help', 'WhatsApp & Video Call support', 'Online forms & Shopping', 'Email & Password assistance', 'Scam awareness guidance', 'General digital confidence'].map((item, i) => (
+                {['Smartphone & Tablet learning', 'WhatsApp & Video Call support', 'Online forms & Shopping', 'Email & Password assistance', 'Scam awareness guidance', 'General digital confidence'].map((item, i) => (
                   <li key={i} className="flex items-center gap-4 text-gray-700 text-lg">
                     <div className="w-8 h-8 rounded-full bg-teal-50 flex items-center justify-center text-teal-600 shrink-0">
                       <CheckCircle2 size={18} />
@@ -151,7 +151,7 @@ export default function About() {
               </div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Why SeniorEase Matters</h2>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Many seniors don’t want to feel dependent, confused, or left behind by technology. They want to remain independent but simply need a helping hand from someone they can trust.
+                Many seniors don’t want to feel dependent, confused, or left behind by technology. They want to remain independent but simply need a educating hand from someone they can trust.
               </p>
               <p className="text-lg text-gray-900 mb-6 font-bold">Many families also worry about:</p>
               <ul className="space-y-4 mb-10">
@@ -184,7 +184,7 @@ export default function About() {
             >
               <motion.h2 variants={fadeInUp} className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">How We Support</motion.h2>
               <motion.p variants={fadeInUp} className="text-xl text-gray-600 mb-10 leading-relaxed">
-                We don’t overcomplicate things. We help in a way that feels human, friendly, and reassuring. We focus on:
+                We don’t overcomplicate things. We educate in a way that feels human, friendly, and reassuring. We focus on:
               </motion.p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                 {['Simple explanations', 'Calm support', 'Easy communication', 'Practical guidance', 'Patience and trust', 'No technical jargon'].map((item, i) => (

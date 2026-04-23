@@ -17,8 +17,8 @@ export default function Privacy() {
           <p className="mb-8">By using our platform or software services, you acknowledge this Privacy Policy.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. Who We Are</h2>
-          <p className="mb-4">Senior Ease provides a Software as a Service (SaaS) platform, secure dashboard access, and friendly digital help for senior citizens in the United Kingdom.</p>
-          <p className="font-medium">Our software tools and services may include help with:</p>
+          <p className="mb-4">Senior Ease provides a Software as a Service (SaaS) platform, secure dashboard access, and friendly digital learning for senior citizens in the United Kingdom.</p>
+          <p className="font-medium">Our software tools and services may include educate on:</p>
           <ul className="list-disc pl-6 mb-4">
             <li>smartphones and tablets</li>
             <li>WhatsApp and messaging</li>
@@ -63,8 +63,8 @@ export default function Privacy() {
 
           <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">C. Service Request Information</h3>
           <ul className="list-disc pl-6 mb-4">
-            <li>details of the help or support you request</li>
-            <li>information you share with us to help us assist you</li>
+            <li>details of the learning or support you request</li>
+            <li>information you share with us to allow us to assist you</li>
             <li>communication preferences</li>
             <li>notes relating to support interactions</li>
           </ul>
@@ -176,7 +176,7 @@ export default function Privacy() {
             <li>subscription status</li>
             <li>payment reference details</li>
           </ul>
-          <p className="mb-8">This helps us manage your membership and support access.</p>
+          <p className="mb-8">This educates us manage your membership and support access.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">8. Communications With Us</h2>
           <p className="font-medium">If you contact us by:</p>

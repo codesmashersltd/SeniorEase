@@ -66,7 +66,7 @@ export default function MyAccount() {
     setShowCancelModal(false);
   };
 
-  const handleRequestHelp = async (serviceName: string) => {
+  const handleRequestLearning = async (serviceName: string) => {
     try {
       const randomTicketNumber = Math.floor(100000 + Math.random() * 900000);
       const ticketStr = `TKT-${randomTicketNumber}`;
@@ -340,9 +340,9 @@ export default function MyAccount() {
                 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {[
-                    'Smartphone & Tablet Help',
+                    'Smartphone & Tablet Learning',
                     'WhatsApp & Video Call',
-                    'Email & Password Help',
+                    'Email & Password Learning',
                     'Scam Awareness',
                     'Online Shopping',
                     'Entertainment Apps',
@@ -356,7 +356,7 @@ export default function MyAccount() {
                         onClick={() => handleRequestHelp(service)}
                         className="mt-6 text-sm font-bold text-teal-600 bg-teal-50 py-3 px-4 rounded-xl group-hover:bg-teal-600 group-hover:text-white transition-all relative z-10 w-full text-center shadow-sm"
                       >
-                        Request Help
+                        Request Learning
                       </button>
                     </div>
                   ))}

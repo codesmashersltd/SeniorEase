@@ -133,7 +133,7 @@ export default function Layout() {
                 Senior Ease provides a software platform with friendly digital support tracking and everyday technology tools for senior citizens in the UK.
               </p>
               <p className="text-gray-500 text-sm max-w-md">
-                SeniorEase is a Software as a Service (SaaS) monthly subscription platform providing non-medical digital assistance tools and everyday admin support. Platform tools include smartphone help resources, communication support, secure portal guidance, scam awareness tracking, and a support ticketing system.
+                SeniorEase is a Software as a Service (SaaS) monthly subscription platform providing non-medical digital assistance tools and everyday admin support. Platform tools include smartphone learning resources, communication support, secure portal guidance, scam awareness tracking, and a support ticketing system.
               </p>
             </div>
             

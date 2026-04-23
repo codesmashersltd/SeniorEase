@@ -56,9 +56,9 @@ export default function Contact() {
         </div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight">Contact Us</h1>
-          <p className="text-2xl text-teal-600 font-medium mb-6">We’re here to help you get started</p>
+          <p className="text-2xl text-teal-600 font-medium mb-6">We’re here to provide education to get you started</p>
           <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-            If you have any questions about our services, memberships, or support options, we’d be happy to help.
+            If you have any questions about our services, memberships, or support options, we’d be happy to educate.
           </p>
         </div>
       </section>
@@ -148,7 +148,7 @@ export default function Contact() {
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Your Message</label>
-                  <textarea required name="message" id="message" rows={4} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow resize-none" placeholder="How can we help?"></textarea>
+                  <textarea required name="message" id="message" rows={4} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow resize-none" placeholder="How can we educate?"></textarea>
                 </div>
 
                 <button 

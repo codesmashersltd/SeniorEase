@@ -29,7 +29,7 @@ export default function Home() {
               Friendly Digital Support Platform for <span className="text-teal-600">Senior Citizens</span> in the UK
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-10 leading-relaxed max-w-3xl mx-auto">
-              Senior Ease is a Software as a Service (SaaS) platform that helps older adults with everyday technology — combining intuitive secure software with friendly digital confidence support.
+              Senior Ease is a Software as a Service (SaaS) platform that learnings older adults with everyday technology — combining intuitive secure software with friendly digital confidence support.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
               <Link
@@ -62,25 +62,25 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Technology should make life easier — not more stressful.</h2>
           <p className="text-xl text-gray-700 mb-6 leading-relaxed">
-            At SeniorEase, our dedicated Software as a Service (SaaS) platform provides calm, friendly, ongoing support tools for senior citizens who need help with phones, apps, online tasks, and everyday digital problems.
+            At SeniorEase, our dedicated Software as a Service (SaaS) platform provides calm, friendly, ongoing support tools for senior citizens who need educate on phones, apps, online tasks, and everyday digital problems.
           </p>
           <p className="text-xl text-gray-700 leading-relaxed">
-            Whether it’s using WhatsApp, spotting suspicious messages, joining a video call, or getting help with an online form, we’re here to make things simpler.
+            Whether it’s using WhatsApp, spotting suspicious messages, joining a video call, or getting educate on an online form, we’re here to make things simpler.
           </p>
         </div>
       </section>
 
-      {/* How We Help */}
+      {/* How We Educate */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">How Our SaaS Platform Helps Seniors Feel More Confident Online</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">How Our SaaS Platform Educates Seniors to Feel More Confident Online</h2>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                 Many everyday tasks now happen online — from messages and emails to appointments, accounts, and family video calls.
               </p>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                For many seniors, that can feel confusing or overwhelming. SeniorEase's proprietary software platform and dashboard provide simple monthly access to help with:
+                For many seniors, that can feel confusing or overwhelming. SeniorEase's proprietary software platform and dashboard provide simple monthly access to educate on:
               </p>
               <ul className="space-y-4 mb-10">
                 {[
@@ -98,7 +98,7 @@ export default function Home() {
                 ))}
               </ul>
               <div className="bg-teal-50 p-6 rounded-2xl border border-teal-100">
-                <p className="text-teal-900 font-semibold text-lg">Secure dashboard access & friendly help when it’s needed — without the stress.</p>
+                <p className="text-teal-900 font-semibold text-lg">Secure dashboard access & friendly learning when it’s needed — without the stress.</p>
               </div>
             </div>
             <div className="relative">
@@ -131,20 +131,20 @@ export default function Home() {
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">What SeniorEase SaaS Platform Provides</h2>
             <p className="text-xl text-gray-600 mb-4">SeniorEase is a powerful Software as a Service (SaaS) platform providing digital dashboard tools and non-medical digital support for senior citizens and their families.
-Through our portal, you can request help with common everyday tasks such as:</p>
+Through our portal, you can request educate on common everyday tasks such as:</p>
             <p className="text-lg text-teal-700 font-medium">Our software platform is designed to make everyday technology easier, simpler, and less stressful for older adults.</p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: Smartphone, title: 'Smartphone and tablet Help', desc: 'Support with basic phone use, settings, contacts, reminders, apps, and everyday device issues.' },
-              { icon: Users, title: 'WhatsApp & messaging support ', desc: 'Help with messages, voice notes, family group chats, photos, and video calls with loved ones.' },
+              { icon: Smartphone, title: 'Smartphone and tablet Learning', desc: 'Support with basic phone use, settings, contacts, reminders, apps, and everyday device issues.' },
+              { icon: Users, title: 'WhatsApp & messaging support ', desc: 'Educate on messages, voice notes, family group chats, photos, and video calls with loved ones.' },
               { icon: Video, title: 'Video Call Setup & Troubleshooting', desc: 'Step-by-step guidance for Zoom, FaceTime, and Skype so you can easily connect with family and friends without technical frustration.' },
               { icon: Mail, title: 'Email & Login Guidance', desc: 'Assistance with reading emails, resetting passwords, understanding account access, and avoiding suspicious emails.' },
-              { icon: Calendar, title: 'Appointment & Reminder Support', desc: 'Help setting up digital calendars, medical appointment reminders, and daily alarms to keep your schedule organized.' },
-              { icon: ShieldCheck, title: 'Scam Awareness Guidance', desc: 'General support to help identify suspicious messages, fake calls, phishing attempts, and online scams.' },
+              { icon: Calendar, title: 'Appointment & Reminder Support', desc: 'Learning setting up digital calendars, medical appointment reminders, and daily alarms to keep your schedule organized.' },
+              { icon: ShieldCheck, title: 'Scam Awareness Guidance', desc: 'General support to educate on identifying suspicious messages, fake calls, phishing attempts, and online scams.' },
               { icon: FileText, title: 'Online Form and Account assistance ', desc: 'Simple guidance with forms, website navigation, online accounts, and digital admin tasks.' },
-              { icon: Star, title: 'Everyday Digital Confidence Support', desc: 'Patient, ongoing encouragement to help you build confidence and overcome the fear of making mistakes with technology.' },
+              { icon: Star, title: 'Everyday Digital Confidence Support', desc: 'Patient, ongoing encouragement to educate you to build confidence and overcome the fear of making mistakes with technology.' },
               { icon: HeartHandshake, title: 'Family Support Add-On', desc: 'Ideal for adult children who want extra support and reassurance for a parent or loved one.' }
             ].map((service, i) => (
               <div key={i} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
@@ -180,7 +180,7 @@ Through our portal, you can request help with common everyday tasks such as:</p>
                   <CheckCircle2 size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Senior citizens who want patient help with everyday technology</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Senior citizens who want patient educate on everyday technology</h3>
                   <p className="text-gray-600">We provide step-by-step, jargon-free guidance so you can use your devices with confidence.</p>
                 </div>
               </div>
@@ -208,7 +208,7 @@ Through our portal, you can request help with common everyday tasks such as:</p>
 
             <div className="bg-teal-50 border border-teal-100 rounded-3xl p-8 text-center">
               <p className="text-xl text-teal-900 font-medium leading-relaxed">
-                Whether it’s help using WhatsApp, joining a video call, understanding a suspicious message, or navigating an online form — we’re here to make things easier.
+                Whether it’s education using WhatsApp, joining a video call, understanding a suspicious message, or navigating an online form — we’re here to make things easier.
               </p>
             </div>
           </div>
@@ -235,7 +235,7 @@ Through our portal, you can request help with common everyday tasks such as:</p>
                   { title: 'Friendly, Respectful Support', desc: 'We treat every older adult with patience and dignity, explaining things simply without any confusing technical jargon.' },
                   { title: 'Clear Monthly Plans', desc: 'Simple, transparent pricing with no hidden surprises, setup fees, or unexpected charges.' },
                   { title: 'UK-Focused Support Model', desc: 'Our service is tailored to the needs of UK seniors, understanding local services, apps, and common concerns.' },
-                  { title: 'Help via Phone, WhatsApp & Email', desc: 'We offer support through the channels you already use and feel most comfortable with.' },
+                  { title: 'Learning via Phone, WhatsApp & Email', desc: 'We offer support through the channels you already use and feel most comfortable with.' },
                   { title: 'Family-Friendly Communication', desc: 'We keep adult children in the loop when needed, providing peace of mind for the whole family.' },
                   { title: 'Easy Cancellation', desc: 'No long-term contracts. You can easily cancel your membership at any time before your next billing date.' },
                   { title: 'Privacy-First Approach', desc: 'We maintain clear support boundaries, never asking for sensitive financial details or passwords, ensuring your data stays safe.' }
@@ -256,7 +256,7 @@ Through our portal, you can request help with common everyday tasks such as:</p>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 tracking-tight">Ready to Make Everyday Technology Easier?</h2>
           <p className="text-xl text-gray-600 mb-12 leading-relaxed">
-            Whether you’re looking for support for yourself or peace of mind for a loved one, SeniorEase is here to help.
+            Whether you’re looking for support for yourself or peace of mind for a loved one, SeniorEase is here to educate.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link

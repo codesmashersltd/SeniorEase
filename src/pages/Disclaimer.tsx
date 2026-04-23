@@ -37,7 +37,7 @@ export default function Disclaimer() {
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">1. General Information</h2>
             <p>Senior Ease provides friendly digital assistance and everyday support services for senior citizens in the United Kingdom.</p>
             <p>All information, guidance, and support provided through our website and services is intended for general assistance purposes only.</p>
-            <p>While we aim to provide helpful and clear support, we do not guarantee that all information or guidance will be suitable for every situation.</p>
+            <p>While we aim to provide learningful and clear support, we do not guarantee that all information or guidance will be suitable for every situation.</p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">2. No Professional Advice</h2>
             <p>Senior Ease does not provide professional advice of any kind.</p>
@@ -124,7 +124,7 @@ export default function Disclaimer() {
             <p>Any reliance on third-party services is at your own discretion.</p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">7. Scam Awareness Guidance</h2>
-            <p>Senior Ease may provide general scam awareness guidance to help customers recognise potentially suspicious messages or situations.</p>
+            <p>Senior Ease may provide general scam awareness guidance to educate customers to recognise potentially suspicious messages or situations.</p>
             <p>However:</p>
             <ul className="list-disc pl-6 mb-4 space-y-2">
               <li>we do not guarantee scam prevention</li>

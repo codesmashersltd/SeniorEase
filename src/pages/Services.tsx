@@ -6,8 +6,8 @@ export default function Services() {
   const services = [
     {
       icon: Smartphone,
-      title: 'Smartphone & Tablet Help',
-      description: 'We help with common device issues and everyday use, making your phone or tablet feel like a helpful tool rather than a frustration:',
+      title: 'Smartphone & Tablet Learning',
+      description: 'We educate on common device issues and everyday use, making your phone or tablet feel like a helpful tool rather than a frustration:',
       items: [
         'Basic phone settings (volume, brightness, Wi-Fi)',
         'Managing contacts and saved numbers',
@@ -21,7 +21,7 @@ export default function Services() {
     {
       icon: Video,
       title: 'WhatsApp & Video Call Support',
-      description: 'Stay connected with family and friends more easily. We can help you navigate messaging and video apps with confidence:',
+      description: 'Stay connected with family and friends more easily. We can educate you to navigate messaging and video apps with confidence:',
       items: [
         'Sending and receiving text messages',
         'Recording and listening to voice notes',
@@ -34,7 +34,7 @@ export default function Services() {
     {
       icon: Mail,
       title: 'Email & Password Assistance',
-      description: 'Emails, passwords, and account logins can often be confusing. We provide patient help to keep your accounts accessible:',
+      description: 'Emails, passwords, and account logins can often be confusing. We provide patient learning to keep your accounts accessible:',
       items: [
         'Reading, organizing, and deleting emails',
         'Sending emails with attachments',
@@ -47,7 +47,7 @@ export default function Services() {
     {
       icon: ShieldAlert,
       title: 'Scam Awareness & Online Safety',
-      description: 'Online scams and suspicious messages are a growing concern. We provide general support to help you identify and avoid threats:',
+      description: 'Online scams and suspicious messages are a growing concern. We provide general support to educate you to identify and avoid threats:',
       items: [
         'Identifying suspicious text messages (smishing)',
         'Spotting phishing emails',
@@ -74,7 +74,7 @@ export default function Services() {
     {
       icon: PlayCircle,
       title: 'Entertainment & Hobbies',
-      description: 'Your device is a gateway to endless entertainment. Let us help you find and enjoy the content you love:',
+      description: 'Your device is a gateway to endless entertainment. Let us educate you to find and enjoy the content you love:',
       items: [
         'Navigating YouTube for videos and tutorials',
         'Setting up catch-up TV (BBC iPlayer, ITVX)',
@@ -86,8 +86,8 @@ export default function Services() {
     },
     {
       icon: FileEdit,
-      title: 'Online Form & Digital Admin Help',
-      description: 'Many essential tasks have moved online and can feel difficult without support. We can help you navigate:',
+      title: 'Online Form & Digital Admin Learning',
+      description: 'Many essential tasks have moved online and can feel difficult without support. We can educate you to navigate:',
       items: [
         'Navigating local council websites',
         'Understanding and filling out simple online forms',
@@ -105,7 +105,7 @@ export default function Services() {
         'Peace of mind for adult children',
         'Coordinating family video call setups',
         'Monthly check-ins and progress updates',
-        'Reassurance that help is always a call away',
+        'Reassurance that learning is always a call away',
         'Assistance with setting up new devices remotely'
       ]
     }

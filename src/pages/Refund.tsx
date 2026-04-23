@@ -17,15 +17,15 @@ export default function Refund() {
           <p className="mb-8">By subscribing to our software platform or dashboard services, you agree to this policy.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. About Our Platform</h2>
-          <p className="mb-4">Senior Ease provides a software platform, secure portal, and friendly digital help for senior citizens in the United Kingdom.</p>
+          <p className="mb-4">Senior Ease provides a software platform, secure portal, and friendly digital learning for senior citizens in the United Kingdom.</p>
           <p className="font-medium">Our portal and SaaS tools may track and support:</p>
           <ul className="list-disc pl-6 mb-4">
-            <li>smartphone help</li>
+            <li>smartphone learning</li>
             <li>WhatsApp support</li>
             <li>email assistance</li>
             <li>online form guidance</li>
             <li>appointment reminder support</li>
-            <li>video call help</li>
+            <li>video call learning</li>
             <li>scam awareness guidance</li>
             <li>general digital confidence support</li>
           </ul>
@@ -53,11 +53,11 @@ export default function Refund() {
           </ul>
           
           <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">Recommended notice</h3>
-          <p className="font-medium">To help avoid unintended renewals, we recommend giving at least:</p>
+          <p className="font-medium">To avoid unintended renewals, we recommend giving at least:</p>
           <ul className="list-disc pl-6 mb-4">
             <li>7 days’ notice before your next billing date</li>
           </ul>
-          <p className="mb-8">This helps us process your request in time.</p>
+          <p className="mb-8">This educates us process your request in time.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">4. No Long-Term Lock-In</h2>
           <p className="mb-4">Senior Ease memberships are designed to be simple monthly support plans.</p>
@@ -167,7 +167,7 @@ export default function Refund() {
             <li>the plan or service purchased</li>
             <li>the reason for your request</li>
           </ul>
-          <p className="mb-8">This helps us resolve your request more quickly.</p>
+          <p className="mb-8">This educates us resolve your request more quickly.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">13. Complaints About Billing or Service</h2>
           <p className="mb-4">If you are unhappy with a charge, service issue, or billing matter, please contact us first.</p>

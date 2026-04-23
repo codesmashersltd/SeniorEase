@@ -7,7 +7,7 @@ export default function HowItWorks() {
     {
       icon: <MousePointerClick className="w-10 h-10 text-teal-600" />,
       title: "Step 1 – Choose Your SaaS Plan",
-      description: "Select the software subscription tier that best matches the support level you need. Whether you're looking for occasional tech help or comprehensive family tracking, our platform has you covered.",
+      description: "Select the software subscription tier that best matches the support level you need. Whether you're looking for occasional tech learning or comprehensive family tracking, our platform has you covered.",
       bullets: [
         "Review our transparent pricing tiers.",
         "Select between Essential SaaS, Plus SaaS, or Family Portal.",

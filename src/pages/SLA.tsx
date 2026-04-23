@@ -34,10 +34,10 @@ export default function SLA() {
           <p className="mb-8">Our goal is to provide a friendly, reliable, and clearly defined support service for senior citizens and their families.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">2. About Senior Ease</h2>
-          <p className="mb-4">Senior Ease provides non-medical digital help and everyday support for senior citizens in the United Kingdom.</p>
-          <p className="font-medium">Our services are designed to help customers with everyday technology and online tasks such as:</p>
+          <p className="mb-4">Senior Ease provides non-medical digital learning and everyday support for senior citizens in the United Kingdom.</p>
+          <p className="font-medium">Our services are designed to educate customers on everyday technology and online tasks such as:</p>
           <ul className="list-disc pl-6 mb-8">
-            <li>smartphone help</li>
+            <li>smartphone learning</li>
             <li>WhatsApp support</li>
             <li>email assistance</li>
             <li>online form guidance</li>
@@ -97,7 +97,7 @@ export default function SLA() {
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">6. Support Request Definition</h2>
           <p className="mb-4">A “Support Request” means a customer enquiry or issue submitted to Senior Ease requesting assistance with an eligible support matter.</p>
-          <p className="font-medium">A support request may include help with:</p>
+          <p className="font-medium">A support request may include educate on:</p>
           <ul className="list-disc pl-6 mb-4">
             <li>using a smartphone feature</li>
             <li>understanding WhatsApp usage</li>
@@ -105,7 +105,7 @@ export default function SLA() {
             <li>understanding a suspicious message</li>
             <li>email or login guidance</li>
             <li>simple online form support</li>
-            <li>general digital confidence help</li>
+            <li>general digital confidence learning</li>
           </ul>
           <p className="font-medium">A support request does not automatically include:</p>
           <ul className="list-disc pl-6 mb-4">
@@ -127,7 +127,7 @@ export default function SLA() {
             <li>Up to 2 support requests per calendar month</li>
             <li>Access to standard business hours support</li>
             <li>Support via phone, WhatsApp, or email (as applicable)</li>
-            <li>Basic help with eligible digital support matters</li>
+            <li>Basic educate on eligible digital support matters</li>
           </ul>
           <p className="font-medium mt-2">Typical Suitable Use</p>
           <p className="mb-8">Best for customers needing occasional support for everyday digital questions.</p>
@@ -143,7 +143,7 @@ export default function SLA() {
             <li>Broader recurring support for everyday digital issues</li>
           </ul>
           <p className="font-medium mt-2">Typical Suitable Use</p>
-          <p className="mb-8">Best for customers who need more regular digital help each month.</p>
+          <p className="mb-8">Best for customers who need more regular digital learning each month.</p>
 
           <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">7.3 Family Care Plan</h3>
           <p className="font-medium">£29.99 / month</p>
@@ -191,7 +191,7 @@ export default function SLA() {
           <p className="mb-8">However, we aim to resolve eligible issues as promptly and reasonably as possible.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">9. Priority Levels</h2>
-          <p className="mb-4">To help manage support fairly, Senior Ease may internally classify support requests into broad priority levels.</p>
+          <p className="mb-4">To learning manage support fairly, Senior Ease may internally classify support requests into broad priority levels.</p>
           
           <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">Priority 1 – High Concern</h3>
           <p className="font-medium">Examples:</p>
@@ -206,8 +206,8 @@ export default function SLA() {
           <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">Priority 2 – Standard Support</h3>
           <p className="font-medium">Examples:</p>
           <ul className="list-disc pl-6 mb-4">
-            <li>WhatsApp help</li>
-            <li>video call help</li>
+            <li>WhatsApp learning</li>
+            <li>video call learning</li>
             <li>email support</li>
             <li>online account guidance</li>
             <li>form assistance</li>
@@ -218,7 +218,7 @@ export default function SLA() {
           <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">Priority 3 – General Guidance</h3>
           <p className="font-medium">Examples:</p>
           <ul className="list-disc pl-6 mb-4">
-            <li>digital confidence help</li>
+            <li>digital confidence learning</li>
             <li>non-urgent feature questions</li>
             <li>educational support requests</li>
           </ul>
@@ -256,7 +256,7 @@ export default function SLA() {
           <p className="mb-8 italic">This exclusions section is especially important for your business because it prevents the service from being misunderstood as care, regulated advice, or emergency assistance.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">12. Customer Responsibilities</h2>
-          <p className="font-medium">To help us deliver support properly, customers (and any family contact acting on their behalf) are responsible for:</p>
+          <p className="font-medium">To allow us deliver support properly, customers (and any family contact acting on their behalf) are responsible for:</p>
           <ul className="list-disc pl-6 mb-4">
             <li>providing accurate contact information</li>
             <li>providing clear and honest information about the issue</li>
@@ -319,7 +319,7 @@ export default function SLA() {
             <li>repeated missed appointments may count as a used support interaction</li>
             <li>support may be rebooked based on availability</li>
           </ul>
-          <p className="mb-8">This helps us manage support fairly across all customers.</p>
+          <p className="mb-8">This educates us manage support fairly across all customers.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">16. Service Availability and Temporary Interruptions</h2>
           <p className="font-medium">We aim to provide consistent service, but support availability may occasionally be affected by:</p>
