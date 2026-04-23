@@ -36,6 +36,12 @@ export default function AdminDashboard() {
   const [passwordErr, setPasswordErr] = useState('');
   const [isChangingPassword, setIsChangingPassword] = useState(false);
 
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    setSearchQuery('');
+  }, [activeTab]);
+
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('isAdminLoggedIn');
     if (!isLoggedIn) {
@@ -260,10 +266,24 @@ export default function AdminDashboard() {
         );
 
       case 'loginLogs':
+        const filteredLogs = loginLogs.filter(l => 
+          l.customerName?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+          l.customerId?.toLowerCase().includes(searchQuery.toLowerCase())
+        );
         return (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
               <h3 className="text-lg font-bold text-gray-900">Customer Login Activity</h3>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                <input 
+                  type="text" 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search logs..." 
+                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
+                />
+              </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
@@ -275,14 +295,14 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 text-sm">
-                  {loginLogs.length === 0 ? (
+                  {filteredLogs.length === 0 ? (
                      <tr>
                        <td colSpan={3} className="px-6 py-8 text-center text-gray-500">
                          No customer login logs found.
                        </td>
                      </tr>
                   ) : null}
-                  {loginLogs.map((log) => (
+                  {filteredLogs.map((log) => (
                     <tr key={log.id} className="hover:bg-gray-50/50 transition-colors">
                       <td className="px-6 py-4 font-bold text-gray-900">{log.customerName}</td>
                       <td className="px-6 py-4 font-mono text-gray-600">{log.customerId}</td>
@@ -296,13 +316,24 @@ export default function AdminDashboard() {
         );
 
       case 'customers':
+        const filteredCustomers = customers.filter(c => 
+          c.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+          c.id?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+          c.email?.toLowerCase().includes(searchQuery.toLowerCase())
+        );
         return (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
               <h3 className="text-lg font-bold text-gray-900">Live Customers</h3>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                <input type="text" placeholder="Search customers..." className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" />
+                <input 
+                  type="text" 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search customers..." 
+                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
+                />
               </div>
             </div>
             <div className="overflow-x-auto">
@@ -318,14 +349,14 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 text-sm">
-                  {customers.length === 0 ? (
+                  {filteredCustomers.length === 0 ? (
                      <tr>
                        <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
-                         No customers found. Database is currently empty.
+                         No customers found matching search.
                        </td>
                      </tr>
                   ) : null}
-                  {customers.map((customer) => (
+                  {filteredCustomers.map((customer) => (
                     <tr key={customer.id} className="hover:bg-gray-50/50 transition-colors">
                       <td className="px-6 py-4 font-mono text-teal-700 font-medium">{customer.id}</td>
                       <td className="px-6 py-4 font-bold text-gray-900">{customer.name}</td>
@@ -353,10 +384,24 @@ export default function AdminDashboard() {
         );
 
       case 'renewals':
+        const filteredRenewals = renewals.filter(r => 
+          r.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+          r.customerId?.toLowerCase().includes(searchQuery.toLowerCase())
+        );
         return (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200 bg-gray-50/50 flex justify-between items-center">
               <h3 className="text-lg font-bold text-gray-900">Upcoming Renewals & Invoices</h3>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                <input 
+                  type="text" 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search renewals..." 
+                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
+                />
+              </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
@@ -371,14 +416,14 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 text-sm">
-                  {renewals.length === 0 ? (
+                  {filteredRenewals.length === 0 ? (
                      <tr>
                        <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
-                         No renewals found. Database is currently empty.
+                         No renewals found matching search.
                        </td>
                      </tr>
                   ) : null}
-                  {renewals.map((renewal, index) => (
+                  {filteredRenewals.map((renewal, index) => (
                     <tr key={index} className="hover:bg-gray-50/50 transition-colors">
                       <td className="px-6 py-4">
                         <div className="font-bold text-gray-900">{renewal.name}</div>
@@ -417,10 +462,26 @@ export default function AdminDashboard() {
 
       case 'tickets':
         const supportTickets = tickets.filter(t => t.source === 'Dashboard');
+        const filteredSupportTickets = supportTickets.filter(t => 
+          t.customerName?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+          t.ticketId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          t.email?.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
         return (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50/50">
+            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50/50 flex justify-between items-center">
               <h3 className="text-lg font-bold text-gray-900">Support Tickets</h3>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                <input 
+                  type="text" 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search tickets..." 
+                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
+                />
+              </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
@@ -441,14 +502,14 @@ export default function AdminDashboard() {
                         {dbError}
                       </td>
                     </tr>
-                  ) : supportTickets.length === 0 ? (
+                  ) : filteredSupportTickets.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
-                        No support tickets found from member dashboards.
+                        No support tickets found matching search.
                       </td>
                     </tr>
                   ) : null}
-                  {supportTickets.map((ticket, index) => (
+                  {filteredSupportTickets.map((ticket, index) => (
                     <tr key={index} className="hover:bg-gray-50/50 transition-colors">
                       <td className="px-6 py-4 font-mono font-bold text-teal-700">{ticket.ticketId}</td>
                       <td className="px-6 py-4">
@@ -492,12 +553,28 @@ export default function AdminDashboard() {
 
       case 'joinees':
         const joineeTickets = tickets.filter(t => t.source !== 'Dashboard');
+        const filteredJoinees = joineeTickets.filter(t => 
+          t.customerName?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+          t.ticketId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          t.email?.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
         return (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200 bg-gray-50/50 flex justify-between items-center">
               <h3 className="text-lg font-bold text-gray-900">New Joinees (Leads & Enquiries)</h3>
               <div className="flex gap-3 items-center">
-                <span className="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">New Leads</span>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                  <input 
+                    type="text" 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search leads..." 
+                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
+                  />
+                </div>
+                <span className="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full hidden sm:inline-flex">New Leads</span>
               </div>
             </div>
             <div className="overflow-x-auto">
@@ -519,14 +596,14 @@ export default function AdminDashboard() {
                         {dbError}
                       </td>
                     </tr>
-                  ) : joineeTickets.length === 0 ? (
+                  ) : filteredJoinees.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
-                        No new leads or enquiries found. When someone fills out the contact or join form, it will appear here.
+                        No new leads or enquiries found matching search.
                       </td>
                     </tr>
                   ) : null}
-                  {joineeTickets.map((ticket, index) => (
+                  {filteredJoinees.map((ticket, index) => (
                     <tr key={index} className="hover:bg-gray-50/50 transition-colors">
                       <td className="px-6 py-4 font-mono font-bold text-teal-700">{ticket.ticketId}</td>
                       <td className="px-6 py-4">
