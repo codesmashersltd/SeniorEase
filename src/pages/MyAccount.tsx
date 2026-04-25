@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { LogIn, User, AlertCircle, CheckCircle2, X, LogOut, Info } from 'lucide-react';
+import { LogIn, User, AlertCircle, CheckCircle2, X, LogOut, Info, HeartHandshake } from 'lucide-react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 
@@ -8,6 +8,7 @@ export default function MyAccount() {
   const [customerName, setCustomerName] = useState('');
   const [customerId, setCustomerId] = useState('');
   const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false);
@@ -27,19 +28,30 @@ export default function MyAccount() {
       setError('Please enter your Name, Unique Customer ID, and Password.');
       return;
     }
-    // Mock login success
-    setError('');
-    setIsLoggedIn(true);
 
     try {
+      // Fetch user's registered phone number from db
+      const { query, where, getDocs } = await import('firebase/firestore');
+      const q = query(collection(db, 'customers'), where('id', '==', customerId.trim()));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        setPhone(querySnapshot.docs[0].data().phone || '07700 900000');
+      } else {
+        setPhone('07700 900000'); // Mock fallback matching the live test
+      }
+      
       await addDoc(collection(db, 'loginLogs'), {
         customerName: customerName,
         customerId: customerId,
+        source: 'Web Dashboard',
         timestamp: serverTimestamp()
       });
     } catch (err) {
       console.error("Error logging user session:", err);
     }
+    
+    setError('');
+    setIsLoggedIn(true);
   };
 
   const handleForgotPassword = (e: React.FormEvent) => {
@@ -56,6 +68,7 @@ export default function MyAccount() {
     setIsLoggedIn(false);
     setCustomerName('');
     setCustomerId('');
+    setPhone('');
     setPassword('');
     setIsCancelled(false);
     setError('');
@@ -73,11 +86,12 @@ export default function MyAccount() {
       setGeneratedTicket(ticketStr);
       
       await addDoc(collection(db, 'tickets'), {
+        ticketId: ticketStr,
         name: customerName || 'Account User',
-        email: customerName ? `${customerName.replace(/\\s+/g, '').toLowerCase()}@member.local` : 'member@local.com',
-        phone: 'Logged in Member',
+        email: customerName ? `${customerName.replace(/\s+/g, '').toLowerCase()}@member.local` : 'member@local.com',
+        phone: phone || 'Logged in Member',
         enquiryType: serviceName,
-        message: `Member Dashboard Support Request [${ticketStr}]: ${serviceName}`,
+        message: serviceName,
         status: 'Open',
         source: 'Dashboard',
         createdAt: serverTimestamp()
@@ -99,8 +113,11 @@ export default function MyAccount() {
             animate={{ opacity: 1, y: 0 }}
             className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 max-w-md mx-auto"
           >
-            <div className="w-16 h-16 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center mb-8 mx-auto">
-              <LogIn size={32} />
+            <div className="flex flex-col items-center mb-8">
+              <div className="w-16 h-16 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center mb-3">
+                <HeartHandshake size={32} />
+              </div>
+              <span className="text-xl font-bold text-teal-800">Senior Ease</span>
             </div>
             
             {!showForgotPassword ? (

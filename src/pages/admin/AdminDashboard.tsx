@@ -37,9 +37,11 @@ export default function AdminDashboard() {
   const [isChangingPassword, setIsChangingPassword] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     setSearchQuery('');
+    setSelectedItems(new Set());
   }, [activeTab]);
 
   useEffect(() => {
@@ -63,16 +65,30 @@ export default function AdminDashboard() {
           const ticketsData: any[] = [];
           querySnapshot.forEach((doc) => {
             const data = doc.data();
+            let parsedTicketId = data.ticketId;
+            let parsedMessage = data.message || '';
+            const ticketMatch = parsedMessage.match(/\[(TKT-\d+)\]/);
+            
+            if (!parsedTicketId && ticketMatch) {
+              parsedTicketId = ticketMatch[1];
+            }
+            if (!parsedTicketId) {
+              parsedTicketId = `TKT-${doc.id.substring(0, 6).toUpperCase()}`;
+            }
+
+            parsedMessage = parsedMessage.replace(/^Member (?:Dashboard Support|App) Request \[(TKT-\d+)\]:\s*/, '');
+
             ticketsData.push({
               id: doc.id,
-              ticketId: `TKT-${doc.id.substring(0, 6).toUpperCase()}`,
+              ticketId: parsedTicketId,
               customerName: data.name,
               email: data.email,
+              phone: data.phone || 'N/A',
               service: data.enquiryType,
               status: data.status,
               source: data.source || 'Contact Us',
-              date: data.createdAt?.toDate().toLocaleDateString() || 'Just now',
-              message: data.message
+              date: data.createdAt?.toDate().toLocaleString() || 'Just now',
+              message: parsedMessage
             });
           });
           setTickets(ticketsData);
@@ -104,6 +120,8 @@ export default function AdminDashboard() {
               id: doc.id,
               customerName: data.customerName || 'Unknown',
               customerId: data.customerId || '---',
+              source: data.source || 'Web Dashboard',
+              action: data.action || 'Login',
               dateStr: data.timestamp?.toDate().toLocaleString() || 'Just now',
               timestamp: data.timestamp
             });
@@ -129,6 +147,38 @@ export default function AdminDashboard() {
     auth.signOut();
     localStorage.removeItem('isAdminLoggedIn');
     navigate('/admin');
+  };
+
+  const toggleSelection = (id: string) => {
+    const newSet = new Set(selectedItems);
+    if (newSet.has(id)) {
+      newSet.delete(id);
+    } else {
+      newSet.add(id);
+    }
+    setSelectedItems(newSet);
+  };
+
+  const toggleSelectAll = (ids: string[]) => {
+    if (selectedItems.size === ids.length && ids.length > 0) {
+      setSelectedItems(new Set());
+    } else {
+      setSelectedItems(new Set(ids));
+    }
+  };
+
+  const handleBulkDelete = async (colName: string) => {
+    if (selectedItems.size === 0) return;
+    if (window.confirm(`Are you sure you want to delete ${selectedItems.size} selected records? This cannot be undone.`)) {
+      try {
+        const promises = Array.from(selectedItems).map(id => deleteDoc(doc(db, colName, id)));
+        await Promise.all(promises);
+        setSelectedItems(new Set());
+      } catch (error: any) {
+        console.error("Bulk delete error:", error);
+        alert(`Failed to delete some records: ${error.message}`);
+      }
+    }
   };
 
   const handleDeleteDoc = async (colName: string, docId: string) => {
@@ -246,9 +296,46 @@ export default function AdminDashboard() {
           { title: "New Joinee Closed", value: closedJoinee, icon: <CheckCircle2 size={24} className="text-gray-500" /> },
         ];
 
+        const handleAddLiveTestRecord = async () => {
+          try {
+            const demoCustomerId = `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+            // Add to customers
+            import('firebase/firestore').then(async ({ collection, addDoc }) => {
+              await addDoc(collection(db, 'customers'), {
+                id: demoCustomerId,
+                name: 'Live Test User',
+                email: 'testuser@member.local',
+                phone: '07700 900000',
+                plan: 'Plus SaaS',
+                joinDate: new Date().toLocaleDateString()
+              });
+              // Add to renewals
+              await addDoc(collection(db, 'renewals'), {
+                name: 'Live Test User',
+                customerId: demoCustomerId,
+                plan: 'Plus SaaS',
+                amount: '£17.99',
+                renewalDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+                status: 'Pending'
+              });
+              alert('Live test Customer and Renewal plan generated successfully!');
+            });
+          } catch (e: any) {
+            alert(`Error adding live test data: ${e.message}`);
+          }
+        };
+
         return (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900">Dashboard Overview</h2>
+            <div className="flex justify-between items-center flex-wrap gap-4">
+              <h2 className="text-2xl font-bold text-gray-900">Dashboard Overview</h2>
+              <button
+                onClick={handleAddLiveTestRecord}
+                className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium shadow transition-colors flex items-center gap-2 text-sm"
+              >
+                <Users size={16} /> Create Live Test Customer & Renewal
+              </button>
+            </div>
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                {statCards.map((stat, i) => (
                  <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex items-center justify-between">
@@ -274,39 +361,79 @@ export default function AdminDashboard() {
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
               <h3 className="text-lg font-bold text-gray-900">Customer Login Activity</h3>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                <input 
-                  type="text" 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search logs..." 
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
-                />
+              <div className="flex items-center space-x-3">
+                {selectedItems.size > 0 && (
+                  <button 
+                    onClick={() => handleBulkDelete('loginLogs')}
+                    className="bg-red-50 text-red-600 hover:bg-red-100 flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                  >
+                    <Trash2 size={16} className="mr-2" /> Delete Selected ({selectedItems.size})
+                  </button>
+                )}
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                  <input 
+                    type="text" 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search logs..." 
+                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
+                  />
+                </div>
               </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 text-xs uppercase tracking-wider">
+                    <th className="px-6 py-4 w-12">
+                      <input 
+                        type="checkbox" 
+                        checked={filteredLogs.length > 0 && selectedItems.size === filteredLogs.length}
+                        onChange={() => toggleSelectAll(filteredLogs.map(l => l.id))}
+                        className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                      />
+                    </th>
                     <th className="px-6 py-4 font-medium">Customer Name</th>
                     <th className="px-6 py-4 font-medium">Customer ID</th>
+                    <th className="px-6 py-4 font-medium">Action</th>
+                    <th className="px-6 py-4 font-medium">Platform / Source</th>
                     <th className="px-6 py-4 font-medium">Time Logged In (Local)</th>
+                    <th className="px-6 py-4 font-medium text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 text-sm">
                   {filteredLogs.length === 0 ? (
                      <tr>
-                       <td colSpan={3} className="px-6 py-8 text-center text-gray-500">
+                       <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
                          No customer login logs found.
                        </td>
                      </tr>
                   ) : null}
                   {filteredLogs.map((log) => (
                     <tr key={log.id} className="hover:bg-gray-50/50 transition-colors">
+                      <td className="px-6 py-4">
+                        <input 
+                          type="checkbox" 
+                          checked={selectedItems.has(log.id)}
+                          onChange={() => toggleSelection(log.id)}
+                          className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                        />
+                      </td>
                       <td className="px-6 py-4 font-bold text-gray-900">{log.customerName}</td>
                       <td className="px-6 py-4 font-mono text-gray-600">{log.customerId}</td>
+                      <td className="px-6 py-4 text-gray-600">{log.action || 'Login'}</td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${log.source === 'Mobile App' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}`}>
+                          {log.source || 'Web Dashboard'}
+                        </span>
+                      </td>
                       <td className="px-6 py-4 text-gray-500">{log.dateStr}</td>
+                      <td className="px-6 py-4 text-right">
+                        <button onClick={() => handleDeleteDoc('loginLogs', log.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors" title="Delete Log">
+                          <Trash2 size={18} />
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -325,21 +452,39 @@ export default function AdminDashboard() {
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
               <h3 className="text-lg font-bold text-gray-900">Live Customers</h3>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                <input 
-                  type="text" 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search customers..." 
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
-                />
+              <div className="flex items-center space-x-3">
+                {selectedItems.size > 0 && (
+                  <button 
+                    onClick={() => handleBulkDelete('customers')}
+                    className="bg-red-50 text-red-600 hover:bg-red-100 flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                  >
+                    <Trash2 size={16} className="mr-2" /> Delete Selected ({selectedItems.size})
+                  </button>
+                )}
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                  <input 
+                    type="text" 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search customers..." 
+                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
+                  />
+                </div>
               </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 text-xs uppercase tracking-wider">
+                    <th className="px-6 py-4 w-12">
+                      <input 
+                        type="checkbox" 
+                        checked={filteredCustomers.length > 0 && selectedItems.size === filteredCustomers.length}
+                        onChange={() => toggleSelectAll(filteredCustomers.map(c => c.id))}
+                        className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                      />
+                    </th>
                     <th className="px-6 py-4 font-medium">Customer ID</th>
                     <th className="px-6 py-4 font-medium">Name</th>
                     <th className="px-6 py-4 font-medium">Contact</th>
@@ -351,13 +496,21 @@ export default function AdminDashboard() {
                 <tbody className="divide-y divide-gray-100 text-sm">
                   {filteredCustomers.length === 0 ? (
                      <tr>
-                       <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
+                       <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
                          No customers found matching search.
                        </td>
                      </tr>
                   ) : null}
                   {filteredCustomers.map((customer) => (
                     <tr key={customer.id} className="hover:bg-gray-50/50 transition-colors">
+                      <td className="px-6 py-4">
+                        <input 
+                          type="checkbox" 
+                          checked={selectedItems.has(customer.id)}
+                          onChange={() => toggleSelection(customer.id)}
+                          className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                        />
+                      </td>
                       <td className="px-6 py-4 font-mono text-teal-700 font-medium">{customer.id}</td>
                       <td className="px-6 py-4 font-bold text-gray-900">{customer.name}</td>
                       <td className="px-6 py-4">
@@ -392,21 +545,39 @@ export default function AdminDashboard() {
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200 bg-gray-50/50 flex justify-between items-center">
               <h3 className="text-lg font-bold text-gray-900">Upcoming Renewals & Invoices</h3>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                <input 
-                  type="text" 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search renewals..." 
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
-                />
+              <div className="flex items-center space-x-3">
+                {selectedItems.size > 0 && (
+                  <button 
+                    onClick={() => handleBulkDelete('renewals')}
+                    className="bg-red-50 text-red-600 hover:bg-red-100 flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                  >
+                    <Trash2 size={16} className="mr-2" /> Delete Selected ({selectedItems.size})
+                  </button>
+                )}
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                  <input 
+                    type="text" 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search renewals..." 
+                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
+                  />
+                </div>
               </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 text-xs uppercase tracking-wider">
+                    <th className="px-6 py-4 w-12">
+                      <input 
+                        type="checkbox" 
+                        checked={filteredRenewals.length > 0 && selectedItems.size === filteredRenewals.length}
+                        onChange={() => toggleSelectAll(filteredRenewals.map(r => r.id))}
+                        className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                      />
+                    </th>
                     <th className="px-6 py-4 font-medium">Customer Info</th>
                     <th className="px-6 py-4 font-medium">Plan</th>
                     <th className="px-6 py-4 font-medium">Amount</th>
@@ -418,13 +589,21 @@ export default function AdminDashboard() {
                 <tbody className="divide-y divide-gray-100 text-sm">
                   {filteredRenewals.length === 0 ? (
                      <tr>
-                       <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
+                       <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
                          No renewals found matching search.
                        </td>
                      </tr>
                   ) : null}
-                  {filteredRenewals.map((renewal, index) => (
-                    <tr key={index} className="hover:bg-gray-50/50 transition-colors">
+                  {filteredRenewals.map((renewal) => (
+                    <tr key={renewal.id} className="hover:bg-gray-50/50 transition-colors">
+                      <td className="px-6 py-4">
+                        <input 
+                          type="checkbox" 
+                          checked={selectedItems.has(renewal.id)}
+                          onChange={() => toggleSelection(renewal.id)}
+                          className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                        />
+                      </td>
                       <td className="px-6 py-4">
                         <div className="font-bold text-gray-900">{renewal.name}</div>
                         <div className="font-mono text-xs text-gray-500 mt-0.5">{renewal.customerId}</div>
@@ -472,53 +651,92 @@ export default function AdminDashboard() {
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200 bg-gray-50/50 flex justify-between items-center">
               <h3 className="text-lg font-bold text-gray-900">Support Tickets</h3>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                <input 
-                  type="text" 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search tickets..." 
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
-                />
+              <div className="flex items-center space-x-3">
+                {selectedItems.size > 0 && (
+                  <button 
+                    onClick={() => handleBulkDelete('tickets')}
+                    className="bg-red-50 text-red-600 hover:bg-red-100 flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                  >
+                    <Trash2 size={16} className="mr-2" /> Delete Selected ({selectedItems.size})
+                  </button>
+                )}
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                  <input 
+                    type="text" 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search tickets..." 
+                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
+                  />
+                </div>
               </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 text-xs uppercase tracking-wider">
+                    <th className="px-6 py-4 w-12">
+                      <input 
+                        type="checkbox" 
+                        checked={filteredSupportTickets.length > 0 && selectedItems.size === filteredSupportTickets.length}
+                        onChange={() => toggleSelectAll(filteredSupportTickets.map(t => t.id))}
+                        className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                      />
+                    </th>
                     <th className="px-6 py-4 font-medium">Ticket ID</th>
                     <th className="px-6 py-4 font-medium">Customer</th>
+                    <th className="px-6 py-4 font-medium">Contact</th>
                     <th className="px-6 py-4 font-medium">Service Requested</th>
-                    <th className="px-6 py-4 font-medium">Date</th>
-                    <th className="px-6 py-4 font-medium">Status</th>
-                    <th className="px-6 py-4 font-medium text-right">Actions</th>
+                    <th className="px-6 py-4 font-medium">Date & Time</th>
+                    <th className="px-6 py-4 font-medium">Status / Action</th>
+                    <th className="px-6 py-4 font-medium text-right">Delete</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 text-sm">
                   {dbError ? (
                     <tr>
-                      <td colSpan={6} className="px-6 py-8 text-center text-red-500 font-medium">
+                      <td colSpan={7} className="px-6 py-8 text-center text-red-500 font-medium">
                         {dbError}
                       </td>
                     </tr>
                   ) : filteredSupportTickets.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
+                      <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
                         No support tickets found matching search.
                       </td>
                     </tr>
                   ) : null}
-                  {filteredSupportTickets.map((ticket, index) => (
-                    <tr key={index} className="hover:bg-gray-50/50 transition-colors">
+                  {filteredSupportTickets.map((ticket) => (
+                    <tr key={ticket.id} className="hover:bg-gray-50/50 transition-colors">
+                      <td className="px-6 py-4">
+                        <input 
+                          type="checkbox" 
+                          checked={selectedItems.has(ticket.id)}
+                          onChange={() => toggleSelection(ticket.id)}
+                          className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                        />
+                      </td>
                       <td className="px-6 py-4 font-mono font-bold text-teal-700">{ticket.ticketId}</td>
                       <td className="px-6 py-4">
                         <div className="font-bold text-gray-900">{ticket.customerName}</div>
                         <div className="font-mono text-xs text-gray-500 mt-0.5">{ticket.email}</div>
                       </td>
+                      <td className="px-6 py-4 text-gray-700 font-medium whitespace-nowrap">
+                        {(() => {
+                           if (!ticket.phone || ticket.phone === 'Logged in Member App' || ticket.phone === 'Logged in Member' || ticket.phone === 'N/A') {
+                             const customer = customers.find(c => c.name?.toLowerCase().trim() === ticket.customerName?.toLowerCase().trim());
+                             if (customer && customer.phone) return customer.phone;
+                             return 'N/A';
+                           }
+                           return ticket.phone;
+                        })()}
+                      </td>
                       <td className="px-6 py-4 text-gray-700">
                         <div className="font-medium">{ticket.service}</div>
-                        <div className="text-xs text-gray-500 mt-1 max-w-xs truncate">{ticket.message}</div>
+                        {ticket.message && ticket.message !== ticket.service && (
+                          <div className="text-xs text-gray-500 mt-1 max-w-xs truncate">{ticket.message}</div>
+                        )}
                       </td>
                       <td className="px-6 py-4 text-gray-500">
                         <div>{ticket.date}</div>
@@ -568,7 +786,15 @@ export default function AdminDashboard() {
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200 bg-gray-50/50 flex justify-between items-center">
               <h3 className="text-lg font-bold text-gray-900">New Joinees (Leads & Enquiries)</h3>
-              <div className="flex gap-3 items-center">
+              <div className="flex items-center space-x-3">
+                {selectedItems.size > 0 && (
+                  <button 
+                    onClick={() => handleBulkDelete('tickets')}
+                    className="bg-red-50 text-red-600 hover:bg-red-100 flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                  >
+                    <Trash2 size={16} className="mr-2" /> Delete Selected ({selectedItems.size})
+                  </button>
+                )}
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                   <input 
@@ -586,10 +812,19 @@ export default function AdminDashboard() {
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 text-xs uppercase tracking-wider">
+                    <th className="px-6 py-4 w-12">
+                      <input 
+                        type="checkbox" 
+                        checked={filteredJoinees.length > 0 && selectedItems.size === filteredJoinees.length}
+                        onChange={() => toggleSelectAll(filteredJoinees.map(t => t.id))}
+                        className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                      />
+                    </th>
                     <th className="px-6 py-4 font-medium">Enquiry ID</th>
                     <th className="px-6 py-4 font-medium">Customer</th>
+                    <th className="px-6 py-4 font-medium">Contact</th>
                     <th className="px-6 py-4 font-medium">Details</th>
-                    <th className="px-6 py-4 font-medium">Date / Source</th>
+                    <th className="px-6 py-4 font-medium">Date & Time / Source</th>
                     <th className="px-6 py-4 font-medium">Status</th>
                     <th className="px-6 py-4 font-medium text-right">Actions</th>
                   </tr>
@@ -597,27 +832,40 @@ export default function AdminDashboard() {
                 <tbody className="divide-y divide-gray-100 text-sm">
                   {dbError ? (
                     <tr>
-                      <td colSpan={6} className="px-6 py-8 text-center text-red-500 font-medium">
+                      <td colSpan={7} className="px-6 py-8 text-center text-red-500 font-medium">
                         {dbError}
                       </td>
                     </tr>
                   ) : filteredJoinees.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
+                      <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
                         No new leads or enquiries found matching search.
                       </td>
                     </tr>
                   ) : null}
-                  {filteredJoinees.map((ticket, index) => (
-                    <tr key={index} className="hover:bg-gray-50/50 transition-colors">
+                  {filteredJoinees.map((ticket) => (
+                    <tr key={ticket.id} className="hover:bg-gray-50/50 transition-colors">
+                      <td className="px-6 py-4">
+                        <input 
+                          type="checkbox" 
+                          checked={selectedItems.has(ticket.id)}
+                          onChange={() => toggleSelection(ticket.id)}
+                          className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                        />
+                      </td>
                       <td className="px-6 py-4 font-mono font-bold text-teal-700">{ticket.ticketId}</td>
                       <td className="px-6 py-4">
                         <div className="font-bold text-gray-900">{ticket.customerName}</div>
                         <div className="font-mono text-xs text-gray-500 mt-0.5">{ticket.email}</div>
                       </td>
+                      <td className="px-6 py-4 text-gray-700 font-medium whitespace-nowrap">
+                        {ticket.phone}
+                      </td>
                       <td className="px-6 py-4 text-gray-700">
                         <div className="font-medium">{ticket.service}</div>
-                        <div className="text-xs text-gray-500 mt-1 max-w-xs truncate">{ticket.message}</div>
+                        {ticket.message && ticket.message !== ticket.service && (
+                           <div className="text-xs text-gray-500 mt-1 max-w-xs truncate">{ticket.message}</div>
+                        )}
                       </td>
                       <td className="px-6 py-4 text-gray-500">
                         <div>{ticket.date}</div>
@@ -1006,15 +1254,23 @@ export default function AdminDashboard() {
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
             </button>
             <div className="h-8 w-px bg-gray-200"></div>
-            <button 
-              onClick={() => setActiveTab('adminProfile')}
-              className="flex items-center gap-3 hover:bg-gray-50 p-2 rounded-xl transition-colors cursor-pointer"
-            >
-              <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-700 font-bold text-sm">
-                A
-              </div>
-              <span className="text-sm font-bold text-gray-700">Admin User</span>
-            </button>
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => setActiveTab('adminProfile')}
+                className="flex items-center gap-3 hover:bg-gray-50 p-2 rounded-xl transition-colors cursor-pointer mr-2"
+              >
+                <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-700 font-bold text-sm">
+                  A
+                </div>
+                <span className="text-sm font-bold text-gray-700">Admin User</span>
+              </button>
+              <button 
+                onClick={handleLogout}
+                className="flex items-center gap-2 text-sm text-red-600 hover:bg-red-50 font-medium px-3 py-2 rounded-lg transition-colors border border-red-100"
+              >
+                <LogOut size={16} /> Logout
+              </button>
+            </div>
           </div>
         </header>
 

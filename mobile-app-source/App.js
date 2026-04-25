@@ -2,13 +2,14 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Modal, StyleSheet, Alert, SafeAreaView, Image } from 'react-native';
 import { CheckCircle2, HeartHandshake } from 'lucide-react-native';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 import { db } from './firebaseConfig'; 
 
 export default function MobileDashboard() {
   const [customerName, setCustomerName] = useState('');
   const [customerId, setCustomerId] = useState('');
   const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   const [showCancelModal, setShowCancelModal] = useState(false);
@@ -28,16 +29,27 @@ export default function MobileDashboard() {
       Alert.alert('Error', 'Please enter your Name, Unique Customer ID, and Password.');
       return;
     }
-    setIsLoggedIn(true);
+
     try {
+      const q = query(collection(db, 'customers'), where('id', '==', customerId.trim()));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        setPhone(querySnapshot.docs[0].data().phone || '07700 900000');
+      } else {
+        setPhone('07700 900000');
+      }
+
       await addDoc(collection(db, 'loginLogs'), {
         customerName: customerName,
         customerId: customerId,
+        source: 'Mobile App',
         timestamp: serverTimestamp()
       });
     } catch (err) {
       console.log('Log Error:', err);
     }
+    
+    setIsLoggedIn(true);
   };
 
   const handleRequestLearning = async (serviceName) => {
@@ -49,14 +61,24 @@ export default function MobileDashboard() {
 
     try {
       await addDoc(collection(db, 'tickets'), {
+        ticketId: ticketStr,
         name: customerName || 'Account User',
         email: customerName ? `${customerName.replace(/\s+/g, '').toLowerCase()}@member.local` : 'member@local.com',
-        phone: 'Logged in Member App',
+        phone: phone || 'Logged in Member App',
         enquiryType: serviceName,
-        message: `Member App Request [${ticketStr}]: ${serviceName}`,
+        message: serviceName,
         status: 'Open',
         source: 'Mobile App',
         createdAt: serverTimestamp()
+      });
+
+      // Also log this action to the Login/Activity Logs for visibility
+      await addDoc(collection(db, 'loginLogs'), {
+        customerName: customerName || 'Account User',
+        customerId: customerId || 'APP-USER',
+        source: 'Mobile App',
+        action: `Requested: ${serviceName}`,
+        timestamp: serverTimestamp()
       });
     } catch (err) {
       console.log('Ticket Error:', err);

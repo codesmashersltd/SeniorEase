@@ -39,7 +39,7 @@ export default function Layout() {
                 </div>
                 <div>
                   <span className="font-bold text-2xl tracking-tight text-gray-900 block leading-none">SeniorEase</span>
-                  <span className="text-xs text-gray-500 font-medium tracking-wide uppercase">SaaS Platform</span>
+                  <span className="text-xs text-gray-500 font-medium tracking-wide border px-1.5 rounded bg-gray-50">DiGITAL LEARNING</span>
                 </div>
               </Link>
             </div>
@@ -129,9 +129,6 @@ export default function Layout() {
                 </div>
                 <span className="font-bold text-2xl tracking-tight text-white">SeniorEase</span>
               </Link>
-              <p className="text-gray-400 text-lg mb-6 max-w-md leading-relaxed">
-                Senior Ease provides a software platform with friendly digital support tracking and everyday technology tools for senior citizens in the UK.
-              </p>
               <p className="text-gray-500 text-sm max-w-md">
                 SeniorEase is a Software as a Service (SaaS) monthly subscription platform providing non-medical digital assistance tools and everyday admin support. Platform tools include smartphone learning resources, communication support, secure portal guidance, scam awareness tracking, and a support ticketing system.
               </p>
@@ -162,7 +159,7 @@ export default function Layout() {
                 ))}
                 <li>
                   <Link to="/mobile-app" className="text-gray-400 hover:text-white transition-colors">
-                    Mobile App Guide
+                    Mobile App
                   </Link>
                 </li>
                 <li>
@@ -229,7 +226,6 @@ export default function Layout() {
             <p>&copy; {new Date().getFullYear()} SeniorEase. All rights reserved.</p>
             <div className="max-w-2xl text-xs text-gray-400 text-center md:text-right space-y-2">
               <p>Monthly SaaS plans renew automatically until cancelled. Please review our legal and software billing policies before subscribing.</p>
-              <p>Senior Ease provides a software platform with friendly digital support tracking and everyday technology tools for senior citizens in the UK.</p>
             </div>
           </div>
         </div>
