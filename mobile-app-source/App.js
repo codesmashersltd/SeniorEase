@@ -1,4 +1,5 @@
 // App.js
+import 'react-native-get-random-values';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Modal, StyleSheet, Alert, SafeAreaView, Image } from 'react-native';
 import { CheckCircle2, HeartHandshake } from 'lucide-react-native';
