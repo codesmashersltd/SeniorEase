@@ -724,8 +724,11 @@ export default function AdminDashboard() {
                       </td>
                       <td className="px-6 py-4 text-gray-700 font-medium whitespace-nowrap">
                         {(() => {
-                           if (!ticket.phone || ticket.phone === 'Logged in Member App' || ticket.phone === 'Logged in Member' || ticket.phone === 'N/A') {
-                             const customer = customers.find(c => c.name?.toLowerCase().trim() === ticket.customerName?.toLowerCase().trim());
+                           if (!ticket.phone || ticket.phone.includes('Logged in') || ticket.phone === 'N/A') {
+                             const customer = customers.find(c => 
+                               c.name?.toLowerCase().trim() === ticket.customerName?.toLowerCase().trim() ||
+                               (c.email && ticket.email && c.email.toLowerCase().trim() === ticket.email.toLowerCase().trim())
+                             );
                              if (customer && customer.phone) return customer.phone;
                              return 'N/A';
                            }
@@ -859,7 +862,17 @@ export default function AdminDashboard() {
                         <div className="font-mono text-xs text-gray-500 mt-0.5">{ticket.email}</div>
                       </td>
                       <td className="px-6 py-4 text-gray-700 font-medium whitespace-nowrap">
-                        {ticket.phone}
+                        {(() => {
+                           if (!ticket.phone || ticket.phone.includes('Logged in') || ticket.phone === 'N/A') {
+                             const customer = customers.find(c => 
+                               c.name?.toLowerCase().trim() === ticket.customerName?.toLowerCase().trim() ||
+                               (c.email && ticket.email && c.email.toLowerCase().trim() === ticket.email.toLowerCase().trim())
+                             );
+                             if (customer && customer.phone) return customer.phone;
+                             return 'N/A';
+                           }
+                           return ticket.phone;
+                        })()}
                       </td>
                       <td className="px-6 py-4 text-gray-700">
                         <div className="font-medium">{ticket.service}</div>
