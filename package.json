@@ -6,10 +6,10 @@
   "main": "server.ts",
   "scripts": {
     "dev": "tsx server.ts",
-    "start": "node --import tsx server.ts",
-    "build": "vite build",
+    "build": "vite build && tsc --project tsconfig.server.json",
+    "start": "NODE_ENV=production node dist-server/server.js",
     "preview": "vite preview",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist dist-server",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
