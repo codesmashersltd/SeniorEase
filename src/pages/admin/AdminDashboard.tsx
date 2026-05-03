@@ -33,7 +33,8 @@ import {
   Lock,
   Plus,
   ArrowUpRight,
-  ArrowDownRight
+  ArrowDownRight,
+  Key
 } from 'lucide-react';
 import { auth, db } from '../../lib/firebase';
 import { 
@@ -337,7 +338,10 @@ export default function AdminDashboard() {
                                 {t.name?.[0] || 'U'}
                               </div>
                               <div>
-                                <p className="font-bold text-gray-900 truncate max-w-[200px]">{t.subject || t.enquiryType}</p>
+                                <p className="font-bold text-gray-900 truncate max-w-[200px]">
+                                  <span className="text-teal-600 mr-2">{t.ticketId || '#TKT'}</span>
+                                  {t.subject || t.enquiryType}
+                                </p>
                                 <p className="text-xs text-gray-500">{t.email} • {t.source}</p>
                               </div>
                             </div>
@@ -439,9 +443,11 @@ export default function AdminDashboard() {
                             {activeTab === 'tickets' ? 'Identity' : 'Details'}
                           </th>
                           <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">
-                            {activeTab === 'renewals' ? 'Renewal Date' : 'Status'}
+                            {activeTab === 'tickets' ? 'Source' : (activeTab === 'renewals' ? 'Renewal Date' : 'Status')}
                           </th>
-                          <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Date</th>
+                          <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">
+                            {activeTab === 'tickets' ? 'Status' : 'Date'}
+                          </th>
                           <th className="px-6 py-4 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Actions</th>
                         </tr>
                       </thead>
@@ -466,7 +472,7 @@ export default function AdminDashboard() {
                               <td className="px-6 py-4 whitespace-nowrap">
                                 {activeTab === 'tickets' ? (
                                   <span className="text-xs font-mono font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded">
-                                    #{1000 + idx}
+                                    {item.ticketId || `TKT-${1000 + idx}`}
                                   </span>
                                 ) : (
                                   <div className="flex items-center gap-3">
@@ -494,6 +500,27 @@ export default function AdminDashboard() {
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap">
                                 {activeTab === 'tickets' ? (
+                                  <span className={`text-[10px] font-black px-2 py-1 rounded-lg uppercase ${
+                                    item.source === 'Mobile' ? 'bg-purple-50 text-purple-600' : 'bg-blue-50 text-blue-600'
+                                  }`}>
+                                    {item.source || 'Web'}
+                                  </span>
+                                ) : activeTab === 'renewals' ? (
+                                  <span className="text-xs font-bold text-gray-700">
+                                    {item.expiryDate ? new Date(item.expiryDate).toLocaleDateString() : 'Next Month'}
+                                  </span>
+                                ) : item.status ? (
+                                  <span className={`px-2 py-1 text-[10px] font-black rounded-lg uppercase ${
+                                    item.status === 'Open' ? 'bg-orange-50 text-orange-600' : 'bg-emerald-50 text-emerald-600'
+                                  }`}>
+                                    {item.status}
+                                  </span>
+                                ) : (
+                                  <span className="text-gray-300 text-xs">—</span>
+                                )}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                {activeTab === 'tickets' ? (
                                   <select 
                                     value={item.status || 'Open'}
                                     onChange={(e) => updateTicketStatus(item.id, e.target.value)}
@@ -509,24 +536,13 @@ export default function AdminDashboard() {
                                     <option value="Pending">Pending</option>
                                     <option value="Closed">Closed</option>
                                   </select>
-                                ) : activeTab === 'renewals' ? (
-                                  <span className="text-xs font-bold text-gray-700">
-                                    {item.expiryDate ? new Date(item.expiryDate).toLocaleDateString() : 'Next Month'}
-                                  </span>
-                                ) : item.status ? (
-                                  <span className={`px-2 py-1 text-[10px] font-black rounded-lg uppercase ${
-                                    item.status === 'Open' ? 'bg-orange-50 text-orange-600' : 'bg-emerald-50 text-emerald-600'
-                                  }`}>
-                                    {item.status}
-                                  </span>
                                 ) : (
-                                  <span className="text-gray-300 text-xs">—</span>
+                                  <span className="text-xs text-gray-500 font-medium">
+                                    {item.createdAt?.seconds || item.timestamp?.seconds 
+                                      ? new Date((item.createdAt?.seconds || item.timestamp?.seconds) * 1000).toLocaleDateString()
+                                      : 'Today'}
+                                  </span>
                                 )}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500 font-medium">
-                                {item.createdAt?.seconds || item.timestamp?.seconds 
-                                  ? new Date((item.createdAt?.seconds || item.timestamp?.seconds) * 1000).toLocaleDateString()
-                                  : 'Today'}
                               </td>
                               <td className="px-6 py-4 text-right whitespace-nowrap">
                                 <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

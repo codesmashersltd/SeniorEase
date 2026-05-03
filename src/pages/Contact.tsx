@@ -17,14 +17,16 @@ export default function Contact() {
     const formData = new FormData(form);
     
     try {
+      const ticketId = `TKT-${Math.floor(100000 + Math.random() * 900000)}`;
       const ticketPayload = {
+        ticketId,
         name: (formData.get('name') as string) || 'No Name',
         email: (formData.get('email') as string) || '',
         phone: (formData.get('phone') as string) || '',
         enquiryType: (formData.get('enquiryType') as string) || 'General',
         message: (formData.get('message') as string) || 'No Message',
         status: 'Open',
-        source: 'Contact Us',
+        source: 'Web',
         createdAt: serverTimestamp()
       };
       console.log('Sending Contact Ticket:', ticketPayload);

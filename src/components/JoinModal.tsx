@@ -29,17 +29,19 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
     setIsSubmitting(true);
 
     try {
+      const ticketId = `TKT-${Math.floor(100000 + Math.random() * 900000)}`;
       const newId = `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
       setCustomerId(newId);
 
       const ticketPayload = {
+        ticketId,
         name: userName,
         email: userEmail,
         phone: userPhone,
         enquiryType: plan ? `Selected Plan: ${plan.name}` : 'Book Intro Call',
         message: plan ? `User wants to purchase ${plan.name} at ${plan.price}` : 'Intro call requested',
         status: 'Open',
-        source: 'Join Now',
+        source: 'Web',
         createdAt: serverTimestamp()
       };
       console.log('Attempting to add ticket:', ticketPayload);

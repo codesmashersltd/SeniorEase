@@ -116,7 +116,7 @@ export default function MyAccount() {
         enquiryType: serviceName,
         message: serviceName,
         status: 'Open',
-        source: 'Dashboard',
+        source: 'Web',
         createdAt: serverTimestamp()
       });
 
