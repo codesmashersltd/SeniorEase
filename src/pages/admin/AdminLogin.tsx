@@ -20,14 +20,19 @@ export default function AdminLogin() {
     setError(null);
 
     try {
-      // Check Firestore for custom credentials
-      const credsDoc = await getDoc(doc(db, 'admin_settings', 'credentials'));
+      // Hardcoded defaults
       let validUser = 'Administrator';
       let validPass = '123456';
 
-      if (credsDoc.exists()) {
-        validUser = credsDoc.data().username;
-        validPass = credsDoc.data().password;
+      try {
+        // Attempt to check Firestore for custom credentials
+        const credsDoc = await getDoc(doc(db, 'admin_settings', 'credentials'));
+        if (credsDoc.exists()) {
+          validUser = credsDoc.data().username || validUser;
+          validPass = credsDoc.data().password || validPass;
+        }
+      } catch (dbErr) {
+        console.warn("Note: Using default credentials as remote settings couldn't be loaded yet.", dbErr);
       }
 
       if (email === validUser && password === validPass) {
@@ -37,7 +42,8 @@ export default function AdminLogin() {
         setError('Invalid credentials. Please try again.');
       }
     } catch (err: any) {
-      setError('System Error: Could not verify credentials.');
+      console.error('Login logic error:', err);
+      setError('An error occurred during authentication.');
     } finally {
       setLoading(false);
     }
