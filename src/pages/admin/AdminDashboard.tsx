@@ -79,7 +79,8 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const unsubAuth = auth.onAuthStateChanged((user) => {
-      if (!user) navigate('/admin');
+      const hasLocalAccess = localStorage.getItem('admin_access') === 'true';
+      if (!user && !hasLocalAccess) navigate('/admin');
     });
 
     // Fetch primary credentials if exists
@@ -132,6 +133,7 @@ export default function AdminDashboard() {
 
   const handleLogout = async () => {
     await auth.signOut();
+    localStorage.removeItem('admin_access');
     navigate('/admin');
   };
 
