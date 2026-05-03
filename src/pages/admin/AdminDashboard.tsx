@@ -96,7 +96,14 @@ export default function AdminDashboard() {
     fetchCreds();
 
     const unsubTickets = onSnapshot(collection(db, 'tickets'), (snap) => {
-      setData(prev => ({ ...prev, tickets: snap.docs.map(d => ({ id: d.id, ...d.data() })) }));
+      const tickets = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      // Sort by newest first
+      tickets.sort((a: any, b: any) => {
+        const timeA = a.createdAt?.seconds || 0;
+        const timeB = b.createdAt?.seconds || 0;
+        return timeB - timeA;
+      });
+      setData(prev => ({ ...prev, tickets }));
     }, (err) => {
       console.error('Tickets sync error:', err.code, err.message);
       if (err.code === 'permission-denied') {
@@ -502,11 +509,22 @@ export default function AdminDashboard() {
                           <th className="px-6 py-4">
                             <button 
                               onClick={() => {
-                                const currentItems = data[activeTab === 'renewals' ? 'customers' : activeTab as keyof typeof data].filter(item => 
-                                  item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                  item.name?.toLowerCase().includes(searchTerm.toLowerCase())
-                                );
-                                toggleSelectAll(currentItems);
+                                  const search = searchTerm.toLowerCase();
+                                  const currentItems = data[activeTab === 'renewals' ? 'customers' : activeTab as keyof typeof data].filter((item: any) => {
+                                    if (activeTab === 'tickets' && ticketFilter !== 'all') {
+                                      if (item.status !== ticketFilter) return false;
+                                    }
+                                    if (!searchTerm) return true;
+                                    return (
+                                      item.email?.toLowerCase().includes(search) ||
+                                      item.name?.toLowerCase().includes(search) ||
+                                      item.customerName?.toLowerCase().includes(search) ||
+                                      item.subject?.toLowerCase().includes(search) ||
+                                      item.ticketId?.toLowerCase().includes(search) ||
+                                      item.id?.toLowerCase().includes(search)
+                                    );
+                                  });
+                                  toggleSelectAll(currentItems);
                               }}
                               className="text-gray-400 hover:text-teal-600 transition-colors"
                             >
@@ -540,12 +558,20 @@ export default function AdminDashboard() {
                             }
                             return true;
                           })
-                          .filter((item: any) => 
-                            item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            item.customerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            item.subject?.toLowerCase().includes(searchTerm.toLowerCase())
-                          )
+                          .filter((item: any) => {
+                            if (!searchTerm) return true;
+                            const search = searchTerm.toLowerCase();
+                            return (
+                              item.email?.toLowerCase().includes(search) ||
+                              item.name?.toLowerCase().includes(search) ||
+                              item.customerName?.toLowerCase().includes(search) ||
+                              item.subject?.toLowerCase().includes(search) ||
+                              item.message?.toLowerCase().includes(search) ||
+                              item.ticketId?.toLowerCase().includes(search) ||
+                              item.status?.toLowerCase().includes(search) ||
+                              item.phone?.includes(search)
+                            );
+                          })
                           .map((item: any, idx: number) => (
                             <tr key={item.id} className={`group transition-colors ${selectedIds.includes(item.id) ? 'bg-teal-50/50' : 'hover:bg-gray-50/50'}`}>
                               <td className="px-6 py-4">
