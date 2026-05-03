@@ -94,18 +94,30 @@ export default function AdminDashboard() {
 
     const unsubTickets = onSnapshot(collection(db, 'tickets'), (snap) => {
       setData(prev => ({ ...prev, tickets: snap.docs.map(d => ({ id: d.id, ...d.data() })) }));
+    }, (err) => {
+      console.error('Tickets sync error:', err);
+      setLoading(false);
     });
 
     const unsubLogs = onSnapshot(collection(db, 'loginLogs'), (snap) => {
       setData(prev => ({ ...prev, logs: snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a: any, b: any) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0)) }));
+    }, (err) => {
+      console.error('Logs sync error:', err);
+      setLoading(false);
     });
 
     const unsubCustomers = onSnapshot(collection(db, 'customers'), (snap) => {
       setData(prev => ({ ...prev, customers: snap.docs.map(d => ({ id: d.id, ...d.data() })) }));
+    }, (err) => {
+      console.error('Customers sync error:', err);
+      setLoading(false);
     });
 
     const unsubAdmins = onSnapshot(collection(db, 'admins'), (snap) => {
       setData(prev => ({ ...prev, admins: snap.docs.map(d => ({ id: d.id, ...d.data() })) }));
+      setLoading(false);
+    }, (err) => {
+      console.error('Admins sync error:', err);
       setLoading(false);
     });
 
@@ -202,7 +214,7 @@ export default function AdminDashboard() {
 
   const stats = [
     { label: 'Total Customers', value: data.customers.length, trend: '+12%', icon: Users, color: 'text-teal-600', bg: 'bg-teal-50' },
-    { label: 'Pending Tickets', value: data.tickets.filter((t: any) => t.status === 'Open').length, trend: '-5%', icon: AlertCircle, color: 'text-orange-600', bg: 'bg-orange-50' },
+    { label: 'Pending Tickets', value: data.tickets.filter((t: any) => t.status === 'Open' || t.status === 'Pending' || t.status === 'In Progress').length, trend: '-5%', icon: AlertCircle, color: 'text-orange-600', bg: 'bg-orange-100/50' },
     { label: 'Recent Logins', value: data.logs.length, trend: '+18%', icon: Shield, color: 'text-blue-600', bg: 'bg-blue-50' },
     { label: 'System Uptime', value: '99.9%', trend: 'Stable', icon: Activity, color: 'text-emerald-600', bg: 'bg-emerald-50' },
   ];
@@ -313,20 +325,24 @@ export default function AdminDashboard() {
                     <p className="text-gray-500">Global Infrastructure & Pipeline Management</p>
                   </div>
 
-                  {/* Stats Grid */}
+                  {/* Stats Grid - Matching the screenshot exactly */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {stats.map((stat) => (
-                      <div key={stat.label} className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-start justify-between mb-4">
-                          <div className={`${stat.bg} ${stat.color} p-3 rounded-xl`}>
+                      <div key={stat.label} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all group">
+                        <div className="flex items-start justify-between mb-6">
+                          <div className={`${stat.bg} ${stat.color} p-3 rounded-2xl transition-transform group-hover:scale-110`}>
                             <stat.icon className="h-6 w-6" />
                           </div>
-                          <span className={`text-xs font-bold px-2 py-1 rounded-full ${stat.trend.startsWith('+') ? 'bg-green-50 text-green-600' : stat.trend === 'Stable' ? 'bg-blue-50 text-blue-600' : 'bg-red-50 text-red-600'}`}>
+                          <span className={`text-[10px] font-bold px-2 py-1 rounded-lg ${
+                            stat.trend.startsWith('+') ? 'bg-green-50 text-green-600' : 
+                            stat.trend === 'Stable' ? 'bg-blue-50 text-blue-600' : 
+                            'bg-red-50 text-red-500'
+                          }`}>
                             {stat.trend}
                           </span>
                         </div>
-                        <p className="text-gray-500 text-sm font-medium mb-1">{stat.label}</p>
-                        <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                        <p className="text-gray-400 text-sm font-semibold mb-1">{stat.label}</p>
+                        <p className="text-3xl font-extrabold text-gray-900 tracking-tight">{stat.value}</p>
                       </div>
                     ))}
                   </div>
@@ -368,22 +384,22 @@ export default function AdminDashboard() {
                     </div>
 
                     {/* Quick Updates */}
-                    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 text-sm uppercase translate-y-0 text-white/100">
-                      <h3 className="font-bold text-gray-900 mb-6 flex items-center gap-2">
+                    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 text-sm uppercase translate-y-0 text-gray-900">
+                      <h3 className="font-bold text-gray-900 mb-6 flex items-center gap-2 tracking-widest">
                         <Zap className="h-5 w-5 text-teal-600" />
                         Live Feed
                       </h3>
                       <div className="space-y-6">
                         {data.logs.slice(0, 5).map((log, i) => (
                           <div key={i} className="flex gap-4 relative">
-                            {i !== 4 && <div className="absolute left-[11px] top-7 bottom-[-15px] w-px bg-gray-100" />}
-                            <div className="h-6 w-6 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0 z-10">
-                              <div className="h-2 w-2 rounded-full bg-teal-600" />
+                            {i !== 4 && <div className="absolute left-[11px] top-7 bottom-[-22px] w-px bg-gray-100" />}
+                            <div className="h-6 w-6 rounded-full bg-teal-50 flex items-center justify-center flex-shrink-0 z-10 border border-teal-100">
+                              <div className="h-2 w-2 rounded-full bg-teal-500 animate-pulse" />
                             </div>
-                            <div>
-                                <p className="text-gray-900 font-bold leading-tight">{log.message || `Login detected: ${log.email}`}</p>
-                                <p className="text-[10px] text-gray-400 mt-1 uppercase font-mono">
-                                    {log.timestamp?.seconds ? new Date(log.timestamp.seconds * 1000).toLocaleTimeString() : 'Just now'}
+                            <div className="flex-1">
+                                <p className="text-gray-900 font-bold leading-tight line-clamp-2">{log.message || `Login: ${log.email || log.customerName}`}</p>
+                                <p className="text-[9px] text-gray-400 mt-1 uppercase font-mono font-bold tracking-tighter">
+                                    {log.timestamp?.seconds ? new Date(log.timestamp.seconds * 1000).toLocaleString('en-GB') : 'Just now'}
                                 </p>
                             </div>
                           </div>
@@ -424,30 +440,33 @@ export default function AdminDashboard() {
                     </div>
 
                     {activeTab === 'tickets' && (
-                      <div className="flex gap-4 border-b border-gray-100 -mb-6">
+                      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 -mb-2">
                         {[
-                          { id: 'all', label: 'Received' },
-                          { id: 'Open', label: 'Open' },
-                          { id: 'Pending', label: 'Pending' },
-                          { id: 'In Progress', label: 'In Progress' },
-                          { id: 'Closed', label: 'Closed' },
-                        ].map((filter) => (
-                          <button
-                            key={filter.id}
-                            onClick={() => setTicketFilter(filter.id as any)}
-                            className={`pb-4 text-xs font-bold uppercase tracking-widest transition-all relative ${
-                              ticketFilter === filter.id ? 'text-teal-600' : 'text-gray-400 hover:text-gray-600'
-                            }`}
-                          >
-                            {filter.label}
-                            <span className="ml-2 bg-gray-50 px-1.5 py-0.5 rounded-md text-[10px]">
-                              {filter.id === 'all' ? data.tickets.length : data.tickets.filter(t => t.status === filter.id).length}
-                            </span>
-                            {ticketFilter === filter.id && (
-                              <motion.div layoutId="ticket-tab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-600" />
-                            )}
-                          </button>
-                        ))}
+                          { id: 'all', label: 'Received', color: 'text-gray-600', bg: 'bg-gray-50' },
+                          { id: 'Open', label: 'Open', color: 'text-orange-600', bg: 'bg-orange-50' },
+                          { id: 'Pending', label: 'Pending', color: 'text-yellow-600', bg: 'bg-yellow-50' },
+                          { id: 'In Progress', label: 'Processing', color: 'text-blue-600', bg: 'bg-blue-50' },
+                          { id: 'Closed', label: 'Closed', color: 'text-emerald-600', bg: 'bg-emerald-50' },
+                        ].map((filter) => {
+                          const count = filter.id === 'all' ? data.tickets.length : data.tickets.filter(t => t.status === filter.id).length;
+                          return (
+                            <button
+                              key={filter.id}
+                              onClick={() => setTicketFilter(filter.id as any)}
+                              className={`p-4 rounded-2xl border text-left transition-all ${
+                                ticketFilter === filter.id 
+                                  ? 'border-teal-500 bg-teal-50/30' 
+                                  : 'border-gray-100 bg-white hover:border-gray-200'
+                              }`}
+                            >
+                              <p className={`text-[10px] font-black uppercase tracking-widest mb-1 ${filter.color}`}>{filter.label}</p>
+                              <p className="text-xl font-black text-gray-900">{count}</p>
+                              {ticketFilter === filter.id && (
+                                <motion.div layoutId="ticket-tab" className="h-1 w-8 bg-teal-600 rounded-full mt-2" />
+                              )}
+                            </button>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
@@ -515,8 +534,8 @@ export default function AdminDashboard() {
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap">
                                 {activeTab === 'tickets' ? (
-                                  <span className="text-xs font-mono font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded">
-                                    {item.ticketId || `TKT-${1000 + idx}`}
+                                  <span className="text-xs font-mono font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded inline-block min-w-[70px] text-center border border-teal-100">
+                                    {item.ticketId || `TKT-${item.id.slice(-4).toUpperCase()}`}
                                   </span>
                                 ) : (
                                   <div className="flex items-center gap-3">
@@ -545,7 +564,7 @@ export default function AdminDashboard() {
                               <td className="px-6 py-4 whitespace-nowrap">
                                 {activeTab === 'tickets' ? (
                                   <span className={`text-[10px] font-black px-2 py-1 rounded-lg uppercase ${
-                                    item.source === 'Mobile' ? 'bg-teal-50 text-teal-600' : 'bg-blue-50 text-blue-600'
+                                    item.source?.toLowerCase().includes('mobile') ? 'bg-teal-50 text-teal-600' : 'bg-blue-50 text-blue-600'
                                   }`}>
                                     {item.source || 'Web'}
                                   </span>
