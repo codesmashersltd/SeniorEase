@@ -62,6 +62,7 @@ import {
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<'overview' | 'customers' | 'renewals' | 'tickets' | 'logs' | 'system'>('overview');
+  const [ticketFilter, setTicketFilter] = useState<'all' | 'Open' | 'Pending' | 'In Progress' | 'Closed'>('all');
   const [data, setData] = useState<{
     customers: any[];
     tickets: any[];
@@ -233,23 +234,30 @@ export default function AdminDashboard() {
         <nav className="flex-1 p-4 space-y-1">
           {[
             { id: 'overview', label: 'Dashboard', icon: LayoutDashboard },
-            { id: 'customers', label: 'All Customers', icon: Users },
+            { id: 'customers', label: 'All Customers', icon: Users, badge: data.customers.length },
             { id: 'renewals', label: 'Customer Renewals', icon: RefreshCcw },
-            { id: 'tickets', label: 'Support Tickets', icon: MessageSquare },
+            { id: 'tickets', label: 'Support Tickets', icon: MessageSquare, badge: data.tickets.filter(t => t.status === 'Open').length },
             { id: 'logs', label: 'Security Logs', icon: Clock },
             { id: 'system', label: 'System Settings', icon: Settings },
           ].map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id as any)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                 activeTab === item.id 
                   ? 'bg-teal-50 text-teal-700 shadow-sm' 
                   : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
               }`}
             >
-              <item.icon className="h-5 w-5" />
-              {item.label}
+              <div className="flex items-center gap-3">
+                <item.icon className="h-5 w-5" />
+                {item.label}
+              </div>
+              {item.badge ? (
+                <span className="bg-teal-600 text-white text-[10px] px-1.5 py-0.5 rounded-full min-w-[18px]">
+                  {item.badge}
+                </span>
+              ) : null}
             </button>
           ))}
         </nav>
@@ -388,30 +396,60 @@ export default function AdminDashboard() {
 
               {(activeTab === 'customers' || activeTab === 'tickets' || activeTab === 'logs' || activeTab === 'renewals') && (
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                  <div className="p-6 border-b border-gray-100 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <h2 className="font-bold text-gray-900 text-lg">{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} List</h2>
-                      {selectedIds.length > 0 && (
-                        <div className="flex items-center gap-2 bg-red-50 text-red-600 px-3 py-1 rounded-lg animate-in fade-in slide-in-from-left-2 transition-all">
-                          <span className="text-xs font-bold">{selectedIds.length} Selected</span>
-                          <button 
-                            onClick={() => bulkDelete(activeTab === 'logs' ? 'loginLogs' : activeTab)}
-                            className="p-1 hover:bg-red-100 rounded transition-colors"
+                  <div className="p-6 border-b border-gray-100 flex flex-col gap-6">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <h2 className="font-bold text-gray-900 text-lg">{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} List</h2>
+                        {selectedIds.length > 0 && (
+                          <div className="flex items-center gap-2 bg-red-50 text-red-600 px-3 py-1 rounded-lg animate-in fade-in slide-in-from-left-2 transition-all">
+                            <span className="text-xs font-bold">{selectedIds.length} Selected</span>
+                            <button 
+                              onClick={() => bulkDelete(activeTab === 'logs' ? 'loginLogs' : activeTab)}
+                              className="p-1 hover:bg-red-100 rounded transition-colors"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex gap-2">
+                        <button className="px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50 rounded-xl transition-all border border-gray-200 flex items-center gap-2">
+                          <Filter size={16} />
+                          Filter
+                        </button>
+                        <button className="px-4 py-2 text-sm font-semibold bg-teal-600 text-white hover:bg-teal-700 rounded-xl shadow-sm shadow-teal-200 transition-all">
+                          Export CSV
+                        </button>
+                      </div>
+                    </div>
+
+                    {activeTab === 'tickets' && (
+                      <div className="flex gap-4 border-b border-gray-100 -mb-6">
+                        {[
+                          { id: 'all', label: 'Received' },
+                          { id: 'Open', label: 'Open' },
+                          { id: 'Pending', label: 'Pending' },
+                          { id: 'In Progress', label: 'In Progress' },
+                          { id: 'Closed', label: 'Closed' },
+                        ].map((filter) => (
+                          <button
+                            key={filter.id}
+                            onClick={() => setTicketFilter(filter.id as any)}
+                            className={`pb-4 text-xs font-bold uppercase tracking-widest transition-all relative ${
+                              ticketFilter === filter.id ? 'text-teal-600' : 'text-gray-400 hover:text-gray-600'
+                            }`}
                           >
-                            <Trash2 size={14} />
+                            {filter.label}
+                            <span className="ml-2 bg-gray-50 px-1.5 py-0.5 rounded-md text-[10px]">
+                              {filter.id === 'all' ? data.tickets.length : data.tickets.filter(t => t.status === filter.id).length}
+                            </span>
+                            {ticketFilter === filter.id && (
+                              <motion.div layoutId="ticket-tab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-600" />
+                            )}
                           </button>
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex gap-2">
-                      <button className="px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50 rounded-xl transition-all border border-gray-200 flex items-center gap-2">
-                        <Filter size={16} />
-                        Filter
-                      </button>
-                      <button className="px-4 py-2 text-sm font-semibold bg-teal-600 text-white hover:bg-teal-700 rounded-xl shadow-sm shadow-teal-200 transition-all">
-                        Export CSV
-                      </button>
-                    </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   <div className="overflow-x-auto">
@@ -453,6 +491,12 @@ export default function AdminDashboard() {
                       </thead>
                       <tbody className="divide-y divide-gray-100">
                         {(activeTab === 'renewals' ? data.customers : data[activeTab as keyof typeof data])
+                          .filter((item: any) => {
+                            if (activeTab === 'tickets' && ticketFilter !== 'all') {
+                              return item.status === ticketFilter;
+                            }
+                            return true;
+                          })
                           .filter((item: any) => 
                             item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -501,7 +545,7 @@ export default function AdminDashboard() {
                               <td className="px-6 py-4 whitespace-nowrap">
                                 {activeTab === 'tickets' ? (
                                   <span className={`text-[10px] font-black px-2 py-1 rounded-lg uppercase ${
-                                    item.source === 'Mobile' ? 'bg-purple-50 text-purple-600' : 'bg-blue-50 text-blue-600'
+                                    item.source === 'Mobile' ? 'bg-teal-50 text-teal-600' : 'bg-blue-50 text-blue-600'
                                   }`}>
                                     {item.source || 'Web'}
                                   </span>
@@ -537,11 +581,18 @@ export default function AdminDashboard() {
                                     <option value="Closed">Closed</option>
                                   </select>
                                 ) : (
-                                  <span className="text-xs text-gray-500 font-medium">
-                                    {item.createdAt?.seconds || item.timestamp?.seconds 
-                                      ? new Date((item.createdAt?.seconds || item.timestamp?.seconds) * 1000).toLocaleDateString()
-                                      : 'Today'}
-                                  </span>
+                                  <div className="flex flex-col">
+                                    <span className="text-sm font-bold text-gray-900">
+                                      {item.createdAt?.seconds || item.timestamp?.seconds 
+                                        ? new Date((item.createdAt?.seconds || item.timestamp?.seconds) * 1000).toLocaleDateString('en-GB')
+                                        : 'Today'}
+                                    </span>
+                                    <span className="text-[10px] text-teal-600 font-mono font-bold uppercase tracking-wider">
+                                      {item.createdAt?.seconds || item.timestamp?.seconds 
+                                        ? new Date((item.createdAt?.seconds || item.timestamp?.seconds) * 1000).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+                                        : '00:00:00'}
+                                    </span>
+                                  </div>
                                 )}
                               </td>
                               <td className="px-6 py-4 text-right whitespace-nowrap">
