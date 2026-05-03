@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { LogIn, User, AlertCircle, CheckCircle2, X, LogOut, Info, HeartHandshake, Loader2 } from 'lucide-react';
+import { LogIn, User, AlertCircle, CheckCircle2, X, LogOut, Info, HeartHandshake, Loader2, Lock } from 'lucide-react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 
@@ -16,6 +16,11 @@ export default function MyAccount() {
   const [generatedTicket, setGeneratedTicket] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [mustChangePassword, setMustChangePassword] = useState(false);
+  const [docId, setDocId] = useState('');
 
   // Forgot Password State
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -61,7 +66,9 @@ export default function MyAccount() {
         return;
       }
 
-      const customerData = querySnapshot.docs[0].data();
+      const doc = querySnapshot.docs[0];
+      const customerData = doc.data();
+      setDocId(doc.id);
       
       // Strict password and name validation
       if (customerData.password !== password.trim()) {
@@ -78,6 +85,10 @@ export default function MyAccount() {
       }
 
       setPhone(customerData.phone || '07700 900000');
+      if (customerData.mustChangePassword) {
+        setMustChangePassword(true);
+        setShowChangePassword(true);
+      }
       
       await addDoc(collection(db, 'loginLogs'), {
         customerName: customerName,
@@ -91,6 +102,38 @@ export default function MyAccount() {
     } catch (err) {
       console.error("Error logging user session:", err);
       setError('A system error occurred. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newPassword.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { doc, updateDoc } = await import('firebase/firestore');
+      await updateDoc(doc(db, 'customers', docId), {
+        password: newPassword,
+        mustChangePassword: false,
+        updatedAt: serverTimestamp()
+      });
+      setShowChangePassword(false);
+      setMustChangePassword(false);
+      setPassword(newPassword);
+      setError('');
+      alert('Password updated successfully!');
+    } catch (err: any) {
+      console.error('Password update error:', err);
+      setError('Error updating password: ' + err.message);
     } finally {
       setLoading(false);
     }
@@ -370,7 +413,13 @@ export default function MyAccount() {
                     )}
                     
                     <div className="mt-6 pt-6 border-t border-gray-200">
-                      <h3 className="text-sm font-bold text-gray-900 mb-3">Manage Subscription</h3>
+                      <h3 className="text-sm font-bold text-gray-900 mb-3">Settings</h3>
+                      <button
+                        onClick={() => setShowChangePassword(true)}
+                        className="w-full mb-3 px-4 py-2.5 bg-gray-50 border border-gray-200 text-gray-700 rounded-xl font-bold hover:bg-gray-100 transition-colors shadow-sm text-sm"
+                      >
+                        Change Password
+                      </button>
                       <button
                         onClick={() => setShowCancelModal(true)}
                         disabled={isCancelled}
@@ -426,6 +475,82 @@ export default function MyAccount() {
           </motion.div>
         )}
       </div>
+
+      {/* Change Password Modal */}
+      <AnimatePresence>
+        {showChangePassword && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm"
+              onClick={() => !mustChangePassword && setShowChangePassword(false)}
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full"
+            >
+              {!mustChangePassword && (
+                <button 
+                  onClick={() => setShowChangePassword(false)}
+                  className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X size={24} />
+                </button>
+              )}
+              
+              <div className="w-16 h-16 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center mb-6">
+                <Lock size={32} />
+              </div>
+              
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Change Password</h3>
+              <p className="text-gray-600 mb-6 text-sm">
+                {mustChangePassword 
+                  ? 'This is your first login. Please update your temporary password to continue.' 
+                  : 'Update your account password for better security.'}
+              </p>
+              
+              <form onSubmit={handleChangePassword} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                  <input
+                    type="password"
+                    required
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-500 outline-none"
+                    placeholder="Min 6 characters"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
+                  <input
+                    type="password"
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-500 outline-none"
+                    placeholder="Repeat password"
+                  />
+                </div>
+
+                {error && <p className="text-red-500 text-sm">{error}</p>}
+                
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md disabled:opacity-50 flex items-center justify-center gap-2"
+                >
+                  {loading ? <Loader2 className="animate-spin" size={20} /> : 'Update Password'}
+                </button>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Cancel Modal */}
       <AnimatePresence>

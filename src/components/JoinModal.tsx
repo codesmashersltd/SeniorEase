@@ -49,6 +49,20 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
       // Save as lead/joinee ticket in Firestore
       await addDoc(collection(db, 'tickets'), ticketPayload);
 
+      // Save to New Joinees collection for Admin Dashboard
+      if (plan) {
+        await addDoc(collection(db, 'new_joinees'), {
+          customerId: newId,
+          name: userName,
+          email: userEmail,
+          phone: userPhone,
+          plan: plan.name,
+          price: plan.price,
+          status: 'Pending',
+          createdAt: serverTimestamp()
+        });
+      }
+
       // Call our background Stripe integration endpoint
       if (plan) {
         const response = await fetch('/api/checkout', {

@@ -33,7 +33,14 @@ service cloud.firestore {
 
     match /customers/{customerId} {
       allow read: if true;
-      allow write, delete: if isAdmin();
+      allow create: if true;
+      allow update, delete: if isAdmin();
+    }
+
+    match /new_joinees/{joineeId} {
+      allow read: if isAdmin();
+      allow create: if true;
+      allow update, delete: if isAdmin();
     }
 
     match /renewals/{renewalId} {

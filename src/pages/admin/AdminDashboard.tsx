@@ -16,6 +16,7 @@ import {
   Clock,
   CheckCircle2,
   AlertCircle,
+  UserCheck,
   MoreVertical,
   Trash2,
   ExternalLink,
@@ -61,14 +62,15 @@ import {
 } from 'recharts';
 
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'customers' | 'renewals' | 'tickets' | 'logs' | 'system'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'customers' | 'new-joinees' | 'renewals' | 'tickets' | 'logs' | 'system'>('overview');
   const [ticketFilter, setTicketFilter] = useState<'all' | 'Open' | 'Pending' | 'In Progress' | 'Closed'>('all');
   const [data, setData] = useState<{
     customers: any[];
+    newJoinees: any[];
     tickets: any[];
     logs: any[];
     admins: any[];
-  }>({ customers: [], tickets: [], logs: [], admins: [] });
+  }>({ customers: [], newJoinees: [], tickets: [], logs: [], admins: [] });
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -126,6 +128,13 @@ export default function AdminDashboard() {
       setLoading(false);
     });
 
+    const unsubNewJoinees = onSnapshot(collection(db, 'new_joinees'), (snap) => {
+      setData(prev => ({ ...prev, newJoinees: snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a: any, b: any) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)) }));
+    }, (err) => {
+      console.error('New Joinees sync error:', err);
+      setLoading(false);
+    });
+
     const unsubAdmins = onSnapshot(collection(db, 'admins'), (snap) => {
       setData(prev => ({ ...prev, admins: snap.docs.map(d => ({ id: d.id, ...d.data() })) }));
       setLoading(false);
@@ -139,6 +148,7 @@ export default function AdminDashboard() {
       unsubTickets();
       unsubLogs();
       unsubCustomers();
+      unsubNewJoinees();
       unsubAdmins();
     };
   }, [navigate]);
@@ -226,6 +236,50 @@ export default function AdminDashboard() {
     }
   };
 
+  const generateTempPassword = async (joinee: any) => {
+    const tempPass = Math.random().toString(36).substring(2, 10);
+    if (window.confirm(`Generate temporary password "${tempPass}" for ${joinee.name}?`)) {
+      try {
+        await updateDoc(doc(db, 'new_joinees', joinee.id), {
+          tempPassword: tempPass,
+          status: 'Password Generated',
+          updatedAt: serverTimestamp()
+        });
+        alert(`Temporary password generated: ${tempPass}`);
+      } catch (err: any) {
+        alert('Error generating password: ' + err.message);
+      }
+    }
+  };
+
+  const activateJoinee = async (joinee: any) => {
+    if (!joinee.tempPassword) {
+      alert('Please generate a temporary password first.');
+      return;
+    }
+    if (window.confirm(`Activate ${joinee.name} as a permanent customer?`)) {
+      try {
+        // 1. Add to customers
+        await addDoc(collection(db, 'customers'), {
+          id: joinee.customerId,
+          name: joinee.name,
+          email: joinee.email,
+          phone: joinee.phone,
+          plan: joinee.plan,
+          password: joinee.tempPassword,
+          mustChangePassword: true,
+          status: 'Active',
+          createdAt: serverTimestamp()
+        });
+        // 2. Remove from new_joinees
+        await deleteDoc(doc(db, 'new_joinees', joinee.id));
+        alert('Customer activated successfully.');
+      } catch (err: any) {
+        alert('Error activating customer: ' + err.message);
+      }
+    }
+  };
+
   const stats = [
     { label: 'Total Customers', value: data.customers.length, trend: '+12%', icon: Users, color: 'text-teal-600', bg: 'bg-teal-50' },
     { label: 'Pending Tickets', value: data.tickets.filter((t: any) => t.status === 'Open' || t.status === 'Pending' || t.status === 'In Progress').length, trend: '-5%', icon: AlertCircle, color: 'text-orange-600', bg: 'bg-orange-100/50' },
@@ -260,6 +314,7 @@ export default function AdminDashboard() {
         <nav className="flex-1 p-4 space-y-1 font-sans">
           {[
             { id: 'overview', label: 'Dashboard', icon: LayoutDashboard },
+            { id: 'new-joinees', label: 'New Joinees', icon: Plus, badge: data.newJoinees.length },
             { id: 'customers', label: 'All Customers', icon: Users, badge: data.customers.length },
             { id: 'renewals', label: 'Customer Renewals', icon: RefreshCcw },
             { id: 'tickets', label: 'Support Tickets', icon: MessageSquare, badge: data.tickets.filter(t => t.status === 'Open').length },
@@ -441,17 +496,17 @@ export default function AdminDashboard() {
                 </div>
               )}
 
-              {(activeTab === 'customers' || activeTab === 'tickets' || activeTab === 'logs' || activeTab === 'renewals') && (
+              {(activeTab === 'customers' || activeTab === 'new-joinees' || activeTab === 'tickets' || activeTab === 'logs' || activeTab === 'renewals') && (
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                   <div className="p-6 border-b border-gray-100 flex flex-col gap-6">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
-                        <h2 className="font-bold text-gray-900 text-lg">{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} List</h2>
+                        <h2 className="font-bold text-gray-900 text-lg">{activeTab === 'new-joinees' ? 'New Joinees' : activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} List</h2>
                         {selectedIds.length > 0 && (
                           <div className="flex items-center gap-2 bg-red-50 text-red-600 px-3 py-1 rounded-lg animate-in fade-in slide-in-from-left-2 transition-all">
                             <span className="text-xs font-bold">{selectedIds.length} Selected</span>
                             <button 
-                              onClick={() => bulkDelete(activeTab === 'logs' ? 'loginLogs' : activeTab)}
+                              onClick={() => bulkDelete(activeTab === 'logs' ? 'loginLogs' : (activeTab === 'new-joinees' ? 'new_joinees' : activeTab))}
                               className="p-1 hover:bg-red-100 rounded transition-colors"
                             >
                               <Trash2 size={14} />
@@ -536,22 +591,22 @@ export default function AdminDashboard() {
                             </button>
                           </th>
                           <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">
-                            {activeTab === 'tickets' ? 'Ticket #' : 'Identity'}
+                            {activeTab === 'tickets' ? 'Ticket #' : (activeTab === 'new-joinees' ? 'Unique ID' : 'Identity')}
                           </th>
                           <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">
-                            {activeTab === 'tickets' ? 'Identity' : 'Details'}
+                            {activeTab === 'tickets' ? 'Identity' : (activeTab === 'new-joinees' ? 'Registration Details' : 'Details')}
                           </th>
                           <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">
-                            {activeTab === 'tickets' ? 'Source' : (activeTab === 'renewals' ? 'Renewal Date' : 'Status')}
+                            {activeTab === 'tickets' ? 'Source' : (activeTab === 'renewals' ? 'Renewal Date' : (activeTab === 'new-joinees' ? 'Plan' : 'Status'))}
                           </th>
                           <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">
-                            {activeTab === 'tickets' ? 'Status' : 'Date'}
+                            {activeTab === 'tickets' ? 'Status' : (activeTab === 'new-joinees' ? 'Temp Pass' : 'Date')}
                           </th>
                           <th className="px-6 py-4 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Actions</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-100">
-                        {(activeTab === 'renewals' ? data.customers : data[activeTab as keyof typeof data])
+                        {(activeTab === 'renewals' ? data.customers : (activeTab === 'new-joinees' ? data.newJoinees : data[activeTab as keyof typeof data]))
                           .filter((item: any) => {
                             if (activeTab === 'tickets' && ticketFilter !== 'all') {
                               return item.status === ticketFilter;
@@ -568,6 +623,7 @@ export default function AdminDashboard() {
                               item.subject?.toLowerCase().includes(search) ||
                               item.message?.toLowerCase().includes(search) ||
                               item.ticketId?.toLowerCase().includes(search) ||
+                              item.customerId?.toLowerCase().includes(search) ||
                               item.status?.toLowerCase().includes(search) ||
                               item.phone?.includes(search)
                             );
@@ -587,6 +643,10 @@ export default function AdminDashboard() {
                                   <span className="text-xs font-mono font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded inline-block min-w-[70px] text-center border border-teal-100">
                                     {item.ticketId || `TKT-${item.id.slice(-4).toUpperCase()}`}
                                   </span>
+                                ) : activeTab === 'new-joinees' ? (
+                                  <span className="text-xs font-mono font-bold text-teal-700 bg-teal-50 px-2 py-1 rounded inline-block min-w-[70px] text-center border border-teal-100">
+                                    {item.customerId}
+                                  </span>
                                 ) : (
                                   <div className="flex items-center gap-3">
                                     <div className="h-10 w-10 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center font-bold text-sm">
@@ -595,6 +655,11 @@ export default function AdminDashboard() {
                                     <div>
                                       <p className="text-sm font-bold text-gray-900">{item.name || item.customerName || 'No Name'}</p>
                                       <p className="text-xs text-gray-500 lowercase">{item.email || 'no-email@system'}</p>
+                                      {item.id && activeTab !== 'logs' && (
+                                        <p className="text-[10px] font-mono font-bold text-teal-600 bg-teal-50 px-1 rounded inline-block mt-1 uppercase">
+                                          {item.id}
+                                        </p>
+                                      )}
                                     </div>
                                   </div>
                                 )}
@@ -604,6 +669,11 @@ export default function AdminDashboard() {
                                   <div>
                                     <p className="text-sm font-bold text-gray-900">{item.name || 'Anonymous'}</p>
                                     <p className="text-xs text-gray-500 truncate max-w-[150px]">{item.subject || item.enquiryType}</p>
+                                  </div>
+                                ) : activeTab === 'new-joinees' ? (
+                                  <div>
+                                    <p className="text-sm font-bold text-gray-900">{item.name}</p>
+                                    <p className="text-xs text-gray-500 truncate max-w-[150px]">{item.email}</p>
                                   </div>
                                 ) : (
                                   <p className="text-xs text-gray-600 font-medium truncate max-w-[200px]">
@@ -621,6 +691,10 @@ export default function AdminDashboard() {
                                 ) : activeTab === 'renewals' ? (
                                   <span className="text-xs font-bold text-gray-700">
                                     {item.expiryDate ? new Date(item.expiryDate).toLocaleDateString() : 'Next Month'}
+                                  </span>
+                                ) : activeTab === 'new-joinees' ? (
+                                  <span className="text-[10px] font-black px-2 py-1 rounded-lg bg-teal-50 text-teal-600 uppercase">
+                                    {item.plan}
                                   </span>
                                 ) : item.status ? (
                                   <span className={`px-2 py-1 text-[10px] font-black rounded-lg uppercase ${
@@ -649,6 +723,10 @@ export default function AdminDashboard() {
                                     <option value="Pending">Pending</option>
                                     <option value="Closed">Closed</option>
                                   </select>
+                                ) : activeTab === 'new-joinees' ? (
+                                  <span className="text-xs font-mono font-bold text-gray-600 bg-gray-50 px-2 py-1 rounded">
+                                    {item.tempPassword || 'Not Set'}
+                                  </span>
                                 ) : (
                                   <div className="flex flex-col">
                                     <span className="text-sm font-bold text-gray-900">
@@ -666,6 +744,24 @@ export default function AdminDashboard() {
                               </td>
                               <td className="px-6 py-4 text-right whitespace-nowrap">
                                 <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                  {activeTab === 'new-joinees' && (
+                                    <>
+                                      <button 
+                                        onClick={() => generateTempPassword(item)}
+                                        className="p-2 text-teal-600 hover:bg-teal-50 rounded-lg transition-all"
+                                        title="Generate Temporary Password"
+                                      >
+                                        <Key size={16} />
+                                      </button>
+                                      <button 
+                                        onClick={() => activateJoinee(item)}
+                                        className="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all"
+                                        title="Approve & Activate"
+                                      >
+                                        <UserCheck size={16} />
+                                      </button>
+                                    </>
+                                  )}
                                   {activeTab === 'tickets' && (
                                     <button 
                                       onClick={() => updateTicketStatus(item.id, item.status === 'Open' ? 'Closed' : 'Open')}
@@ -676,7 +772,7 @@ export default function AdminDashboard() {
                                     </button>
                                   )}
                                   <button 
-                                    onClick={() => deleteRecord(activeTab === 'logs' ? 'loginLogs' : (activeTab === 'renewals' ? 'customers' : activeTab), item.id)}
+                                    onClick={() => deleteRecord(activeTab === 'logs' ? 'loginLogs' : (activeTab === 'renewals' ? 'customers' : (activeTab === 'new-joinees' ? 'new_joinees' : activeTab)), item.id)}
                                     className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-all"
                                     title="Purge"
                                   >
