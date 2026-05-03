@@ -25,10 +25,6 @@ export default function MyAccount() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (customerName.trim() === '' || customerId.trim() === '' || password.trim() === '') {
-      setError('Please enter your Name, Unique Customer ID, and Password.');
-      return;
-    }
 
     setLoading(true);
     try {
@@ -45,6 +41,12 @@ export default function MyAccount() {
         });
         setError('');
         setIsLoggedIn(true);
+        setLoading(false);
+        return;
+      }
+
+      if (customerName.trim() === '' || customerId.trim() === '' || password.trim() === '') {
+        setError('Please enter your Name, Unique Customer ID, and Password.');
         setLoading(false);
         return;
       }
