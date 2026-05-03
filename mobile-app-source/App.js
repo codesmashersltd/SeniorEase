@@ -33,15 +33,18 @@ export default function MobileDashboard() {
     }
 
     // Handle login
-    if (customerName === 'Demo' && customerId === 'Demo123' && password === '123456') {
-      setPhone('07700 900000');
+    if (customerId.trim().toUpperCase() === 'DEMO' && password.trim() === '123456') {
+      const resolvedName = customerName.trim() || 'Demo User';
+      setCustomerName(resolvedName);
+      setCustomerId('DEMO');
+      setPhone('00000 000000');
       setPlan({ name: 'Demo Membership', status: 'Active' }); // Set demo plan
       setIsLoggedIn(true);
       
       try {
         await addDoc(collection(db, 'loginLogs'), {
-          customerName: customerName,
-          customerId: customerId,
+          customerName: resolvedName,
+          customerId: 'DEMO',
           source: 'Mobile App',
           timestamp: serverTimestamp()
         });
@@ -180,7 +183,7 @@ export default function MobileDashboard() {
           </View>
           <Text style={styles.subText}>Customer ID: {customerId}</Text>
           
-          {customerId !== 'Demo123' && (
+          {customerId !== 'DEMO' && (
             <View style={styles.planBox}>
               <Text style={styles.planTitle}>Current Plan</Text>
               <Text style={styles.planName}>{plan.name}</Text>
@@ -190,7 +193,7 @@ export default function MobileDashboard() {
             </View>
           )}
 
-          {customerId !== 'Demo123' && (
+          {customerId !== 'DEMO' && (
             <TouchableOpacity 
               style={[styles.cancelBtn, isCancelled && styles.cancelBtnDisabled]}
               disabled={isCancelled}
