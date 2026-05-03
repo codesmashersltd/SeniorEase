@@ -10,10 +10,7 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// In production, __dirname will be dist-server/, so we go up one level to find dist/
-const rootPath = process.env.NODE_ENV === "production"
-  ? path.resolve(__dirname, "..")
-  : process.cwd();
+const rootPath = process.cwd();
 
 let stripeClient: Stripe | null = null;
 function getStripe(): Stripe {
@@ -102,7 +99,7 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     // Production mode: serve built files from dist/
-    const distPath = path.resolve(rootPath, "dist");
+    const distPath = path.resolve(process.cwd(), "dist");
     console.log(`[Server] Serving static files from: ${distPath}`);
 
     // Serve static assets (JS, CSS, images, etc.)
