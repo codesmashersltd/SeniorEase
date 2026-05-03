@@ -80,7 +80,9 @@ export default function AdminDashboard() {
   useEffect(() => {
     const unsubAuth = auth.onAuthStateChanged((user) => {
       const hasLocalAccess = localStorage.getItem('admin_access') === 'true';
-      if (!user && !hasLocalAccess) navigate('/admin');
+      if (!user && !hasLocalAccess) {
+        navigate('/admin');
+      }
     });
 
     // Fetch primary credentials if exists
@@ -96,7 +98,10 @@ export default function AdminDashboard() {
     const unsubTickets = onSnapshot(collection(db, 'tickets'), (snap) => {
       setData(prev => ({ ...prev, tickets: snap.docs.map(d => ({ id: d.id, ...d.data() })) }));
     }, (err) => {
-      console.error('Tickets sync error:', err);
+      console.error('Tickets sync error:', err.code, err.message);
+      if (err.code === 'permission-denied') {
+        console.warn('Is user signed into Firebase? ', !!auth.currentUser);
+      }
       setLoading(false);
     });
 
@@ -290,7 +295,16 @@ export default function AdminDashboard() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 sticky top-0 z-10">
-          <h1 className="text-xl font-display font-bold text-gray-900 capitalize tracking-tight">{activeTab}</h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-xl font-display font-bold text-gray-900 capitalize tracking-tight">{activeTab}</h1>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="p-2 text-gray-400 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all"
+              title="Refresh Data"
+            >
+              <RefreshCcw size={16} className={loading ? 'animate-spin' : ''} />
+            </button>
+          </div>
           
           <div className="flex items-center gap-4">
             <div className="relative hidden sm:block">
@@ -310,6 +324,14 @@ export default function AdminDashboard() {
         </header>
 
         <main className="flex-1 p-8 overflow-y-auto">
+          {!auth.currentUser && localStorage.getItem('admin_access') === 'true' && (
+            <div className="mb-8 bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3 text-amber-800">
+                <AlertCircle size={20} />
+                <p className="text-sm font-medium">You are using local access. Real-time data is disabled. Please <button onClick={() => navigate('/admin')} className="underline font-bold">Sign in with Google</button> to enable Firestore.</p>
+              </div>
+            </div>
+          )}
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}

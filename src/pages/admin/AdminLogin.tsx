@@ -7,7 +7,7 @@ import { auth, db } from '../../lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 export default function AdminLogin() {
-  const [activeTab, setActiveTab] = useState<'email' | 'google'>('email');
+  const [activeTab, setActiveTab] = useState<'email' | 'google'>('google');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
