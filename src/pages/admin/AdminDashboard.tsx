@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
+  Square,
+  CheckSquare,
+  HeartHandshake,
   Users, 
   MessageSquare, 
   LayoutDashboard, 
@@ -57,7 +60,7 @@ import {
 } from 'recharts';
 
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'customers' | 'tickets' | 'logs' | 'system'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'customers' | 'renewals' | 'tickets' | 'logs' | 'system'>('overview');
   const [data, setData] = useState<{
     customers: any[];
     tickets: any[];
@@ -66,6 +69,7 @@ export default function AdminDashboard() {
   }>({ customers: [], tickets: [], logs: [], admins: [] });
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [newAdminEmail, setNewAdminEmail] = useState('');
   const [newAdminUid, setNewAdminUid] = useState('');
   const [primaryPassword, setPrimaryPassword] = useState('123456');
@@ -117,6 +121,33 @@ export default function AdminDashboard() {
     navigate('/admin');
   };
 
+  const toggleSelect = (id: string) => {
+    setSelectedIds(prev => 
+      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+    );
+  };
+
+  const toggleSelectAll = (items: any[]) => {
+    if (selectedIds.length === items.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(items.map(item => item.id));
+    }
+  };
+
+  const bulkDelete = async (col: string) => {
+    if (selectedIds.length === 0) return;
+    if (window.confirm(`Are you sure you want to delete ${selectedIds.length} records?`)) {
+      try {
+        const promises = selectedIds.map(id => deleteDoc(doc(db, col, id)));
+        await Promise.all(promises);
+        setSelectedIds([]);
+      } catch (err: any) {
+        alert('Error performing bulk delete: ' + err.message);
+      }
+    }
+  };
+
   const deleteRecord = async (col: string, id: string) => {
     if (window.confirm('Are you sure you want to delete this record?')) {
       try {
@@ -127,8 +158,7 @@ export default function AdminDashboard() {
     }
   };
 
-  const updateTicketStatus = async (id: string, currentStatus: string) => {
-    const newStatus = currentStatus === 'Open' ? 'In Progress' : 'Resolved';
+  const updateTicketStatus = async (id: string, newStatus: string) => {
     try {
       await updateDoc(doc(db, 'tickets', id), { status: newStatus });
     } catch (err: any) {
@@ -193,7 +223,7 @@ export default function AdminDashboard() {
         <div className="p-6 border-b border-gray-100">
           <div className="flex items-center gap-3">
             <div className="bg-teal-600 p-2 rounded-lg shadow-sm">
-              <LifeBuoy className="h-5 w-5 text-white" />
+              <HeartHandshake className="h-5 w-5 text-white" />
             </div>
             <span className="font-bold text-xl text-gray-900 tracking-tight">Senior Ease</span>
           </div>
@@ -202,7 +232,8 @@ export default function AdminDashboard() {
         <nav className="flex-1 p-4 space-y-1">
           {[
             { id: 'overview', label: 'Dashboard', icon: LayoutDashboard },
-            { id: 'customers', label: 'Customers', icon: Users },
+            { id: 'customers', label: 'All Customers', icon: Users },
+            { id: 'renewals', label: 'Customer Renewals', icon: RefreshCcw },
             { id: 'tickets', label: 'Support Tickets', icon: MessageSquare },
             { id: 'logs', label: 'Security Logs', icon: Clock },
             { id: 'system', label: 'System Settings', icon: Settings },
@@ -266,6 +297,13 @@ export default function AdminDashboard() {
             >
               {activeTab === 'overview' && (
                 <div className="space-y-8">
+                  {/* Company Logo Display (as requested) */}
+                  <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center justify-center text-center">
+                    <HeartHandshake className="h-16 w-16 text-teal-600 mb-4" />
+                    <h2 className="text-2xl font-bold text-gray-900">Senior Ease Admin</h2>
+                    <p className="text-gray-500">Global Infrastructure & Pipeline Management</p>
+                  </div>
+
                   {/* Stats Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {stats.map((stat) => (
@@ -344,10 +382,23 @@ export default function AdminDashboard() {
                 </div>
               )}
 
-              {(activeTab === 'customers' || activeTab === 'tickets' || activeTab === 'logs') && (
+              {(activeTab === 'customers' || activeTab === 'tickets' || activeTab === 'logs' || activeTab === 'renewals') && (
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                   <div className="p-6 border-b border-gray-100 flex items-center justify-between">
-                    <h2 className="font-bold text-gray-900 text-lg">{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} List</h2>
+                    <div className="flex items-center gap-4">
+                      <h2 className="font-bold text-gray-900 text-lg">{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} List</h2>
+                      {selectedIds.length > 0 && (
+                        <div className="flex items-center gap-2 bg-red-50 text-red-600 px-3 py-1 rounded-lg animate-in fade-in slide-in-from-left-2 transition-all">
+                          <span className="text-xs font-bold">{selectedIds.length} Selected</span>
+                          <button 
+                            onClick={() => bulkDelete(activeTab === 'logs' ? 'loginLogs' : activeTab)}
+                            className="p-1 hover:bg-red-100 rounded transition-colors"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      )}
+                    </div>
                     <div className="flex gap-2">
                       <button className="px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50 rounded-xl transition-all border border-gray-200 flex items-center gap-2">
                         <Filter size={16} />
@@ -363,41 +414,106 @@ export default function AdminDashboard() {
                     <table className="w-full">
                       <thead>
                         <tr className="bg-gray-50/50 text-left">
-                          <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Identity</th>
-                          <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Details</th>
-                          <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Status</th>
+                          <th className="px-6 py-4">
+                            <button 
+                              onClick={() => {
+                                const currentItems = data[activeTab === 'renewals' ? 'customers' : activeTab as keyof typeof data].filter(item => 
+                                  item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                  item.name?.toLowerCase().includes(searchTerm.toLowerCase())
+                                );
+                                toggleSelectAll(currentItems);
+                              }}
+                              className="text-gray-400 hover:text-teal-600 transition-colors"
+                            >
+                              {selectedIds.length > 0 && selectedIds.length === data[activeTab === 'renewals' ? 'customers' : activeTab as keyof typeof data].length ? (
+                                <CheckSquare size={18} />
+                              ) : (
+                                <Square size={18} />
+                              )}
+                            </button>
+                          </th>
+                          <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">
+                            {activeTab === 'tickets' ? 'Ticket #' : 'Identity'}
+                          </th>
+                          <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">
+                            {activeTab === 'tickets' ? 'Identity' : 'Details'}
+                          </th>
+                          <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">
+                            {activeTab === 'renewals' ? 'Renewal Date' : 'Status'}
+                          </th>
                           <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Date</th>
                           <th className="px-6 py-4 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Actions</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-100">
-                        {data[activeTab as keyof typeof data]
+                        {(activeTab === 'renewals' ? data.customers : data[activeTab as keyof typeof data])
                           .filter((item: any) => 
                             item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             item.customerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             item.subject?.toLowerCase().includes(searchTerm.toLowerCase())
                           )
-                          .map((item: any) => (
-                            <tr key={item.id} className="group hover:bg-gray-50/50 transition-colors">
+                          .map((item: any, idx: number) => (
+                            <tr key={item.id} className={`group transition-colors ${selectedIds.includes(item.id) ? 'bg-teal-50/50' : 'hover:bg-gray-50/50'}`}>
+                              <td className="px-6 py-4">
+                                <button 
+                                  onClick={() => toggleSelect(item.id)}
+                                  className={`${selectedIds.includes(item.id) ? 'text-teal-600' : 'text-gray-300'} hover:text-teal-500 transition-colors`}
+                                >
+                                  {selectedIds.includes(item.id) ? <CheckSquare size={18} /> : <Square size={18} />}
+                                </button>
+                              </td>
                               <td className="px-6 py-4 whitespace-nowrap">
-                                <div className="flex items-center gap-3">
-                                  <div className="h-10 w-10 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center font-bold text-sm">
-                                    {(item.name || item.customerName || item.email || 'U')[0].toUpperCase()}
+                                {activeTab === 'tickets' ? (
+                                  <span className="text-xs font-mono font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded">
+                                    #{1000 + idx}
+                                  </span>
+                                ) : (
+                                  <div className="flex items-center gap-3">
+                                    <div className="h-10 w-10 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center font-bold text-sm">
+                                      {(item.name || item.customerName || item.email || 'U')[0].toUpperCase()}
+                                    </div>
+                                    <div>
+                                      <p className="text-sm font-bold text-gray-900">{item.name || item.customerName || 'No Name'}</p>
+                                      <p className="text-xs text-gray-500 lowercase">{item.email || 'no-email@system'}</p>
+                                    </div>
                                   </div>
-                                  <div>
-                                    <p className="text-sm font-bold text-gray-900">{item.name || item.customerName || 'No Name'}</p>
-                                    <p className="text-xs text-gray-500 lowercase">{item.email || 'no-email@system'}</p>
-                                  </div>
-                                </div>
+                                )}
                               </td>
                               <td className="px-6 py-4">
-                                <p className="text-xs text-gray-600 font-medium truncate max-w-[200px]">
-                                  {item.message || item.subject || item.source || '-'}
-                                </p>
+                                {activeTab === 'tickets' ? (
+                                  <div>
+                                    <p className="text-sm font-bold text-gray-900">{item.name || 'Anonymous'}</p>
+                                    <p className="text-xs text-gray-500 truncate max-w-[150px]">{item.subject || item.enquiryType}</p>
+                                  </div>
+                                ) : (
+                                  <p className="text-xs text-gray-600 font-medium truncate max-w-[200px]">
+                                    {item.message || item.subject || item.source || '-'}
+                                  </p>
+                                )}
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap">
-                                {item.status ? (
+                                {activeTab === 'tickets' ? (
+                                  <select 
+                                    value={item.status || 'Open'}
+                                    onChange={(e) => updateTicketStatus(item.id, e.target.value)}
+                                    className={`px-2 py-1 text-[10px] font-black rounded-lg uppercase cursor-pointer border-none focus:ring-0 ${
+                                      item.status === 'Open' ? 'bg-orange-50 text-orange-600' : 
+                                      item.status === 'In Progress' ? 'bg-blue-50 text-blue-600' :
+                                      item.status === 'Pending' ? 'bg-yellow-50 text-yellow-600' :
+                                      'bg-emerald-50 text-emerald-600'
+                                    }`}
+                                  >
+                                    <option value="Open">Open</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Closed">Closed</option>
+                                  </select>
+                                ) : activeTab === 'renewals' ? (
+                                  <span className="text-xs font-bold text-gray-700">
+                                    {item.expiryDate ? new Date(item.expiryDate).toLocaleDateString() : 'Next Month'}
+                                  </span>
+                                ) : item.status ? (
                                   <span className={`px-2 py-1 text-[10px] font-black rounded-lg uppercase ${
                                     item.status === 'Open' ? 'bg-orange-50 text-orange-600' : 'bg-emerald-50 text-emerald-600'
                                   }`}>
@@ -416,15 +532,15 @@ export default function AdminDashboard() {
                                 <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                   {activeTab === 'tickets' && (
                                     <button 
-                                      onClick={() => updateTicketStatus(item.id, item.status)}
+                                      onClick={() => updateTicketStatus(item.id, item.status === 'Open' ? 'Closed' : 'Open')}
                                       className="p-2 text-teal-600 hover:bg-teal-50 rounded-lg transition-all"
-                                      title="Update Status"
+                                      title="Toggle Status"
                                     >
                                       <RefreshCcw size={16} />
                                     </button>
                                   )}
                                   <button 
-                                    onClick={() => deleteRecord(activeTab === 'logs' ? 'loginLogs' : activeTab, item.id)}
+                                    onClick={() => deleteRecord(activeTab === 'logs' ? 'loginLogs' : (activeTab === 'renewals' ? 'customers' : activeTab), item.id)}
                                     className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-all"
                                     title="Purge"
                                   >
