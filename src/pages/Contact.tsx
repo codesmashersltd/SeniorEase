@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, Clock, MessageSquare, ArrowRight, CheckCircle2, X } from 'lucide-react';
-import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
@@ -9,7 +9,7 @@ export default function Contact() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsSubmitting(true);
     

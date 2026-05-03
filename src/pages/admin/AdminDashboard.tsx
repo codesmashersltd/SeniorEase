@@ -1,1302 +1,326 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   Users, 
-  CreditCard, 
-  Ticket, 
+  MessageSquare, 
+  LayoutDashboard, 
   LogOut, 
   Search, 
-  Bell,
+  Filter, 
+  ChevronRight,
+  User,
+  Clock,
   CheckCircle2,
   AlertCircle,
-  Shield,
-  HeartHandshake,
-  Download,
+  MoreVertical,
   Trash2,
-  LayoutDashboard,
-  FileText
+  ExternalLink,
+  Loader2,
+  Calendar,
+  Settings
 } from 'lucide-react';
-import { motion } from 'motion/react';
-import { collection, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
-import { onAuthStateChanged, updatePassword } from 'firebase/auth';
-import { db, auth } from '../../lib/firebase';
+import { auth, db } from '../../lib/firebase';
+import { collection, query, orderBy, getDocs, deleteDoc, doc, updateDoc, onSnapshot, limit } from 'firebase/firestore';
 
 export default function AdminDashboard() {
+  const [activeTab, setActiveTab] = useState<'overview' | 'customers' | 'tickets' | 'logs'>('overview');
+  const [data, setData] = useState<{
+    customers: any[];
+    tickets: any[];
+    logs: any[];
+  }>({ customers: [], tickets: [], logs: [] });
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [tickets, setTickets] = useState<any[]>([]);
-  const [customers, setCustomers] = useState<any[]>([]);
-  const [renewals, setRenewals] = useState<any[]>([]);
-  const [loginLogs, setLoginLogs] = useState<any[]>([]);
-  const [dbError, setDbError] = useState<string | null>(null);
-
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordMsg, setPasswordMsg] = useState('');
-  const [passwordErr, setPasswordErr] = useState('');
-  const [isChangingPassword, setIsChangingPassword] = useState(false);
-
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    setSearchQuery('');
-    setSelectedItems(new Set());
-  }, [activeTab]);
+    const unsubAuth = auth.onAuthStateChanged((user) => {
+      if (!user) navigate('/admin');
+    });
 
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem('isAdminLoggedIn');
-    if (!isLoggedIn) {
-      navigate('/admin');
-      return;
-    }
-    
-    let unsubscribeTickets: (() => void) | null = null;
-    let unsubscribeCustomers: (() => void) | null = null;
-    let unsubscribeRenewals: (() => void) | null = null;
-    let unsubscribeLogs: (() => void) | null = null;
+    // Real-time listeners for stats
+    const unsubTickets = onSnapshot(collection(db, 'tickets'), (snap) => {
+      setData(prev => ({ ...prev, tickets: snap.docs.map(d => ({ id: d.id, ...d.data() })) }));
+    });
 
-    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setDbError(null);
-        // Fetch Tickets
-        const qT = query(collection(db, 'tickets'), orderBy('createdAt', 'desc'));
-        unsubscribeTickets = onSnapshot(qT, (querySnapshot) => {
-          const ticketsData: any[] = [];
-          querySnapshot.forEach((doc) => {
-            const data = doc.data();
-            let parsedTicketId = data.ticketId;
-            let parsedMessage = data.message || '';
-            const ticketMatch = parsedMessage.match(/\[(TKT-\d+)\]/);
-            
-            if (!parsedTicketId && ticketMatch) {
-              parsedTicketId = ticketMatch[1];
-            }
-            if (!parsedTicketId) {
-              parsedTicketId = `TKT-${doc.id.substring(0, 6).toUpperCase()}`;
-            }
+    const unsubLogs = onSnapshot(collection(db, 'loginLogs'), (snap) => {
+      setData(prev => ({ ...prev, logs: snap.docs.map(d => ({ id: d.id, ...d.data() })) }));
+    });
 
-            parsedMessage = parsedMessage.replace(/^Member (?:Dashboard Support|App) Request \[(TKT-\d+)\]:\s*/, '');
-
-            ticketsData.push({
-              id: doc.id,
-              ticketId: parsedTicketId,
-              customerName: data.name,
-              email: data.email,
-              phone: data.phone || 'N/A',
-              service: data.enquiryType,
-              status: data.status,
-              source: data.source || 'Contact Us',
-              date: data.createdAt?.toDate().toLocaleString() || 'Just now',
-              message: parsedMessage
-            });
-          });
-          setTickets(ticketsData);
-        }, (error) => setDbError(error.message));
-
-        // Fetch Customers
-        const qC = query(collection(db, 'customers'));
-        unsubscribeCustomers = onSnapshot(qC, (querySnapshot) => {
-          const customersData: any[] = [];
-          querySnapshot.forEach((doc) => customersData.push({ id: doc.id, ...doc.data() }));
-          setCustomers(customersData);
-        }, (error) => console.error("Customers Error:", error));
-
-        // Fetch Renewals
-        const qR = query(collection(db, 'renewals'));
-        unsubscribeRenewals = onSnapshot(qR, (querySnapshot) => {
-          const renewalsData: any[] = [];
-          querySnapshot.forEach((doc) => renewalsData.push({ id: doc.id, ...doc.data() }));
-          setRenewals(renewalsData);
-        }, (error) => console.error("Renewals Error:", error));
-
-        // Fetch Login Logs
-        const qL = query(collection(db, 'loginLogs'), orderBy('timestamp', 'desc'));
-        unsubscribeLogs = onSnapshot(qL, (querySnapshot) => {
-          const logsData: any[] = [];
-          querySnapshot.forEach((doc) => {
-            const data = doc.data();
-            logsData.push({
-              id: doc.id,
-              customerName: data.customerName || 'Unknown',
-              customerId: data.customerId || '---',
-              source: data.source || 'Web Dashboard',
-              action: data.action || 'Login',
-              dateStr: data.timestamp?.toDate().toLocaleString() || 'Just now',
-              timestamp: data.timestamp
-            });
-          });
-          setLoginLogs(logsData);
-        }, (error) => console.error("Login Logs Error:", error));
-
-      } else {
-        navigate('/admin');
-      }
+    const unsubCustomers = onSnapshot(collection(db, 'customers'), (snap) => {
+      setData(prev => ({ ...prev, customers: snap.docs.map(d => ({ id: d.id, ...d.data() })) }));
+      setLoading(false);
     });
 
     return () => {
-      unsubscribeAuth();
-      if (unsubscribeTickets) unsubscribeTickets();
-      if (unsubscribeCustomers) unsubscribeCustomers();
-      if (unsubscribeRenewals) unsubscribeRenewals();
-      if (unsubscribeLogs) unsubscribeLogs();
+      unsubAuth();
+      unsubTickets();
+      unsubLogs();
+      unsubCustomers();
     };
   }, [navigate]);
 
-  const handleLogout = () => {
-    auth.signOut();
-    localStorage.removeItem('isAdminLoggedIn');
+  const handleLogout = async () => {
+    await auth.signOut();
     navigate('/admin');
   };
 
-  const toggleSelection = (id: string) => {
-    const newSet = new Set(selectedItems);
-    if (newSet.has(id)) {
-      newSet.delete(id);
-    } else {
-      newSet.add(id);
-    }
-    setSelectedItems(newSet);
-  };
-
-  const toggleSelectAll = (ids: string[]) => {
-    if (selectedItems.size === ids.length && ids.length > 0) {
-      setSelectedItems(new Set());
-    } else {
-      setSelectedItems(new Set(ids));
-    }
-  };
-
-  const handleBulkDelete = async (colName: string) => {
-    if (selectedItems.size === 0) return;
-    if (window.confirm(`Are you sure you want to delete ${selectedItems.size} selected records? This cannot be undone.`)) {
+  const deleteRecord = async (col: string, id: string) => {
+    if (window.confirm('Are you sure you want to delete this record?')) {
       try {
-        const promises = Array.from(selectedItems).map(id => deleteDoc(doc(db, colName, id)));
-        await Promise.all(promises);
-        setSelectedItems(new Set());
-      } catch (error: any) {
-        console.error("Bulk delete error:", error);
-        alert(`Failed to delete some records: ${error.message}`);
+        await deleteDoc(doc(db, col, id));
+      } catch (err) {
+        alert('Failed to delete: ' + err);
       }
     }
   };
 
-  const handleDeleteDoc = async (colName: string, docId: string) => {
-    if (window.confirm('Are you sure you want to delete this record? This cannot be undone.')) {
-      try {
-        await deleteDoc(doc(db, colName, docId));
-      } catch (error: any) {
-        console.error("Error deleting document:", error);
-        alert(`Failed to delete: ${error.message}`);
-      }
-    }
-  };
+  const stats = [
+    { label: 'Total Customers', value: data.customers.length, icon: Users, color: 'text-blue-600', bg: 'bg-blue-50' },
+    { label: 'Support Tickets', value: data.tickets.length, icon: MessageSquare, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+    { label: 'Recent Logins', value: data.logs.length, icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50' },
+    { label: 'Open Tickets', value: data.tickets.filter((c: any) => c.status === 'Open').length, icon: AlertCircle, color: 'text-red-500', bg: 'bg-red-50' },
+  ];
 
-  const handleStatusChange = async (docId: string, newStatus: string) => {
-    try {
-      await updateDoc(doc(db, 'tickets', docId), { status: newStatus });
-    } catch (error: any) {
-      console.error("Error updating status:", error);
-      alert(`Failed to update status: ${error.message}`);
-    }
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="h-12 w-12 text-indigo-600 animate-spin" />
+          <p className="text-gray-500 font-medium">Loading Dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
-  const handleChangePassword = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setPasswordMsg('');
-    setPasswordErr('');
-    
-    if (newPassword !== confirmPassword) {
-      setPasswordErr("Passwords do not match.");
-      return;
-    }
-    
-    if (newPassword.length < 6) {
-      setPasswordErr("Password should be at least 6 characters.");
-      return;
-    }
-    
-    const user = auth.currentUser;
-    if (!user) {
-      setPasswordErr("No admin authenticated.");
-      return;
-    }
+  return (
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* Sidebar */}
+      <div className="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col shrink-0">
+        <div className="p-6">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="bg-indigo-600 p-2 rounded-lg">
+              <LayoutDashboard className="h-6 w-6 text-white" />
+            </div>
+            <span className="font-bold text-xl text-gray-900 tracking-tight">Senior Ease</span>
+          </div>
 
-    setIsChangingPassword(true);
-    try {
-      await updatePassword(user, newPassword);
-      setPasswordMsg('Password has been successfully updated!');
-      setNewPassword('');
-      setConfirmPassword('');
-    } catch (error: any) {
-      console.error("Error changing password:", error);
-      if (error.code === 'auth/requires-recent-login') {
-        setPasswordErr("For security, please log out and log back in before changing your password.");
-      } else {
-        setPasswordErr(error.message || "Failed to update password.");
-      }
-    } finally {
-      setIsChangingPassword(false);
-    }
-  };
-
-  const handleExportCSV = () => {
-    const joineeTickets = tickets.filter(t => t.source !== 'Dashboard');
-    if (joineeTickets.length === 0) {
-      alert("No new joinees to export.");
-      return;
-    }
-
-    const headers = ["Enquiry ID", "Customer Name", "Email", "Details", "Message", "Source", "Status", "Date"];
-    const csvContent = [
-      headers.join(","),
-      ...joineeTickets.map(t => [
-        `"${t.ticketId}"`,
-        `"${t.customerName?.replace(/"/g, '""') || ''}"`,
-        `"${t.email?.replace(/"/g, '""') || ''}"`,
-        `"${t.service?.replace(/"/g, '""') || ''}"`,
-        `"${t.message?.replace(/"/g, '""') || ''}"`,
-        `"${t.source?.replace(/"/g, '""') || ''}"`,
-        `"${t.status?.replace(/"/g, '""') || ''}"`,
-        `"${t.date?.replace(/"/g, '""') || ''}"`
-      ].join(","))
-    ].join("\n");
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `new_joinees_report_${new Date().toISOString().split('T')[0]}.csv`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'dashboard':
-        const totalCustomers = customers.length;
-        const pendingRenewals = renewals.filter(r => r.status === 'Pending').length;
-        const paymentsReceived = renewals.filter(r => r.status === 'Paid').length;
-        const paymentsInProgress = renewals.filter(r => r.status === 'In Progress').length;
-        
-        const openSupport = tickets.filter(t => (t.source === 'Dashboard' || t.source === 'Mobile App') && (t.status === 'Open' || t.status === 'In Progress')).length;
-        const closedSupport = tickets.filter(t => (t.source === 'Dashboard' || t.source === 'Mobile App') && (t.status === 'Closed' || t.status === 'Resolved')).length;
-        const openJoinee = tickets.filter(t => (t.source === 'Contact Us' || t.source === 'Join Now' || t.source === 'Checkout') && (t.status === 'Open' || t.status === 'In Progress')).length;
-        const closedJoinee = tickets.filter(t => (t.source === 'Contact Us' || t.source === 'Join Now' || t.source === 'Checkout') && (t.status === 'Closed' || t.status === 'Resolved')).length;
-
-        const statCards = [
-          { title: "Total Customers", value: totalCustomers, icon: <Users size={24} className="text-teal-600" /> },
-          { title: "Pending Renewals", value: pendingRenewals, icon: <AlertCircle size={24} className="text-amber-500" /> },
-          { title: "Payments Received", value: paymentsReceived, icon: <CheckCircle2 size={24} className="text-green-500" /> },
-          { title: "Payments In Progress", value: paymentsInProgress, icon: <CreditCard size={24} className="text-blue-500" /> },
-          { title: "Open Support Tickets", value: openSupport, icon: <Ticket size={24} className="text-red-500" /> },
-          { title: "Closed Support Tickets", value: closedSupport, icon: <CheckCircle2 size={24} className="text-gray-500" /> },
-          { title: "New Joinee Requests", value: openJoinee, icon: <Users size={24} className="text-teal-500" /> },
-          { title: "New Joinee Closed", value: closedJoinee, icon: <CheckCircle2 size={24} className="text-gray-500" /> },
-        ];
-
-        const handleAddLiveTestRecord = async () => {
-          try {
-            const demoCustomerId = `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-            // Add to customers
-            import('firebase/firestore').then(async ({ collection, addDoc }) => {
-              await addDoc(collection(db, 'customers'), {
-                id: demoCustomerId,
-                name: 'Live Test User',
-                email: 'testuser@member.local',
-                phone: '07700 900000',
-                plan: 'Plus SaaS',
-                joinDate: new Date().toLocaleDateString()
-              });
-              // Add to renewals
-              await addDoc(collection(db, 'renewals'), {
-                name: 'Live Test User',
-                customerId: demoCustomerId,
-                plan: 'Plus SaaS',
-                amount: '£17.99',
-                renewalDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-                status: 'Pending'
-              });
-              alert('Live test Customer and Renewal plan generated successfully!');
-            });
-          } catch (e: any) {
-            alert(`Error adding live test data: ${e.message}`);
-          }
-        };
-
-        return (
-          <div className="space-y-6">
-            <div className="flex justify-between items-center flex-wrap gap-4">
-              <h2 className="text-2xl font-bold text-gray-900">Dashboard Overview</h2>
+          <nav className="space-y-1">
+            {[
+              { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+              { id: 'customers', label: 'Customers', icon: Users },
+              { id: 'tickets', label: 'Tickets', icon: MessageSquare },
+              { id: 'logs', label: 'Login Logs', icon: Clock },
+            ].map((item) => (
               <button
-                onClick={handleAddLiveTestRecord}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium shadow transition-colors flex items-center gap-2 text-sm"
+                key={item.id}
+                onClick={() => setActiveTab(item.id as any)}
+                className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-lg transition-all ${
+                  activeTab === item.id 
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-100' 
+                    : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+                }`}
               >
-                <Users size={16} /> Create Live Test Customer & Renewal
+                <item.icon className="h-5 w-5" />
+                {item.label}
               </button>
-            </div>
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-               {statCards.map((stat, i) => (
-                 <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex items-center justify-between">
-                   <div>
-                     <p className="text-sm font-medium text-gray-500 mb-2">{stat.title}</p>
-                     <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
-                   </div>
-                   <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
-                     {stat.icon}
-                   </div>
-                 </div>
-               ))}
-             </div>
-          </div>
-        );
+            ))}
+          </nav>
+        </div>
 
-      case 'loginLogs':
-        const filteredLogs = loginLogs.filter(l => 
-          l.customerName?.toLowerCase().includes(searchQuery.toLowerCase()) || 
-          l.customerId?.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        return (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
-              <h3 className="text-lg font-bold text-gray-900">Customer Login Activity</h3>
-              <div className="flex items-center space-x-3">
-                {selectedItems.size > 0 && (
-                  <button 
-                    onClick={() => handleBulkDelete('loginLogs')}
-                    className="bg-red-50 text-red-600 hover:bg-red-100 flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-                  >
-                    <Trash2 size={16} className="mr-2" /> Delete Selected ({selectedItems.size})
-                  </button>
-                )}
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                  <input 
-                    type="text" 
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search logs..." 
-                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
-                  />
-                </div>
+        <div className="mt-auto p-4 border-t border-gray-100">
+          <button 
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+          >
+            <LogOut className="h-5 w-5" />
+            Sign Out
+          </button>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <main className="flex-1 overflow-x-hidden">
+        <header className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-20">
+          <div className="px-8 py-4 flex items-center justify-between">
+            <h1 className="text-xl font-bold text-gray-900 capitalize">
+              {activeTab === 'overview' ? 'Hello Admin' : activeTab}
+            </h1>
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search records..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 pr-4 py-2 bg-gray-50 border-none rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 w-64 transition-all"
+                />
               </div>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 text-xs uppercase tracking-wider">
-                    <th className="px-6 py-4 w-12">
-                      <input 
-                        type="checkbox" 
-                        checked={filteredLogs.length > 0 && selectedItems.size === filteredLogs.length}
-                        onChange={() => toggleSelectAll(filteredLogs.map(l => l.id))}
-                        className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
-                      />
-                    </th>
-                    <th className="px-6 py-4 font-medium">Customer Name</th>
-                    <th className="px-6 py-4 font-medium">Customer ID</th>
-                    <th className="px-6 py-4 font-medium">Action</th>
-                    <th className="px-6 py-4 font-medium">Platform / Source</th>
-                    <th className="px-6 py-4 font-medium">Time Logged In (Local)</th>
-                    <th className="px-6 py-4 font-medium text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100 text-sm">
-                  {filteredLogs.length === 0 ? (
-                     <tr>
-                       <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
-                         No customer login logs found.
-                       </td>
-                     </tr>
-                  ) : null}
-                  {filteredLogs.map((log) => (
-                    <tr key={log.id} className="hover:bg-gray-50/50 transition-colors">
-                      <td className="px-6 py-4">
-                        <input 
-                          type="checkbox" 
-                          checked={selectedItems.has(log.id)}
-                          onChange={() => toggleSelection(log.id)}
-                          className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
-                        />
-                      </td>
-                      <td className="px-6 py-4 font-bold text-gray-900">{log.customerName}</td>
-                      <td className="px-6 py-4 font-mono text-gray-600">{log.customerId}</td>
-                      <td className="px-6 py-4 text-gray-600">{log.action || 'Login'}</td>
-                      <td className="px-6 py-4">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${log.source === 'Mobile App' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}`}>
-                          {log.source || 'Web Dashboard'}
+          </div>
+        </header>
+
+        <div className="p-8 max-w-7xl mx-auto">
+          {activeTab === 'overview' && (
+            <div className="space-y-8">
+              {/* Stats Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {stats.map((stat, idx) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                    className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className={`${stat.bg} ${stat.color} p-3 rounded-xl`}>
+                        <stat.icon className="h-6 w-6" />
+                      </div>
+                    </div>
+                    <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">{stat.label}</p>
+                    <p className="text-3xl font-extrabold text-gray-900 mt-1">{stat.value}</p>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Recent Activity */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                  <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+                    <h2 className="font-bold text-gray-900">Current Tickets</h2>
+                    <button onClick={() => setActiveTab('tickets')} className="text-sm text-indigo-600 font-bold hover:text-indigo-700">View all</button>
+                  </div>
+                  <div className="divide-y divide-gray-50">
+                    {data.tickets.filter(t => t.status !== 'Resolved').slice(0, 6).map((item) => (
+                      <div key={item.id} className="px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                        <div className="flex items-center gap-4">
+                          <div className={`p-2 rounded-lg ${item.source === 'Contact Us' ? 'bg-teal-50 text-teal-600' : 'bg-blue-50 text-blue-600'}`}>
+                            <MessageSquare className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-gray-900 line-clamp-1">{item.subject || item.enquiryType || 'General Enquiry'}</p>
+                            <p className="text-xs text-gray-500">by {item.name || item.email}</p>
+                          </div>
+                        </div>
+                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${
+                          item.status === 'Open' ? 'bg-red-50 text-red-600' : 'bg-amber-50 text-amber-600'
+                        }`}>
+                          {item.status || 'pending'}
                         </span>
-                      </td>
-                      <td className="px-6 py-4 text-gray-500">{log.dateStr}</td>
-                      <td className="px-6 py-4 text-right">
-                        <button onClick={() => handleDeleteDoc('loginLogs', log.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors" title="Delete Log">
-                          <Trash2 size={18} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        );
-
-      case 'customers':
-        const filteredCustomers = customers.filter(c => 
-          c.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
-          c.id?.toLowerCase().includes(searchQuery.toLowerCase()) || 
-          c.email?.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        return (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
-              <h3 className="text-lg font-bold text-gray-900">Live Customers</h3>
-              <div className="flex items-center space-x-3">
-                {selectedItems.size > 0 && (
-                  <button 
-                    onClick={() => handleBulkDelete('customers')}
-                    className="bg-red-50 text-red-600 hover:bg-red-100 flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-                  >
-                    <Trash2 size={16} className="mr-2" /> Delete Selected ({selectedItems.size})
-                  </button>
-                )}
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                  <input 
-                    type="text" 
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search customers..." 
-                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 text-xs uppercase tracking-wider">
-                    <th className="px-6 py-4 w-12">
-                      <input 
-                        type="checkbox" 
-                        checked={filteredCustomers.length > 0 && selectedItems.size === filteredCustomers.length}
-                        onChange={() => toggleSelectAll(filteredCustomers.map(c => c.id))}
-                        className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
-                      />
-                    </th>
-                    <th className="px-6 py-4 font-medium">Customer ID</th>
-                    <th className="px-6 py-4 font-medium">Name</th>
-                    <th className="px-6 py-4 font-medium">Contact</th>
-                    <th className="px-6 py-4 font-medium">Plan</th>
-                    <th className="px-6 py-4 font-medium">Join Date</th>
-                    <th className="px-6 py-4 font-medium text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100 text-sm">
-                  {filteredCustomers.length === 0 ? (
-                     <tr>
-                       <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
-                         No customers found matching search.
-                       </td>
-                     </tr>
-                  ) : null}
-                  {filteredCustomers.map((customer) => (
-                    <tr key={customer.id} className="hover:bg-gray-50/50 transition-colors">
-                      <td className="px-6 py-4">
-                        <input 
-                          type="checkbox" 
-                          checked={selectedItems.has(customer.id)}
-                          onChange={() => toggleSelection(customer.id)}
-                          className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
-                        />
-                      </td>
-                      <td className="px-6 py-4 font-mono text-teal-700 font-medium">{customer.id}</td>
-                      <td className="px-6 py-4 font-bold text-gray-900">{customer.name}</td>
-                      <td className="px-6 py-4">
-                        <div className="text-gray-900">{customer.email}</div>
-                        <div className="text-gray-500 text-xs mt-0.5">{customer.phone}</div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-100 text-teal-800">
-                          {customer.plan || 'Free Member'}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-gray-500">{customer.joinDate}</td>
-                      <td className="px-6 py-4 text-right">
-                        <button onClick={() => handleDeleteDoc('customers', customer.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors" title="Delete Customer">
-                          <Trash2 size={18} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        );
-
-      case 'renewals':
-        const filteredRenewals = renewals.filter(r => 
-          r.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
-          r.customerId?.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        return (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50/50 flex justify-between items-center">
-              <h3 className="text-lg font-bold text-gray-900">Upcoming Renewals & Invoices</h3>
-              <div className="flex items-center space-x-3">
-                {selectedItems.size > 0 && (
-                  <button 
-                    onClick={() => handleBulkDelete('renewals')}
-                    className="bg-red-50 text-red-600 hover:bg-red-100 flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-                  >
-                    <Trash2 size={16} className="mr-2" /> Delete Selected ({selectedItems.size})
-                  </button>
-                )}
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                  <input 
-                    type="text" 
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search renewals..." 
-                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 text-xs uppercase tracking-wider">
-                    <th className="px-6 py-4 w-12">
-                      <input 
-                        type="checkbox" 
-                        checked={filteredRenewals.length > 0 && selectedItems.size === filteredRenewals.length}
-                        onChange={() => toggleSelectAll(filteredRenewals.map(r => r.id))}
-                        className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
-                      />
-                    </th>
-                    <th className="px-6 py-4 font-medium">Customer Info</th>
-                    <th className="px-6 py-4 font-medium">Plan</th>
-                    <th className="px-6 py-4 font-medium">Amount</th>
-                    <th className="px-6 py-4 font-medium">Renewal Date</th>
-                    <th className="px-6 py-4 font-medium">Status</th>
-                    <th className="px-6 py-4 font-medium text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100 text-sm">
-                  {filteredRenewals.length === 0 ? (
-                     <tr>
-                       <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
-                         No renewals found matching search.
-                       </td>
-                     </tr>
-                  ) : null}
-                  {filteredRenewals.map((renewal) => (
-                    <tr key={renewal.id} className="hover:bg-gray-50/50 transition-colors">
-                      <td className="px-6 py-4">
-                        <input 
-                          type="checkbox" 
-                          checked={selectedItems.has(renewal.id)}
-                          onChange={() => toggleSelection(renewal.id)}
-                          className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
-                        />
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="font-bold text-gray-900">{renewal.name}</div>
-                        <div className="font-mono text-xs text-gray-500 mt-0.5">{renewal.customerId}</div>
-                      </td>
-                      <td className="px-6 py-4 text-gray-700">{renewal.plan}</td>
-                      <td className="px-6 py-4 font-medium text-gray-900">{renewal.amount}</td>
-                      <td className="px-6 py-4 text-gray-500">{renewal.renewalDate}</td>
-                      <td className="px-6 py-4">
-                        {renewal.status === 'Paid' ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-green-100 text-green-800">
-                            <CheckCircle2 size={14} /> Paid
-                          </span>
-                          ) : renewal.status === 'Failed' ? (
-                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-red-100 text-red-800">
-                              <AlertCircle size={14} /> Failed
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-amber-100 text-amber-800">
-                              <AlertCircle size={14} /> Pending/In Progress
-                            </span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                          <button onClick={() => handleDeleteDoc('renewals', renewal.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors" title="Delete Renewal">
-                            <Trash2 size={18} />
-                          </button>
-                        </td>
-                      </tr>
+                      </div>
                     ))}
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                  <div className="px-6 py-4 border-b border-gray-100">
+                    <h2 className="font-bold text-gray-900">Recent Logins</h2>
+                  </div>
+                  <div className="divide-y divide-gray-50">
+                    {data.logs.slice(0, 8).map((log) => (
+                      <div key={log.id} className="px-6 py-4 flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
+                          <User className="h-4 w-4 text-gray-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-bold text-gray-900 truncate">{log.customerName}</p>
+                          <p className="text-[10px] text-gray-400 truncate">{log.source} • {log.timestamp?.seconds ? new Date(log.timestamp.seconds * 1000).toLocaleTimeString() : 'Recent'}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {(activeTab === 'customers' || activeTab === 'tickets' || activeTab === 'logs') && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden"
+            >
+              <div className="overflow-x-auto">
+                <table className="w-full text-left">
+                  <thead className="bg-gray-50/50 border-b border-gray-100">
+                    <tr>
+                      <th className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-widest">Entry</th>
+                      <th className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-widest">Description</th>
+                      <th className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-widest">Info</th>
+                      <th className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-widest text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-50">
+                    {data[activeTab as keyof typeof data]
+                      .filter((item: any) => 
+                        item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        item.customerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        item.subject?.toLowerCase().includes(searchTerm.toLowerCase())
+                      )
+                      .map((item: any) => (
+                        <tr key={item.id} className="hover:bg-gray-50/50 transition-colors group">
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-3">
+                              <div className="h-9 w-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-500 font-bold text-xs uppercase">
+                                {(item.name || item.customerName || item.email || 'U')[0]}
+                              </div>
+                              <div className="min-w-0">
+                                <p className="text-sm font-bold text-gray-900 truncate">{item.name || item.customerName || 'No Name'}</p>
+                                <p className="text-[10px] text-gray-400 truncate font-medium">{item.email || item.id}</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="max-w-xs">
+                              <p className="text-sm text-gray-600 truncate">{item.message || item.subject || item.source || '-'}</p>
+                              <p className="text-[10px] text-gray-400">{item.enquiryType || ''}</p>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex flex-col gap-1">
+                              <span className="text-[10px] font-bold text-gray-400 flex items-center gap-1">
+                                <Calendar size={10} />
+                                {item.createdAt?.seconds || item.timestamp?.seconds 
+                                  ? new Date((item.createdAt?.seconds || item.timestamp?.seconds) * 1000).toLocaleDateString() 
+                                  : 'Today'}
+                              </span>
+                              {item.status && (
+                                <span className={`w-fit px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-tighter ${
+                                  item.status === 'Open' ? 'bg-red-50 text-red-600' : 'bg-emerald-50 text-emerald-600'
+                                }`}>
+                                  {item.status}
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            <button 
+                              onClick={() => deleteRecord(activeTab === 'logs' ? 'loginLogs' : activeTab, item.id)}
+                              className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
-            </div>
-        );
-
-      case 'tickets':
-        const supportTickets = tickets.filter(t => t.source === 'Dashboard' || t.source === 'Mobile App');
-        const filteredSupportTickets = supportTickets.filter(t => 
-          t.customerName?.toLowerCase().includes(searchQuery.toLowerCase()) || 
-          t.ticketId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          t.email?.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-
-        return (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50/50 flex justify-between items-center">
-              <h3 className="text-lg font-bold text-gray-900">Support Tickets</h3>
-              <div className="flex items-center space-x-3">
-                {selectedItems.size > 0 && (
-                  <button 
-                    onClick={() => handleBulkDelete('tickets')}
-                    className="bg-red-50 text-red-600 hover:bg-red-100 flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-                  >
-                    <Trash2 size={16} className="mr-2" /> Delete Selected ({selectedItems.size})
-                  </button>
-                )}
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                  <input 
-                    type="text" 
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search tickets..." 
-                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 text-xs uppercase tracking-wider">
-                    <th className="px-6 py-4 w-12">
-                      <input 
-                        type="checkbox" 
-                        checked={filteredSupportTickets.length > 0 && selectedItems.size === filteredSupportTickets.length}
-                        onChange={() => toggleSelectAll(filteredSupportTickets.map(t => t.id))}
-                        className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
-                      />
-                    </th>
-                    <th className="px-6 py-4 font-medium">Ticket ID</th>
-                    <th className="px-6 py-4 font-medium">Customer</th>
-                    <th className="px-6 py-4 font-medium">Contact</th>
-                    <th className="px-6 py-4 font-medium">Service Requested</th>
-                    <th className="px-6 py-4 font-medium">Date & Time</th>
-                    <th className="px-6 py-4 font-medium">Status / Action</th>
-                    <th className="px-6 py-4 font-medium text-right">Delete</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100 text-sm">
-                  {dbError ? (
-                    <tr>
-                      <td colSpan={7} className="px-6 py-8 text-center text-red-500 font-medium">
-                        {dbError}
-                      </td>
-                    </tr>
-                  ) : filteredSupportTickets.length === 0 ? (
-                    <tr>
-                      <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
-                        No support tickets found matching search.
-                      </td>
-                    </tr>
-                  ) : null}
-                  {filteredSupportTickets.map((ticket) => (
-                    <tr key={ticket.id} className="hover:bg-gray-50/50 transition-colors">
-                      <td className="px-6 py-4">
-                        <input 
-                          type="checkbox" 
-                          checked={selectedItems.has(ticket.id)}
-                          onChange={() => toggleSelection(ticket.id)}
-                          className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
-                        />
-                      </td>
-                      <td className="px-6 py-4 font-mono font-bold text-teal-700">{ticket.ticketId}</td>
-                      <td className="px-6 py-4">
-                        <div className="font-bold text-gray-900">{ticket.customerName}</div>
-                        <div className="font-mono text-xs text-gray-500 mt-0.5">{ticket.email}</div>
-                      </td>
-                      <td className="px-6 py-4 text-gray-700 font-medium whitespace-nowrap">
-                        {(() => {
-                           if (!ticket.phone || ticket.phone.includes('Logged in') || ticket.phone === 'N/A') {
-                             const customer = customers.find(c => 
-                               c.name?.toLowerCase().trim() === ticket.customerName?.toLowerCase().trim() ||
-                               (c.email && ticket.email && c.email.toLowerCase().trim() === ticket.email.toLowerCase().trim())
-                             );
-                             if (customer && customer.phone) return customer.phone;
-                             return 'N/A';
-                           }
-                           return ticket.phone;
-                        })()}
-                      </td>
-                      <td className="px-6 py-4 text-gray-700">
-                        <div className="font-medium">{ticket.service}</div>
-                        {ticket.message && ticket.message !== ticket.service && (
-                          <div className="text-xs text-gray-500 mt-1 max-w-xs truncate">{ticket.message}</div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 text-gray-500">
-                        <div>{ticket.date}</div>
-                        <span className={`inline-flex mt-1 items-center px-2 py-0.5 rounded text-[10px] font-bold ${ticket.source === 'Mobile App' ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-600'} uppercase`}>
-                          {ticket.source}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <select
-                          value={ticket.status}
-                          onChange={(e) => handleStatusChange(ticket.id, e.target.value)}
-                          className={`inline-flex items-center px-3 py-1.5 rounded-md text-xs font-bold border-0 outline-none cursor-pointer focus:ring-2 focus:ring-teal-500 transition-colors ${
-                            ticket.status === 'Open' ? 'bg-red-100 text-red-800 hover:bg-red-200' :
-                            ticket.status === 'In Progress' ? 'bg-blue-100 text-blue-800 hover:bg-blue-200' :
-                            ticket.status === 'Closed' ? 'bg-gray-100 text-gray-800 hover:bg-gray-200' :
-                            'bg-green-100 text-green-800 hover:bg-green-200'
-                          }`}
-                        >
-                          <option value="Open" className="bg-white text-gray-900 font-medium">Open</option>
-                          <option value="In Progress" className="bg-white text-gray-900 font-medium">In Progress</option>
-                          <option value="Resolved" className="bg-white text-gray-900 font-medium">Resolved</option>
-                          <option value="Closed" className="bg-white text-gray-900 font-medium">Closed</option>
-                        </select>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <button onClick={() => handleDeleteDoc('tickets', ticket.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors" title="Delete Ticket">
-                          <Trash2 size={18} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        );
-
-      case 'joinees':
-        const joineeTickets = tickets.filter(t => t.source !== 'Dashboard' && t.source !== 'Mobile App');
-        const filteredJoinees = joineeTickets.filter(t => 
-          t.customerName?.toLowerCase().includes(searchQuery.toLowerCase()) || 
-          t.ticketId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          t.email?.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-
-        return (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50/50 flex justify-between items-center">
-              <h3 className="text-lg font-bold text-gray-900">New Joinees (Leads & Enquiries)</h3>
-              <div className="flex items-center space-x-3">
-                {selectedItems.size > 0 && (
-                  <button 
-                    onClick={() => handleBulkDelete('tickets')}
-                    className="bg-red-50 text-red-600 hover:bg-red-100 flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-                  >
-                    <Trash2 size={16} className="mr-2" /> Delete Selected ({selectedItems.size})
-                  </button>
-                )}
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                  <input 
-                    type="text" 
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search leads..." 
-                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none w-64" 
-                  />
-                </div>
-                <span className="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full hidden sm:inline-flex">New Leads</span>
-              </div>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 text-xs uppercase tracking-wider">
-                    <th className="px-6 py-4 w-12">
-                      <input 
-                        type="checkbox" 
-                        checked={filteredJoinees.length > 0 && selectedItems.size === filteredJoinees.length}
-                        onChange={() => toggleSelectAll(filteredJoinees.map(t => t.id))}
-                        className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
-                      />
-                    </th>
-                    <th className="px-6 py-4 font-medium">Enquiry ID</th>
-                    <th className="px-6 py-4 font-medium">Customer</th>
-                    <th className="px-6 py-4 font-medium">Contact</th>
-                    <th className="px-6 py-4 font-medium">Details</th>
-                    <th className="px-6 py-4 font-medium">Date & Time / Source</th>
-                    <th className="px-6 py-4 font-medium">Status</th>
-                    <th className="px-6 py-4 font-medium text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100 text-sm">
-                  {dbError ? (
-                    <tr>
-                      <td colSpan={7} className="px-6 py-8 text-center text-red-500 font-medium">
-                        {dbError}
-                      </td>
-                    </tr>
-                  ) : filteredJoinees.length === 0 ? (
-                    <tr>
-                      <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
-                        No new leads or enquiries found matching search.
-                      </td>
-                    </tr>
-                  ) : null}
-                  {filteredJoinees.map((ticket) => (
-                    <tr key={ticket.id} className="hover:bg-gray-50/50 transition-colors">
-                      <td className="px-6 py-4">
-                        <input 
-                          type="checkbox" 
-                          checked={selectedItems.has(ticket.id)}
-                          onChange={() => toggleSelection(ticket.id)}
-                          className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
-                        />
-                      </td>
-                      <td className="px-6 py-4 font-mono font-bold text-teal-700">{ticket.ticketId}</td>
-                      <td className="px-6 py-4">
-                        <div className="font-bold text-gray-900">{ticket.customerName}</div>
-                        <div className="font-mono text-xs text-gray-500 mt-0.5">{ticket.email}</div>
-                      </td>
-                      <td className="px-6 py-4 text-gray-700 font-medium whitespace-nowrap">
-                        {(() => {
-                           if (!ticket.phone || ticket.phone.includes('Logged in') || ticket.phone === 'N/A') {
-                             const customer = customers.find(c => 
-                               c.name?.toLowerCase().trim() === ticket.customerName?.toLowerCase().trim() ||
-                               (c.email && ticket.email && c.email.toLowerCase().trim() === ticket.email.toLowerCase().trim())
-                             );
-                             if (customer && customer.phone) return customer.phone;
-                             return 'N/A';
-                           }
-                           return ticket.phone;
-                        })()}
-                      </td>
-                      <td className="px-6 py-4 text-gray-700">
-                        <div className="font-medium">{ticket.service}</div>
-                        {ticket.message && ticket.message !== ticket.service && (
-                           <div className="text-xs text-gray-500 mt-1 max-w-xs truncate">{ticket.message}</div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 text-gray-500">
-                        <div>{ticket.date}</div>
-                        <span className="inline-flex mt-1 items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 uppercase">
-                          {ticket.source}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <select
-                          value={ticket.status}
-                          onChange={(e) => handleStatusChange(ticket.id, e.target.value)}
-                          className={`inline-flex items-center px-3 py-1.5 rounded-md text-xs font-bold border-0 outline-none cursor-pointer focus:ring-2 focus:ring-teal-500 transition-colors ${
-                            ticket.status === 'Open' ? 'bg-red-100 text-red-800 hover:bg-red-200' :
-                            ticket.status === 'In Progress' ? 'bg-blue-100 text-blue-800 hover:bg-blue-200' :
-                            ticket.status === 'Closed' ? 'bg-gray-100 text-gray-800 hover:bg-gray-200' :
-                            'bg-green-100 text-green-800 hover:bg-green-200'
-                          }`}
-                        >
-                          <option value="Open" className="bg-white text-gray-900 font-medium">Open</option>
-                          <option value="In Progress" className="bg-white text-gray-900 font-medium">In Progress</option>
-                          <option value="Resolved" className="bg-white text-gray-900 font-medium">Resolved</option>
-                          <option value="Closed" className="bg-white text-gray-900 font-medium">Closed</option>
-                        </select>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <button onClick={() => handleDeleteDoc('tickets', ticket.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors" title="Delete Lead">
-                          <Trash2 size={18} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        );
-
-      case 'reports':
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900">Generate Reports</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-start gap-4">
-                <h3 className="font-bold text-gray-900 text-lg">Customers Report</h3>
-                <p className="text-sm text-gray-500 flex-grow">Export all live customer data from the database.</p>
-                <button
-                  onClick={() => {
-                    if (customers.length === 0) { alert("No customers to export."); return; }
-                    const headers = ["Customer ID", "Name", "Email", "Phone", "Plan", "Join Date"];
-                    const csv = [headers.join(","), ...customers.map(c => [
-                      `"${c.id}"`, `"${c.name?.replace(/"/g, '""') || ''}"`, `"${c.email?.replace(/"/g, '""') || ''}"`,
-                      `"${c.phone?.replace(/"/g, '""') || ''}"`, `"${c.plan?.replace(/"/g, '""') || ''}"`, `"${c.joinDate?.replace(/"/g, '""') || ''}"`
-                    ].join(","))].join("\n");
-                    const link = document.createElement("a");
-                    link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
-                    link.download = `customers_report_${new Date().toISOString().split('T')[0]}.csv`;
-                    link.click();
-                  }}
-                  className="bg-teal-600 text-white hover:bg-teal-700 px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors w-full justify-center"
-                >
-                  <Download size={18} />
-                  Download Customers CSV
-                </button>
-              </div>
-
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-start gap-4">
-                <h3 className="font-bold text-gray-900 text-lg">Renewals & Payments</h3>
-                <p className="text-sm text-gray-500 flex-grow">Export all payment histories and upcoming renewals.</p>
-                <button
-                  onClick={() => {
-                    if (renewals.length === 0) { alert("No renewals to export."); return; }
-                    const headers = ["Customer ID", "Name", "Plan", "Amount", "Renewal Date", "Status"];
-                    const csv = [headers.join(","), ...renewals.map(r => [
-                      `"${r.customerId?.replace(/"/g, '""') || ''}"`, `"${r.name?.replace(/"/g, '""') || ''}"`, `"${r.plan?.replace(/"/g, '""') || ''}"`,
-                      `"${r.amount?.replace(/"/g, '""') || ''}"`, `"${r.renewalDate?.replace(/"/g, '""') || ''}"`, `"${r.status?.replace(/"/g, '""') || ''}"`
-                    ].join(","))].join("\n");
-                    const link = document.createElement("a");
-                    link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
-                    link.download = `renewals_report_${new Date().toISOString().split('T')[0]}.csv`;
-                    link.click();
-                  }}
-                  className="bg-teal-600 text-white hover:bg-teal-700 px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors w-full justify-center"
-                >
-                  <Download size={18} />
-                  Download Renewals CSV
-                </button>
-              </div>
-
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-start gap-4">
-                <h3 className="font-bold text-gray-900 text-lg">New Joinee Leads</h3>
-                <p className="text-sm text-gray-500 flex-grow">Export all sales enquiries and leads that arrived through the 'Join Now' and 'Book Intro' forms.</p>
-                <button
-                  onClick={handleExportCSV}
-                  className="bg-teal-600 text-white hover:bg-teal-700 px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors w-full justify-center"
-                >
-                  <Download size={18} />
-                  Download Joinees CSV
-                </button>
-              </div>
-
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-start gap-4">
-                <h3 className="font-bold text-gray-900 text-lg">Support Tickets</h3>
-                <p className="text-sm text-gray-500 flex-grow">Export all support requests submitted by active members via their dashboard.</p>
-                <button
-                  onClick={() => {
-                    const suppTickets = tickets.filter(t => t.source === 'Dashboard');
-                    if (suppTickets.length === 0) { alert("No tickets to export."); return; }
-                    const headers = ["Ticket ID", "Customer", "Email", "Service", "Message", "Status", "Date"];
-                    const csv = [headers.join(","), ...suppTickets.map(t => [
-                      `"${t.ticketId}"`, `"${t.customerName?.replace(/"/g, '""') || ''}"`, `"${t.email?.replace(/"/g, '""') || ''}"`,
-                      `"${t.service?.replace(/"/g, '""') || ''}"`, `"${t.message?.replace(/"/g, '""') || ''}"`,
-                      `"${t.status?.replace(/"/g, '""') || ''}"`, `"${t.date?.replace(/"/g, '""') || ''}"`
-                    ].join(","))].join("\n");
-                    const link = document.createElement("a");
-                    link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
-                    link.download = `support_tickets_report_${new Date().toISOString().split('T')[0]}.csv`;
-                    link.click();
-                  }}
-                  className="bg-teal-600 text-white hover:bg-teal-700 px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors w-full justify-center"
-                >
-                  <Download size={18} />
-                  Download Tickets CSV
-                </button>
-              </div>
-            </div>
-          </div>
-        );
-        
-      case 'adminProfile':
-        return (
-          <div className="space-y-6 max-w-2xl">
-            <h2 className="text-2xl font-bold text-gray-900">Admin Profile Settings</h2>
-            
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-200 bg-gray-50/50">
-                <h3 className="text-lg font-bold text-gray-900">Account Security</h3>
-                <p className="text-sm text-gray-500 mt-1">
-                  Change your admin password below. Make sure you use a secure password. If you originally signed in with Google, you will need to log out and use Email/Password sign-in to utilize this password, assuming Email/Password auth is enabled in Firebase.
-                </p>
-              </div>
-              
-              <div className="p-6">
-                <form onSubmit={handleChangePassword} className="space-y-4">
-                  {passwordMsg && (
-                    <div className="bg-green-50 text-green-700 border border-green-200 p-3 rounded-lg text-sm mb-4">
-                      {passwordMsg}
-                    </div>
-                  )}
-                  {passwordErr && (
-                    <div className="bg-red-50 text-red-700 border border-red-200 p-3 rounded-lg text-sm mb-4">
-                      {passwordErr}
-                    </div>
-                  )}
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
-                    <input 
-                      type="password"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 outline-none"
-                      placeholder="Enter new password"
-                    />
+              {data[activeTab as keyof typeof data].length === 0 && (
+                <div className="p-20 text-center">
+                  <div className="inline-flex items-center justify-center h-16 w-16 bg-gray-100 rounded-2xl mb-4">
+                    <Search className="h-8 w-8 text-gray-300" />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
-                    <input 
-                      type="password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 outline-none"
-                      placeholder="Confirm new password"
-                    />
-                  </div>
-                  
-                  <div className="pt-2">
-                    <button 
-                      type="submit"
-                      disabled={isChangingPassword}
-                      className="bg-teal-600 text-white font-medium py-2 px-6 rounded-lg shadow hover:bg-teal-700 transition disabled:bg-teal-800 disabled:cursor-not-allowed"
-                    >
-                      {isChangingPassword ? "Updating..." : "Update Password"}
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-            
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-               <div className="p-6 flex items-start gap-4">
-                 <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-500">
-                   <Shield size={24} />
-                 </div>
-                 <div>
-                   <h3 className="font-bold text-gray-900 border-b border-gray-100 pb-2 mb-2">Authenticated Admin</h3>
-                   <div className="text-sm text-gray-600 space-y-1">
-                     <p><span className="font-medium text-gray-900">ID:</span> {auth.currentUser?.uid || 'Unknown'}</p>
-                     <p><span className="font-medium text-gray-900">Email:</span> {auth.currentUser?.email || 'Unknown'}</p>
-                     <p><span className="font-medium text-gray-900">Provider:</span> {auth.currentUser?.providerData[0]?.providerId || 'Unknown'}</p>
-                   </div>
-                 </div>
-               </div>
-            </div>
-            
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row">
-      {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-gray-900 text-gray-300 flex flex-col hidden md:flex min-h-screen">
-        <div className="p-6 flex items-center gap-3 text-white border-b border-gray-800">
-          <div className="bg-teal-600 p-2 rounded-xl">
-            <HeartHandshake size={20} className="text-white" />
-          </div>
-          <span className="font-bold text-xl tracking-wide">Admin Portal</span>
-        </div>
-        
-        <nav className="flex-1 py-6 px-4 space-y-2">
-          <button 
-            onClick={() => setActiveTab('dashboard')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${
-              activeTab === 'dashboard' ? 'bg-teal-600 text-white shadow-md' : 'hover:bg-gray-800 hover:text-white'
-            }`}
-          >
-            <LayoutDashboard size={20} />
-            Dashboard
-          </button>
-          <button 
-            onClick={() => setActiveTab('customers')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${
-              activeTab === 'customers' ? 'bg-teal-600 text-white shadow-md' : 'hover:bg-gray-800 hover:text-white'
-            }`}
-          >
-            <Users size={20} />
-            Customers
-          </button>
-          <button 
-            onClick={() => setActiveTab('renewals')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${
-              activeTab === 'renewals' ? 'bg-teal-600 text-white shadow-md' : 'hover:bg-gray-800 hover:text-white'
-            }`}
-          >
-            <CreditCard size={20} />
-            Renewals
-          </button>
-          <button 
-            onClick={() => setActiveTab('tickets')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${
-              activeTab === 'tickets' ? 'bg-teal-600 text-white shadow-md' : 'hover:bg-gray-800 hover:text-white'
-            }`}
-          >
-            <Ticket size={20} />
-            Support Tickets
-          </button>
-          <button 
-            onClick={() => setActiveTab('joinees')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${
-              activeTab === 'joinees' ? 'bg-teal-600 text-white shadow-md' : 'hover:bg-gray-800 hover:text-white'
-            }`}
-          >
-            <Users size={20} />
-            New Joinee
-          </button>
-          <button 
-            onClick={() => setActiveTab('reports')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${
-              activeTab === 'reports' ? 'bg-teal-600 text-white shadow-md' : 'hover:bg-gray-800 hover:text-white'
-            }`}
-          >
-            <FileText size={20} />
-            Reports
-          </button>
-          <button 
-            onClick={() => setActiveTab('loginLogs')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${
-              activeTab === 'loginLogs' ? 'bg-teal-600 text-white shadow-md' : 'hover:bg-gray-800 hover:text-white'
-            }`}
-          >
-            <Shield size={20} />
-            Login Logs
-          </button>
-          <button 
-            onClick={() => setActiveTab('adminProfile')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${
-              activeTab === 'adminProfile' ? 'bg-teal-600 text-white shadow-md' : 'hover:bg-gray-800 hover:text-white'
-            }`}
-          >
-            <Shield size={20} />
-            Admin Profile
-          </button>
-        </nav>
-
-        <div className="p-4 border-t border-gray-800">
-          <button 
-            onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300"
-          >
-            <LogOut size={20} />
-            Logout
-          </button>
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col min-w-0">
-        {/* Mobile Header */}
-        <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between md:hidden -mx-0">
-          <div className="flex items-center gap-2">
-            <div className="bg-teal-600 p-1.5 rounded-xl">
-              <HeartHandshake size={16} className="text-white" />
-            </div>
-            <span className="font-bold text-gray-900">Admin Portal</span>
-          </div>
-          <button onClick={handleLogout} className="text-gray-500 hover:text-red-500">
-            <LogOut size={20} />
-          </button>
-        </header>
-
-        {/* Mobile Tabs */}
-        <div className="bg-white border-b border-gray-200 px-2 flex overflow-x-auto md:hidden no-scrollbar">
-          <button 
-            onClick={() => setActiveTab('dashboard')}
-            className={`px-4 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'dashboard' ? 'border-teal-600 text-teal-600' : 'border-transparent text-gray-500'}`}
-          >
-            Dashboard
-          </button>
-          <button 
-            onClick={() => setActiveTab('customers')}
-            className={`px-4 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'customers' ? 'border-teal-600 text-teal-600' : 'border-transparent text-gray-500'}`}
-          >
-            Customers
-          </button>
-          <button 
-            onClick={() => setActiveTab('renewals')}
-            className={`px-4 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'renewals' ? 'border-teal-600 text-teal-600' : 'border-transparent text-gray-500'}`}
-          >
-            Renewals
-          </button>
-          <button 
-            onClick={() => setActiveTab('tickets')}
-            className={`px-4 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'tickets' ? 'border-teal-600 text-teal-600' : 'border-transparent text-gray-500'}`}
-          >
-            Tickets
-          </button>
-          <button 
-            onClick={() => setActiveTab('joinees')}
-            className={`px-4 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'joinees' ? 'border-teal-600 text-teal-600' : 'border-transparent text-gray-500'}`}
-          >
-            New Joinee
-          </button>
-          <button 
-            onClick={() => setActiveTab('reports')}
-            className={`px-4 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'reports' ? 'border-teal-600 text-teal-600' : 'border-transparent text-gray-500'}`}
-          >
-            Reports
-          </button>
-          <button 
-            onClick={() => setActiveTab('loginLogs')}
-            className={`px-4 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'loginLogs' ? 'border-teal-600 text-teal-600' : 'border-transparent text-gray-500'}`}
-          >
-            Login Logs
-          </button>
-          <button 
-            onClick={() => setActiveTab('adminProfile')}
-            className={`px-4 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'adminProfile' ? 'border-teal-600 text-teal-600' : 'border-transparent text-gray-500'}`}
-          >
-            Admin Profile
-          </button>
-        </div>
-
-        {/* Topbar (Desktop) */}
-        <header className="bg-white border-b border-gray-200 px-8 py-5 hidden md:flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900 capitalize tracking-tight">
-            {activeTab.replace(/([A-Z])/g, ' $1').trim()}
-          </h1>
-          <div className="flex items-center gap-4">
-            <button className="relative p-2 text-gray-400 hover:text-gray-600 transition-colors">
-              <Bell size={20} />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-            </button>
-            <div className="h-8 w-px bg-gray-200"></div>
-            <div className="flex items-center gap-2">
-              <button 
-                onClick={() => setActiveTab('adminProfile')}
-                className="flex items-center gap-3 hover:bg-gray-50 p-2 rounded-xl transition-colors cursor-pointer mr-2"
-              >
-                <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-700 font-bold text-sm">
-                  A
+                  <h3 className="text-sm font-bold text-gray-900">No records to display</h3>
+                  <p className="text-xs text-gray-400 mt-1">Check back later or try a different search.</p>
                 </div>
-                <span className="text-sm font-bold text-gray-700">Admin User</span>
-              </button>
-              <button 
-                onClick={handleLogout}
-                className="flex items-center gap-2 text-sm text-red-600 hover:bg-red-50 font-medium px-3 py-2 rounded-lg transition-colors border border-red-100"
-              >
-                <LogOut size={16} /> Logout
-              </button>
-            </div>
-          </div>
-        </header>
-
-        {/* Dashboard Content */}
-        <div className="p-4 sm:p-8 flex-1 overflow-y-auto">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {renderContent()}
-          </motion.div>
+              )}
+            </motion.div>
+          )}
         </div>
       </main>
     </div>

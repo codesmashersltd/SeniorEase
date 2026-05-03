@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LogIn, User, AlertCircle, CheckCircle2, X, LogOut, Info, HeartHandshake } from 'lucide-react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';

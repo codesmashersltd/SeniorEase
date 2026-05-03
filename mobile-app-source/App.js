@@ -12,6 +12,7 @@ export default function MobileDashboard() {
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [plan, setPlan] = useState({ name: 'Standard Membership', status: 'Active' });
   
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false);
@@ -31,26 +32,55 @@ export default function MobileDashboard() {
       return;
     }
 
-    try {
-      const q = query(collection(db, 'customers'), where('id', '==', customerId.trim()));
-      const querySnapshot = await getDocs(q);
-      if (!querySnapshot.empty) {
-        setPhone(querySnapshot.docs[0].data().phone || '07700 900000');
-      } else {
-        setPhone('07700 900000');
+    // Handle login
+    if (customerName === 'Demo' && customerId === 'Demo123' && password === '123456') {
+      setPhone('07700 900000');
+      setPlan({ name: 'Demo Membership', status: 'Active' }); // Set demo plan
+      setIsLoggedIn(true);
+      
+      try {
+        await addDoc(collection(db, 'loginLogs'), {
+          customerName: customerName,
+          customerId: customerId,
+          source: 'Mobile App',
+          timestamp: serverTimestamp()
+        });
+      } catch (err) { console.log('Log Error:', err); }
+    } else {
+      // Logic for Genuine Users: Check Firestore
+      try {
+        const q = query(
+          collection(db, 'customers'), 
+          where('id', '==', customerId.trim()),
+          where('password', '==', password.trim())
+        );
+        const querySnapshot = await getDocs(q);
+        
+        if (!querySnapshot.empty) {
+          const userData = querySnapshot.docs[0].data();
+          setPhone(userData.phone || '');
+          setCustomerName(userData.name || customerName);
+          setPlan({
+            name: userData.planName || 'Plus Membership',
+            status: userData.status || 'Active'
+          });
+          setIsCancelled(userData.status === 'Cancelled' || userData.status === 'Pending Cancellation');
+          setIsLoggedIn(true);
+          
+          await addDoc(collection(db, 'loginLogs'), {
+            customerName: userData.name,
+            customerId: customerId,
+            source: 'Mobile App',
+            timestamp: serverTimestamp()
+          });
+        } else {
+          Alert.alert('Login Failed', 'Invalid User ID or Password. Please ensure you have an active membership.');
+        }
+      } catch (err) {
+        console.error('Login error:', err);
+        Alert.alert('Error', 'Connection error. Please try again later.');
       }
-
-      await addDoc(collection(db, 'loginLogs'), {
-        customerName: customerName,
-        customerId: customerId,
-        source: 'Mobile App',
-        timestamp: serverTimestamp()
-      });
-    } catch (err) {
-      console.log('Log Error:', err);
     }
-    
-    setIsLoggedIn(true);
   };
 
   const handleRequestLearning = async (serviceName) => {
@@ -93,10 +123,8 @@ export default function MobileDashboard() {
       <SafeAreaView style={styles.container}>
         <View style={styles.loginCard}>
           <View style={styles.logoContainer}>
-            {/* You can replace this icon with your real image logo like this: */}
-            {/* <Image source={require('./assets/logo.png')} style={{width: 80, height: 80}} resizeMode="contain" /> */}
             <HeartHandshake color="#0d9488" size={64} />
-            <Text style={styles.logoTextBig}>Senior Ease</Text>
+            <Text style={styles.logoTextBig}>SeniorEase</Text>
           </View>
 
           <Text style={styles.headerTitle}>Member Login</Text>
@@ -135,9 +163,8 @@ export default function MobileDashboard() {
       {/* Dashboard Header with Small Logo */}
       <View style={styles.dashboardHeader}>
         <View style={styles.smallLogoContainer}>
-          {/* <Image source={require('./assets/logo.png')} style={{width: 32, height: 32}} resizeMode="contain" /> */}
           <HeartHandshake color="#0d9488" size={28} />
-          <Text style={styles.logoTextSmall}>Senior Ease</Text>
+          <Text style={styles.logoTextSmall}>SeniorEase</Text>
         </View>
         <TouchableOpacity onPress={() => setIsLoggedIn(false)}>
           <Text style={styles.logoutText}>Sign Out</Text>
@@ -153,23 +180,27 @@ export default function MobileDashboard() {
           </View>
           <Text style={styles.subText}>Customer ID: {customerId}</Text>
           
-          <View style={styles.planBox}>
-            <Text style={styles.planTitle}>Current Plan</Text>
-            <Text style={styles.planName}>Plus Membership (£17.99 / m)</Text>
-            <Text style={[styles.statusText, isCancelled ? styles.textRed : styles.textGreen]}>
-              {isCancelled ? 'Pending Cancellation' : 'Active Subscription'}
-            </Text>
-          </View>
+          {customerId !== 'Demo123' && (
+            <View style={styles.planBox}>
+              <Text style={styles.planTitle}>Current Plan</Text>
+              <Text style={styles.planName}>{plan.name}</Text>
+              <Text style={[styles.statusText, isCancelled ? styles.textRed : styles.textGreen]}>
+                {isCancelled ? 'Pending Cancellation' : 'Active Subscription'}
+              </Text>
+            </View>
+          )}
 
-          <TouchableOpacity 
-            style={[styles.cancelBtn, isCancelled && styles.cancelBtnDisabled]}
-            disabled={isCancelled}
-            onPress={() => setShowCancelModal(true)}
-          >
-            <Text style={[styles.cancelBtnText, isCancelled && styles.cancelBtnTextDisabled]}>
-              {isCancelled ? 'Cancellation Requested' : 'Cancel Subscription'}
-            </Text>
-          </TouchableOpacity>
+          {customerId !== 'Demo123' && (
+            <TouchableOpacity 
+              style={[styles.cancelBtn, isCancelled && styles.cancelBtnDisabled]}
+              disabled={isCancelled}
+              onPress={() => setShowCancelModal(true)}
+            >
+              <Text style={[styles.cancelBtnText, isCancelled && styles.cancelBtnTextDisabled]}>
+                {isCancelled ? 'Cancellation Requested' : 'Cancel Subscription'}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
 
         {/* Dashboard Services */}

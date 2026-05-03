@@ -27,7 +27,8 @@ service cloud.firestore {
     }
 
     match /customers/{customerId} {
-      allow read, write, delete: if isAdmin();
+      allow read: if true;
+      allow write, delete: if isAdmin();
     }
 
     match /renewals/{renewalId} {

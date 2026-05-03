@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { LearningCircle, ArrowRight } from 'lucide-react';
+import { HelpCircle, ArrowRight } from 'lucide-react';
 
 export default function FAQ() {
   const faqs = [

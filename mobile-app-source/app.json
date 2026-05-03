@@ -2,19 +2,29 @@
   "expo": {
     "name": "SeniorEase Mobile",
     "slug": "seniorease-mobile",
+    "owner": "codesmashers",
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.seniorease.mobile"
+      "bundleIdentifier": "com.seniorease.mobile",
+      "icon": "./assets/icon.png"
     },
     "android": {
       "package": "com.seniorease.mobile",
+      "versionCode": 1,
       "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       }
     },
