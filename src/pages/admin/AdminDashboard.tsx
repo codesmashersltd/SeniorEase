@@ -68,12 +68,23 @@ export default function AdminDashboard() {
   const [searchTerm, setSearchTerm] = useState('');
   const [newAdminEmail, setNewAdminEmail] = useState('');
   const [newAdminUid, setNewAdminUid] = useState('');
+  const [primaryPassword, setPrimaryPassword] = useState('123456');
   const navigate = useNavigate();
 
   useEffect(() => {
     const unsubAuth = auth.onAuthStateChanged((user) => {
       if (!user) navigate('/admin');
     });
+
+    // Fetch primary credentials if exists
+    const fetchCreds = async () => {
+      const docSnap = await getDocs(query(collection(db, 'admin_settings')));
+      const creds = docSnap.docs.find(d => d.id === 'credentials');
+      if (creds?.exists()) {
+        setPrimaryPassword(creds.data().password);
+      }
+    };
+    fetchCreds();
 
     const unsubTickets = onSnapshot(collection(db, 'tickets'), (snap) => {
       setData(prev => ({ ...prev, tickets: snap.docs.map(d => ({ id: d.id, ...d.data() })) }));
@@ -137,6 +148,23 @@ export default function AdminDashboard() {
       setNewAdminUid('');
     } catch (err: any) {
       alert('Error whitelisting admin: ' + err.message);
+    }
+  };
+
+  const updatePrimaryPassword = async () => {
+    if (primaryPassword.length < 4) {
+      alert('Password too short.');
+      return;
+    }
+    try {
+      await setDoc(doc(db, 'admin_settings', 'credentials'), {
+        username: 'Administrator',
+        password: primaryPassword,
+        updatedAt: serverTimestamp()
+      });
+      alert('Primary credentials updated successfully.');
+    } catch (err: any) {
+      alert('Error updating credentials: ' + err.message);
     }
   };
 
@@ -463,31 +491,54 @@ export default function AdminDashboard() {
                   </div>
 
                   <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">Platform Health</h3>
-                    <p className="text-gray-500 text-sm mb-8">System performance and service status.</p>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+                      <Key className="h-5 w-5 text-teal-600" />
+                      Credentials Manager
+                    </h3>
+                    <p className="text-gray-500 text-sm mb-8">Update the primary 'Administrator' account password.</p>
                     
                     <div className="space-y-6">
-                      {[
-                        { label: 'Authentication Service', status: 'Healthy', icon: Shield, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-                        { label: 'Cloud Firestore', status: 'Operational', icon: Database, color: 'text-blue-600', bg: 'bg-blue-50' },
-                        { label: 'Storage Cluster', status: 'Healthy', icon: Server, color: 'text-teal-600', bg: 'bg-teal-50' },
-                      ].map((service) => (
-                        <div key={service.label} className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
-                          <div className="flex items-center gap-4">
-                            <div className={`${service.bg} ${service.color} p-2 rounded-lg`}>
-                              <service.icon size={18} />
-                            </div>
-                            <p className="text-sm font-bold text-gray-900">{service.label}</p>
-                          </div>
-                          <span className="text-[10px] font-black tracking-widest text-emerald-600 uppercase">ONLINE</span>
+                      <div className="space-y-4">
+                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest">New Password</label>
+                        <div className="flex gap-3">
+                          <input 
+                            type="password" 
+                            placeholder="Min 6 characters"
+                            value={primaryPassword}
+                            onChange={(e) => setPrimaryPassword(e.target.value)}
+                            className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all font-mono"
+                          />
+                          <button 
+                            onClick={updatePrimaryPassword}
+                            className="bg-teal-600 text-white font-bold px-6 rounded-xl hover:bg-teal-700 transition-all text-xs uppercase tracking-widest"
+                          >
+                            Update
+                          </button>
                         </div>
-                      ))}
+                        <p className="text-[10px] text-gray-400 italic font-medium">This affects the direct 'Email & Password' login method.</p>
+                      </div>
 
-                      <div className="mt-8 p-6 bg-teal-600 rounded-2xl text-white relative overflow-hidden group">
-                        <div className="absolute top-[-20px] right-[-20px] h-32 w-32 bg-teal-500/20 rounded-full blur-2xl group-hover:bg-teal-400/30 transition-all" />
-                        <h4 className="font-bold mb-2">Automated Backups</h4>
-                        <p className="text-xs text-teal-50 leading-relaxed mb-4">Your platform data is backed up every 24 hours. Last backup completed: 03:00 AM Today.</p>
-                        <button className="text-xs font-black uppercase tracking-widest bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-lg transition-all">Check Logs</button>
+                      <div className="mt-8 pt-8 border-t border-gray-100">
+                        <h4 className="text-sm font-bold text-gray-900 mb-6 flex items-center gap-2 uppercase tracking-widest">
+                          <Activity size={16} className="text-teal-600" />
+                          Platform Health
+                        </h4>
+                        <div className="space-y-4">
+                          {[
+                            { label: 'Authentication Service', status: 'Healthy', icon: Shield, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+                            { label: 'Cloud Firestore', status: 'Operational', icon: Database, color: 'text-blue-600', bg: 'bg-blue-50' },
+                          ].map((service) => (
+                            <div key={service.label} className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
+                              <div className="flex items-center gap-4">
+                                <div className={`${service.bg} ${service.color} p-2 rounded-lg`}>
+                                  <service.icon size={18} />
+                                </div>
+                                <p className="text-sm font-bold text-gray-900">{service.label}</p>
+                              </div>
+                              <span className="text-[10px] font-black tracking-widest text-emerald-600 uppercase">ONLINE</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
