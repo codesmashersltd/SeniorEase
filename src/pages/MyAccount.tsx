@@ -32,6 +32,23 @@ export default function MyAccount() {
 
     setLoading(true);
     try {
+      // Demo Details Bypass
+      if (customerId.trim().toUpperCase() === 'DEMO' && password.trim() === '123456') {
+        setCustomerName('Demo User');
+        setCustomerId('DEMO');
+        setPhone('00000 000000');
+        await addDoc(collection(db, 'loginLogs'), {
+          customerName: 'Demo User',
+          customerId: 'DEMO',
+          source: 'Web Dashboard (Demo)',
+          timestamp: serverTimestamp()
+        });
+        setError('');
+        setIsLoggedIn(true);
+        setLoading(false);
+        return;
+      }
+
       const { query, where, getDocs } = await import('firebase/firestore');
       const q = query(collection(db, 'customers'), where('id', '==', customerId.trim()));
       const querySnapshot = await getDocs(q);

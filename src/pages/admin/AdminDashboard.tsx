@@ -241,11 +241,11 @@ export default function AdminDashboard() {
             <div className="bg-teal-600 p-2 rounded-lg shadow-sm">
               <HeartHandshake className="h-5 w-5 text-white" />
             </div>
-            <span className="font-bold text-xl text-gray-900 tracking-tight">Senior Ease</span>
+            <span className="font-display font-bold text-xl text-gray-900 tracking-tight">Senior Ease</span>
           </div>
         </div>
 
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 p-4 space-y-1 font-sans">
           {[
             { id: 'overview', label: 'Dashboard', icon: LayoutDashboard },
             { id: 'customers', label: 'All Customers', icon: Users, badge: data.customers.length },
@@ -290,7 +290,7 @@ export default function AdminDashboard() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 sticky top-0 z-10">
-          <h1 className="text-lg font-semibold text-gray-900 capitalize">{activeTab}</h1>
+          <h1 className="text-xl font-display font-bold text-gray-900 capitalize tracking-tight">{activeTab}</h1>
           
           <div className="flex items-center gap-4">
             <div className="relative hidden sm:block">
@@ -323,8 +323,8 @@ export default function AdminDashboard() {
                   {/* Company Logo Display (as requested) */}
                   <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center justify-center text-center">
                     <HeartHandshake className="h-16 w-16 text-teal-600 mb-4" />
-                    <h2 className="text-2xl font-bold text-gray-900">Senior Ease Admin</h2>
-                    <p className="text-gray-500">Global Infrastructure & Pipeline Management</p>
+                    <h2 className="text-2xl font-display font-black text-gray-900 tracking-tight">Senior Ease Admin</h2>
+                    <p className="text-gray-500 font-sans">Global Infrastructure & Pipeline Management</p>
                   </div>
 
                   {/* Stats Grid - Matching the screenshot exactly */}
@@ -343,8 +343,8 @@ export default function AdminDashboard() {
                             {stat.trend}
                           </span>
                         </div>
-                        <p className="text-gray-400 text-sm font-semibold mb-1">{stat.label}</p>
-                        <p className="text-3xl font-extrabold text-gray-900 tracking-tight">{stat.value}</p>
+                        <p className="text-gray-400 text-[10px] uppercase font-black tracking-widest mb-1">{stat.label}</p>
+                        <p className="text-3xl font-display font-black text-gray-900 tracking-tighter">{stat.value}</p>
                       </div>
                     ))}
                   </div>
