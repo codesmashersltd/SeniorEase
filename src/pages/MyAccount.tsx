@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { LogIn, User, AlertCircle, CheckCircle2, X, LogOut, Info, HeartHandshake } from 'lucide-react';
+import { LogIn, User, AlertCircle, CheckCircle2, X, LogOut, Info, HeartHandshake, Loader2 } from 'lucide-react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 
@@ -15,6 +15,7 @@ export default function MyAccount() {
   const [showTicketModal, setShowTicketModal] = useState(false);
   const [generatedTicket, setGeneratedTicket] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   // Forgot Password State
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -29,16 +30,35 @@ export default function MyAccount() {
       return;
     }
 
+    setLoading(true);
     try {
-      // Fetch user's registered phone number from db
       const { query, where, getDocs } = await import('firebase/firestore');
       const q = query(collection(db, 'customers'), where('id', '==', customerId.trim()));
       const querySnapshot = await getDocs(q);
-      if (!querySnapshot.empty) {
-        setPhone(querySnapshot.docs[0].data().phone || '07700 900000');
-      } else {
-        setPhone('07700 900000'); // Mock fallback matching the live test
+
+      if (querySnapshot.empty) {
+        setError('Account not found. Only registered paid customers can access the dashboard.');
+        setLoading(false);
+        return;
       }
+
+      const customerData = querySnapshot.docs[0].data();
+      
+      // Strict password and name validation
+      if (customerData.password !== password.trim()) {
+        setError('Invalid password. Please check your credentials.');
+        setLoading(false);
+        return;
+      }
+
+      // Optional: Name validation (can be loose or strict)
+      if (customerData.name.toLowerCase() !== customerName.trim().toLowerCase()) {
+        setError('Customer name does not match our records.');
+        setLoading(false);
+        return;
+      }
+
+      setPhone(customerData.phone || '07700 900000');
       
       await addDoc(collection(db, 'loginLogs'), {
         customerName: customerName,
@@ -46,12 +66,15 @@ export default function MyAccount() {
         source: 'Web Dashboard',
         timestamp: serverTimestamp()
       });
+
+      setError('');
+      setIsLoggedIn(true);
     } catch (err) {
       console.error("Error logging user session:", err);
+      setError('A system error occurred. Please try again later.');
+    } finally {
+      setLoading(false);
     }
-    
-    setError('');
-    setIsLoggedIn(true);
   };
 
   const handleForgotPassword = (e: React.FormEvent) => {
@@ -180,9 +203,10 @@ export default function MyAccount() {
                   {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
                   <button
                     type="submit"
-                    className="w-full bg-teal-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md"
+                    disabled={loading}
+                    className="w-full bg-teal-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
                   >
-                    Login
+                    {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Login'}
                   </button>
                 </form>
               </>
