@@ -79,11 +79,13 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
       };
       console.log('Attempting to add ticket:', ticketPayload);
 
-      // Save as lead/joinee ticket in Firestore
-      try {
-        await addDoc(collection(db, 'tickets'), ticketPayload);
-      } catch (err: any) {
-        handleFirestoreError(err, OperationType.CREATE, 'tickets');
+      // Save as lead/joinee ticket in Firestore ONLY IF NOT selecting a plan (to avoid double entry)
+      if (!plan) {
+        try {
+          await addDoc(collection(db, 'tickets'), ticketPayload);
+        } catch (err: any) {
+          handleFirestoreError(err, OperationType.CREATE, 'tickets');
+        }
       }
 
       // Save to New Joinees collection for Admin Dashboard
