@@ -73,6 +73,7 @@ export default function AdminDashboard() {
   }>({ customers: [], newJoinees: [], tickets: [], logs: [], admins: [] });
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [newAdminEmail, setNewAdminEmail] = useState('');
   const [newAdminUid, setNewAdminUid] = useState('');
@@ -152,6 +153,77 @@ export default function AdminDashboard() {
       unsubAdmins();
     };
   }, [navigate]);
+
+  const handleExportCSV = () => {
+    const currentItems = (activeTab === 'renewals' ? data.customers : (activeTab === 'new-joinees' ? data.newJoinees : data[activeTab as keyof typeof data]))
+      .filter((item: any) => {
+        if (activeTab === 'tickets' && ticketFilter !== 'all') {
+          return item.status === ticketFilter;
+        }
+        return true;
+      })
+      .filter((item: any) => {
+        if (!searchTerm) return true;
+        const search = searchTerm.toLowerCase();
+        return (
+          item.email?.toLowerCase().includes(search) ||
+          item.name?.toLowerCase().includes(search) ||
+          item.customerName?.toLowerCase().includes(search) ||
+          item.subject?.toLowerCase().includes(search) ||
+          item.ticketId?.toLowerCase().includes(search) ||
+          item.id?.toLowerCase().includes(search)
+        );
+      });
+
+    if (currentItems.length === 0) {
+      alert('No data to export.');
+      return;
+    }
+
+    // Define headers based on tab
+    let headers: string[] = [];
+    if (activeTab === 'tickets') {
+      headers = ['Ticket ID', 'Name', 'Email', 'Subject', 'Source', 'Status', 'Date'];
+    } else if (activeTab === 'new-joinees') {
+      headers = ['Customer ID', 'Name', 'Email', 'Phone', 'Plan', 'Price', 'Status', 'Date'];
+    } else if (activeTab === 'customers') {
+      headers = ['ID', 'Name', 'Email', 'Phone', 'Plan', 'Status', 'Date'];
+    } else {
+      headers = ['ID', 'Name', 'Email', 'Details', 'Date'];
+    }
+
+    const csvRows = [headers.join(',')];
+
+    currentItems.forEach((item: any) => {
+      let row: string[] = [];
+      const date = item.createdAt?.seconds || item.timestamp?.seconds 
+        ? new Date((item.createdAt?.seconds || item.timestamp?.seconds) * 1000).toLocaleString() 
+        : 'N/A';
+
+      if (activeTab === 'tickets') {
+        row = [item.ticketId || '', item.name || '', item.email || '', item.subject || '', item.source || '', item.status || '', date];
+      } else if (activeTab === 'new-joinees') {
+        row = [item.customerId || '', item.name || '', item.email || '', item.phone || '', item.plan || '', item.price || '', item.status || '', date];
+      } else if (activeTab === 'customers') {
+        row = [item.id || '', item.name || '', item.email || '', item.phone || '', item.plan || '', item.status || '', date];
+      } else {
+        row = [item.id || '', item.name || item.customerName || '', item.email || '', (item.message || item.source || '').replace(/,/g, ';'), date];
+      }
+
+      csvRows.push(row.map(val => `"${val}"`).join(','));
+    });
+
+    const csvString = csvRows.join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', `seniorease_${activeTab}_export.csv`);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
 
   const handleLogout = async () => {
     await auth.signOut();
@@ -515,15 +587,52 @@ export default function AdminDashboard() {
                         )}
                       </div>
                       <div className="flex gap-2">
-                        <button className="px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50 rounded-xl transition-all border border-gray-200 flex items-center gap-2">
+                        <button 
+                          onClick={() => setShowFilters(!showFilters)}
+                          className={`px-4 py-2 text-sm font-semibold transition-all border rounded-xl flex items-center gap-2 ${
+                            showFilters ? 'bg-teal-50 border-teal-200 text-teal-700' : 'text-gray-600 border-gray-200 hover:bg-gray-50'
+                          }`}
+                        >
                           <Filter size={16} />
                           Filter
                         </button>
-                        <button className="px-4 py-2 text-sm font-semibold bg-teal-600 text-white hover:bg-teal-700 rounded-xl shadow-sm shadow-teal-200 transition-all">
+                        <button 
+                          onClick={handleExportCSV}
+                          className="px-4 py-2 text-sm font-semibold bg-teal-600 text-white hover:bg-teal-700 rounded-xl shadow-sm shadow-teal-200 transition-all"
+                        >
                           Export CSV
                         </button>
                       </div>
                     </div>
+
+                    {showFilters && (
+                      <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 animate-in slide-in-from-top-2 duration-200">
+                        <div className="flex flex-wrap gap-4 items-center">
+                          <div className="relative flex-1 min-w-[200px]">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                            <input 
+                              type="text" 
+                              placeholder="Global Search..."
+                              value={searchTerm}
+                              onChange={(e) => setSearchTerm(e.target.value)}
+                              className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                            />
+                          </div>
+                          <p className="text-xs font-bold text-gray-500 italic">Showing {
+                            (activeTab === 'renewals' ? data.customers : (activeTab === 'new-joinees' ? data.newJoinees : data[activeTab as keyof typeof data]))
+                            .filter((item: any) => {
+                              if (activeTab === 'tickets' && ticketFilter !== 'all') return item.status === ticketFilter;
+                              return true;
+                            })
+                            .filter((item: any) => {
+                              if (!searchTerm) return true;
+                              const search = searchTerm.toLowerCase();
+                              return item.email?.toLowerCase().includes(search) || item.name?.toLowerCase().includes(search);
+                            }).length
+                          } results</p>
+                        </div>
+                      </div>
+                    )}
 
                     {activeTab === 'tickets' && (
                       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 -mb-2">
@@ -693,9 +802,16 @@ export default function AdminDashboard() {
                                     {item.expiryDate ? new Date(item.expiryDate).toLocaleDateString() : 'Next Month'}
                                   </span>
                                 ) : activeTab === 'new-joinees' ? (
-                                  <span className="text-[10px] font-black px-2 py-1 rounded-lg bg-teal-50 text-teal-600 uppercase">
-                                    {item.plan}
-                                  </span>
+                                  <div className="flex flex-col gap-1">
+                                    <span className="text-[10px] font-black px-2 py-1 rounded-lg bg-teal-50 text-teal-600 uppercase w-fit">
+                                      {item.plan}
+                                    </span>
+                                    {item.price && (
+                                      <span className="text-[10px] font-bold text-teal-700 px-2">
+                                        Amount: {item.price}
+                                      </span>
+                                    )}
+                                  </div>
                                 ) : item.status ? (
                                   <span className={`px-2 py-1 text-[10px] font-black rounded-lg uppercase ${
                                     item.status === 'Open' ? 'bg-orange-50 text-orange-600' : 'bg-emerald-50 text-emerald-600'
