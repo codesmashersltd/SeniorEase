@@ -3,8 +3,8 @@ service cloud.firestore {
   match /databases/{database}/documents {
     // 0. Global Safety Net
     match /{document=**} { allow read, write: if false; }
-    
-    // ── Pre-flight Helpers ──────────────────────────────────────────────────
+
+    // Helpers
     function isSignedIn() { return request.auth != null; }
     function isAdmin() { 
       return isSignedIn() && (
@@ -14,37 +14,32 @@ service cloud.firestore {
     }
     function incoming() { return request.resource.data; }
     function existing() { return resource.data; }
-    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function isValidId(id) { return id is string && id.size() <= 128; }
 
-    // ── Validation Blueprints ───────────────────────────────────────────────
+    // 1. Tickets Validation
     function isValidTicket(data) {
       return data.name is string && data.name.size() > 0 && data.name.size() < 500
-        && data.email is string && data.email.size() > 0 && data.email.size() < 500
+        && data.email is string && data.email.size() < 500
         && (data.phone is string || data.phone == null)
         && (data.enquiryType is string || data.enquiryType == null)
         && (data.message is string || data.message == null)
         && data.status in ['Open', 'Pending', 'In Progress', 'Resolved', 'Closed']
         && (data.source is string || data.source == null)
-        && data.createdAt != null;
+        && data.createdAt == request.time;
     }
 
+    match /tickets/{ticketId} {
+      allow create: if isValidTicket(incoming());
+      allow read, update, delete: if isAdmin();
+    }
+
+    // 2. New Joinees Validation
     function isValidJoinee(data) {
       return data.customerId is string && data.customerId.size() > 0
         && data.name is string && data.name.size() > 0
         && data.email is string && data.email.size() > 0
-        && (data.phone is string || data.phone == null)
         && data.plan is string
-        && (data.price is string || data.price == null)
-        && (data.status is string || data.status == null)
-        && (data.tempPassword is string || data.tempPassword == null)
-        && data.createdAt != null;
-    }
-
-    // ── Collection Rules ────────────────────────────────────────────────────
-    
-    match /tickets/{ticketId} {
-      allow create: if isValidTicket(incoming());
-      allow read, update, delete: if isAdmin();
+        && data.createdAt == request.time;
     }
 
     match /new_joinees/{joineeId} {
@@ -52,21 +47,14 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // 3. Customers
     match /customers/{customerId} {
-      allow read: if true;
-      allow create: if true; 
-      allow update: if (isAdmin() || (isSignedIn() && incoming().diff(existing()).affectedKeys().hasOnly(['password', 'mustChangePassword', 'updatedAt'])));
-      allow delete: if isAdmin();
+      allow read: if true; // Public access for identity verification in login
+      allow create: if isAdmin() || true; // Public can register via JoinModal if it used customers, but it uses new_joinees now
+      allow update, delete: if isAdmin();
     }
 
-    match /renewals/{renewalId} {
-      allow read, write, delete: if isAdmin();
-    }
-    
-    match /payments/{paymentId} {
-      allow read, write, delete: if isAdmin();
-    }
-
+    // 4. Others
     match /loginLogs/{logId} {
       allow create: if true;
       allow read, update, delete: if isAdmin();
@@ -80,6 +68,10 @@ service cloud.firestore {
     match /admin_settings/{settingId} {
       allow read: if true;
       allow write: if isAdmin();
+    }
+    
+    match /renewals/{renewalId} {
+      allow read, write, delete: if isAdmin();
     }
   }
 }

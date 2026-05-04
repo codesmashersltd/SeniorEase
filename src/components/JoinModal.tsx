@@ -9,12 +9,45 @@ interface JoinModalProps {
   plan?: { name: string; price: string } | null;
 }
 
+enum OperationType {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete',
+  LIST = 'list',
+  GET = 'get',
+  WRITE = 'write',
+}
+
+interface FirestoreErrorInfo {
+  error: string;
+  operationType: OperationType;
+  path: string | null;
+  authInfo: {
+    userId?: string | null;
+    email?: string | null;
+  }
+}
+
 export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [customerId, setCustomerId] = useState('');
   const [email, setEmail] = useState('');
   const [checkoutUrl, setCheckoutUrl] = useState('');
+
+  const handleFirestoreError = (error: unknown, operationType: OperationType, path: string | null) => {
+    const errInfo: FirestoreErrorInfo = {
+      error: error instanceof Error ? error.message : String(error),
+      authInfo: {
+        userId: null, // Public user here usually
+        email: null,
+      },
+      operationType,
+      path
+    };
+    console.error('Firestore Error: ', JSON.stringify(errInfo));
+    throw new Error(JSON.stringify(errInfo));
+  };
 
   if (!isOpen) return null;
 
@@ -47,20 +80,28 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
       console.log('Attempting to add ticket:', ticketPayload);
 
       // Save as lead/joinee ticket in Firestore
-      await addDoc(collection(db, 'tickets'), ticketPayload);
+      try {
+        await addDoc(collection(db, 'tickets'), ticketPayload);
+      } catch (err: any) {
+        handleFirestoreError(err, OperationType.CREATE, 'tickets');
+      }
 
       // Save to New Joinees collection for Admin Dashboard
       if (plan) {
-        await addDoc(collection(db, 'new_joinees'), {
-          customerId: newId,
-          name: userName,
-          email: userEmail,
-          phone: userPhone,
-          plan: plan.name,
-          price: plan.price,
-          status: 'Pending',
-          createdAt: serverTimestamp()
-        });
+        try {
+          await addDoc(collection(db, 'new_joinees'), {
+            customerId: newId,
+            name: userName,
+            email: userEmail,
+            phone: userPhone,
+            plan: plan.name,
+            price: plan.price,
+            status: 'Pending',
+            createdAt: serverTimestamp()
+          });
+        } catch (err: any) {
+          handleFirestoreError(err, OperationType.CREATE, 'new_joinees');
+        }
       }
 
       // Call our background Stripe integration endpoint

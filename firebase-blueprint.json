@@ -5,21 +5,44 @@
       "description": "Represents a support ticket or query from the contact form.",
       "type": "object",
       "properties": {
+        "ticketId": { "type": "string" },
         "name": { "type": "string" },
         "email": { "type": "string" },
         "phone": { "type": "string" },
         "enquiryType": { "type": "string" },
         "message": { "type": "string" },
-        "status": { "type": "string", "enum": ["Open", "In Progress", "Resolved", "Closed"] },
+        "status": { "type": "string", "enum": ["Open", "Pending", "In Progress", "Resolved", "Closed"] },
+        "source": { "type": "string" },
         "createdAt": { "type": "string", "format": "date-time" }
       },
-      "required": ["name", "email", "phone", "enquiryType", "message", "status", "createdAt"]
+      "required": ["name", "email", "status", "createdAt"]
+    },
+    "NewJoinee": {
+      "title": "New Joinee",
+      "description": "Represents a new registration before activation.",
+      "type": "object",
+      "properties": {
+        "customerId": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "plan": { "type": "string" },
+        "price": { "type": "string" },
+        "status": { "type": "string" },
+        "tempPassword": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["customerId", "name", "email", "plan", "createdAt"]
     }
   },
   "firestore": {
     "/tickets/{ticketId}": {
       "schema": { "$ref": "#/entities/Ticket" },
       "description": "Stores user inquiries and support tickets."
+    },
+    "/new_joinees/{joineeId}": {
+      "schema": { "$ref": "#/entities/NewJoinee" },
+      "description": "Stores pending registrations."
     }
   }
 }
