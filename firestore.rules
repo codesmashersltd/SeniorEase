@@ -20,24 +20,24 @@ service cloud.firestore {
     function isValidTicket(data) {
       return data.name is string && data.name.size() > 0 && data.name.size() < 500
         && data.email is string && data.email.size() > 0 && data.email.size() < 500
-        && (data.phone is string || data.phone == null)
-        && (data.enquiryType is string || data.enquiryType == null)
-        && (data.message is string || data.message == null)
+        && (data.get('phone', '') is string)
+        && (data.get('enquiryType', '') is string)
+        && (data.get('message', '') is string)
         && data.status in ['Open', 'Pending', 'In Progress', 'Resolved', 'Closed']
-        && (data.source is string || data.source == null)
-        && data.createdAt != null;
+        && (data.get('source', '') is string)
+        && data.createdAt == request.time;
     }
 
     function isValidJoinee(data) {
       return data.customerId is string && data.customerId.size() > 0
         && data.name is string && data.name.size() > 0
         && data.email is string && data.email.size() > 0
-        && (data.phone is string || data.phone == null)
+        && (data.get('phone', '') is string)
         && data.plan is string
-        && (data.price is string || data.price == null)
-        && (data.status is string || data.status == null)
-        && (data.tempPassword is string || data.tempPassword == null)
-        && data.createdAt != null;
+        && (data.get('price', '') is string)
+        && (data.get('status', '') is string)
+        && (data.get('tempPassword', null) == null || data.tempPassword is string)
+        && data.createdAt == request.time;
     }
 
     // ── Collection Rules ────────────────────────────────────────────────────
