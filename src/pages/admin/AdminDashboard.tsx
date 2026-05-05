@@ -154,26 +154,33 @@ export default function AdminDashboard() {
     };
   }, [navigate]);
 
+  const getCurrentItems = () => {
+    const items = (activeTab === 'renewals' ? data.customers : (activeTab === 'new-joinees' ? data.newJoinees : data[activeTab as keyof typeof data] || []));
+    return items.filter((item: any) => {
+      if (activeTab === 'tickets' && ticketFilter !== 'all') {
+        return item.status === ticketFilter;
+      }
+      return true;
+    }).filter((item: any) => {
+      if (!searchTerm) return true;
+      const search = searchTerm.toLowerCase();
+      return (
+        item.email?.toLowerCase().includes(search) ||
+        item.name?.toLowerCase().includes(search) ||
+        item.customerName?.toLowerCase().includes(search) ||
+        item.subject?.toLowerCase().includes(search) ||
+        item.message?.toLowerCase().includes(search) ||
+        item.ticketId?.toLowerCase().includes(search) ||
+        item.customerId?.toLowerCase().includes(search) ||
+        item.status?.toLowerCase().includes(search) ||
+        item.phone?.includes(search) ||
+        item.id?.toLowerCase().includes(search)
+      );
+    });
+  };
+
   const handleExportCSV = () => {
-    const currentItems = (activeTab === 'renewals' ? data.customers : (activeTab === 'new-joinees' ? data.newJoinees : data[activeTab as keyof typeof data]))
-      .filter((item: any) => {
-        if (activeTab === 'tickets' && ticketFilter !== 'all') {
-          return item.status === ticketFilter;
-        }
-        return true;
-      })
-      .filter((item: any) => {
-        if (!searchTerm) return true;
-        const search = searchTerm.toLowerCase();
-        return (
-          item.email?.toLowerCase().includes(search) ||
-          item.name?.toLowerCase().includes(search) ||
-          item.customerName?.toLowerCase().includes(search) ||
-          item.subject?.toLowerCase().includes(search) ||
-          item.ticketId?.toLowerCase().includes(search) ||
-          item.id?.toLowerCase().includes(search)
-        );
-      });
+    const currentItems = getCurrentItems();
 
     if (currentItems.length === 0) {
       alert('No data to export.');
@@ -618,18 +625,7 @@ export default function AdminDashboard() {
                               className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
                             />
                           </div>
-                          <p className="text-xs font-bold text-gray-500 italic">Showing {
-                            (activeTab === 'renewals' ? data.customers : (activeTab === 'new-joinees' ? data.newJoinees : data[activeTab as keyof typeof data]))
-                            .filter((item: any) => {
-                              if (activeTab === 'tickets' && ticketFilter !== 'all') return item.status === ticketFilter;
-                              return true;
-                            })
-                            .filter((item: any) => {
-                              if (!searchTerm) return true;
-                              const search = searchTerm.toLowerCase();
-                              return item.email?.toLowerCase().includes(search) || item.name?.toLowerCase().includes(search);
-                            }).length
-                          } results</p>
+                            <p className="text-xs font-bold text-gray-500 italic">Showing {getCurrentItems().length} results</p>
                         </div>
                       </div>
                     )}
@@ -672,28 +668,10 @@ export default function AdminDashboard() {
                         <tr className="bg-gray-50/50 text-left">
                           <th className="px-6 py-4">
                             <button 
-                              onClick={() => {
-                                  const search = searchTerm.toLowerCase();
-                                  const currentItems = (activeTab === 'renewals' ? data.customers : (activeTab === 'new-joinees' ? data.newJoinees : data[activeTab as keyof typeof data])).filter((item: any) => {
-                                    if (activeTab === 'tickets' && ticketFilter !== 'all') {
-                                      if (item.status !== ticketFilter) return false;
-                                    }
-                                    if (!searchTerm) return true;
-                                    return (
-                                      item.email?.toLowerCase().includes(search) ||
-                                      item.name?.toLowerCase().includes(search) ||
-                                      item.customerName?.toLowerCase().includes(search) ||
-                                      item.subject?.toLowerCase().includes(search) ||
-                                      item.ticketId?.toLowerCase().includes(search) ||
-                                      item.customerId?.toLowerCase().includes(search) ||
-                                      item.id?.toLowerCase().includes(search)
-                                    );
-                                  });
-                                  toggleSelectAll(currentItems);
-                              }}
+                              onClick={() => toggleSelectAll(getCurrentItems())}
                               className="text-gray-400 hover:text-teal-600 transition-colors"
                             >
-                              {selectedIds.length > 0 && selectedIds.length === data[activeTab === 'renewals' ? 'customers' : activeTab as keyof typeof data].length ? (
+                              {selectedIds.length > 0 && selectedIds.length === getCurrentItems().length ? (
                                 <CheckSquare size={18} />
                               ) : (
                                 <Square size={18} />
@@ -716,28 +694,7 @@ export default function AdminDashboard() {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-100">
-                        {(activeTab === 'renewals' ? data.customers : (activeTab === 'new-joinees' ? data.newJoinees : data[activeTab as keyof typeof data]))
-                          .filter((item: any) => {
-                            if (activeTab === 'tickets' && ticketFilter !== 'all') {
-                              return item.status === ticketFilter;
-                            }
-                            return true;
-                          })
-                          .filter((item: any) => {
-                            if (!searchTerm) return true;
-                            const search = searchTerm.toLowerCase();
-                            return (
-                              item.email?.toLowerCase().includes(search) ||
-                              item.name?.toLowerCase().includes(search) ||
-                              item.customerName?.toLowerCase().includes(search) ||
-                              item.subject?.toLowerCase().includes(search) ||
-                              item.message?.toLowerCase().includes(search) ||
-                              item.ticketId?.toLowerCase().includes(search) ||
-                              item.customerId?.toLowerCase().includes(search) ||
-                              item.status?.toLowerCase().includes(search) ||
-                              item.phone?.includes(search)
-                            );
-                          })
+                        {getCurrentItems()
                           .map((item: any, idx: number) => (
                             <tr key={item.id} className={`group transition-colors ${selectedIds.includes(item.id) ? 'bg-teal-50/50' : 'hover:bg-gray-50/50'}`}>
                               <td className="px-6 py-4">
