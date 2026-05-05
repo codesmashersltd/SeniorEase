@@ -674,7 +674,7 @@ export default function AdminDashboard() {
                             <button 
                               onClick={() => {
                                   const search = searchTerm.toLowerCase();
-                                  const currentItems = data[activeTab === 'renewals' ? 'customers' : activeTab as keyof typeof data].filter((item: any) => {
+                                  const currentItems = (activeTab === 'renewals' ? data.customers : (activeTab === 'new-joinees' ? data.newJoinees : data[activeTab as keyof typeof data])).filter((item: any) => {
                                     if (activeTab === 'tickets' && ticketFilter !== 'all') {
                                       if (item.status !== ticketFilter) return false;
                                     }
@@ -685,6 +685,7 @@ export default function AdminDashboard() {
                                       item.customerName?.toLowerCase().includes(search) ||
                                       item.subject?.toLowerCase().includes(search) ||
                                       item.ticketId?.toLowerCase().includes(search) ||
+                                      item.customerId?.toLowerCase().includes(search) ||
                                       item.id?.toLowerCase().includes(search)
                                     );
                                   });
