@@ -326,14 +326,16 @@ export default function MobileDashboard() {
       <Modal visible={showTicketModal} animationType="fade" transparent={true}>
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-             <CheckCircle2 color="#0d9488" size={64} />
+             <View style={{ marginBottom: 20 }}>
+               <CheckCircle2 color="#0d9488" size={80} />
+             </View>
              <Text style={styles.modalTitle}>Request Sent!</Text>
-             <Text style={styles.modalSubtitle}>Ticket: {generatedTicket}</Text>
+             <Text style={styles.modalSubtitle}>Ticket ID: {generatedTicket}</Text>
              <TouchableOpacity 
-               style={[styles.modalBtnConfirm, { width: '100%', marginTop: 8 }]} 
+               style={[styles.button, { width: '100%', marginTop: 24 }]} 
                onPress={() => setShowTicketModal(false)}
              >
-                <Text style={[styles.modalBtnTextWhite, { textAlign: 'center', width: '100%' }]}>Done</Text>
+                <Text style={styles.buttonText}>Done</Text>
               </TouchableOpacity>
           </View>
         </View>

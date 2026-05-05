@@ -22,10 +22,10 @@
     },
     "android": {
       "package": "com.seniorease.mobile",
-      "versionCode": 1,
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
