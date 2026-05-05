@@ -94,6 +94,14 @@ export default function MobileDashboard() {
       return;
     }
 
+    if (customerId === 'DEMO') {
+      Alert.alert('Demo Account', 'In Demo mode, password changes are simulated. Your new password is now set locally.');
+      setPassword(newPasswordValue);
+      setNewPasswordValue('');
+      setShowPasswordModal(false);
+      return;
+    }
+
     try {
       const q = query(collection(db, 'customers'), where('id', '==', customerId));
       const querySnapshot = await getDocs(q);
@@ -125,6 +133,14 @@ export default function MobileDashboard() {
   };
 
   const handleConfirmCancel = async () => {
+    if (customerId === 'DEMO') {
+      Alert.alert('Demo Account', 'Cancellation request simulated for Demo account.');
+      setIsCancelled(true);
+      setPlan(prev => ({ ...prev, status: 'Pending Cancellation' }));
+      setShowCancelModal(false);
+      return;
+    }
+
     try {
       const q = query(collection(db, 'customers'), where('id', '==', customerId));
       const querySnapshot = await getDocs(q);
@@ -196,8 +212,8 @@ export default function MobileDashboard() {
       <SafeAreaView style={styles.container}>
         <View style={styles.loginCard}>
           <View style={styles.logoContainer}>
-            <HeartHandshake color="#0d9488" size={64} />
-            <Text style={styles.logoTextBig}>SeniorEase</Text>
+            <HeartHandshake color="#0d9488" size={80} />
+            <Text style={[styles.logoTextBig, { fontSize: 32 }]}>SeniorEase</Text>
           </View>
 
           <Text style={styles.headerTitle}>Member Login</Text>
@@ -236,8 +252,8 @@ export default function MobileDashboard() {
       {/* Dashboard Header with Small Logo */}
       <View style={styles.dashboardHeader}>
         <View style={styles.smallLogoContainer}>
-          <HeartHandshake color="#0d9488" size={28} />
-          <Text style={styles.logoTextSmall}>SeniorEase</Text>
+          <HeartHandshake color="#0d9488" size={32} />
+          <Text style={[styles.logoTextSmall, { fontSize: 22 }]}>SeniorEase</Text>
         </View>
         <TouchableOpacity onPress={() => setIsLoggedIn(false)}>
           <Text style={styles.logoutText}>Sign Out</Text>
@@ -253,36 +269,32 @@ export default function MobileDashboard() {
           </View>
           <Text style={styles.subText}>Customer ID: {customerId}</Text>
           
-          {customerId !== 'DEMO' && (
-            <View style={styles.planBox}>
-              <Text style={styles.planTitle}>Current Plan</Text>
-              <Text style={styles.planName}>{plan.name}</Text>
-              <Text style={[styles.statusText, isCancelled ? styles.textRed : styles.textGreen]}>
-                {isCancelled ? 'Pending Cancellation' : 'Active Subscription'}
-              </Text>
-            </View>
-          )}
+          <View style={styles.planBox}>
+            <Text style={styles.planTitle}>Current Plan</Text>
+            <Text style={styles.planName}>{plan.name}</Text>
+            <Text style={[styles.statusText, isCancelled ? styles.textRed : styles.textGreen]}>
+              {isCancelled ? 'Pending Cancellation' : 'Active Subscription'}
+            </Text>
+          </View>
 
-          {customerId !== 'DEMO' && (
-            <View style={styles.actionButtons}>
-              <TouchableOpacity 
-                style={styles.changePasswordBtn}
-                onPress={() => setShowPasswordModal(true)}
-              >
-                <Text style={styles.changePasswordBtnText}>Change Password</Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity 
-                style={[styles.cancelBtn, isCancelled && styles.cancelBtnDisabled]}
-                disabled={isCancelled}
-                onPress={() => setShowCancelModal(true)}
-              >
-                <Text style={[styles.cancelBtnText, isCancelled && styles.cancelBtnTextDisabled]}>
-                  {isCancelled ? 'Cancellation Requested' : 'Cancel Subscription'}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
+          <View style={styles.actionButtons}>
+            <TouchableOpacity 
+              style={styles.changePasswordBtn}
+              onPress={() => setShowPasswordModal(true)}
+            >
+              <Text style={styles.changePasswordBtnText}>Change Password</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity 
+              style={[styles.cancelBtn, isCancelled && styles.cancelBtnDisabled]}
+              disabled={isCancelled}
+              onPress={() => setShowCancelModal(true)}
+            >
+              <Text style={[styles.cancelBtnText, isCancelled && styles.cancelBtnTextDisabled]}>
+                {isCancelled ? 'Cancellation Requested' : 'Cancel Subscription'}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Dashboard Services */}
