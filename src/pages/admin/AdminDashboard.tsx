@@ -43,6 +43,7 @@ import {
   query, 
   orderBy, 
   getDocs, 
+  addDoc,
   deleteDoc, 
   doc, 
   updateDoc, 
@@ -79,6 +80,10 @@ export default function AdminDashboard() {
   const [newAdminUid, setNewAdminUid] = useState('');
   const [primaryPassword, setPrimaryPassword] = useState('123456');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setSelectedIds([]);
+  }, [activeTab]);
 
   useEffect(() => {
     const unsubAuth = auth.onAuthStateChanged((user) => {

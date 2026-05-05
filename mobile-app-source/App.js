@@ -3,7 +3,7 @@ import 'react-native-get-random-values';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Modal, StyleSheet, Alert, SafeAreaView, Image } from 'react-native';
 import { CheckCircle2, HeartHandshake } from 'lucide-react-native';
-import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { db } from './firebaseConfig'; 
 
 export default function MobileDashboard() {
@@ -15,6 +15,8 @@ export default function MobileDashboard() {
   const [plan, setPlan] = useState({ name: 'Standard Membership', status: 'Active' });
   
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [newPasswordValue, setNewPasswordValue] = useState('');
   const [isCancelled, setIsCancelled] = useState(false);
   const [showTicketModal, setShowTicketModal] = useState(false);
   const [generatedTicket, setGeneratedTicket] = useState('');
@@ -83,6 +85,74 @@ export default function MobileDashboard() {
         console.error('Login error:', err);
         Alert.alert('Error', 'Connection error. Please try again later.');
       }
+    }
+  };
+
+  const handleUpdatePassword = async () => {
+    if (!newPasswordValue || newPasswordValue.length < 6) {
+      Alert.alert('Error', 'Password must be at least 6 characters long.');
+      return;
+    }
+
+    try {
+      const q = query(collection(db, 'customers'), where('id', '==', customerId));
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        const userDoc = querySnapshot.docs[0];
+        await updateDoc(userDoc.ref, {
+          password: newPasswordValue.trim()
+        });
+        
+        await addDoc(collection(db, 'loginLogs'), {
+          customerName,
+          customerId,
+          action: 'Changed Password (Mobile)',
+          timestamp: serverTimestamp()
+        });
+
+        Alert.alert('Success', 'Password updated successfully.');
+        setPassword(newPasswordValue);
+        setNewPasswordValue('');
+        setShowPasswordModal(false);
+      } else {
+        Alert.alert('Error', 'User account not found.');
+      }
+    } catch (err) {
+      console.error(err);
+      Alert.alert('Error', 'Failed to update password. Please try again.');
+    }
+  };
+
+  const handleConfirmCancel = async () => {
+    try {
+      const q = query(collection(db, 'customers'), where('id', '==', customerId));
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        const userDoc = querySnapshot.docs[0];
+        await updateDoc(userDoc.ref, {
+          status: 'Pending Cancellation',
+          updatedAt: serverTimestamp()
+        });
+
+        await addDoc(collection(db, 'loginLogs'), {
+          customerName,
+          customerId,
+          action: 'Requested Cancellation (Mobile)',
+          timestamp: serverTimestamp()
+        });
+
+        setIsCancelled(true);
+        setPlan(prev => ({ ...prev, status: 'Pending Cancellation' }));
+        setShowCancelModal(false);
+        Alert.alert('Success', 'Cancellation request submitted.');
+      } else {
+        Alert.alert('Error', 'User account not found.');
+      }
+    } catch (err) {
+      console.error(err);
+      Alert.alert('Error', 'Failed to submit cancellation request.');
     }
   };
 
@@ -194,15 +264,24 @@ export default function MobileDashboard() {
           )}
 
           {customerId !== 'DEMO' && (
-            <TouchableOpacity 
-              style={[styles.cancelBtn, isCancelled && styles.cancelBtnDisabled]}
-              disabled={isCancelled}
-              onPress={() => setShowCancelModal(true)}
-            >
-              <Text style={[styles.cancelBtnText, isCancelled && styles.cancelBtnTextDisabled]}>
-                {isCancelled ? 'Cancellation Requested' : 'Cancel Subscription'}
-              </Text>
-            </TouchableOpacity>
+            <View style={styles.actionButtons}>
+              <TouchableOpacity 
+                style={styles.changePasswordBtn}
+                onPress={() => setShowPasswordModal(true)}
+              >
+                <Text style={styles.changePasswordBtnText}>Change Password</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity 
+                style={[styles.cancelBtn, isCancelled && styles.cancelBtnDisabled]}
+                disabled={isCancelled}
+                onPress={() => setShowCancelModal(true)}
+              >
+                <Text style={[styles.cancelBtnText, isCancelled && styles.cancelBtnTextDisabled]}>
+                  {isCancelled ? 'Cancellation Requested' : 'Cancel Subscription'}
+                </Text>
+              </TouchableOpacity>
+            </View>
           )}
         </View>
 
@@ -235,7 +314,7 @@ export default function MobileDashboard() {
               <TouchableOpacity style={styles.modalBtnCancel} onPress={() => setShowCancelModal(false)}>
                 <Text style={styles.modalBtnTextBlack}>Go Back</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.modalBtnConfirm} onPress={() => { setIsCancelled(true); setShowCancelModal(false); }}>
+              <TouchableOpacity style={styles.modalBtnConfirm} onPress={handleConfirmCancel}>
                 <Text style={styles.modalBtnTextWhite}>Confirm Cancel</Text>
               </TouchableOpacity>
             </View>
@@ -247,12 +326,42 @@ export default function MobileDashboard() {
       <Modal visible={showTicketModal} animationType="fade" transparent={true}>
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-             <CheckCircle2 color="#0d9488" size={48} />
+             <CheckCircle2 color="#0d9488" size={64} />
              <Text style={styles.modalTitle}>Request Sent!</Text>
              <Text style={styles.modalSubtitle}>Ticket: {generatedTicket}</Text>
-             <TouchableOpacity style={[styles.modalBtnConfirm, { width: '100%', marginTop: 8 }]} onPress={() => setShowTicketModal(false)}>
-                <Text style={styles.modalBtnTextWhite}>Done</Text>
+             <TouchableOpacity 
+               style={[styles.modalBtnConfirm, { width: '100%', marginTop: 8 }]} 
+               onPress={() => setShowTicketModal(false)}
+             >
+                <Text style={[styles.modalBtnTextWhite, { textAlign: 'center', width: '100%' }]}>Done</Text>
               </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Change Password Modal */}
+      <Modal visible={showPasswordModal} animationType="slide" transparent={true}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Change Password</Text>
+            <Text style={styles.modalSubtitle}>Enter your new password below.</Text>
+            
+            <TextInput
+              style={[styles.input, { width: '100%' }]}
+              placeholder="New Password"
+              secureTextEntry
+              value={newPasswordValue}
+              onChangeText={setNewPasswordValue}
+            />
+
+            <View style={styles.modalButtons}>
+              <TouchableOpacity style={styles.modalBtnCancel} onPress={() => setShowPasswordModal(false)}>
+                <Text style={styles.modalBtnTextBlack}>Back</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.modalBtnConfirm} onPress={handleUpdatePassword}>
+                <Text style={styles.modalBtnTextWhite}>Update</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
@@ -286,6 +395,9 @@ const styles = StyleSheet.create({
   statusText: { fontWeight: 'bold', marginTop: 8 },
   textGreen: { color: '#059669' },
   textRed: { color: '#d97706' },
+  actionButtons: { gap: 12 },
+  changePasswordBtn: { backgroundColor: '#f0fdfa', padding: 12, borderRadius: 12, alignItems: 'center', marginBottom: 4 },
+  changePasswordBtnText: { color: '#0d9488', fontWeight: 'bold' },
   cancelBtn: { borderWidth: 1, borderColor: '#fecaca', padding: 12, borderRadius: 12, alignItems: 'center' },
   cancelBtnText: { color: '#dc2626', fontWeight: 'bold' },
   cancelBtnDisabled: { borderColor: '#e5e7eb', backgroundColor: '#f3f4f6' },
