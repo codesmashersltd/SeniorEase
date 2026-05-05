@@ -162,24 +162,25 @@ export default function AdminDashboard() {
   const getCurrentItems = () => {
     const items = (activeTab === 'renewals' ? data.customers : (activeTab === 'new-joinees' ? data.newJoinees : data[activeTab as keyof typeof data] || []));
     return items.filter((item: any) => {
+      if (!item) return false;
       if (activeTab === 'tickets' && ticketFilter !== 'all') {
         return item.status === ticketFilter;
       }
       return true;
     }).filter((item: any) => {
-      if (!searchTerm) return true;
+      if (!searchTerm || !item) return true;
       const search = searchTerm.toLowerCase();
       return (
-        item.email?.toLowerCase().includes(search) ||
-        item.name?.toLowerCase().includes(search) ||
-        item.customerName?.toLowerCase().includes(search) ||
-        item.subject?.toLowerCase().includes(search) ||
-        item.message?.toLowerCase().includes(search) ||
-        item.ticketId?.toLowerCase().includes(search) ||
-        item.customerId?.toLowerCase().includes(search) ||
-        item.status?.toLowerCase().includes(search) ||
+        item.email?.toLowerCase()?.includes(search) ||
+        item.name?.toLowerCase()?.includes(search) ||
+        item.customerName?.toLowerCase()?.includes(search) ||
+        item.subject?.toLowerCase()?.includes(search) ||
+        item.message?.toLowerCase()?.includes(search) ||
+        item.ticketId?.toLowerCase()?.includes(search) ||
+        item.customerId?.toLowerCase()?.includes(search) ||
+        item.status?.toLowerCase()?.includes(search) ||
         item.phone?.includes(search) ||
-        item.id?.toLowerCase().includes(search)
+        item.id?.toLowerCase()?.includes(search)
       );
     });
   };
@@ -823,6 +824,13 @@ export default function AdminDashboard() {
                               </td>
                               <td className="px-6 py-4 text-right whitespace-nowrap">
                                 <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <button 
+                                    onClick={() => deleteRecord(activeTab === 'logs' ? 'loginLogs' : (activeTab === 'new-joinees' ? 'new_joinees' : activeTab), item.id)}
+                                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                                    title="Delete Record"
+                                  >
+                                    <Trash2 size={16} />
+                                  </button>
                                   {activeTab === 'new-joinees' && (
                                     <>
                                       <button 

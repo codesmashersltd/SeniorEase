@@ -22,7 +22,7 @@
     },
     "android": {
       "package": "com.seniorease.mobile",
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"

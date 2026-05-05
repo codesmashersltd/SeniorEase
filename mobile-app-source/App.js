@@ -332,10 +332,10 @@ export default function MobileDashboard() {
              <Text style={styles.modalTitle}>Request Sent!</Text>
              <Text style={styles.modalSubtitle}>Ticket ID: {generatedTicket}</Text>
              <TouchableOpacity 
-               style={[styles.button, { width: '100%', marginTop: 24 }]} 
+               style={[styles.button, { width: '100%', marginTop: 24, height: 60, justifyContent: 'center' }]} 
                onPress={() => setShowTicketModal(false)}
              >
-                <Text style={styles.buttonText}>Done</Text>
+                <Text style={[styles.buttonText, { fontSize: 20 }]}>Done</Text>
               </TouchableOpacity>
           </View>
         </View>
