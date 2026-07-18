@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, Clock, MessageSquare, ArrowRight, CheckCircle2, X } from 'lucide-react';
+import { Mail, Phone, Clock, MessageSquare, ArrowRight, CheckCircle2, X, MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
@@ -81,7 +81,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">Email</h3>
-                    <a href="mailto:support@senioreaseuk.co.uk" className="text-teal-600 hover:underline">support@senioreaseuk.co.uk</a>
+                    <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline font-medium">support@seniorease.com</a>
                   </div>
                 </div>
 
@@ -91,7 +91,21 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">Phone</h3>
-                    <p className="text-gray-600">+44 XXXX XXXXXX</p>
+                    <a href="tel:+443304010019" className="text-teal-600 hover:underline font-medium">+44 (0) 330 401 0019</a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="bg-teal-100 p-3 rounded-xl text-teal-600 shrink-0">
+                    <MapPin size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Address</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      167-169 Great Portland Street<br />
+                      5th Floor<br />
+                      London, W1W 5PF
+                    </p>
                   </div>
                 </div>
 

@@ -208,11 +208,19 @@ export default function Layout() {
               <div className="space-y-3 text-gray-400">
                 <p className="flex flex-col">
                   <span className="text-gray-500 text-sm">Email</span>
-                  <a href="mailto:support@senioreaseuk.co.uk" className="hover:text-white transition-colors">support@senioreaseuk.co.uk</a>
+                  <a href="mailto:support@seniorease.com" className="hover:text-white transition-colors">support@seniorease.com</a>
                 </p>
                 <p className="flex flex-col">
                   <span className="text-gray-500 text-sm">Phone</span>
-                  <span>+44 XXXX XXXXXX</span>
+                  <a href="tel:+443304010019" className="hover:text-white transition-colors">+44 (0) 330 401 0019</a>
+                </p>
+                <p className="flex flex-col">
+                  <span className="text-gray-500 text-sm">Address</span>
+                  <span className="text-xs leading-relaxed text-gray-400">
+                    167-169 Great Portland Street<br />
+                    5th Floor<br />
+                    London, W1W 5PF
+                  </span>
                 </p>
                 <p className="flex flex-col">
                   <span className="text-gray-500 text-sm">WhatsApp</span>
