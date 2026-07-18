@@ -84,7 +84,7 @@ export default function Pricing() {
               className="bg-white rounded-3xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-200 p-8 flex flex-col relative"
             >
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2 uppercase tracking-wide">Essential SaaS</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2 uppercase tracking-wide">Essential Care</h2>
                 <div className="flex items-baseline gap-1 mb-4">
                   <span className="text-4xl font-bold text-gray-900">£9.99</span>
                   <span className="text-gray-500 font-medium">/ month</span>
@@ -137,7 +137,7 @@ export default function Pricing() {
               </motion.div>
               
               <div className="mb-8 mt-2">
-                <h2 className="text-2xl font-bold text-white mb-2 uppercase tracking-wide">Plus SaaS</h2>
+                <h2 className="text-2xl font-bold text-white mb-2 uppercase tracking-wide">Plus Care</h2>
                 <div className="flex items-baseline gap-1 mb-4">
                   <span className="text-4xl font-bold text-white">£17.99</span>
                   <span className="text-teal-200 font-medium">/ month</span>
@@ -183,7 +183,7 @@ export default function Pricing() {
               className="bg-white rounded-3xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-200 p-8 flex flex-col relative"
             >
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2 uppercase tracking-wide">Family Portal</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2 uppercase tracking-wide">Family Care</h2>
                 <div className="flex items-baseline gap-1 mb-4">
                   <span className="text-4xl font-bold text-gray-900">£29.99</span>
                   <span className="text-gray-500 font-medium">/ month</span>
