@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Smartphone, Video, Mail, ShieldAlert, FileEdit, Users, ArrowRight, ShoppingBag, PlayCircle } from 'lucide-react';
 import { motion } from 'motion/react';
+import servicesHeroImage from '../assets/images/seniors_laptop_group_learning_1784446651691.jpg';
 
 export default function Services() {
   const services = [
@@ -136,19 +137,15 @@ export default function Services() {
   return (
     <div className="flex flex-col overflow-hidden">
       {/* Hero Section */}
-      <section className="relative text-white py-32 overflow-hidden bg-teal-900">
-        {/* Decorative background elements */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <motion.div 
-            animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-24 -right-24 w-96 h-96 bg-teal-700 rounded-full mix-blend-screen filter blur-3xl"
+      <section className="relative text-white py-32 md:py-40 overflow-hidden bg-slate-900">
+        <div className="absolute inset-0">
+          <img 
+            src={servicesHeroImage} 
+            alt="Seniors learning digital skills with a laptop" 
+            className="w-full h-full object-cover object-center"
+            referrerPolicy="no-referrer"
           />
-          <motion.div 
-            animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.5, 0.2] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute -bottom-24 -left-24 w-96 h-96 bg-teal-800 rounded-full mix-blend-screen filter blur-3xl"
-          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-slate-950/65 backdrop-blur-[0.5px]"></div>
         </div>
 
         <motion.div 
@@ -157,13 +154,20 @@ export default function Services() {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
         >
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">Software Features</h1>
-          <p className="text-2xl text-teal-300 font-medium mb-6">Simple, friendly SaaS tools for everyday digital life</p>
-          <p className="text-xl text-teal-100 leading-relaxed max-w-3xl mx-auto mb-10">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
+            Interactive SaaS Features
+          </span>
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+            Software Features
+          </h1>
+          <p className="text-2xl text-teal-300 font-bold mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+            Simple, friendly SaaS tools for everyday digital life
+          </p>
+          <p className="text-xl text-teal-50 font-medium leading-relaxed max-w-3xl mx-auto mb-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
             SeniorEase's proprietary SaaS platform offers patient, ongoing support tracking, dashboard access, and ticketing for the common technology and online tasks that many seniors face every month. We're here to make the digital world feel a little smaller and a lot friendlier.
           </p>
 
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 text-white font-bold text-lg md:text-xl bg-teal-800/80 inline-flex px-8 py-4 rounded-3xl md:rounded-full border border-teal-600/50 backdrop-blur-md shadow-2xl">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 text-white font-bold text-lg md:text-xl bg-slate-950/85 inline-flex px-8 py-4 rounded-3xl md:rounded-full border border-teal-500/30 backdrop-blur-md shadow-2xl">
             <span className="text-teal-200 font-medium md:mr-2">Our team connects and resolves your queries via:</span>
             <span className="flex items-center gap-2">
               <Video size={24} className="text-teal-300" /> Zoom

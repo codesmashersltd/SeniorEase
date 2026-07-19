@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { CheckCircle2, ShieldCheck, Smartphone, Mail, FileText, Users, ArrowRight, PhoneCall, HeartHandshake, Video, Calendar, Star } from 'lucide-react';
 import JoinModal from '../components/JoinModal';
 import heroImage from '../assets/images/senior_tech_support_1784443978651.jpg';
+import featureImage from '../assets/images/senior_couple_computer_learning_1784446449833.jpg';
 
 export default function Home() {
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
@@ -116,8 +117,8 @@ export default function Home() {
             <div className="relative">
               <div className="aspect-square rounded-3xl overflow-hidden bg-gray-100 relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=1000" 
-                  alt="Senior woman smiling while using a tablet" 
+                  src={featureImage} 
+                  alt="Senior couple smiling and learning computer skills together" 
                   className="object-cover w-full h-full"
                   referrerPolicy="no-referrer"
                 />
