@@ -4,353 +4,655 @@ export default function Privacy() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-8">Privacy Policy</h1>
         
-        <div className="prose prose-blue max-w-none text-gray-600">
-          <p className="font-medium">Senior Ease</p>
-          <p className="font-medium">Effective Date: [01/06/2026]</p>
-          <p className="font-medium">Website: [https://www.senioreease.com]</p>
-          <p className="font-medium">Business Name: Senior Ease</p>
-          <p className="font-medium">Email: [support@senioreease.com]</p>
-          <p className="font-medium mb-8">Phone: [+44 (0) 330 401 0019]</p>
+        <div className="prose prose-teal max-w-none text-gray-600 space-y-8">
+          <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-1">
+            <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
+            <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
+            <p className="font-semibold text-gray-900">Business Name: Senior Ease</p>
+            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
+            <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
+          </div>
 
-          <p className="mb-4">At Senior Ease, we respect your privacy and are committed to protecting your personal information.</p>
-          <p className="mb-4">This Privacy Policy explains how we collect, use, store, and protect personal information when you use our SaaS platform, website, secure portal, contact us, or subscribe to our software services.</p>
-          <p className="mb-8">By using our platform or software services, you acknowledge this Privacy Policy.</p>
+          <hr className="border-gray-200" />
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. Who We Are</h2>
-          <p className="mb-4">Senior Ease provides a Software as a Service (SaaS) platform, secure dashboard access, and friendly digital learning for senior citizens in the United Kingdom.</p>
-          <p className="font-medium">Our software tools and services may include provide guidance on:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>smartphones and tablets</li>
-            <li>WhatsApp and messaging</li>
-            <li>emails and online accounts</li>
-            <li>video calls</li>
-            <li>online forms</li>
-            <li>appointment reminders</li>
-            <li>scam awareness guidance</li>
-            <li>general digital confidence support</li>
-          </ul>
-          <p className="mb-4">For the purposes of UK data protection law, Senior Ease is the data controller of the personal information described in this Privacy Policy.</p>
-          
-          <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Contact Details</h3>
-          <p className="mb-4">
-            Senior Ease<br />
-            Email: [Insert Email]<br />
-            Phone: [Insert Phone Number]<br />
-            Website: [Insert Website URL]
-          </p>
-          <p className="mb-8">If you have any questions about how we use your personal data, you can contact us using the details above.</p>
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Introduction</h2>
+            <p className="mb-4">
+              Senior Ease respects your privacy and is committed to protecting your personal information.
+              This Privacy Policy explains how we collect, use, store, protect, and share your personal information when you:
+            </p>
+            <ul className="list-disc pl-6 mb-4 space-y-2">
+              <li>visit our website;</li>
+              <li>create an account;</li>
+              <li>purchase a subscription;</li>
+              <li>use our secure customer portal;</li>
+              <li>contact our support team;</li>
+              <li>receive technical guidance from our advisers; or</li>
+              <li>otherwise interact with our services.</li>
+            </ul>
+            <p>
+              By using our website or subscribing to our services, you acknowledge that you have read this Privacy Policy.
+            </p>
+          </section>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">2. The Information We Collect</h2>
-          <p className="mb-4">We may collect and process the following categories of personal information:</p>
-          
-          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">A. Contact Information</h3>
-          <ul className="list-disc pl-6 mb-4">
-            <li>full name</li>
-            <li>phone number</li>
-            <li>email address</li>
-            <li>postal address (if provided)</li>
-          </ul>
+          <hr className="border-gray-200" />
 
-          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">B. Customer / Membership Information</h3>
-          <ul className="list-disc pl-6 mb-4">
-            <li>account or membership details</li>
-            <li>plan selection</li>
-            <li>billing information</li>
-            <li>payment status</li>
-            <li>support history</li>
-            <li>subscription status</li>
-          </ul>
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Who We Are</h2>
+            <p className="mb-4">
+              Senior Ease is a subscription-based digital education and technical support service designed to help senior citizens become more confident when using everyday technology.
+            </p>
+            <p className="mb-4 font-semibold text-gray-900">
+              Our support team provides friendly, patient guidance to help customers understand and use digital services such as:
+            </p>
+            <ul className="list-disc pl-6 mb-4 space-y-2">
+              <li>smartphones and tablets;</li>
+              <li>WhatsApp and messaging applications;</li>
+              <li>email accounts;</li>
+              <li>video calling platforms;</li>
+              <li>online forms;</li>
+              <li>NHS and government websites;</li>
+              <li>online shopping;</li>
+              <li>internet safety;</li>
+              <li>scam awareness;</li>
+              <li>password guidance;</li>
+              <li>digital confidence and everyday technology.</li>
+            </ul>
+            <p className="mb-4">
+              Senior Ease is not a medical provider, healthcare organisation, financial adviser, legal adviser, or emergency assistance service.
+            </p>
+            <p>
+              For the purposes of the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018, Senior Ease acts as the Data Controller for the personal information described in this Privacy Policy.
+            </p>
+          </section>
 
-          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">C. Service Request Information</h3>
-          <ul className="list-disc pl-6 mb-4">
-            <li>details of the learning or support you request</li>
-            <li>information you share with us to allow us to assist you</li>
-            <li>communication preferences</li>
-            <li>notes relating to support interactions</li>
-          </ul>
+          <hr className="border-gray-200" />
 
-          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">D. Technical / Website Information</h3>
-          <ul className="list-disc pl-6 mb-4">
-            <li>IP address</li>
-            <li>browser type</li>
-            <li>device type</li>
-            <li>pages visited</li>
-            <li>cookies and website usage data</li>
-          </ul>
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Contact Details</h2>
+            <p className="mb-4">
+              If you have any questions regarding this Privacy Policy or how we use your personal information, you may contact us using the details below.
+            </p>
+            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+              <p className="font-bold text-gray-900 mb-2">Senior Ease</p>
+              <p className="mb-1"><span className="font-medium text-gray-500">Website:</span> <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
+              <p className="mb-1"><span className="font-medium text-gray-500">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
+              <p><span className="font-medium text-gray-500">Telephone:</span> <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
+            </div>
+          </section>
 
-          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">E. Family / Authorised Contact Information</h3>
-          <p className="mb-4">Where a family member, carer, or authorised person purchases or manages a service on behalf of someone else, we may collect:</p>
-          <ul className="list-disc pl-6 mb-8">
-            <li>their name</li>
-            <li>their contact details</li>
-            <li>their relationship to the customer</li>
-            <li>relevant communication information</li>
-          </ul>
+          <hr className="border-gray-200" />
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">3. Information We Do Not Intend to Collect</h2>
-          <p className="mb-4">Senior Ease is designed as a non-medical support service.</p>
-          <p className="font-medium">We do not intentionally ask for or require:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>medical diagnoses</li>
-            <li>clinical records</li>
-            <li>treatment information</li>
-            <li>sensitive health records</li>
-            <li>legal case details</li>
-            <li>financial account secrets such as banking PINs or full card details</li>
-          </ul>
-          <p className="mb-4">Please avoid sharing unnecessary sensitive personal information with us unless it is genuinely required for a support request.</p>
-          <p className="mb-4">If sensitive or special category data is shared with us unexpectedly, we will handle it with appropriate care and only where necessary and lawful.</p>
-          <p className="mb-8">Under UK GDPR, you need a lawful basis to process personal data, and if you process special category data (such as health information), you also need an additional condition. The ICO is explicit about this.</p>
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Information We Collect</h2>
+            <p className="mb-6">
+              Depending on how you interact with our services, we may collect the following categories of personal information.
+            </p>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">4. How We Collect Personal Information</h2>
-          <p className="font-medium">We may collect personal information:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>directly from you when you fill in forms or contact us</li>
-            <li>when you sign up for a membership or service</li>
-            <li>when you communicate with us by phone, email, or WhatsApp</li>
-            <li>from a family member or authorised person acting on your behalf</li>
-            <li>automatically through website cookies and analytics tools</li>
-            <li>from payment processors in relation to billing and payment status</li>
-          </ul>
-          <p className="mb-8">The ICO guidance says you should tell people where you got their data from, especially if it wasn’t collected directly from them.</p>
+            <div className="space-y-6">
+              <div className="border-l-4 border-teal-500 pl-4">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Personal Information</h3>
+                <p className="mb-2 text-gray-600">This may include:</p>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li>full name;</li>
+                  <li>date of birth (where required);</li>
+                  <li>postal address;</li>
+                  <li>email address;</li>
+                  <li>telephone number.</li>
+                </ul>
+              </div>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">5. How We Use Your Personal Information</h2>
-          <p className="font-medium">We may use your personal information to:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>provide our support services</li>
-            <li>respond to enquiries</li>
-            <li>manage memberships and subscriptions</li>
-            <li>communicate with customers and authorised family contacts</li>
-            <li>provide customer support and follow-up</li>
-            <li>send service-related updates</li>
-            <li>process or manage payments</li>
-            <li>improve our website and customer experience</li>
-            <li>protect our business, customers, and systems</li>
-            <li>comply with legal or regulatory obligations</li>
-          </ul>
-          <p className="mb-8">We only use personal data where we have a valid lawful basis under UK data protection law.</p>
+              <div className="border-l-4 border-teal-500 pl-4">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Account Information</h3>
+                <p className="mb-2 text-gray-600">When you purchase a subscription or register an account, we may collect:</p>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li>account details;</li>
+                  <li>chosen subscription plan;</li>
+                  <li>membership status;</li>
+                  <li>customer reference number;</li>
+                  <li>login information;</li>
+                  <li>support history.</li>
+                </ul>
+              </div>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">6. Our Lawful Bases for Processing</h2>
-          <p className="mb-4">The ICO says you must identify and explain your lawful basis for each purpose, and that this should be included in your privacy information.</p>
-          <p className="mb-4">Depending on the situation, we may rely on one or more of the following lawful bases:</p>
+              <div className="border-l-4 border-teal-500 pl-4">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Billing Information</h3>
+                <p className="mb-2 text-gray-600">To manage subscriptions we may collect:</p>
+                <ul className="list-disc pl-6 mb-4 space-y-1">
+                  <li>billing address;</li>
+                  <li>subscription status;</li>
+                  <li>payment status;</li>
+                  <li>invoice references;</li>
+                  <li>renewal dates;</li>
+                  <li>transaction identifiers.</li>
+                </ul>
+                <div className="text-sm bg-gray-50 p-4 rounded-xl text-gray-600">
+                  <p className="font-semibold text-gray-900 mb-1">Payments are securely processed by Stripe.</p>
+                  <p className="mb-1">Senior Ease does not store or have access to your complete payment card details.</p>
+                  <p>Payment information is processed securely by Stripe in accordance with Stripe's own Privacy Policy.</p>
+                </div>
+              </div>
 
-          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">A. Contract</h3>
-          <p className="font-medium">We use personal information where it is necessary to:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>provide the service you have requested</li>
-            <li>manage your membership</li>
-            <li>process your subscription</li>
-            <li>deliver customer support</li>
-          </ul>
+              <div className="border-l-4 border-teal-500 pl-4">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Technical Information</h3>
+                <p className="mb-2 text-gray-600">When you visit our website we may automatically collect:</p>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li>IP address;</li>
+                  <li>browser type;</li>
+                  <li>operating system;</li>
+                  <li>device type;</li>
+                  <li>pages visited;</li>
+                  <li>referring website;</li>
+                  <li>time spent on our website;</li>
+                  <li>cookie information.</li>
+                </ul>
+              </div>
 
-          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">B. Legitimate Interests</h3>
-          <p className="font-medium">We may process personal information where it is reasonably necessary for our legitimate business interests, including:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>improving our services</li>
-            <li>managing customer support</li>
-            <li>maintaining website security</li>
-            <li>preventing misuse or fraud</li>
-            <li>administering our business effectively</li>
-          </ul>
-          <p className="mb-4">Where we rely on legitimate interests, we aim to ensure our use of data is fair, proportionate, and does not override your rights. The ICO describes legitimate interests as a flexible basis, but it must pass a purpose, necessity, and balancing test.</p>
+              <div className="border-l-4 border-teal-500 pl-4">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Communications</h3>
+                <p className="mb-2 text-gray-600">If you contact us, we may keep records of communications including:</p>
+                <ul className="list-disc pl-6 mb-4 space-y-1">
+                  <li>emails;</li>
+                  <li>telephone conversations;</li>
+                  <li>website contact forms;</li>
+                  <li>WhatsApp messages;</li>
+                  <li>customer support notes.</li>
+                </ul>
+                <p className="text-sm text-gray-500 italic">
+                  At present, we do not routinely record telephone calls unless we clearly inform you beforehand.
+                </p>
+              </div>
 
-          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">C. Legal Obligation</h3>
-          <p className="mb-4">We may process personal information where required to comply with applicable laws or regulations.</p>
+              <div className="border-l-4 border-teal-500 pl-4">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Information Provided by Family Members</h3>
+                <p className="mb-2 text-gray-600">Many of our subscriptions are purchased by adult children or other authorised family members.</p>
+                <p className="mb-2">Where someone purchases or manages a subscription on behalf of another person, we may collect:</p>
+                <ul className="list-disc pl-6 mb-2 space-y-1">
+                  <li>their name;</li>
+                  <li>contact details;</li>
+                  <li>relationship to the customer;</li>
+                  <li>information necessary to manage the subscription.</li>
+                </ul>
+                <p className="text-sm text-gray-500">
+                  We only use this information where appropriate and lawful.
+                </p>
+              </div>
+            </div>
+          </section>
 
-          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">D. Consent</h3>
-          <p className="font-medium">In some situations, we may rely on your consent, for example:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>where you opt in to receive marketing emails</li>
-            <li>where a cookie consent tool requires your permission</li>
-            <li>where you choose to provide optional information</li>
-          </ul>
-          <p className="mb-8">Where we rely on consent, you may withdraw it at any time.</p>
+          <hr className="border-gray-200" />
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">7. Payments and Billing Information</h2>
-          <p className="mb-4">If you purchase a membership or service, payments may be processed through Stripe to securely process subscription payments. Senior Ease does not store your complete payment card details. Stripe processes payment information in accordance with its own Privacy Policy..</p>
-          <p className="mb-4">We do not usually store your full payment card or bank account details directly on our own website systems unless securely handled through an authorised provider.</p>
-          <p className="font-medium">We may receive and store limited payment-related information such as:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>payment status</li>
-            <li>billing dates</li>
-            <li>subscription status</li>
-            <li>payment reference details</li>
-          </ul>
-          <p className="mb-8">This helps us manage your membership and provide support.</p>
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Information We Do Not Intentionally Collect</h2>
+            <p className="mb-4">
+              Senior Ease is a digital education and technical support service.
+            </p>
+            <p className="font-semibold text-gray-900 mb-2">We do not intentionally request or require:</p>
+            <ul className="list-disc pl-6 mb-4 space-y-1">
+              <li>medical diagnoses;</li>
+              <li>clinical records;</li>
+              <li>treatment information;</li>
+              <li>prescription information;</li>
+              <li>health assessments;</li>
+              <li>financial PINs;</li>
+              <li>online banking passwords;</li>
+              <li>complete payment card details;</li>
+              <li>legal case information.</li>
+            </ul>
+            <p className="mb-4">
+              We ask customers not to provide sensitive personal information unless it is genuinely necessary for a support request.
+            </p>
+            <p>
+              If sensitive information is shared unexpectedly, we will handle it appropriately and only where permitted by law.
+            </p>
+          </section>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">8. Communications With Us</h2>
-          <p className="font-medium">If you contact us by:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>phone</li>
-            <li>email</li>
-            <li>WhatsApp</li>
-            <li>website form</li>
-            <li>online chat (if added later)</li>
-          </ul>
-          <p className="font-medium">we may keep a record of those communications for:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>customer support</li>
-            <li>service delivery</li>
-            <li>quality assurance</li>
-            <li>dispute handling</li>
-            <li>business administration</li>
-          </ul>
-          
-          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">Call Recordings</h3>
-          <p className="mb-4">If you later choose to record calls for training or service quality, do not just turn this on casually. Your policy, call flow, and notice should explicitly say that calls may be recorded, why, how long they are kept, and what your lawful basis is. The current draft below is written to be safe if you are not recording by default.</p>
-          <p className="mb-4 italic">Suggested clause to keep for now:</p>
-          <p className="mb-4">At present, we do not routinely record calls unless we clearly tell you otherwise.</p>
-          <p className="mb-8">If you want, I can later give you a call recording-compliant version too.</p>
+          <hr className="border-gray-200" />
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">9. Marketing Communications</h2>
-          <p className="mb-4">We may occasionally send you updates about our services, offers, or useful information only where we are allowed to do so.</p>
-          <p className="font-medium">You can opt out of marketing communications at any time by:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>clicking unsubscribe in emails</li>
-            <li>contacting us directly</li>
-            <li>updating your preferences where available</li>
-          </ul>
-          <p className="mb-8">We will not continue sending marketing where you have opted out.</p>
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">6. How We Collect Information</h2>
+            <p className="font-semibold text-gray-900 mb-2">We may collect personal information:</p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>directly from you;</li>
+              <li>when you complete forms on our website;</li>
+              <li>when you create an account;</li>
+              <li>when you purchase a subscription;</li>
+              <li>when you contact our support team;</li>
+              <li>through email or telephone communications;</li>
+              <li>through WhatsApp communications;</li>
+              <li>from authorised family members acting on your behalf;</li>
+              <li>through cookies and website analytics;</li>
+              <li>from payment processors in relation to payment status and subscription confirmation.</li>
+            </ul>
+          </section>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">10. Who We Share Personal Information With</h2>
-          <p className="mb-4">We do not sell your personal information.</p>
-          <p className="font-medium">We may share personal information only where necessary and appropriate with:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>payment providers</li>
-            <li>website hosting providers</li>
-            <li>email or communication service providers</li>
-            <li>customer support tools</li>
-            <li>IT and security service providers</li>
-            <li>professional advisers (such as accountants, solicitors, or compliance advisers)</li>
-            <li>regulators, law enforcement, or authorities where legally required</li>
-          </ul>
-          <p className="mb-4">Where a family member or authorised contact is involved in a customer’s service, we may also communicate relevant information with that person where appropriate and lawful.</p>
-          <p className="mb-8">The ICO says your notice should explain who you share data with or at least the categories of recipients.</p>
+          <hr className="border-gray-200" />
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">11. International Data Transfers</h2>
-          <p className="mb-4">Some of our service providers or technology platforms may store or process data outside the United Kingdom.</p>
-          <p className="mb-4">Where personal information is transferred internationally, we will take reasonable steps to ensure that appropriate safeguards are in place in line with applicable data protection law.</p>
-          <p className="font-medium">These safeguards may include:</p>
-          <ul className="list-disc pl-6 mb-8">
-            <li>UK adequacy regulations</li>
-            <li>approved contractual safeguards</li>
-            <li>secure provider arrangements</li>
-          </ul>
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. How We Use Your Personal Information</h2>
+            <p className="mb-4">
+              Senior Ease only uses personal information where there is a legitimate reason to do so. We use your information to deliver our services, manage your subscription, improve customer experience, and comply with our legal obligations.
+            </p>
+            <p className="font-semibold text-gray-900 mb-2">We may use your personal information to:</p>
+            <ul className="list-disc pl-6 mb-4 space-y-1">
+              <li>create and manage your customer account;</li>
+              <li>provide technical education and support services;</li>
+              <li>verify your identity where appropriate;</li>
+              <li>respond to enquiries and support requests;</li>
+              <li>manage your subscription and membership;</li>
+              <li>process subscription payments;</li>
+              <li>send invoices and payment confirmations;</li>
+              <li>provide service updates and important account notifications;</li>
+              <li>improve our website and services;</li>
+              <li>maintain the security of our systems;</li>
+              <li>investigate fraud or misuse of our services;</li>
+              <li>comply with legal and regulatory obligations.</li>
+            </ul>
+            <p className="font-medium text-gray-900">We do not sell your personal information to third parties.</p>
+          </section>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">12. How Long We Keep Personal Information</h2>
-          <p className="font-medium">We keep personal information only for as long as it is reasonably necessary for the purposes set out in this Privacy Policy, including:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>providing our services</li>
-            <li>handling customer support</li>
-            <li>maintaining business records</li>
-            <li>complying with legal, tax, and accounting obligations</li>
-            <li>resolving disputes or complaints</li>
-          </ul>
-          
-          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">Typical retention approach</h3>
-          <p className="font-medium">We may keep different categories of information for different periods depending on:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>the nature of the service</li>
-            <li>whether the customer remains active</li>
-            <li>whether there is an ongoing complaint or dispute</li>
-            <li>legal or accounting recordkeeping needs</li>
-          </ul>
-          <p className="mb-4 italic">If you want a simple operational rule for launch, use something like:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>enquiry-only records: up to 12 months</li>
-            <li>customer account / support records: up to 6 years after the end of the relationship</li>
-            <li>basic billing records: up to 6 years where needed for accounting/tax</li>
-          </ul>
-          <p className="mb-8">That kind of retention-based wording is generally better than saying “we keep it forever.” ICO guidance says you should tell people how long you keep data, or how you decide that period.</p>
+          <hr className="border-gray-200" />
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">13. How We Protect Personal Information</h2>
-          <p className="font-medium">We take reasonable technical and organisational measures to protect personal information against:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>unauthorised access</li>
-            <li>accidental loss</li>
-            <li>misuse</li>
-            <li>alteration</li>
-            <li>disclosure</li>
-          </ul>
-          <p className="font-medium">These measures may include:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>password-protected systems</li>
-            <li>limited access controls</li>
-            <li>secure software tools</li>
-            <li>trusted payment providers</li>
-            <li>secure website hosting</li>
-          </ul>
-          <p className="mb-8">However, no online system can be guaranteed to be completely secure.</p>
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Our Lawful Basis for Processing Personal Information</h2>
+            <p className="mb-6">
+              Under the UK General Data Protection Regulation (UK GDPR), we must have a lawful basis for processing your personal information.
+              Depending on the circumstances, we rely on one or more of the following lawful bases.
+            </p>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">14. Your Data Protection Rights</h2>
-          <p className="font-medium">Under UK data protection law, you may have the right to:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>access the personal information we hold about you</li>
-            <li>correct inaccurate or incomplete information</li>
-            <li>request deletion of your information in certain circumstances</li>
-            <li>restrict how we use your information in certain circumstances</li>
-            <li>object to certain processing, including processing based on legitimate interests and direct marketing</li>
-            <li>request portability of certain information where applicable</li>
-            <li>withdraw consent where we rely on consent</li>
-          </ul>
-          <p className="mb-4">The ICO says your privacy notice should explain what rights people have, and that the right to object should be brought to their attention clearly.</p>
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">A. Performance of a Contract</h3>
+                <p className="mb-2">Most of the information we process is necessary to fulfil the agreement between you and Senior Ease.</p>
+                <p className="mb-2 font-medium text-gray-700">This includes:</p>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li>creating your account;</li>
+                  <li>providing technical support;</li>
+                  <li>managing subscriptions;</li>
+                  <li>processing payments;</li>
+                  <li>providing customer service;</li>
+                  <li>renewing or cancelling subscriptions.</li>
+                </ul>
+                <p className="mt-2 text-sm text-gray-500 italic">Without this information, we may not be able to provide our services.</p>
+              </div>
 
-          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-2">How to Exercise Your Rights</h3>
-          <p className="mb-4">To exercise any of your rights, please contact us at:</p>
-          <p className="mb-4">
-            Email: [Insert Email]<br />
-            Phone: [Insert Phone Number]
-          </p>
-          <p className="mb-8">We may need to verify your identity before responding to certain requests.</p>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">B. Legitimate Interests</h3>
+                <p className="mb-2">We may process personal information where it is reasonably necessary for our legitimate business interests, provided your rights and freedoms are not overridden.</p>
+                <p className="mb-2 font-medium text-gray-700">This may include:</p>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li>improving our services;</li>
+                  <li>responding to customer enquiries;</li>
+                  <li>maintaining website security;</li>
+                  <li>preventing fraud;</li>
+                  <li>resolving complaints;</li>
+                  <li>analysing website performance;</li>
+                  <li>managing business operations.</li>
+                </ul>
+              </div>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">15. Complaints</h2>
-          <p className="mb-4">If you have concerns about how we use your personal information, please contact us first so we can try to resolve the issue.</p>
-          <p className="mb-4">You also have the right to complain to the UK’s data protection regulator:</p>
-          <p className="mb-8">
-            Information Commissioner’s Office (ICO)<br />
-            Website: <a href="https://ico.org.uk" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">ICO website</a>
-          </p>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">C. Legal Obligations</h3>
+                <p>We may process personal information where required to comply with applicable laws, including tax, accounting, fraud prevention, or law enforcement requirements.</p>
+              </div>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">16. Cookies and Website Tracking</h2>
-          <p className="font-medium">Our website may use cookies and similar technologies to:</p>
-          <ul className="list-disc pl-6 mb-4">
-            <li>help the website function properly</li>
-            <li>understand how visitors use the website</li>
-            <li>improve website performance</li>
-            <li>remember preferences</li>
-          </ul>
-          <p className="mb-4">Depending on how your website is set up, you may also use cookies for analytics or marketing purposes.</p>
-          <p className="mb-4">If required, we will provide a cookie notice and/or cookie consent tool on our website.</p>
-          <p className="mb-8 italic">Strong recommendation: add a separate Cookie Policy and cookie banner before launch, especially if you use: Google Analytics, Meta Pixel, Hotjar, chat widgets, embedded videos or maps.</p>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">D. Consent</h3>
+                <p className="mb-2">Where required by law, we rely on your consent.</p>
+                <p className="mb-2 font-medium text-gray-700">Examples include:</p>
+                <ul className="list-disc pl-6 mb-2 space-y-1">
+                  <li>receiving marketing emails;</li>
+                  <li>accepting non-essential cookies;</li>
+                  <li>providing optional information through website forms.</li>
+                </ul>
+                <p className="text-sm text-gray-500">Where processing is based on consent, you may withdraw that consent at any time.</p>
+              </div>
+            </div>
+          </section>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">17. Children’s Data</h2>
-          <p className="mb-4">Senior Ease is intended for adults and is not aimed at children.</p>
-          <p className="mb-8">We do not knowingly collect personal information from children as part of our normal service.</p>
+          <hr className="border-gray-200" />
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">18. Data Provided by Family Members or Authorised Contacts</h2>
-          <p className="mb-4">Because Senior Ease may be purchased by adult children or family members on behalf of a senior citizen, we may sometimes receive personal information from another person rather than directly from the customer.</p>
-          <p className="mb-4">Where this happens, we aim to use that information only where appropriate and relevant to delivering our service.</p>
-          <p className="mb-8">If you share someone else’s information with us, you should do so only where you have a proper reason and, where appropriate, their knowledge or permission.</p>
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Payments and Billing</h2>
+            <p className="mb-4">
+              Senior Ease offers subscription-based services.
+            </p>
+            <p className="font-semibold text-gray-900 mb-2">We currently accept payments through:</p>
+            <ul className="list-disc pl-6 mb-4 space-y-1">
+              <li>Stripe, our secure online payment processor; and</li>
+              <li>BACS Bank Transfer for customers who prefer to pay directly from their UK bank account, where this payment option is available.</li>
+            </ul>
+            <p className="mb-4">
+              After a subscription is confirmed, we may send customers an invoice and a secure payment link using Stripe Invoicing. Stripe's hosted payment page allows customers to pay securely using the payment methods supported by Stripe. All payment pages are hosted and secured by Stripe.
+            </p>
+            <p className="mb-4">
+              When you make a payment using Stripe, your payment card information is processed securely by Stripe. Senior Ease does not store or have access to your complete payment card details. Stripe processes payment information in accordance with its own Privacy Policy and security standards.
+            </p>
+            <p className="mb-4">
+              Where you choose to pay by BACS Bank Transfer, payments are made directly between your bank and Senior Ease using the bank account details provided by us. We do not collect or store your online banking passwords, PINs, or other banking security credentials.
+            </p>
+            <p className="font-semibold text-gray-900 mb-2">To manage your subscription, we may receive and retain limited payment-related information, including:</p>
+            <ul className="list-disc pl-6 mb-4 space-y-1">
+              <li>payment confirmation;</li>
+              <li>payment reference numbers;</li>
+              <li>billing dates;</li>
+              <li>invoice details;</li>
+              <li>subscription status;</li>
+              <li>renewal information; and</li>
+              <li>transaction identifiers.</li>
+            </ul>
+            <p className="font-semibold text-gray-900 mb-2">We use this information solely to:</p>
+            <ul className="list-disc pl-6 mb-4 space-y-1">
+              <li>activate and manage your subscription;</li>
+              <li>issue invoices and secure payment links through Stripe Invoicing where applicable;</li>
+              <li>verify payments received through Stripe or BACS Bank Transfer;</li>
+              <li>process subscription renewals;</li>
+              <li>issue invoices and payment receipts;</li>
+              <li>respond to billing enquiries;</li>
+              <li>provide customer support; and</li>
+              <li>comply with legal, accounting, and regulatory obligations.</li>
+            </ul>
+            <p>
+              All payment information is handled using appropriate security measures. Access to payment-related information is restricted to authorised personnel who require it to manage subscriptions, customer accounts, and billing enquiries.
+            </p>
+          </section>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">19. Changes to This Privacy Policy</h2>
-          <p className="mb-4">We may update this Privacy Policy from time to time.</p>
-          <p className="mb-4">Any updates will be posted on this page, and the revised version will apply from the updated Effective Date shown at the top.</p>
-          <p className="mb-8">We recommend checking this page occasionally to stay informed.</p>
+          <hr className="border-gray-200" />
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">20. Contact Us</h2>
-          <p className="mb-4">If you have any questions about this Privacy Policy or how your personal information is used, please contact:</p>
-          <p className="mb-8">
-            Senior Ease<br />
-            Email: [support@senioreease.com]<br />
-            Phone: [+44 (0) 330 401 0019]<br />
-            Website: [www.senioreease.com]
-          </p>
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Marketing Communications</h2>
+            <p className="font-semibold text-gray-900 mb-2">We may occasionally send information relating to:</p>
+            <ul className="list-disc pl-6 mb-4 space-y-1">
+              <li>new services;</li>
+              <li>service improvements;</li>
+              <li>newsletters;</li>
+              <li>educational content;</li>
+              <li>promotions;</li>
+              <li>important company announcements.</li>
+            </ul>
+            <p className="mb-4">
+              Where required by law, we will only send marketing communications if you have given your consent or where another lawful basis applies.
+            </p>
+            <p className="font-semibold text-gray-900 mb-2">You may opt out of marketing communications at any time by:</p>
+            <ul className="list-disc pl-6 mb-4 space-y-1">
+              <li>clicking the unsubscribe link in our emails;</li>
+              <li>contacting our support team;</li>
+              <li>updating your communication preferences, where available.</li>
+            </ul>
+            <p>
+              Even if you opt out of marketing communications, we may still send important service-related emails, such as payment confirmations, security notices, and account updates.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Communications With Our Support Team</h2>
+            <p className="font-semibold text-gray-900 mb-2">If you contact Senior Ease by:</p>
+            <ul className="list-disc pl-6 mb-4 space-y-1">
+              <li>telephone;</li>
+              <li>email;</li>
+              <li>WhatsApp;</li>
+              <li>website contact form; or</li>
+              <li>customer portal,</li>
+            </ul>
+            <p className="mb-4">
+              we may retain records of those communications to:
+            </p>
+            <ul className="list-disc pl-6 mb-4 space-y-1">
+              <li>provide customer support;</li>
+              <li>answer your enquiries;</li>
+              <li>improve our services;</li>
+              <li>resolve complaints;</li>
+              <li>maintain accurate service records;</li>
+              <li>protect our staff and customers where necessary.</li>
+            </ul>
+            <p className="mb-4">
+              At present, telephone calls are not routinely recorded.
+            </p>
+            <p>
+              If this changes in the future, we will clearly inform you before any recording takes place and explain why recordings are made and how long they will be retained.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Who We Share Your Information With</h2>
+            <p className="mb-4 font-semibold text-gray-900">
+              We only share personal information where necessary to operate our business or where required by law.
+            </p>
+            <p className="mb-2">We may share information with:</p>
+            <ul className="list-disc pl-6 mb-4 space-y-1">
+              <li>Stripe for secure payment processing;</li>
+              <li>website hosting providers;</li>
+              <li>cloud storage providers;</li>
+              <li>IT service providers;</li>
+              <li>website maintenance providers;</li>
+              <li>email service providers;</li>
+              <li>customer communication platforms;</li>
+              <li>accountants and professional advisers;</li>
+              <li>legal advisers where required;</li>
+              <li>regulatory authorities;</li>
+              <li>law enforcement agencies where legally required.</li>
+            </ul>
+            <p className="mb-4">
+              Where a family member or authorised representative manages your subscription, we may share relevant information with that person where appropriate and lawful.
+            </p>
+            <p className="font-semibold text-gray-900">We do not sell or rent your personal information to third parties.</p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">13. International Transfers</h2>
+            <p className="mb-4">
+              Some of our trusted service providers may process personal information outside the United Kingdom.
+            </p>
+            <p className="mb-4 font-semibold text-gray-900">
+              Where this happens, we ensure that appropriate safeguards are in place to protect your personal information.
+            </p>
+            <p className="mb-2 font-medium text-gray-700">These safeguards may include:</p>
+            <ul className="list-disc pl-6 mb-4 space-y-1">
+              <li>UK Adequacy Regulations;</li>
+              <li>International Data Transfer Agreements;</li>
+              <li>Standard Contractual Clauses;</li>
+              <li>other safeguards recognised under UK data protection law.</li>
+            </ul>
+            <p>
+              We will take reasonable steps to ensure that your information receives an appropriate level of protection wherever it is processed.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">14. How Long We Keep Your Personal Information</h2>
+            <p className="mb-4">
+              We keep personal information only for as long as it is reasonably necessary to fulfil the purposes described in this Privacy Policy, including providing our services, meeting legal obligations, resolving disputes, and maintaining accurate business records.
+            </p>
+            <p className="font-semibold text-gray-900 mb-2">Our typical retention periods are:</p>
+            <ul className="list-disc pl-6 mb-4 space-y-2">
+              <li><span className="font-medium text-gray-900">Enquiries from prospective customers:</span> up to 12 months after the enquiry, unless a subscription is created.</li>
+              <li><span className="font-medium text-gray-900">Customer account information:</span> for the duration of the subscription and up to 6 years after the account is closed, where required for legal, tax, or accounting purposes.</li>
+              <li><span className="font-medium text-gray-900">Billing and payment records:</span> up to 6 years, or longer where required by applicable law.</li>
+              <li><span className="font-medium text-gray-900">Customer support records:</span> for as long as reasonably necessary to provide support and manage our business operations.</li>
+              <li><span className="font-medium text-gray-900">Website analytics:</span> retained in accordance with the settings of our analytics providers.</li>
+            </ul>
+            <p>
+              When personal information is no longer required, we will securely delete or anonymise it where reasonably practicable.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">15. How We Protect Your Personal Information</h2>
+            <p className="mb-4">
+              Senior Ease is committed to protecting your personal information.
+              We use appropriate technical and organisational measures designed to safeguard your information against unauthorised access, loss, misuse, alteration, or disclosure.
+            </p>
+            <p className="font-semibold text-gray-900 mb-2">These measures may include:</p>
+            <ul className="list-disc pl-6 mb-4 space-y-1">
+              <li>secure website encryption (HTTPS);</li>
+              <li>password-protected systems;</li>
+              <li>role-based access controls;</li>
+              <li>secure cloud hosting;</li>
+              <li>trusted payment providers;</li>
+              <li>software security updates;</li>
+              <li>restricted staff access to customer information.</li>
+            </ul>
+            <p>
+              Although we take reasonable steps to protect your information, no method of electronic storage or internet transmission can be guaranteed to be completely secure.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">16. Your Privacy Rights</h2>
+            <p className="mb-4">
+              Under the UK General Data Protection Regulation (UK GDPR), you may have the following rights:
+            </p>
+            <ul className="list-disc pl-6 mb-4 space-y-2">
+              <li>to request access to the personal information we hold about you;</li>
+              <li>to request correction of inaccurate or incomplete information;</li>
+              <li>to request deletion of your personal information where applicable;</li>
+              <li>to request restriction of processing in certain circumstances;</li>
+              <li>to object to certain types of processing, including direct marketing;</li>
+              <li>to request the transfer of your personal information where applicable;</li>
+              <li>to withdraw consent where processing is based on your consent.</li>
+            </ul>
+            <p className="mb-4">
+              These rights are subject to certain legal exceptions and may not apply in every circumstance.
+            </p>
+            <p className="mb-4">
+              To exercise any of your rights, please contact us using the details provided at the end of this Privacy Policy.
+              We may ask you to verify your identity before responding to your request.
+            </p>
+            <p>
+              We aim to respond to valid requests within one month, although this may be extended where permitted by law.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">17. Complaints</h2>
+            <p className="mb-4">
+              If you have any concerns about how we use your personal information, we encourage you to contact us first so we have the opportunity to resolve your concerns.
+            </p>
+            <p className="mb-4">
+              If you are not satisfied with our response, you have the right to lodge a complaint with the UK's supervisory authority for data protection:
+            </p>
+            <div className="bg-red-50/50 p-6 rounded-2xl border border-red-100/50">
+              <p className="font-bold text-gray-900 mb-2">Information Commissioner's Office (ICO)</p>
+              <p className="mb-1"><span className="font-medium text-gray-500">Website:</span> <a href="https://www.ico.org.uk" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.ico.org.uk</a></p>
+              <p><span className="font-medium text-gray-500">Telephone:</span> <a href="tel:03031231113" className="text-teal-600 hover:underline">0303 123 1113</a></p>
+            </div>
+            <p className="mt-4 text-sm text-gray-500">
+              Further information about your privacy rights is available on the ICO website.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">18. Cookies and Similar Technologies</h2>
+            <p className="mb-4">
+              Our website uses cookies and similar technologies to help provide a better browsing experience.
+            </p>
+            <p className="font-semibold text-gray-900 mb-2">Cookies may be used to:</p>
+            <ul className="list-disc pl-6 mb-4 space-y-1">
+              <li>ensure the website functions correctly;</li>
+              <li>remember your preferences;</li>
+              <li>understand how visitors use our website;</li>
+              <li>improve website performance;</li>
+              <li>enhance security.</li>
+            </ul>
+            <p className="mb-4">
+              Where required by law, we will ask for your consent before placing non-essential cookies on your device.
+            </p>
+            <p>
+              You can manage or disable cookies through your browser settings at any time. However, disabling certain cookies may affect the functionality of our website.
+              For more detailed information, please refer to our Cookie Policy, where available.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">19. Children's Privacy</h2>
+            <p className="mb-4">
+              Senior Ease is designed for adults and is not intended for children under the age of 18.
+              We do not knowingly collect personal information from children.
+            </p>
+            <p>
+              If we become aware that we have unintentionally collected personal information from a child without appropriate authorisation, we will take reasonable steps to delete that information promptly.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">20. Information Provided by Family Members or Authorised Representatives</h2>
+            <p className="mb-4">
+              Many Senior Ease subscriptions are purchased or managed by adult children, family members, carers, or other authorised representatives on behalf of senior citizens.
+            </p>
+            <p className="mb-4">
+              Where a family member or authorised representative provides personal information about another individual, they should ensure they have the appropriate authority or permission to do so.
+            </p>
+            <p>
+              We will only use such information where it is relevant to providing our services and in accordance with applicable data protection laws.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">21. Third-Party Websites</h2>
+            <p className="mb-4">
+              Our website may contain links to third-party websites or services.
+              We are not responsible for the privacy practices, security, or content of external websites.
+            </p>
+            <p>
+              We encourage you to read the privacy policies of any third-party websites before providing personal information.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">22. Changes to This Privacy Policy</h2>
+            <p className="mb-4">
+              We may update this Privacy Policy from time to time to reflect changes in our services, legal obligations, or business practices.
+              Any changes will be published on this page with an updated Effective Date.
+            </p>
+            <p>
+              We encourage you to review this Privacy Policy periodically to stay informed about how we protect your personal information.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">23. Contact Us</h2>
+            <p className="mb-6">
+              If you have any questions about this Privacy Policy or how we handle your personal information, please contact us.
+            </p>
+            <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100/50">
+              <p className="font-bold text-teal-900 mb-2">Senior Ease</p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.senioreease.com" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-700 hover:underline">support@senioreease.com</a></p>
+              <p><span className="font-semibold text-teal-800">Telephone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
+            </div>
+          </section>
 
           <hr className="my-8 border-gray-200" />
           
-          <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4"></h3>
-          <p className="mb-4 italic"></p>
-          <p className="mb-8 font-medium">We respect your privacy and only use your information to provide support, manage memberships, and communicate with you in line with our Privacy Policy.</p>
+          <p className="font-semibold text-teal-600">
+            We respect your privacy and only use your information to provide support, manage memberships, and communicate with you in line with our Privacy Policy.
+          </p>
         </div>
       </div>
     </div>
