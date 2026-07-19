@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Heart, Shield, Users, CheckCircle2, Lightbulb, Smile, Clock, Phone } from 'lucide-react';
 import { motion } from 'motion/react';
-const aboutHeroImage = '/images/seniors_learning_tablets_group_1784445191695.jpg';
+import aboutHeroImage from '../assets/images/seniors_learning_tablets_group_1784445191695.jpg';
 
 export default function About() {
   const fadeInUp = {
@@ -26,7 +26,6 @@ export default function About() {
             src={aboutHeroImage} 
             alt="Group of seniors learning digital skills" 
             className="w-full h-full object-cover object-center"
-            referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/45 to-slate-950/60 backdrop-blur-[0.5px]"></div>
         </div>
@@ -57,7 +56,6 @@ export default function About() {
                 src={aboutHeroImage} 
                 alt="Group of seniors learning digital skills" 
                 className="w-full h-full object-cover object-center"
-                referrerPolicy="no-referrer"
               />
             </div>
             <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>

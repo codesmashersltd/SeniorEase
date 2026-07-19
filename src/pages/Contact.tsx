@@ -4,7 +4,7 @@ import { Mail, Phone, Clock, MessageSquare, ArrowRight, CheckCircle2, X, MapPin 
 import { motion, AnimatePresence } from 'motion/react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-const contactHeroImage = '/images/seniors_contact_hero_1784446926253.jpg';
+import contactHeroImage from '../assets/images/seniors_contact_hero_1784446926253.jpg';
 
 export default function Contact() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -53,7 +53,6 @@ export default function Contact() {
             src={contactHeroImage} 
             alt="Cheerful senior using a smartphone" 
             className="w-full h-full object-cover object-center"
-            referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-slate-950/65 backdrop-blur-[0.5px]"></div>
         </div>
@@ -82,7 +81,6 @@ export default function Contact() {
                 src={contactHeroImage} 
                 alt="Cheerful senior using a smartphone" 
                 className="w-full h-full object-cover object-center"
-                referrerPolicy="no-referrer"
               />
             </div>
             <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>
