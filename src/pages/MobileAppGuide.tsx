@@ -48,15 +48,18 @@ export default function MobileAppGuide() {
             </div>
           </div>
 
-          <a 
-            href="https://drive.google.com/file/d/1bjd4Vko01LVx0JWrIqAszY1C0JS3mT2Y/view?usp=sharing"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-          >
-            <DownloadCloud size={24} />
-            Download App (.apk)
-          </a>
+          <div className="space-y-4">
+            {/* Primary Direct Download Button */}
+            <a 
+              href="https://drive.google.com/file/d/1YyhDMbBC0-0nO82zlA-DWHsgf0VVOox-/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+            >
+              <DownloadCloud size={24} />
+              Download App
+            </a>
+          </div>
 
           {/* Icon Download Section */}
           <div className="mt-12 pt-8 border-t border-gray-100 uppercase tracking-widest text-[10px] text-gray-400 font-bold mb-4">

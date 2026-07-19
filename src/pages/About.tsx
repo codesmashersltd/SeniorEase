@@ -20,8 +20,8 @@ export default function About() {
   return (
     <div className="flex flex-col overflow-hidden">
       {/* Hero Section */}
-      <section className="relative text-white py-32 md:py-40 overflow-hidden bg-slate-900">
-        <div className="absolute inset-0">
+      <section className="relative text-white py-16 md:py-40 overflow-hidden bg-slate-900">
+        <div className="absolute inset-0 hidden md:block">
           <img 
             src={aboutHeroImage} 
             alt="Group of seniors learning digital skills" 
@@ -29,6 +29,10 @@ export default function About() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/45 to-slate-950/60 backdrop-blur-[0.5px]"></div>
         </div>
+        
+        {/* Mobile background (soft dark gradient) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 md:hidden"></div>
+
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -38,12 +42,24 @@ export default function About() {
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
             Our Mission & Vision
           </span>
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
+          <h1 className="text-4xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
             About SeniorEase
           </h1>
-          <p className="text-xl md:text-2xl text-teal-50 font-medium leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
+          <p className="text-lg md:text-2xl text-teal-50 font-medium leading-relaxed max-w-3xl mx-auto mb-8 md:mb-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
             Helping senior citizens feel more confident, comfortable, and supported in today’s fast-paced digital world.
           </p>
+
+          {/* Mobile Hero Image */}
+          <div className="block md:hidden mb-2 relative">
+            <div className="aspect-[16/10] rounded-2xl overflow-hidden shadow-xl border border-teal-500/20">
+              <img 
+                src={aboutHeroImage} 
+                alt="Group of seniors learning digital skills" 
+                className="w-full h-full object-cover object-center"
+              />
+            </div>
+            <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>
+          </div>
         </motion.div>
       </section>
 

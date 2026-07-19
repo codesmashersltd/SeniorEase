@@ -43,8 +43,8 @@ export default function Pricing() {
     "provider": {
       "@type": "Organization",
       "name": "Senior Ease",
-      "url": "https://www.senioreease.com",
-      "email": "support@senioreease.com",
+      "url": "https://www.seniorease.com",
+      "email": "support@seniorease.com",
       "telephone": "+443304010019"
     },
     "itemListElement": [
@@ -67,7 +67,7 @@ export default function Pricing() {
               "unitCode": "MON"
             }
           },
-          "url": "https://www.senioreease.com/pricing"
+          "url": "https://www.seniorease.com/pricing"
         }
       },
       {
@@ -89,7 +89,7 @@ export default function Pricing() {
               "unitCode": "MON"
             }
           },
-          "url": "https://www.senioreease.com/pricing"
+          "url": "https://www.seniorease.com/pricing"
         }
       },
       {
@@ -111,7 +111,7 @@ export default function Pricing() {
               "unitCode": "MON"
             }
           },
-          "url": "https://www.senioreease.com/pricing"
+          "url": "https://www.seniorease.com/pricing"
         }
       }
     ]
@@ -152,8 +152,8 @@ export default function Pricing() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingSchema) }}
       />
       {/* Hero Section */}
-      <section className="relative text-white py-32 md:py-40 overflow-hidden bg-slate-900">
-        <div className="absolute inset-0">
+      <section className="relative text-white py-16 md:py-40 overflow-hidden bg-slate-900">
+        <div className="absolute inset-0 hidden md:block">
           <img 
             src={pricingHeroImage} 
             alt="Happy seniors enjoying their afternoon with ease of mind" 
@@ -162,6 +162,9 @@ export default function Pricing() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-slate-950/65 backdrop-blur-[0.5px]"></div>
         </div>
+
+        {/* Mobile background (soft dark gradient) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 md:hidden"></div>
 
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -172,24 +175,36 @@ export default function Pricing() {
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
             Transparent Subscriptions
           </span>
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+          <h1 className="text-4xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
             Simple Plans
           </h1>
-          <p className="text-xl md:text-2xl text-teal-100 leading-relaxed max-w-3xl mx-auto font-medium mb-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+          <p className="text-base md:text-xl text-teal-100 leading-relaxed max-w-3xl mx-auto font-medium mb-8 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
             Choose the level of support that suits you or your loved one best. Our plans are designed to provide calm, practical digital learning on a monthly basis.
           </p>
+
+          {/* Mobile Hero Image */}
+          <div className="block md:hidden mb-8 relative">
+            <div className="aspect-[16/10] rounded-2xl overflow-hidden shadow-xl border border-teal-500/20">
+              <img 
+                src={pricingHeroImage} 
+                alt="Happy seniors enjoying their afternoon with ease of mind" 
+                className="w-full h-full object-cover object-center"
+              />
+            </div>
+            <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>
+          </div>
           
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-white font-bold text-lg md:text-xl bg-slate-950/85 inline-flex px-8 py-4 md:py-5 rounded-2xl md:rounded-full border border-teal-500/30 backdrop-blur-md shadow-2xl">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-white font-bold text-sm md:text-xl bg-slate-950/85 inline-flex px-8 py-4 md:py-5 rounded-2xl md:rounded-full border border-teal-500/30 backdrop-blur-md shadow-2xl">
             <span className="flex items-center gap-2.5">
-              <CheckCircle2 size={24} className="text-teal-300" /> Cancel Anytime
+              <CheckCircle2 size={20} className="text-teal-300" /> Cancel Anytime
             </span>
             <span className="hidden md:inline text-teal-500/80 text-2xl">•</span>
             <span className="flex items-center gap-2.5">
-              <CheckCircle2 size={24} className="text-teal-300" /> No Hidden Fees
+              <CheckCircle2 size={20} className="text-teal-300" /> No Hidden Fees
             </span>
             <span className="hidden md:inline text-teal-500/80 text-2xl">•</span>
             <span className="flex items-center gap-2.5">
-              <CheckCircle2 size={24} className="text-teal-300" /> No Setup Costs
+              <CheckCircle2 size={20} className="text-teal-300" /> No Setup Costs
             </span>
           </div>
         </motion.div>
@@ -425,7 +440,7 @@ export default function Pricing() {
           </div>
           
           <motion.div variants={fadeInUp} className="text-center text-sm text-gray-600 bg-gray-50 p-4 rounded-xl border border-gray-200">
-            <p>All plans are billed monthly and renew automatically until cancelled. You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline font-semibold">support@senioreease.com</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken. Please see our <Link to="/refund" className="text-teal-600 hover:underline font-semibold">Refund & Cancellation Policy</Link> and <Link to="/terms" className="text-teal-600 hover:underline font-semibold">Terms & Conditions</Link> for full details. If paying by BACS Direct Debit, your membership will be activated once the payment has been successfully processed and confirmed.</p>
+            <p>All plans are billed monthly and renew automatically until cancelled. You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline font-semibold">support@seniorease.com</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken. Please see our <Link to="/refund" className="text-teal-600 hover:underline font-semibold">Refund & Cancellation Policy</Link> and <Link to="/terms" className="text-teal-600 hover:underline font-semibold">Terms & Conditions</Link> for full details. If paying by BACS Direct Debit, your membership will be activated once the payment has been successfully processed and confirmed.</p>
           </motion.div>
         </motion.div>
       </section>

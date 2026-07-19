@@ -37,8 +37,8 @@ export default function FAQ() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative text-white py-32 md:py-40 overflow-hidden bg-slate-900">
-        <div className="absolute inset-0">
+      <section className="relative text-white py-16 md:py-40 overflow-hidden bg-slate-900">
+        <div className="absolute inset-0 hidden md:block">
           <img 
             src={faqHeroImage} 
             alt="Friendly support representative helping seniors" 
@@ -48,16 +48,31 @@ export default function FAQ() {
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-slate-950/65 backdrop-blur-[0.5px]"></div>
         </div>
 
+        {/* Mobile background (soft dark gradient) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 md:hidden"></div>
+
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
             Got Questions?
           </span>
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
             Frequently Asked Questions
           </h1>
-          <p className="text-xl md:text-2xl text-teal-100 font-medium leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+          <p className="text-lg md:text-2xl text-teal-100 font-medium leading-relaxed max-w-3xl mx-auto mb-8 md:mb-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
             Helpful answers about how our simple digital learning platform works.
           </p>
+
+          {/* Mobile Hero Image */}
+          <div className="block md:hidden mb-2 relative">
+            <div className="aspect-[16/10] rounded-2xl overflow-hidden shadow-xl border border-teal-500/20">
+              <img 
+                src={faqHeroImage} 
+                alt="Friendly support representative helping seniors" 
+                className="w-full h-full object-cover object-center"
+              />
+            </div>
+            <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>
+          </div>
         </div>
       </section>
 

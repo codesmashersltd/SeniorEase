@@ -31,9 +31,9 @@ export default function Layout() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Senior Ease",
-    "url": "https://www.senioreease.com",
-    "logo": "https://www.senioreease.com/logo.svg",
-    "email": "support@senioreease.com",
+    "url": "https://www.seniorease.com",
+    "logo": "https://www.seniorease.com/logo.svg",
+    "email": "support@seniorease.com",
     "telephone": "+443304010019",
     "address": {
       "@type": "PostalAddress",
@@ -43,7 +43,7 @@ export default function Layout() {
       "addressCountry": "GB"
     },
     "sameAs": [
-      "https://www.senioreease.com"
+      "https://www.seniorease.com"
     ]
   };
 
@@ -234,7 +234,7 @@ export default function Layout() {
               <div className="space-y-4 text-gray-300 text-sm">
                 <p className="flex flex-col gap-0.5">
                   <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Email</span>
-                  <a href="mailto:support@senioreease.com" className="hover:text-white text-gray-200 transition-colors">support@senioreease.com</a>
+                  <a href="mailto:support@seniorease.com" className="hover:text-white text-gray-200 transition-colors">support@seniorease.com</a>
                 </p>
                 <p className="flex flex-col gap-0.5">
                   <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Phone</span>

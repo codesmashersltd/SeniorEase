@@ -11,6 +11,7 @@ export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [unauthorizedDomain, setUnauthorizedDomain] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -52,6 +53,7 @@ export default function AdminLogin() {
   const handleGoogleLogin = async () => {
     setLoading(true);
     setError(null);
+    setUnauthorizedDomain(null);
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
@@ -67,7 +69,12 @@ export default function AdminLogin() {
         setError(`Access denied (${user.email}). Unauthorized account.`);
       }
     } catch (err: any) {
-      setError(err.message || 'Failed to login via Google.');
+      if (err.code === 'auth/unauthorized-domain' || err.message?.includes('unauthorized-domain')) {
+        setUnauthorizedDomain(window.location.hostname);
+        setError('This domain is not authorized in your Firebase project configuration.');
+      } else {
+        setError(err.message || 'Failed to login via Google.');
+      }
     } finally {
       setLoading(false);
     }
@@ -85,7 +92,11 @@ export default function AdminLogin() {
         {/* Tabs */}
         <div className="bg-gray-100/80 p-1.5 rounded-xl flex mb-8 animate-in fade-in duration-700 delay-200">
           <button
-            onClick={() => setActiveTab('email')}
+            onClick={() => {
+              setActiveTab('email');
+              setError(null);
+              setUnauthorizedDomain(null);
+            }}
             className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-bold transition-all duration-300 ${
               activeTab === 'email' ? 'bg-white text-[#009688] shadow-sm' : 'text-gray-500 hover:text-gray-700'
             }`}
@@ -93,7 +104,11 @@ export default function AdminLogin() {
             Email & Password
           </button>
           <button
-            onClick={() => setActiveTab('google')}
+            onClick={() => {
+              setActiveTab('google');
+              setError(null);
+              setUnauthorizedDomain(null);
+            }}
             className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-bold transition-all duration-300 ${
               activeTab === 'google' ? 'bg-white text-[#009688] shadow-sm' : 'text-gray-500 hover:text-gray-700'
             }`}
@@ -103,9 +118,29 @@ export default function AdminLogin() {
         </div>
 
         {error && (
-          <div className="mb-6 bg-red-50 border border-red-100 text-red-600 p-4 rounded-xl flex items-center gap-3 text-sm animate-in fade-in slide-in-from-top-2 duration-300">
-            <AlertCircle className="h-5 w-5 shrink-0" />
-            <p>{error}</p>
+          <div className="mb-6 bg-red-50 border border-red-100 text-red-600 p-4 rounded-xl flex items-start gap-3 text-sm animate-in fade-in slide-in-from-top-2 duration-300">
+            <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="font-semibold">{error}</p>
+              {unauthorizedDomain && (
+                <div className="mt-3 text-xs text-red-700 space-y-2 border-t border-red-200/60 pt-3">
+                  <p>
+                    The domain <strong className="font-black underline">{unauthorizedDomain}</strong> is not listed as an Authorized Domain in your Firebase project <code className="bg-red-100/80 px-1.5 py-0.5 rounded font-mono text-red-800">gen-lang-client-0483352558</code>.
+                  </p>
+                  <p className="font-bold">How to resolve this in Firebase Console:</p>
+                  <ol className="list-decimal pl-4 space-y-1 text-red-800 font-medium">
+                    <li>Go to the <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer" className="underline font-bold hover:text-red-900">Firebase Console</a>.</li>
+                    <li>Open your project: <strong className="font-bold">gen-lang-client-0483352558</strong>.</li>
+                    <li>Navigate to <strong className="font-bold">Build &gt; Authentication &gt; Settings</strong> tab.</li>
+                    <li>Scroll down to <strong className="font-bold">Authorized domains</strong>.</li>
+                    <li>Click <strong className="font-bold">Add domain</strong> and add <code className="bg-red-100/80 px-1 py-0.5 rounded font-mono">{unauthorizedDomain}</code>.</li>
+                  </ol>
+                  <p className="pt-2 border-t border-red-200/40 text-[11px] text-red-600 italic">
+                    💡 <strong>Immediate Workaround:</strong> Switch to the <strong>"Email & Password"</strong> tab above to sign in instantly with default credentials (default username: <code className="bg-red-100/80 px-1 py-0.5 rounded font-mono font-bold">Administrator</code>, password: <code className="bg-red-100/80 px-1 py-0.5 rounded font-mono font-bold">123456</code>).
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         )}
 

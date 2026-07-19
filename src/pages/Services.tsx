@@ -137,8 +137,8 @@ export default function Services() {
   return (
     <div className="flex flex-col overflow-hidden">
       {/* Hero Section */}
-      <section className="relative text-white py-32 md:py-40 overflow-hidden bg-slate-900">
-        <div className="absolute inset-0">
+      <section className="relative text-white py-16 md:py-40 overflow-hidden bg-slate-900">
+        <div className="absolute inset-0 hidden md:block">
           <img 
             src={servicesHeroImage} 
             alt="Seniors learning digital skills with a laptop" 
@@ -147,6 +147,9 @@ export default function Services() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-slate-950/65 backdrop-blur-[0.5px]"></div>
         </div>
+
+        {/* Mobile background (soft dark gradient) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 md:hidden"></div>
 
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -157,25 +160,39 @@ export default function Services() {
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
             Interactive SaaS Features
           </span>
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+          <h1 className="text-4xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
             Software Features
           </h1>
-          <p className="text-2xl text-teal-300 font-bold mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+          <p className="text-lg md:text-2xl text-teal-300 font-bold mb-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
             Simple, friendly SaaS tools for everyday digital life
           </p>
-          <p className="text-xl text-teal-50 font-medium leading-relaxed max-w-3xl mx-auto mb-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+          <p className="text-sm md:text-xl text-teal-50 font-medium leading-relaxed max-w-3xl mx-auto mb-8 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
             SeniorEase's proprietary SaaS platform offers patient, ongoing support tracking, dashboard access, and ticketing for the common technology and online tasks that many seniors face every month. We're here to make the digital world feel a little smaller and a lot friendlier.
           </p>
 
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 text-white font-bold text-lg md:text-xl bg-slate-950/85 inline-flex px-8 py-4 rounded-3xl md:rounded-full border border-teal-500/30 backdrop-blur-md shadow-2xl">
-            <span className="text-teal-200 font-medium md:mr-2">Our team connects and resolves your queries via:</span>
-            <span className="flex items-center gap-2">
-              <Video size={24} className="text-teal-300" /> Zoom
-            </span>
-            <span className="hidden md:inline text-teal-500/80 text-xl">•</span>
-            <span className="flex items-center gap-2">
-              <Smartphone size={24} className="text-teal-300" /> WhatsApp
-            </span>
+          {/* Mobile Hero Image */}
+          <div className="block md:hidden mb-8 relative">
+            <div className="aspect-[16/10] rounded-2xl overflow-hidden shadow-xl border border-teal-500/20">
+              <img 
+                src={servicesHeroImage} 
+                alt="Seniors learning digital skills with a laptop" 
+                className="w-full h-full object-cover object-center"
+              />
+            </div>
+            <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>
+          </div>
+
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 text-white font-bold text-sm md:text-xl bg-slate-950/85 inline-flex px-8 py-4 rounded-3xl md:rounded-full border border-teal-500/30 backdrop-blur-md shadow-2xl">
+            <span className="text-teal-200 font-medium md:mr-2 text-xs md:text-base">Our team connects and resolves your queries via:</span>
+            <div className="flex gap-4">
+              <span className="flex items-center gap-2">
+                <Video size={20} className="text-teal-300" /> Zoom
+              </span>
+              <span className="hidden md:inline text-teal-500/80 text-xl">•</span>
+              <span className="flex items-center gap-2">
+                <Smartphone size={20} className="text-teal-300" /> WhatsApp
+              </span>
+            </div>
           </div>
         </motion.div>
       </section>
