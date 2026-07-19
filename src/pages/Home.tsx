@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle2, ShieldCheck, Smartphone, Mail, FileText, Users, ArrowRight, PhoneCall, HeartHandshake, Video, Calendar, Star } from 'lucide-react';
 import JoinModal from '../components/JoinModal';
+import heroImage from '../assets/images/senior_tech_support_1784443978651.jpg';
 
 export default function Home() {
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
@@ -12,10 +13,9 @@ export default function Home() {
       <section className="relative pt-16 pb-16 md:pt-24 md:pb-24 overflow-hidden bg-slate-100">
         <div className="absolute inset-0">
           <img 
-            src="/p1.jpg" 
+            src={heroImage} 
             alt="Seniors using technology" 
             className="w-full h-full object-cover"
-            referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-white/45 backdrop-blur-[1px]"></div>
         </div>

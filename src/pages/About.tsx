@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Heart, Shield, Users, CheckCircle2, Lightbulb, Smile, Clock, Phone } from 'lucide-react';
 import { motion } from 'motion/react';
+import aboutHeroImage from '../assets/images/seniors_learning_tablets_group_1784445191695.jpg';
 
 export default function About() {
   const fadeInUp = {
@@ -22,10 +23,9 @@ export default function About() {
       <section className="relative text-white py-32 md:py-40 overflow-hidden bg-slate-900">
         <div className="absolute inset-0">
           <img 
-            src="/se121.jpg" 
+            src={aboutHeroImage} 
             alt="Group of seniors learning digital skills" 
             className="w-full h-full object-cover object-center"
-            referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/45 to-slate-950/60 backdrop-blur-[0.5px]"></div>
         </div>
