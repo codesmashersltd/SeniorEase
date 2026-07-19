@@ -239,8 +239,13 @@ export default function Pricing() {
                 </ul>
               </div>
               
-              <div className="bg-gray-50 p-4 rounded-xl mb-8">
-                <p className="text-sm text-gray-700"><span className="font-bold">Best for:</span> Seniors who only need light support from time to time.</p>
+              <div className="bg-gray-50 p-4 rounded-xl mb-8 text-sm text-gray-700 space-y-2.5 border border-gray-100">
+                <p><span className="font-bold text-gray-900">Best for:</span> Seniors who only need light support from time to time.</p>
+                <div className="border-t border-gray-200/60 pt-2.5 mt-2 space-y-1.5 text-xs">
+                  <p className="flex justify-between gap-2"><span className="text-gray-500 font-medium">Response Time:</span> <span className="font-semibold text-gray-900">Within 24-48 hours</span></p>
+                  <p className="flex justify-between gap-2"><span className="text-gray-500 font-medium">Support Hours:</span> <span className="font-semibold text-gray-900">Mon-Fri, 9am - 5:30pm GMT</span></p>
+                  <p className="flex justify-between gap-2 flex-col sm:flex-row sm:justify-between"><span className="text-gray-500 font-medium">Delivery:</span> <span className="font-semibold text-gray-900 text-right">Same-day software setup</span></p>
+                </div>
               </div>
               
               <button 
@@ -293,8 +298,13 @@ export default function Pricing() {
                 </ul>
               </div>
               
-              <div className="bg-teal-800/50 p-4 rounded-xl mb-8 border border-teal-700/50">
-                <p className="text-sm text-teal-100"><span className="font-bold text-white">Best for:</span> Seniors who need regular monthly educate on everyday digital tasks.</p>
+              <div className="bg-teal-800/50 p-4 rounded-xl mb-8 text-sm text-teal-100 space-y-2.5 border border-teal-700/50">
+                <p><span className="font-bold text-white">Best for:</span> Seniors who need regular monthly educate on everyday digital tasks.</p>
+                <div className="border-t border-teal-700/60 pt-2.5 mt-2 space-y-1.5 text-xs">
+                  <p className="flex justify-between gap-2"><span className="text-teal-200 font-medium">Response Time:</span> <span className="font-semibold text-white">Within 12-24 hours (Priority)</span></p>
+                  <p className="flex justify-between gap-2"><span className="text-teal-200 font-medium">Support Hours:</span> <span className="font-semibold text-white">Mon-Sat, 9am - 6pm GMT</span></p>
+                  <p className="flex justify-between gap-2 flex-col sm:flex-row sm:justify-between"><span className="text-teal-200 font-medium">Delivery:</span> <span className="font-semibold text-white text-right">Setup completed under 24 hours</span></p>
+                </div>
               </div>
               
               <button 
@@ -339,8 +349,13 @@ export default function Pricing() {
                 </ul>
               </div>
               
-              <div className="bg-gray-50 p-4 rounded-xl mb-8">
-                <p className="text-sm text-gray-700"><span className="font-bold">Best for:</span> Adult children who want regular support available for a parent or loved one.</p>
+              <div className="bg-gray-50 p-4 rounded-xl mb-8 text-sm text-gray-700 space-y-2.5 border border-gray-100">
+                <p><span className="font-bold text-gray-900">Best for:</span> Adult children who want regular support available for a parent or loved one.</p>
+                <div className="border-t border-gray-200/60 pt-2.5 mt-2 space-y-1.5 text-xs">
+                  <p className="flex justify-between gap-2"><span className="text-gray-500 font-medium">Response Time:</span> <span className="font-semibold text-gray-900">Under 12 hours (Express Priority)</span></p>
+                  <p className="flex justify-between gap-2"><span className="text-gray-500 font-medium">Support Hours:</span> <span className="font-semibold text-gray-900">Mon-Sun, 8am - 8pm GMT</span></p>
+                  <p className="flex justify-between gap-2 flex-col sm:flex-row sm:justify-between"><span className="text-gray-500 font-medium">Delivery:</span> <span className="font-semibold text-gray-900 text-right">Fast onboarding under 12 hours</span></p>
+                </div>
               </div>
               
               <button 
@@ -410,7 +425,7 @@ export default function Pricing() {
           </div>
           
           <motion.div variants={fadeInUp} className="text-center text-sm text-gray-600 bg-gray-50 p-4 rounded-xl border border-gray-200">
-            <p>All plans are billed monthly and renew automatically until cancelled. You may cancel before your next billing date. Please review our Refund & Cancellation Policy and Terms & Conditions before subscribing. Please see our <Link to="/refund" className="text-teal-600 hover:underline">Refund & Cancellation Policy</Link> for full details. If Payment done through BACS Direct Debit then the service will start only after receiving the Payment. </p>
+            <p>All plans are billed monthly and renew automatically until cancelled. You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline font-semibold">support@senioreease.com</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken. Please see our <Link to="/refund" className="text-teal-600 hover:underline font-semibold">Refund & Cancellation Policy</Link> and <Link to="/terms" className="text-teal-600 hover:underline font-semibold">Terms & Conditions</Link> for full details. If paying by BACS Direct Debit, your membership will be activated once the payment has been successfully processed and confirmed.</p>
           </motion.div>
         </motion.div>
       </section>

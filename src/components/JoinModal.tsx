@@ -34,6 +34,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
   const [customerId, setCustomerId] = useState('');
   const [email, setEmail] = useState('');
   const [checkoutUrl, setCheckoutUrl] = useState('');
+  const [consentChecked, setConsentChecked] = useState(false);
 
   const handleFirestoreError = (error: unknown, operationType: OperationType, path: string | null) => {
     const errInfo: FirestoreErrorInfo = {
@@ -147,6 +148,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
     setCustomerId('');
     setEmail('');
     setCheckoutUrl('');
+    setConsentChecked(false);
     onClose();
   };
 
@@ -228,7 +230,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
               <p className="text-gray-600 mb-6">
-                {plan ? 'Please fill in your details below. Our team will process your registration and email you a secure payment link to activate your software membership and dashboard access.' : 'Please fill in your details below. Our team will contact you shortly to schedule your free setup call.'}
+                {plan ? "Please fill in your details below. After submitting this form, we'll review your registration and email you a secure Stripe payment link. Your subscription begins only after successful payment." : 'Please fill in your details below. Our team will contact you shortly to schedule your free setup call.'}
               </p>
 
               {plan && (
@@ -275,20 +277,86 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                 </div>
               </div>
 
-              <div className="pt-4">
+              <div className="pt-4 space-y-5">
                 {plan && (
-                  <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200 text-xs text-gray-600 leading-relaxed">
-                    <span className="font-bold block mb-1">Subscription Consent</span>
-                    By subscribing, you agree to recurring monthly billing until cancelled. You may cancel before your next billing date. By starting your membership immediately, you request that we begin providing the service during the cancellation period, which may affect your right to a full refund once service access begins.If Payment done through BACS Direct Debit then the service will start only after receiving the Payment
-                    
-                    <span className="font-bold block mt-3 mb-1">Disclaimer:</span>
-                    Senior Ease provides friendly digital assistance and everyday support for senior citizens in the UK. We do not provide medical, emergency, legal, financial, or regulated care services.
+                  <div className="space-y-4">
+                    {/* Billing Summary Box */}
+                    <div className="bg-teal-50/60 p-4 rounded-xl border border-teal-100 text-sm">
+                      <span className="font-bold text-teal-900 block mb-2">Billing Summary</span>
+                      <div className="space-y-1.5 font-medium text-gray-700 text-xs">
+                        <div className="flex justify-between">
+                          <span>Today's charge:</span>
+                          <span className="font-bold text-teal-800">{plan.price}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Billing frequency:</span>
+                          <span>Monthly</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Auto-renew:</span>
+                          <span className="text-teal-700 font-semibold">Yes</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Cancel anytime:</span>
+                          <span className="text-teal-700 font-semibold">Yes</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Detailed billing disclosures */}
+                    <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 text-xs text-gray-600 space-y-2.5 leading-relaxed">
+                      <p>
+                        <span className="font-bold text-gray-900">Billing Terms: </span>
+                        Your first payment of <span className="font-bold text-gray-950">{plan.price}</span> is due after you receive your secure payment link. Future payments will automatically renew every month on the same date unless cancelled.
+                      </p>
+                      <p>
+                        <span className="font-bold text-gray-900">Cancellation Policy: </span>
+                        You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken.
+                      </p>
+                      <p>
+                        Your membership begins once your first payment has been successfully processed. If paying by BACS Direct Debit, your membership will be activated once the payment has been successfully processed and confirmed. You'll receive a confirmation email and receipt after every successful payment.
+                      </p>
+                      <p className="text-[10px] text-gray-500 border-t border-gray-200 pt-2">
+                        <span className="font-bold text-gray-700 block mb-0.5">Disclaimer:</span>
+                        SeniorEase provides friendly digital assistance and everyday support for senior citizens in the UK. We do not provide medical, emergency, legal, financial, or regulated care services.
+                      </p>
+                    </div>
+
+                    {/* Bold Subscription Statement */}
+                    <p className="text-sm font-bold text-gray-950">
+                      Subscription: {plan.price}/month, billed automatically every month until cancelled.
+                    </p>
+
+                    {/* Mandatory Consent Checkbox */}
+                    <div className="flex items-start gap-2.5">
+                      <input 
+                        required
+                        type="checkbox" 
+                        id="consentCheckbox"
+                        name="consentCheckbox"
+                        checked={consentChecked}
+                        onChange={(e) => setConsentChecked(e.target.checked)}
+                        className="mt-1 h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500 cursor-pointer"
+                      />
+                      <label htmlFor="consentCheckbox" className="text-xs font-semibold text-gray-700 select-none cursor-pointer leading-tight">
+                        I understand this is a recurring monthly subscription and I authorize automatic payments.
+                      </label>
+                    </div>
+
+                    {/* Direct links to legal pages */}
+                    <p className="text-xs text-gray-500 font-medium pl-6.5">
+                      By subscribing, you agree to our{' '}
+                      <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline font-semibold">Terms & Conditions</a>,{' '}
+                      <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline font-semibold">Privacy Policy</a>, and{' '}
+                      <a href="/refund" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline font-semibold">Refund Policy</a>.
+                    </p>
                   </div>
                 )}
+
                 <button 
                   type="submit" 
-                  disabled={isSubmitting}
-                  className="w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  disabled={isSubmitting || (!!plan && !consentChecked)}
+                  className="w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <>
@@ -296,7 +364,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                       Processing...
                     </>
                   ) : (
-                    plan ? 'Complete Registration' : 'Request Free Call'
+                    plan ? `Register for ${plan.price}/month` : 'Request Free Call'
                   )}
                 </button>
               </div>
