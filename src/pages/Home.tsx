@@ -17,6 +17,7 @@ export default function Home() {
             src={heroImage} 
             alt="Seniors using technology" 
             className="w-full h-full object-cover"
+            referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-white/45 backdrop-blur-[1px]"></div>
         </div>
@@ -44,6 +45,7 @@ export default function Home() {
                   src={heroImage} 
                   alt="Seniors using technology" 
                   className="w-full h-full object-cover object-center"
+                  referrerPolicy="no-referrer"
                 />
               </div>
               <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/10"></div>

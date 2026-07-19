@@ -82,6 +82,7 @@ export default function Contact() {
                 src={contactHeroImage} 
                 alt="Cheerful senior using a smartphone" 
                 className="w-full h-full object-cover object-center"
+                referrerPolicy="no-referrer"
               />
             </div>
             <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>

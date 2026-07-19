@@ -189,6 +189,7 @@ export default function Pricing() {
                 src={pricingHeroImage} 
                 alt="Happy seniors enjoying their afternoon with ease of mind" 
                 className="w-full h-full object-cover object-center"
+                referrerPolicy="no-referrer"
               />
             </div>
             <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>

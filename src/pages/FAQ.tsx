@@ -69,6 +69,7 @@ export default function FAQ() {
                 src={faqHeroImage} 
                 alt="Friendly support representative helping seniors" 
                 className="w-full h-full object-cover object-center"
+                referrerPolicy="no-referrer"
               />
             </div>
             <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>

@@ -197,7 +197,7 @@ export default function AdminLogin() {
                   <Loader2 className="h-6 w-6 animate-spin text-[#009688]" />
                 ) : (
                   <>
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" className="h-5 w-5" />
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" className="h-5 w-5" referrerPolicy="no-referrer" />
                     Sign in with Google Admin
                   </>
                 )}
