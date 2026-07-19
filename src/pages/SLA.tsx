@@ -7,9 +7,9 @@ export default function SLA() {
         <div className="prose prose-teal max-w-none text-gray-600 space-y-8">
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-1">
             <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
-            <p className="font-semibold text-gray-900">Website: <a href="https://www.seniorease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.com</a></p>
+            <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
             <p className="font-semibold text-gray-900">Business Name: Senior Ease</p>
-            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline">support@seniorease.com</a></p>
+            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
             <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
           </div>
 
@@ -582,8 +582,8 @@ export default function SLA() {
             </p>
             <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100/50">
               <p className="font-bold text-teal-900 mb-2">Senior Ease</p>
-              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.seniorease.com" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.com</a></p>
-              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@seniorease.com" className="text-teal-700 hover:underline">support@seniorease.com</a></p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.senioreease.com" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-700 hover:underline">support@senioreease.com</a></p>
               <p className="mb-3"><span className="font-semibold text-teal-800">Telephone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
               <p className="font-semibold text-teal-900 mt-2">Business Hours:</p>
               <p className="text-teal-800">Monday to Friday</p>

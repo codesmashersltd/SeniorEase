@@ -311,7 +311,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                       </p>
                       <p>
                         <span className="font-bold text-gray-900">Cancellation Policy: </span>
-                        You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline">support@seniorease.com</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken.
+                        You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken.
                       </p>
                       <p>
                         Your membership begins once your first payment has been successfully processed. If paying by BACS Direct Debit, your membership will be activated once the payment has been successfully processed and confirmed. You'll receive a confirmation email and receipt after every successful payment.

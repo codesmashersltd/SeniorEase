@@ -99,7 +99,7 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     // Production mode: serve built files from dist/
-    const distPath = path.resolve(process.cwd(), "dist");
+    const distPath = path.resolve(__dirname, "../dist");
     console.log(`[Server] Serving static files from: ${distPath}`);
 
     // Serve static assets (JS, CSS, images, etc.)

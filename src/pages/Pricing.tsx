@@ -43,8 +43,8 @@ export default function Pricing() {
     "provider": {
       "@type": "Organization",
       "name": "Senior Ease",
-      "url": "https://www.seniorease.com",
-      "email": "support@seniorease.com",
+      "url": "https://www.senioreease.com",
+      "email": "support@senioreease.com",
       "telephone": "+443304010019"
     },
     "itemListElement": [
@@ -67,7 +67,7 @@ export default function Pricing() {
               "unitCode": "MON"
             }
           },
-          "url": "https://www.seniorease.com/pricing"
+          "url": "https://www.senioreease.com/pricing"
         }
       },
       {
@@ -89,7 +89,7 @@ export default function Pricing() {
               "unitCode": "MON"
             }
           },
-          "url": "https://www.seniorease.com/pricing"
+          "url": "https://www.senioreease.com/pricing"
         }
       },
       {
@@ -111,7 +111,7 @@ export default function Pricing() {
               "unitCode": "MON"
             }
           },
-          "url": "https://www.seniorease.com/pricing"
+          "url": "https://www.senioreease.com/pricing"
         }
       }
     ]
@@ -439,7 +439,7 @@ export default function Pricing() {
           </div>
           
           <motion.div variants={fadeInUp} className="text-center text-sm text-gray-600 bg-gray-50 p-4 rounded-xl border border-gray-200">
-            <p>All plans are billed monthly and renew automatically until cancelled. You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline font-semibold">support@seniorease.com</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken. Please see our <Link to="/refund" className="text-teal-600 hover:underline font-semibold">Refund & Cancellation Policy</Link> and <Link to="/terms" className="text-teal-600 hover:underline font-semibold">Terms & Conditions</Link> for full details. If paying by BACS Direct Debit, your membership will be activated once the payment has been successfully processed and confirmed.</p>
+            <p>All plans are billed monthly and renew automatically until cancelled. You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline font-semibold">support@senioreease.com</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken. Please see our <Link to="/refund" className="text-teal-600 hover:underline font-semibold">Refund & Cancellation Policy</Link> and <Link to="/terms" className="text-teal-600 hover:underline font-semibold">Terms & Conditions</Link> for full details. If paying by BACS Direct Debit, your membership will be activated once the payment has been successfully processed and confirmed.</p>
           </motion.div>
         </motion.div>
       </section>
