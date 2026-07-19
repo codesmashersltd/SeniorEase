@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MousePointerClick, PlayCircle, PhoneCall, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
+import howItWorksHeroImage from '../assets/images/seniors_how_it_works_hero_1784446891606.jpg';
 
 export default function HowItWorks() {
   const steps = [
@@ -66,27 +67,47 @@ export default function HowItWorks() {
   };
 
   return (
-    <div className="bg-white py-24 overflow-hidden">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative text-white py-32 md:py-40 overflow-hidden bg-slate-900">
+        <div className="absolute inset-0">
+          <img 
+            src={howItWorksHeroImage} 
+            alt="Elderly senior learning with technology" 
+            className="w-full h-full object-cover object-center"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-slate-950/65 backdrop-blur-[0.5px]"></div>
+        </div>
+
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">How the Platform Works</h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
+            Step-by-Step Guidance
+          </span>
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+            How It Works
+          </h1>
+          <p className="text-xl md:text-2xl text-teal-100 font-medium leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
             Getting started with the Senior Ease software platform is simple and straightforward. Here is our step-by-step process for onboarding and requesting digital support.
           </p>
         </motion.div>
+      </section>
 
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="space-y-6"
-        >
+      {/* Steps List */}
+      <section className="py-24 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            className="space-y-6"
+          >
           {steps.map((step, index) => (
             <motion.div 
               key={index} 
@@ -164,6 +185,7 @@ export default function HowItWorks() {
           </div>
         </motion.div>
       </div>
-    </div>
+    </section>
+  </div>
   );
 }

@@ -3,6 +3,7 @@ import { CheckCircle2, Info } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import JoinModal from '../components/JoinModal';
+import pricingHeroImage from '../assets/images/seniors_pricing_hero_1784446914914.jpg';
 
 export default function Pricing() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -151,19 +152,34 @@ export default function Pricing() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingSchema) }}
       />
       {/* Hero Section */}
-      <section className="relative text-white py-32 overflow-hidden bg-teal-900">
+      <section className="relative text-white py-32 md:py-40 overflow-hidden bg-slate-900">
+        <div className="absolute inset-0">
+          <img 
+            src={pricingHeroImage} 
+            alt="Happy seniors enjoying their afternoon with ease of mind" 
+            className="w-full h-full object-cover object-center"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-slate-950/65 backdrop-blur-[0.5px]"></div>
+        </div>
+
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
         >
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">Simple Plans</h1>
-          <p className="text-xl md:text-2xl text-teal-100 leading-relaxed max-w-3xl mx-auto font-medium mb-10">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
+            Transparent Subscriptions
+          </span>
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+            Simple Plans
+          </h1>
+          <p className="text-xl md:text-2xl text-teal-100 leading-relaxed max-w-3xl mx-auto font-medium mb-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
             Choose the level of support that suits you or your loved one best. Our plans are designed to provide calm, practical digital learning on a monthly basis.
           </p>
           
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-white font-bold text-lg md:text-xl bg-teal-800/80 inline-flex px-8 py-4 md:py-5 rounded-2xl md:rounded-full border border-teal-600/50 backdrop-blur-md shadow-2xl">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-white font-bold text-lg md:text-xl bg-slate-950/85 inline-flex px-8 py-4 md:py-5 rounded-2xl md:rounded-full border border-teal-500/30 backdrop-blur-md shadow-2xl">
             <span className="flex items-center gap-2.5">
               <CheckCircle2 size={24} className="text-teal-300" /> Cancel Anytime
             </span>

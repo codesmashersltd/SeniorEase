@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { HelpCircle, ArrowRight } from 'lucide-react';
+import faqHeroImage from '../assets/images/seniors_faq_hero_1784446901963.jpg';
 
 export default function FAQ() {
   const faqs = [
@@ -36,14 +37,26 @@ export default function FAQ() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative text-white py-32 overflow-hidden bg-teal-900">
+      <section className="relative text-white py-32 md:py-40 overflow-hidden bg-slate-900">
+        <div className="absolute inset-0">
+          <img 
+            src={faqHeroImage} 
+            alt="Friendly support representative helping seniors" 
+            className="w-full h-full object-cover object-center"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-slate-950/65 backdrop-blur-[0.5px]"></div>
+        </div>
+
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-teal-800 text-teal-100 mb-6">
-            <HelpCircle size={32} />
-          </div>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">Frequently Asked Questions</h1>
-          <p className="text-xl text-teal-100 leading-relaxed max-w-2xl mx-auto">
-            Helpful answers about how SeniorEase works
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
+            Got Questions?
+          </span>
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+            Frequently Asked Questions
+          </h1>
+          <p className="text-xl md:text-2xl text-teal-100 font-medium leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+            Helpful answers about how our simple digital learning platform works.
           </p>
         </div>
       </section>

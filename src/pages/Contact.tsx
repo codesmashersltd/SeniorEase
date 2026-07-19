@@ -4,6 +4,7 @@ import { Mail, Phone, Clock, MessageSquare, ArrowRight, CheckCircle2, X, MapPin 
 import { motion, AnimatePresence } from 'motion/react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import contactHeroImage from '../assets/images/seniors_contact_hero_1784446926253.jpg';
 
 export default function Contact() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -46,21 +47,29 @@ export default function Contact() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative py-24 border-b border-gray-100 overflow-hidden">
+      <section className="relative text-white py-32 md:py-40 overflow-hidden bg-slate-900">
         <div className="absolute inset-0">
           <img 
-            src="https://images.unsplash.com/photo-1573497491208-6b1acb260507?auto=format&fit=crop&q=80&w=2000" 
-            alt="Senior on phone" 
-            className="w-full h-full object-cover"
+            src={contactHeroImage} 
+            alt="Cheerful senior using a smartphone" 
+            className="w-full h-full object-cover object-center"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-white/60"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-slate-950/65 backdrop-blur-[0.5px]"></div>
         </div>
+
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight">Contact Us</h1>
-          <p className="text-2xl text-teal-600 font-medium mb-6">We’re here to provide education to get you started</p>
-          <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-            If you have any questions about our services, memberships, or support options, we’d be happy to educate.
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
+            Get In Touch
+          </span>
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+            Contact Us
+          </h1>
+          <p className="text-2xl text-teal-300 font-bold mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+            We’re here to help you get started on your digital journey
+          </p>
+          <p className="text-xl text-teal-50 font-medium leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+            If you have any questions about our software features, membership benefits, or platform security, please drop us a message.
           </p>
         </div>
       </section>
