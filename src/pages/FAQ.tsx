@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { HelpCircle, ArrowRight } from 'lucide-react';
-import faqHeroImage from '../assets/images/seniors_faq_hero_1784446901963.jpg';
+const faqHeroImage = '/images/seniors_faq_hero_1784446901963.jpg';
 
 export default function FAQ() {
   const faqs = [

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Heart, Shield, Users, CheckCircle2, Lightbulb, Smile, Clock, Phone } from 'lucide-react';
 import { motion } from 'motion/react';
-import aboutHeroImage from '../assets/images/seniors_learning_tablets_group_1784445191695.jpg';
+const aboutHeroImage = '/images/seniors_learning_tablets_group_1784445191695.jpg';
 
 export default function About() {
   const fadeInUp = {

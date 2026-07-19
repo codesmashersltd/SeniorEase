@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MousePointerClick, PlayCircle, PhoneCall, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
-import howItWorksHeroImage from '../assets/images/seniors_how_it_works_hero_1784446891606.jpg';
+const howItWorksHeroImage = '/images/seniors_how_it_works_hero_1784446891606.jpg';
 
 export default function HowItWorks() {
   const steps = [
