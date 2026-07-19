@@ -1,12 +1,120 @@
 import { Link } from 'react-router-dom';
 import { CheckCircle2, Info } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import JoinModal from '../components/JoinModal';
 
 export default function Pricing() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<{ name: string; price: string } | null>(null);
+
+  // SEO & AI Bot Accessibility: dynamically update page title and meta description
+  useEffect(() => {
+    const originalTitle = document.title;
+    const metaDescription = document.querySelector('meta[name="description"]');
+    const originalDescription = metaDescription ? metaDescription.getAttribute('content') : '';
+
+    document.title = "Simple Pricing Plans | Senior Ease - Digital Support & Education";
+    
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Explore simple and clear monthly pricing plans for Senior Ease digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.');
+    } else {
+      const newMeta = document.createElement('meta');
+      newMeta.name = 'description';
+      newMeta.content = 'Explore simple and clear monthly pricing plans for Senior Ease digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.';
+      document.head.appendChild(newMeta);
+    }
+
+    return () => {
+      document.title = originalTitle;
+      if (metaDescription && originalDescription) {
+        metaDescription.setAttribute('content', originalDescription);
+      }
+    };
+  }, []);
+
+  // Structured Data (JSON-LD) for Search Engines and AI bots to parse pricing accurately
+  const pricingSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProductCollection",
+    "name": "Senior Ease Subscription Plans",
+    "description": "Digital education and technology support subscriptions designed to help senior citizens become confident using everyday technology.",
+    "provider": {
+      "@type": "Organization",
+      "name": "Senior Ease",
+      "url": "https://www.senioreease.com",
+      "email": "support@senioreease.com",
+      "telephone": "+443304010019"
+    },
+    "itemListElement": [
+      {
+        "@type": "Product",
+        "name": "Essential Care",
+        "description": "Basic software platform access for occasional learning. Up to 2 support requests per month. Support via phone, WhatsApp, or email.",
+        "offers": {
+          "@type": "Offer",
+          "price": "9.99",
+          "priceCurrency": "GBP",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "9.99",
+            "priceCurrency": "GBP",
+            "unitText": "Month",
+            "referenceQuantity": {
+              "@type": "QuantitativeValue",
+              "value": "1",
+              "unitCode": "MON"
+            }
+          },
+          "url": "https://www.senioreease.com/pricing"
+        }
+      },
+      {
+        "@type": "Product",
+        "name": "Plus Care",
+        "description": "Full portal access for seniors who need more regular support. Up to 5 support requests per month and 1 scheduled support call.",
+        "offers": {
+          "@type": "Offer",
+          "price": "17.99",
+          "priceCurrency": "GBP",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "17.99",
+            "priceCurrency": "GBP",
+            "unitText": "Month",
+            "referenceQuantity": {
+              "@type": "QuantitativeValue",
+              "value": "1",
+              "unitCode": "MON"
+            }
+          },
+          "url": "https://www.senioreease.com/pricing"
+        }
+      },
+      {
+        "@type": "Product",
+        "name": "Family Care",
+        "description": "Multi-user software access designed for families to support a loved one with priority handling, monthly check-ins, and video call setup assistance.",
+        "offers": {
+          "@type": "Offer",
+          "price": "29.99",
+          "priceCurrency": "GBP",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "29.99",
+            "priceCurrency": "GBP",
+            "unitText": "Month",
+            "referenceQuantity": {
+              "@type": "QuantitativeValue",
+              "value": "1",
+              "unitCode": "MON"
+            }
+          },
+          "url": "https://www.senioreease.com/pricing"
+        }
+      }
+    ]
+  };
 
   const handleGetStarted = (name: string, price: string) => {
     setSelectedPlan({ name, price });
@@ -36,7 +144,12 @@ export default function Pricing() {
   };
 
   return (
-    <div className="flex flex-col overflow-hidden">
+    <div className="flex flex-col overflow-hidden" id="pricing-page-wrapper">
+      {/* Structured data injection for SEO & AI Crawlers */}
+      <script 
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingSchema) }}
+      />
       {/* Hero Section */}
       <section className="relative text-white py-32 overflow-hidden bg-teal-900">
         <motion.div 

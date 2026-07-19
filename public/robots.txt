@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://seniorease.com/sitemap.xml
+Sitemap: https://www.senioreease.com/sitemap.xml
