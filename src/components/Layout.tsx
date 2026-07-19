@@ -183,7 +183,7 @@ export default function Layout() {
                   <a href="/disclaimer" className="text-gray-300 hover:text-white transition-colors">Disclaimer</a>
                 </li>
                 <li>
-                  <Link to="/nhs-standards" className="text-gray-300 hover:text-white transition-colors">NHS Standards</Link>
+                  <Link to="/nhs-standards" className="text-gray-300 hover:text-white transition-colors">Our Commitment</Link>
                 </li>
               </ul>
             </div>
@@ -194,9 +194,9 @@ export default function Layout() {
                 <li>
                   <a href="/privacy" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</a>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/gdpr" className="text-gray-300 hover:text-white transition-colors">GDPR Compliance</Link>
-                </li>
+                </li> */}
                 <li>
                   <a href="/refund" className="text-gray-300 hover:text-white transition-colors">Refund / Cancellation</a>
                 </li>
