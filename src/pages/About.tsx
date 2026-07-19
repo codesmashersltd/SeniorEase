@@ -19,16 +19,30 @@ export default function About() {
   return (
     <div className="flex flex-col overflow-hidden">
       {/* Hero Section */}
-      <section className="relative text-white py-32 overflow-hidden bg-teal-900">
+      <section className="relative text-white py-32 md:py-40 overflow-hidden bg-slate-900">
+        <div className="absolute inset-0">
+          <img 
+            src="/se121.jpg" 
+            alt="Group of seniors learning digital skills" 
+            className="w-full h-full object-cover object-center"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/45 to-slate-950/60 backdrop-blur-[0.5px]"></div>
+        </div>
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center"
         >
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">About SeniorEase</h1>
-          <p className="text-xl md:text-2xl text-teal-100 leading-relaxed max-w-3xl mx-auto">
-            Educating senior citizens feel more confident, comfortable, and supported in today’s fast-paced digital world.
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
+            Our Mission & Vision
+          </span>
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
+            About SeniorEase
+          </h1>
+          <p className="text-xl md:text-2xl text-teal-50 font-medium leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
+            Helping senior citizens feel more confident, comfortable, and supported in today’s fast-paced digital world.
           </p>
         </motion.div>
       </section>

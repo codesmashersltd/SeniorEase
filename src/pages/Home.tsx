@@ -9,49 +9,61 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-32 overflow-hidden">
+      <section className="relative pt-16 pb-16 md:pt-24 md:pb-24 overflow-hidden bg-slate-100">
         <div className="absolute inset-0">
           <img 
-            src="https://images.unsplash.com/photo-1573497491208-6b1acb260507?auto=format&fit=crop&q=80&w=2000" 
+            src="/p1.jpg" 
             alt="Seniors using technology" 
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-white/60"></div>
+          <div className="absolute inset-0 bg-white/45 backdrop-blur-[1px]"></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-50 text-teal-700 font-medium text-sm mb-8 border border-teal-100">
-              <ShieldCheck size={18} />
+          <div className="text-center max-w-4xl mx-auto px-6 py-8 md:py-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-100/90 text-teal-950 font-semibold text-sm mb-8 border border-teal-200 shadow-sm backdrop-blur-sm">
+              <ShieldCheck size={18} className="text-teal-700" />
               <span>Friendly UK-based assistance</span>
             </div>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 tracking-tight mb-8 leading-[1.1]">
-              Friendly Digital Support Platform for <span className="text-teal-600">Senior Citizens</span> in the UK
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-950 tracking-tight mb-6 leading-[1.15] drop-shadow-[0_1.2px_1.2px_rgba(255,255,255,0.8)]">
+              Friendly Digital Support Platform for <span className="text-teal-700">Senior Citizens</span> in the UK
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-10 leading-relaxed max-w-3xl mx-auto">
-              Senior Ease is a Software as a Service (SaaS) platform that learnings older adults with everyday technology — combining intuitive secure software with friendly digital confidence support.
+            <p className="text-lg md:text-xl text-gray-900 font-bold mb-10 leading-relaxed max-w-3xl mx-auto drop-shadow-[0_1px_1px_rgba(255,255,255,0.9)]">
+              Senior Ease is a Software as a Service (SaaS) platform that assists older adults with everyday technology — combining intuitive secure software with friendly digital confidence support.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
               <Link
                 to="/pricing"
-                className="bg-teal-600 text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-teal-700 transition-colors shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                className="bg-teal-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-teal-700 transition-colors shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
               >
                 Choose Your Plan <ArrowRight size={20} />
               </Link>
               <button
                 onClick={() => setIsJoinModalOpen(true)}
-                className="bg-white text-gray-900 border-2 border-gray-200 px-8 py-4 rounded-full font-medium text-lg hover:border-gray-300 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                className="bg-white/95 text-gray-900 border-2 border-gray-200 px-8 py-4 rounded-full font-semibold text-lg hover:border-gray-300 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 shadow-md"
               >
-                <PhoneCall size={20} /> Book a Free Intro Call
+                <PhoneCall size={20} className="text-teal-600" /> Book a Free Intro Call
               </button>
             </div>
             
             {/* Trust Strip */}
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-gray-500 uppercase tracking-wide">
-              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Secure SaaS Platform</span>
-              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Friendly digital support</span>
-              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Monthly software subscription</span>
-              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> UK-focused service</span>
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-3 text-xs md:text-sm font-bold text-slate-900 uppercase tracking-wider">
+              <span className="flex items-center gap-2 bg-white/90 px-4 py-2.5 rounded-full border border-gray-100 shadow-sm">
+                <CheckCircle2 size={16} className="text-teal-700 shrink-0" /> 
+                <span>Secure SaaS Platform</span>
+              </span>
+              <span className="flex items-center gap-2 bg-white/90 px-4 py-2.5 rounded-full border border-gray-100 shadow-sm">
+                <CheckCircle2 size={16} className="text-teal-700 shrink-0" /> 
+                <span>Friendly digital support</span>
+              </span>
+              <span className="flex items-center gap-2 bg-white/90 px-4 py-2.5 rounded-full border border-gray-100 shadow-sm">
+                <CheckCircle2 size={16} className="text-teal-700 shrink-0" /> 
+                <span>Monthly software subscription</span>
+              </span>
+              <span className="flex items-center gap-2 bg-white/90 px-4 py-2.5 rounded-full border border-gray-100 shadow-sm">
+                <CheckCircle2 size={16} className="text-teal-700 shrink-0" /> 
+                <span>UK-focused service</span>
+              </span>
             </div>
           </div>
         </div>
