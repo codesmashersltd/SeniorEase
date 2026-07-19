@@ -48,10 +48,17 @@ export default function App() {
       featureImage
     ];
 
-    imagesToPreload.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
+    // Wait 1.5s after the initial mount, then preload one image every 300ms to avoid network congestion
+    const mainTimer = setTimeout(() => {
+      imagesToPreload.forEach((src, index) => {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = src;
+        }, index * 300);
+      });
+    }, 1500);
+
+    return () => clearTimeout(mainTimer);
   }, []);
 
   return (
