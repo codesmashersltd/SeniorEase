@@ -341,16 +341,16 @@ export default function Privacy() {
           <p className="mb-4">If you have any questions about this Privacy Policy or how your personal information is used, please contact:</p>
           <p className="mb-8">
             Senior Ease<br />
-            Email: [Insert Email]<br />
-            Phone: [Insert Phone Number]<br />
-            Website: [Insert Website URL]
+            Email: [support@senioreease.com]<br />
+            Phone: [+44 (0) 330 401 0019]<br />
+            Website: [www.senioreease.com]
           </p>
 
           <hr className="my-8 border-gray-200" />
           
-          <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Best Footer Privacy Line for Your Website</h3>
-          <p className="mb-4 italic">Use this short line in your footer or forms:</p>
-          <p className="mb-8 font-medium">“We respect your privacy and only use your information to provide support, manage memberships, and communicate with you in line with our Privacy Policy.”</p>
+          <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4"></h3>
+          <p className="mb-4 italic"></p>
+          <p className="mb-8 font-medium">We respect your privacy and only use your information to provide support, manage memberships, and communicate with you in line with our Privacy Policy.</p>
         </div>
       </div>
     </div>
