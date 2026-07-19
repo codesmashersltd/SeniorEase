@@ -6,11 +6,11 @@ export default function Privacy() {
         
         <div className="prose prose-blue max-w-none text-gray-600">
           <p className="font-medium">Senior Ease</p>
-          <p className="font-medium">Effective Date: [Insert Date]</p>
-          <p className="font-medium">Website: [Insert Website URL]</p>
+          <p className="font-medium">Effective Date: [01/06/2026]</p>
+          <p className="font-medium">Website: [https://www.senioreease.com]</p>
           <p className="font-medium">Business Name: Senior Ease</p>
-          <p className="font-medium">Email: [Insert Email Address]</p>
-          <p className="font-medium mb-8">Phone: [Insert Phone Number]</p>
+          <p className="font-medium">Email: [support@senioreease.com]</p>
+          <p className="font-medium mb-8">Phone: [+44 (0) 330 401 0019]</p>
 
           <p className="mb-4">At Senior Ease, we respect your privacy and are committed to protecting your personal information.</p>
           <p className="mb-4">This Privacy Policy explains how we collect, use, store, and protect personal information when you use our SaaS platform, website, secure portal, contact us, or subscribe to our software services.</p>
@@ -18,7 +18,7 @@ export default function Privacy() {
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. Who We Are</h2>
           <p className="mb-4">Senior Ease provides a Software as a Service (SaaS) platform, secure dashboard access, and friendly digital learning for senior citizens in the United Kingdom.</p>
-          <p className="font-medium">Our software tools and services may include educate on:</p>
+          <p className="font-medium">Our software tools and services may include provide guidance on:</p>
           <ul className="list-disc pl-6 mb-4">
             <li>smartphones and tablets</li>
             <li>WhatsApp and messaging</li>
@@ -167,7 +167,7 @@ export default function Privacy() {
           <p className="mb-8">Where we rely on consent, you may withdraw it at any time.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">7. Payments and Billing Information</h2>
-          <p className="mb-4">If you purchase a membership or service, payments may be processed through secure third-party payment providers.</p>
+          <p className="mb-4">If you purchase a membership or service, payments may be processed through Stripe to securely process subscription payments. Senior Ease does not store your complete payment card details. Stripe processes payment information in accordance with its own Privacy Policy..</p>
           <p className="mb-4">We do not usually store your full payment card or bank account details directly on our own website systems unless securely handled through an authorised provider.</p>
           <p className="font-medium">We may receive and store limited payment-related information such as:</p>
           <ul className="list-disc pl-6 mb-4">
@@ -176,7 +176,7 @@ export default function Privacy() {
             <li>subscription status</li>
             <li>payment reference details</li>
           </ul>
-          <p className="mb-8">This educates us manage your membership and support access.</p>
+          <p className="mb-8">This helps us manage your membership and provide support.</p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">8. Communications With Us</h2>
           <p className="font-medium">If you contact us by:</p>
