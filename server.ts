@@ -126,8 +126,8 @@ async function startServer() {
 
     console.log(`[Server] Final choice for serving static files: ${distPath}`);
 
-    // Serve static assets (JS, CSS, images, etc.)
-    app.use(express.static(distPath, { index: false }));
+    // Serve static assets (JS, CSS, images, etc.) without automatic directory redirection
+    app.use(express.static(distPath, { index: false, redirect: false }));
   }
 
   // Unified routing handler for HTML pages (both Dev & Production)
