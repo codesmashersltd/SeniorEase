@@ -1,6 +1,7 @@
 import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
+import fs from "fs";
 import Stripe from "stripe";
 import * as dotenv from "dotenv";
 import { fileURLToPath } from "url";
@@ -87,13 +88,39 @@ async function startServer() {
     }
     else {
         // Production mode: serve built files from dist/
-        const distPath = path.resolve(process.cwd(), "dist");
-        console.log(`[Server] Serving static files from: ${distPath}`);
+        // Try to find the correct dist directory in multiple common locations
+        const possiblePaths = [
+            path.resolve(process.cwd(), "dist"),
+            path.resolve(__dirname, "../dist"),
+            path.resolve(__dirname, "dist"),
+            path.resolve(__dirname, "../../dist"),
+        ];
+        let distPath = possiblePaths[0];
+        console.log(`[Server] Searching for dist folder. Current directory: ${process.cwd()}, __dirname: ${__dirname}`);
+        for (const p of possiblePaths) {
+            const indexCheck = path.join(p, "index.html");
+            console.log(`[Server] Checking path: ${p} (index.html exists: ${fs.existsSync(indexCheck)})`);
+            if (fs.existsSync(p) && fs.existsSync(indexCheck)) {
+                distPath = p;
+                console.log(`[Server] Found valid dist folder at: ${distPath}`);
+                break;
+            }
+        }
+        console.log(`[Server] Final choice for serving static files: ${distPath}`);
         // Serve static assets (JS, CSS, images, etc.)
         app.use(express.static(distPath, { index: false }));
         // SPA fallback — serve index.html for ALL non-asset routes
         // This makes React Router work for /admin, /admin/dashboard, /account, etc.
         app.get("*", (req, res) => {
+            // Do not serve index.html for static assets / physical files that were not found
+            const ext = path.extname(req.path).toLowerCase();
+            const isAssetRoute = req.path.startsWith("/assets/") || req.path.startsWith("/images/") || [
+                ".js", ".css", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".woff", ".woff2", ".ttf", ".json", ".xml", ".txt"
+            ].includes(ext);
+            if (isAssetRoute) {
+                res.status(404).send("Asset not found");
+                return;
+            }
             const indexPath = path.resolve(distPath, "index.html");
             res.sendFile(indexPath, (err) => {
                 if (err) {
