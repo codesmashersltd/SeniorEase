@@ -140,6 +140,24 @@ async function startServer() {
         return;
       }
 
+      const normalizedPath = req.path.toLowerCase().replace(/\/$/, "") || "/";
+
+      // 1. Check if a pre-rendered static HTML file exists for this route
+      let routeFile = normalizedPath;
+      if (routeFile === "/") {
+        routeFile = "/index.html";
+      } else {
+        routeFile = `${routeFile}/index.html`;
+      }
+
+      const preRenderedPath = path.join(distPath, routeFile);
+      if (fs.existsSync(preRenderedPath)) {
+        console.log(`[SPA Fallback] Serving pre-rendered static file for ${req.path}`);
+        res.sendFile(preRenderedPath);
+        return;
+      }
+
+      // 2. Otherwise fall back to reading index.html and doing runtime replacements
       const indexPath = path.resolve(distPath, "index.html");
 
       fs.readFile(indexPath, "utf8", (err, html) => {
