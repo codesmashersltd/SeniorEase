@@ -81,6 +81,114 @@ export default function AdminDashboard() {
   const [primaryPassword, setPrimaryPassword] = useState('123456');
   const navigate = useNavigate();
 
+  const [pwdSearch, setPwdSearch] = useState('');
+  const [resetUniqueId, setResetUniqueId] = useState('');
+  const [resetActionType, setResetActionType] = useState<'generate' | 'custom'>('generate');
+  const [resetCustomPwd, setResetCustomPwd] = useState('');
+  const [resetStatus, setResetStatus] = useState<{ success: boolean; message: string } | null>(null);
+  const [visiblePasswords, setVisiblePasswords] = useState<Record<string, boolean>>({});
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const togglePasswordVisibility = (docId: string) => {
+    setVisiblePasswords(prev => ({
+      ...prev,
+      [docId]: !prev[docId]
+    }));
+  };
+
+  const copyToClipboard = (text: string, docId: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(docId);
+    setTimeout(() => {
+      setCopiedId(null);
+    }, 2000);
+  };
+
+  const generateRandomString = (length = 8) => {
+    const chars = 'abcdefghijklmnopqrstuvwxyz';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  };
+
+  const handlePasswordReset = async () => {
+    setResetStatus(null);
+    if (!resetUniqueId.trim()) {
+      setResetStatus({ success: false, message: 'Please enter a Unique ID.' });
+      return;
+    }
+
+    const cleanedId = resetUniqueId.trim().toUpperCase();
+    
+    // Find customer in data.customers
+    let customer = data.customers.find((c: any) => c.id?.trim()?.toUpperCase() === cleanedId);
+    let isNewJoinee = false;
+    let joineeDocId = '';
+    
+    if (!customer) {
+      // Check in new_joinees
+      const joinee = data.newJoinees.find((j: any) => j.customerId?.trim()?.toUpperCase() === cleanedId);
+      if (joinee) {
+        customer = joinee;
+        isNewJoinee = true;
+        joineeDocId = joinee.id;
+      }
+    }
+
+    if (!customer) {
+      setResetStatus({ 
+        success: false, 
+        message: `No active customer or new joinee found with Unique ID "${cleanedId}". Please verify the ID.` 
+      });
+      return;
+    }
+
+    let newPass = '';
+    if (resetActionType === 'generate') {
+      newPass = generateRandomString(8);
+    } else {
+      if (!resetCustomPwd.trim() || resetCustomPwd.trim().length < 4) {
+        setResetStatus({ success: false, message: 'Custom password must be at least 4 characters.' });
+        return;
+      }
+      newPass = resetCustomPwd.trim();
+    }
+
+    try {
+      if (isNewJoinee) {
+        const docRef = doc(db, 'new_joinees', joineeDocId);
+        await updateDoc(docRef, {
+          tempPassword: newPass,
+          status: 'Password Generated',
+          updatedAt: serverTimestamp()
+        });
+      } else {
+        const docRef = doc(db, 'customers', customer.docId || customer.id);
+        await updateDoc(docRef, {
+          password: newPass,
+          mustChangePassword: true,
+          updatedAt: serverTimestamp()
+        });
+      }
+
+      setResetStatus({
+        success: true,
+        message: `Successfully set password to "${newPass}" for ${customer.name} (${customer.customerId || customer.id || cleanedId}).`
+      });
+
+      if (resetActionType === 'custom') {
+        setResetCustomPwd('');
+      }
+    } catch (err: any) {
+      setResetStatus({
+        success: false,
+        message: `Error resetting password: ${err.message}`
+      });
+    }
+  };
+
   useEffect(() => {
     setSelectedIds([]);
   }, [activeTab]);
@@ -128,7 +236,7 @@ export default function AdminDashboard() {
     });
 
     const unsubCustomers = onSnapshot(collection(db, 'customers'), (snap) => {
-      setData(prev => ({ ...prev, customers: snap.docs.map(d => ({ id: d.id, ...d.data() })) }));
+      setData(prev => ({ ...prev, customers: snap.docs.map(d => ({ docId: d.id, ...d.data(), id: d.data().id || d.id })) }));
     }, (err) => {
       console.error('Customers sync error:', err);
       setLoading(false);
@@ -859,7 +967,7 @@ export default function AdminDashboard() {
                                     </button>
                                   )}
                                   <button 
-                                    onClick={() => deleteRecord(activeTab === 'logs' ? 'loginLogs' : (activeTab === 'renewals' ? 'customers' : (activeTab === 'new-joinees' ? 'new_joinees' : activeTab)), item.id)}
+                                    onClick={() => deleteRecord(activeTab === 'logs' ? 'loginLogs' : (activeTab === 'renewals' ? 'customers' : (activeTab === 'new-joinees' ? 'new_joinees' : activeTab)), item.docId || item.id)}
                                     className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-all"
                                     title="Purge"
                                   >
@@ -876,104 +984,326 @@ export default function AdminDashboard() {
               )}
 
               {activeTab === 'system' && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">Administrators</h3>
-                    <p className="text-gray-500 text-sm mb-8">Manage users who have access to this dashboard.</p>
-                    
-                    <div className="space-y-4 mb-8">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input 
-                          type="email" 
-                          placeholder="Admin Email"
-                          value={newAdminEmail}
-                          onChange={(e) => setNewAdminEmail(e.target.value)}
-                          className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all"
-                        />
-                        <input 
-                          type="text" 
-                          placeholder="Firebase UID"
-                          value={newAdminUid}
-                          onChange={(e) => setNewAdminUid(e.target.value)}
-                          className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all font-mono"
-                        />
+                <div className="space-y-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+                      <h3 className="text-lg font-bold text-gray-900 mb-2">Administrators</h3>
+                      <p className="text-gray-500 text-sm mb-8">Manage users who have access to this dashboard.</p>
+                      
+                      <div className="space-y-4 mb-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <input 
+                            type="email" 
+                            placeholder="Admin Email"
+                            value={newAdminEmail}
+                            onChange={(e) => setNewAdminEmail(e.target.value)}
+                            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all"
+                          />
+                          <input 
+                            type="text" 
+                            placeholder="Firebase UID"
+                            value={newAdminUid}
+                            onChange={(e) => setNewAdminUid(e.target.value)}
+                            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all font-mono"
+                          />
+                        </div>
+                        <button 
+                          onClick={whitelistAdmin}
+                          className="w-full bg-teal-600 text-white font-bold py-3 rounded-xl hover:bg-teal-700 transition-all flex items-center justify-center gap-2"
+                        >
+                          <Plus size={18} />
+                          Whitelist New Admin
+                        </button>
                       </div>
-                      <button 
-                        onClick={whitelistAdmin}
-                        className="w-full bg-teal-600 text-white font-bold py-3 rounded-xl hover:bg-teal-700 transition-all flex items-center justify-center gap-2"
-                      >
-                        <Plus size={18} />
-                        Whitelist New Admin
-                      </button>
+
+                      <div className="divide-y divide-gray-50 border-t border-gray-50">
+                        {data.admins.map(admin => (
+                          <div key={admin.id} className="py-4 flex items-center justify-between group">
+                            <div>
+                              <p className="text-sm font-bold text-gray-900">{admin.email}</p>
+                              <p className="text-[10px] text-gray-400 font-mono tracking-wider">{admin.id}</p>
+                            </div>
+                            <button 
+                              onClick={() => deleteRecord('admins', admin.id)}
+                              className="text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-all p-2 rounded-lg hover:bg-red-50"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
-                    <div className="divide-y divide-gray-50 border-t border-gray-50">
-                      {data.admins.map(admin => (
-                        <div key={admin.id} className="py-4 flex items-center justify-between group">
-                          <div>
-                            <p className="text-sm font-bold text-gray-900">{admin.email}</p>
-                            <p className="text-[10px] text-gray-400 font-mono tracking-wider">{admin.id}</p>
+                    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+                      <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+                        <Key className="h-5 w-5 text-teal-600" />
+                        Credentials Manager
+                      </h3>
+                      <p className="text-gray-500 text-sm mb-8">Update the primary 'Administrator' account password.</p>
+                      
+                      <div className="space-y-6">
+                        <div className="space-y-4">
+                          <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest">New Password</label>
+                          <div className="flex gap-3">
+                            <input 
+                              type="password" 
+                              placeholder="Min 6 characters"
+                              value={primaryPassword}
+                              onChange={(e) => setPrimaryPassword(e.target.value)}
+                              className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all font-mono"
+                            />
+                            <button 
+                              onClick={updatePrimaryPassword}
+                              className="bg-teal-600 text-white font-bold px-6 rounded-xl hover:bg-teal-700 transition-all text-xs uppercase tracking-widest"
+                            >
+                              Update
+                            </button>
                           </div>
-                          <button 
-                            onClick={() => deleteRecord('admins', admin.id)}
-                            className="text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-all p-2 rounded-lg hover:bg-red-50"
-                          >
-                            <Trash2 size={16} />
-                          </button>
+                          <p className="text-[10px] text-gray-400 italic font-medium">This affects the direct 'Email & Password' login method.</p>
                         </div>
-                      ))}
+
+                        <div className="mt-8 pt-8 border-t border-gray-100">
+                          <h4 className="text-sm font-bold text-gray-900 mb-6 flex items-center gap-2 uppercase tracking-widest">
+                            <Activity size={16} className="text-teal-600" />
+                            Platform Health
+                          </h4>
+                          <div className="space-y-4">
+                            {[
+                              { label: 'Authentication Service', status: 'Healthy', icon: Shield, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+                              { label: 'Cloud Firestore', status: 'Operational', icon: Database, color: 'text-blue-600', bg: 'bg-blue-50' },
+                            ].map((service) => (
+                              <div key={service.label} className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
+                                <div className="flex items-center gap-4">
+                                  <div className={`${service.bg} ${service.color} p-2 rounded-lg`}>
+                                    <service.icon size={18} />
+                                  </div>
+                                  <p className="text-sm font-bold text-gray-900">{service.label}</p>
+                                </div>
+                                <span className="text-[10px] font-black tracking-widest text-emerald-600 uppercase">ONLINE</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
+                  {/* User Password Directory & Reset Tool */}
                   <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-                    <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
-                      <Key className="h-5 w-5 text-teal-600" />
-                      Credentials Manager
-                    </h3>
-                    <p className="text-gray-500 text-sm mb-8">Update the primary 'Administrator' account password.</p>
-                    
-                    <div className="space-y-6">
-                      <div className="space-y-4">
-                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest">New Password</label>
-                        <div className="flex gap-3">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                      <div>
+                        <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+                          <Lock className="h-5 w-5 text-teal-600" />
+                          User Passwords Directory & Reset Tool
+                        </h3>
+                        <p className="text-gray-500 text-sm">View stored passwords of registered users or reset/generate new ones using their Unique ID.</p>
+                      </div>
+                    </div>
+
+                    {/* Quick ID Reset Section */}
+                    <div id="quick-reset-box" className="bg-gray-50/50 rounded-2xl border border-gray-100 p-6 mb-8 text-gray-900">
+                      <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Reset / Generate Password by Unique ID</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                        <div>
+                          <label className="block text-xs font-bold text-gray-700 mb-2 uppercase">Unique ID</label>
                           <input 
-                            type="password" 
-                            placeholder="Min 6 characters"
-                            value={primaryPassword}
-                            onChange={(e) => setPrimaryPassword(e.target.value)}
-                            className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all font-mono"
+                            type="text" 
+                            placeholder="e.g. SE-CHZK1T"
+                            value={resetUniqueId}
+                            onChange={(e) => setResetUniqueId(e.target.value)}
+                            className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all font-mono font-bold uppercase placeholder:normal-case"
                           />
-                          <button 
-                            onClick={updatePrimaryPassword}
-                            className="bg-teal-600 text-white font-bold px-6 rounded-xl hover:bg-teal-700 transition-all text-xs uppercase tracking-widest"
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-gray-700 mb-2 uppercase">Action Type</label>
+                          <select 
+                            value={resetActionType}
+                            onChange={(e) => setResetActionType(e.target.value as any)}
+                            className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all"
                           >
-                            Update
+                            <option value="generate">Generate Random Password</option>
+                            <option value="custom">Set Custom Password</option>
+                          </select>
+                        </div>
+                        {resetActionType === 'custom' ? (
+                          <div>
+                            <label className="block text-xs font-bold text-gray-700 mb-2 uppercase">Custom Password</label>
+                            <input 
+                              type="text" 
+                              placeholder="Min 4 characters"
+                              value={resetCustomPwd}
+                              onChange={(e) => setResetCustomPwd(e.target.value)}
+                              className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all font-mono"
+                            />
+                          </div>
+                        ) : (
+                          <div className="text-xs text-gray-400 pb-3 italic">
+                            Will generate a random 8-character password.
+                          </div>
+                        )}
+                        <div>
+                          <button 
+                            onClick={handlePasswordReset}
+                            className="w-full bg-teal-600 text-white font-bold py-3 rounded-xl hover:bg-teal-700 transition-all text-xs uppercase tracking-widest cursor-pointer"
+                          >
+                            Apply Password
                           </button>
                         </div>
-                        <p className="text-[10px] text-gray-400 italic font-medium">This affects the direct 'Email & Password' login method.</p>
                       </div>
 
-                      <div className="mt-8 pt-8 border-t border-gray-100">
-                        <h4 className="text-sm font-bold text-gray-900 mb-6 flex items-center gap-2 uppercase tracking-widest">
-                          <Activity size={16} className="text-teal-600" />
-                          Platform Health
-                        </h4>
-                        <div className="space-y-4">
-                          {[
-                            { label: 'Authentication Service', status: 'Healthy', icon: Shield, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-                            { label: 'Cloud Firestore', status: 'Operational', icon: Database, color: 'text-blue-600', bg: 'bg-blue-50' },
-                          ].map((service) => (
-                            <div key={service.label} className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
-                              <div className="flex items-center gap-4">
-                                <div className={`${service.bg} ${service.color} p-2 rounded-lg`}>
-                                  <service.icon size={18} />
-                                </div>
-                                <p className="text-sm font-bold text-gray-900">{service.label}</p>
-                              </div>
-                              <span className="text-[10px] font-black tracking-widest text-emerald-600 uppercase">ONLINE</span>
-                            </div>
-                          ))}
+                      {resetStatus && (
+                        <div className={`mt-4 p-4 rounded-xl text-sm flex items-start gap-2 ${resetStatus.success ? 'bg-emerald-50 text-emerald-800 border border-emerald-100' : 'bg-red-50 text-red-800 border border-red-100'}`}>
+                          <div className="mt-0.5">
+                            {resetStatus.success ? <CheckCircle2 size={16} className="text-emerald-600" /> : <AlertCircle size={16} className="text-red-600" />}
+                          </div>
+                          <div>{resetStatus.message}</div>
                         </div>
+                      )}
+                    </div>
+
+                    {/* Directory List Table */}
+                    <div className="border border-gray-100 rounded-2xl overflow-hidden text-gray-900">
+                      <div className="p-4 bg-gray-50/50 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">User Passwords Directory</span>
+                        <div className="relative max-w-xs w-full">
+                          <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+                          <input 
+                            type="text" 
+                            placeholder="Filter by ID, name, email..."
+                            value={pwdSearch}
+                            onChange={(e) => setPwdSearch(e.target.value)}
+                            className="w-full bg-white border border-gray-200 rounded-xl pl-9 pr-4 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                          <thead>
+                            <tr className="bg-gray-50/20 border-b border-gray-100">
+                              <th className="px-6 py-3 text-[10px] font-black text-gray-400 uppercase tracking-widest">User ID / Type</th>
+                              <th className="px-6 py-3 text-[10px] font-black text-gray-400 uppercase tracking-widest">Name & Email</th>
+                              <th className="px-6 py-3 text-[10px] font-black text-gray-400 uppercase tracking-widest">Stored Password</th>
+                              <th className="px-6 py-3 text-[10px] font-black text-gray-400 uppercase tracking-widest text-right">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-gray-100 text-sm">
+                            {(() => {
+                              // Build combined users array
+                              const customerUsers = data.customers.map((c: any) => ({
+                                id: c.id,
+                                name: c.name || 'No Name',
+                                email: c.email || 'no-email',
+                                type: 'Customer',
+                                password: c.password || '',
+                                mustChange: c.mustChangePassword,
+                                docId: c.docId || c.id,
+                                isCustomer: true
+                              }));
+
+                              const joineeUsers = data.newJoinees.map((j: any) => ({
+                                id: j.customerId,
+                                name: j.name || 'No Name',
+                                email: j.email || 'no-email',
+                                type: 'New Joinee',
+                                password: j.tempPassword || '',
+                                mustChange: true,
+                                docId: j.id,
+                                isCustomer: false
+                              }));
+
+                              const allUsers = [...customerUsers, ...joineeUsers];
+
+                              // Filter by search term
+                              const filteredUsers = allUsers.filter(u => {
+                                if (!pwdSearch) return true;
+                                const s = pwdSearch.toLowerCase();
+                                return (
+                                  u.id?.toLowerCase().includes(s) ||
+                                  u.name?.toLowerCase().includes(s) ||
+                                  u.email?.toLowerCase().includes(s) ||
+                                  u.type?.toLowerCase().includes(s)
+                                );
+                              });
+
+                              if (filteredUsers.length === 0) {
+                                return (
+                                  <tr>
+                                    <td colSpan={4} className="px-6 py-12 text-center text-gray-400 italic">
+                                      No users found matching your search.
+                                    </td>
+                                  </tr>
+                                );
+                              }
+
+                              return filteredUsers.map((user) => {
+                                const isVisible = !!visiblePasswords[user.docId];
+                                return (
+                                  <tr key={user.docId} className="hover:bg-gray-50/30 transition-colors">
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                      <div className="flex flex-col gap-1">
+                                        <span className="text-xs font-mono font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-100 w-fit">
+                                          {user.id || 'N/A'}
+                                        </span>
+                                        <span className={`text-[9px] font-black px-1.5 py-0.5 rounded uppercase w-fit ${
+                                          user.isCustomer ? 'bg-emerald-50 text-emerald-600' : 'bg-blue-50 text-blue-600'
+                                        }`}>
+                                          {user.type}
+                                        </span>
+                                      </div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                      <p className="font-bold text-gray-900 text-xs">{user.name}</p>
+                                      <p className="text-gray-500 text-xs lowercase">{user.email}</p>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                      <div className="flex items-center gap-2">
+                                        <span className="font-mono text-xs font-medium bg-gray-50 px-2 py-1 rounded border border-gray-100">
+                                          {isVisible ? (user.password || <span className="text-gray-400 italic">None</span>) : '••••••••'}
+                                        </span>
+                                        <button 
+                                          onClick={() => togglePasswordVisibility(user.docId)}
+                                          className="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+                                          title={isVisible ? "Hide Password" : "Show Password"}
+                                        >
+                                          {isVisible ? <Shield size={14} /> : <Lock size={14} />}
+                                        </button>
+                                        {user.password && (
+                                          <button 
+                                            onClick={() => copyToClipboard(user.password, user.docId)}
+                                            className="text-gray-400 hover:text-teal-600 p-1.5 rounded-lg hover:bg-teal-50 transition-colors text-xs font-bold cursor-pointer"
+                                            title="Copy Password"
+                                          >
+                                            {copiedId === user.docId ? 'Copied!' : 'Copy'}
+                                          </button>
+                                        )}
+                                      </div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-right">
+                                      <div className="flex items-center justify-end gap-2">
+                                        <button 
+                                          onClick={() => {
+                                            setResetUniqueId(user.id);
+                                            setResetActionType('generate');
+                                            setResetStatus(null);
+                                            // Scroll to reset block smoothly
+                                            const element = document.getElementById('quick-reset-box');
+                                            if (element) {
+                                              element.scrollIntoView({ behavior: 'smooth' });
+                                            }
+                                          }}
+                                          className="text-[10px] font-bold text-teal-600 hover:bg-teal-50 px-2.5 py-1.5 rounded-lg border border-teal-100/50 transition-all cursor-pointer"
+                                        >
+                                          Reset / Edit
+                                        </button>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                );
+                              });
+                            })()}
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                   </div>
