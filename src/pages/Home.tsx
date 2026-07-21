@@ -4,7 +4,7 @@ import { CheckCircle2, ShieldCheck, Smartphone, Mail, FileText, Users, ArrowRigh
 import JoinModal from '../components/JoinModal';
 
 const heroImage = '/se121.jpg';
-const featureImage = '/images/senior_couple_computer_learning_1784446449833.jpg';
+const featureImage = '/images/senior_couple_computer_1784467962096.jpg';
 
 export default function Home() {
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);

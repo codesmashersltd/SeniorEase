@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import JoinModal from '../components/JoinModal';
 
-const pricingHeroImage = '/images/seniors_pricing_hero_1784446914914.jpg';
+const pricingHeroImage = '/images/seniors_pricing_hero_1784468020091.jpg';
 
 export default function Pricing() {
   const [isModalOpen, setIsModalOpen] = useState(false);

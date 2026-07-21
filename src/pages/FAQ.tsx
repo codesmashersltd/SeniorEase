@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { HelpCircle, ArrowRight } from 'lucide-react';
 
-const faqHeroImage = '/images/seniors_faq_hero_1784446901963.jpg';
+const faqHeroImage = '/images/seniors_faq_hero_1784468031510.jpg';
 
 export default function FAQ() {
   const faqs = [
