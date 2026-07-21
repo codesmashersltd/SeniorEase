@@ -4,8 +4,7 @@ import { Mail, Phone, Clock, MessageSquare, ArrowRight, CheckCircle2, X, MapPin 
 import { motion, AnimatePresence } from 'motion/react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-
-const contactHeroImage = '/images/seniors_contact_hero_1784468041599.jpg';
+import contactHeroImage from '../assets/images/seniors_contact_hero_1784468041599.jpg';
 
 export default function Contact() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);

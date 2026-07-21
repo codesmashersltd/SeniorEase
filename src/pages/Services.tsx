@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Smartphone, Video, Mail, ShieldAlert, FileEdit, Users, ArrowRight, ShoppingBag, PlayCircle } from 'lucide-react';
 import { motion } from 'motion/react';
-
-const servicesHeroImage = '/images/seniors_laptop_learning_1784467992551.jpg';
+import servicesHeroImage from '../assets/images/seniors_laptop_learning_1784467992551.jpg';
 
 export default function Services() {
   const services = [

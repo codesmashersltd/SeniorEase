@@ -3,8 +3,7 @@ import { CheckCircle2, Info } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import JoinModal from '../components/JoinModal';
-
-const pricingHeroImage = '/images/seniors_pricing_hero_1784468020091.jpg';
+import pricingHeroImage from '../assets/images/seniors_pricing_hero_1784468020091.jpg';
 
 export default function Pricing() {
   const [isModalOpen, setIsModalOpen] = useState(false);

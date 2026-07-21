@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle2, ShieldCheck, Smartphone, Mail, FileText, Users, ArrowRight, PhoneCall, HeartHandshake, Video, Calendar, Star } from 'lucide-react';
 import JoinModal from '../components/JoinModal';
-
-const heroImage = '/se121.jpg';
-const featureImage = '/images/senior_couple_computer_1784467962096.jpg';
+import heroImage from '../assets/images/se121.jpg';
+import featureImage from '../assets/images/senior_couple_computer_1784467962096.jpg';
 
 export default function Home() {
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
