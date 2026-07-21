@@ -258,7 +258,7 @@ export default function Pricing() {
               <div className="bg-gray-50 p-4 rounded-xl mb-8 text-sm text-gray-700 space-y-2.5 border border-gray-100">
                 <p><span className="font-bold text-gray-900">Best for:</span> Seniors who only need light support from time to time.</p>
                 <div className="border-t border-gray-200/60 pt-2.5 mt-2 space-y-1.5 text-xs">
-                  <p className="flex justify-between gap-2"><span className="text-gray-500 font-medium">Response Time:</span> <span className="font-semibold text-gray-900">Within 24-48 hours</span></p>
+                  <p className="flex justify-between gap-2"><span className="text-gray-500 font-medium">Response Time:</span> <span className="font-semibold text-gray-900">Within 1-2 hours</span></p>
                   <p className="flex justify-between gap-2"><span className="text-gray-500 font-medium">Support Hours:</span> <span className="font-semibold text-gray-900">Mon-Fri, 9am - 5:30pm GMT</span></p>
                   <p className="flex justify-between gap-2 flex-col sm:flex-row sm:justify-between"><span className="text-gray-500 font-medium">Delivery:</span> <span className="font-semibold text-gray-900 text-right">Same-day software setup</span></p>
                 </div>
@@ -317,7 +317,7 @@ export default function Pricing() {
               <div className="bg-teal-800/50 p-4 rounded-xl mb-8 text-sm text-teal-100 space-y-2.5 border border-teal-700/50">
                 <p><span className="font-bold text-white">Best for:</span> Seniors who need regular monthly educate on everyday digital tasks.</p>
                 <div className="border-t border-teal-700/60 pt-2.5 mt-2 space-y-1.5 text-xs">
-                  <p className="flex justify-between gap-2"><span className="text-teal-200 font-medium">Response Time:</span> <span className="font-semibold text-white">Within 12-24 hours (Priority)</span></p>
+                  <p className="flex justify-between gap-2"><span className="text-teal-200 font-medium">Response Time:</span> <span className="font-semibold text-white">Within 1-2 hours (Priority)</span></p>
                   <p className="flex justify-between gap-2"><span className="text-teal-200 font-medium">Support Hours:</span> <span className="font-semibold text-white">Mon-Sat, 9am - 6pm GMT</span></p>
                   <p className="flex justify-between gap-2 flex-col sm:flex-row sm:justify-between"><span className="text-teal-200 font-medium">Delivery:</span> <span className="font-semibold text-white text-right">Setup completed under 24 hours</span></p>
                 </div>
@@ -368,7 +368,7 @@ export default function Pricing() {
               <div className="bg-gray-50 p-4 rounded-xl mb-8 text-sm text-gray-700 space-y-2.5 border border-gray-100">
                 <p><span className="font-bold text-gray-900">Best for:</span> Adult children who want regular support available for a parent or loved one.</p>
                 <div className="border-t border-gray-200/60 pt-2.5 mt-2 space-y-1.5 text-xs">
-                  <p className="flex justify-between gap-2"><span className="text-gray-500 font-medium">Response Time:</span> <span className="font-semibold text-gray-900">Under 12 hours (Express Priority)</span></p>
+                  <p className="flex justify-between gap-2"><span className="text-gray-500 font-medium">Response Time:</span> <span className="font-semibold text-gray-900">Under 1 hours (Express Priority)</span></p>
                   <p className="flex justify-between gap-2"><span className="text-gray-500 font-medium">Support Hours:</span> <span className="font-semibold text-gray-900">Mon-Sun, 8am - 8pm GMT</span></p>
                   <p className="flex justify-between gap-2 flex-col sm:flex-row sm:justify-between"><span className="text-gray-500 font-medium">Delivery:</span> <span className="font-semibold text-gray-900 text-right">Fast onboarding under 12 hours</span></p>
                 </div>
