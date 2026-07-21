@@ -91,11 +91,14 @@ async function startServer() {
   });
 
   // ── Static / SPA Serving ──────────────────────────────────────────────────
+  let distPath = "";
+  let vite: any = null;
+
   if (!isProduction) {
-    // Dev mode: use Vite middleware
-    const vite = await createViteServer({
+    // Dev mode: use Vite middleware with custom appType to intercept HTML requests
+    vite = await createViteServer({
       server: { middlewareMode: true },
-      appType: "spa",
+      appType: "custom",
     });
     app.use(vite.middlewares);
   } else {
@@ -108,7 +111,7 @@ async function startServer() {
       path.resolve(__dirname, "../../dist"),
     ];
 
-    let distPath = possiblePaths[0];
+    distPath = possiblePaths[0];
     console.log(`[Server] Searching for dist folder. Current directory: ${process.cwd()}, __dirname: ${__dirname}`);
     
     for (const p of possiblePaths) {
@@ -125,24 +128,31 @@ async function startServer() {
 
     // Serve static assets (JS, CSS, images, etc.)
     app.use(express.static(distPath, { index: false }));
+  }
 
-    // SPA fallback — serve index.html for ALL non-asset routes
-    // This makes React Router work for /admin, /admin/dashboard, /account, etc.
-    app.get("*", (req, res) => {
-      // Do not serve index.html for static assets / physical files that were not found
-      const ext = path.extname(req.path).toLowerCase();
-      const isAssetRoute = req.path.startsWith("/assets/") || req.path.startsWith("/images/") || [
-        ".js", ".css", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".woff", ".woff2", ".ttf", ".json", ".xml", ".txt"
-      ].includes(ext);
+  // Unified routing handler for HTML pages (both Dev & Production)
+  app.get("*", (req, res, next) => {
+    // Ignore API and admin-ping routes
+    if (req.path.startsWith("/api/") || req.path === "/admin-ping") {
+      return next();
+    }
 
-      if (isAssetRoute) {
-        res.status(404).send("Asset not found");
-        return;
-      }
+    // Do not serve index.html for static assets / physical files that were not found
+    const ext = path.extname(req.path).toLowerCase();
+    const isAssetRoute = req.path.startsWith("/assets/") || req.path.startsWith("/images/") || [
+      ".js", ".css", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".woff", ".woff2", ".ttf", ".json", ".xml", ".txt"
+    ].includes(ext);
 
-      const normalizedPath = req.path.toLowerCase().replace(/\/$/, "") || "/";
+    if (isAssetRoute) {
+      if (vite) return next();
+      res.status(404).send("Asset not found");
+      return;
+    }
 
-      // 1. Check if a pre-rendered static HTML file exists for this route
+    const normalizedPath = req.path.toLowerCase().replace(/\/$/, "") || "/";
+
+    // 1. Check if a pre-rendered static HTML file exists for this route (Production only)
+    if (!vite) {
       let routeFile = normalizedPath;
       if (routeFile === "/") {
         routeFile = "/index.html";
@@ -156,11 +166,14 @@ async function startServer() {
         res.sendFile(preRenderedPath);
         return;
       }
+    }
 
-      // 2. Otherwise fall back to reading index.html and doing runtime replacements
-      const indexPath = path.resolve(distPath, "index.html");
+    // 2. Otherwise fall back to reading index.html and doing runtime replacements
+    const indexPath = vite 
+      ? path.resolve(rootPath, "index.html")
+      : path.resolve(distPath, "index.html");
 
-      fs.readFile(indexPath, "utf8", (err, html) => {
+    fs.readFile(indexPath, "utf8", async (err, html) => {
         if (err) {
           console.error("[SPA Fallback Error]", err);
           res.status(500).send("Could not serve app. Please check the build.");
@@ -617,15 +630,23 @@ async function startServer() {
         // 4. Inject static content inside <div id="root"></div>
         if (staticHTML) {
           modifiedHtml = modifiedHtml.replace(
-            /<div\s+id="root">\s*<\/div>/gi,
+            /<div\s+id=["']?root["']?\s*>\s*<\/div>/gi,
             `<div id="root">${staticHTML}</div>`
           );
         }
 
-        res.send(modifiedHtml);
+        if (vite) {
+          try {
+            const transformedHtml = await vite.transformIndexHtml(req.url, modifiedHtml);
+            res.status(200).set({ "Content-Type": "text/html" }).send(transformedHtml);
+          } catch (e) {
+            next(e);
+          }
+        } else {
+          res.send(modifiedHtml);
+        }
       });
     });
-  }
 
   // ── Error Handler ─────────────────────────────────────────────────────────
   app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
