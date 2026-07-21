@@ -61,59 +61,6 @@ export default function MobileAppGuide() {
             </a>
           </div>
 
-          {/* Icon Download Section */}
-          <div className="mt-12 pt-8 border-t border-gray-100 uppercase tracking-widest text-[10px] text-gray-400 font-bold mb-4">
-            Developer Assets
-          </div>
-          
-          <div className="bg-gray-900 rounded-2xl p-6 text-left">
-            <h3 className="text-white font-bold mb-2">App Icon (1024x1024)</h3>
-            <p className="text-gray-400 text-xs mb-4">Use this for Google Play and App Store submissions.</p>
-            
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-teal-600 rounded-xl flex items-center justify-center shadow-lg">
-                <HeartHandshake className="text-white" size={32} />
-              </div>
-              <button 
-                onClick={() => {
-                  const canvas = document.createElement('canvas');
-                  canvas.width = 1024;
-                  canvas.height = 1024;
-                  const ctx = canvas.getContext('2d');
-                  if (ctx) {
-                    // Draw Background
-                    ctx.fillStyle = '#0d9488';
-                    ctx.beginPath();
-                    const radius = 200;
-                    ctx.roundRect(0, 0, 1024, 1024, [radius]);
-                    ctx.fill();
-                    
-                    // Draw Icon (Hand-drawn-ish heart handshake)
-                    ctx.fillStyle = 'white';
-                    ctx.font = '600px Lucide'; // Approximation
-                    // Since we can't easily draw the lucide icon to canvas without the font
-                    // We'll draw a white heart as a fallback
-                    ctx.beginPath();
-                    ctx.moveTo(512, 800);
-                    ctx.bezierCurveTo(512, 800, 100, 550, 100, 350);
-                    ctx.arc(306, 350, 206, Math.PI, 0, false);
-                    ctx.arc(718, 350, 206, Math.PI, 0, false);
-                    ctx.bezierCurveTo(924, 550, 512, 800, 512, 800);
-                    ctx.fill();
-                    
-                    const link = document.createElement('a');
-                    link.download = 'seniorease-icon.png';
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                  }
-                }}
-                className="bg-gray-700 hover:bg-gray-600 text-white text-xs font-bold py-2 px-4 rounded-lg transition-colors"
-              >
-                Download Icon PNG
-              </button>
-            </div>
-          </div>
-
           <div className="mt-8 flex items-center justify-center gap-2 text-xs text-gray-500">
             <ShieldCheck size={16} className="text-teal-600" />
             <span>Secure, private, and ad-free experience</span>
