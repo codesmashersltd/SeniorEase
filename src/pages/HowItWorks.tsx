@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { MousePointerClick, PlayCircle, PhoneCall, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
-import howItWorksHeroImage from '../assets/images/seniors_how_it_works_hero_1784446891606.jpg';
+
+const howItWorksHeroImage = '/images/seniors_how_it_works_hero_1784446891606.jpg';
 
 export default function HowItWorks() {
   const steps = [
@@ -75,6 +76,7 @@ export default function HowItWorks() {
             src={howItWorksHeroImage} 
             alt="Elderly senior learning with technology" 
             className="w-full h-full object-cover object-center"
+            referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-slate-950/65 backdrop-blur-[0.5px]"></div>
         </div>
@@ -105,6 +107,7 @@ export default function HowItWorks() {
                 src={howItWorksHeroImage} 
                 alt="Elderly senior learning with technology" 
                 className="w-full h-full object-cover object-center"
+                referrerPolicy="no-referrer"
               />
             </div>
             <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>

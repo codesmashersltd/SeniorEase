@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { HelpCircle, ArrowRight } from 'lucide-react';
-import faqHeroImage from '../assets/images/seniors_faq_hero_1784446901963.jpg';
+
+const faqHeroImage = '/images/seniors_faq_hero_1784446901963.jpg';
 
 export default function FAQ() {
   const faqs = [
@@ -43,6 +44,7 @@ export default function FAQ() {
             src={faqHeroImage} 
             alt="Friendly support representative helping seniors" 
             className="w-full h-full object-cover object-center"
+            referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-slate-950/65 backdrop-blur-[0.5px]"></div>
         </div>
@@ -68,6 +70,7 @@ export default function FAQ() {
                 src={faqHeroImage} 
                 alt="Friendly support representative helping seniors" 
                 className="w-full h-full object-cover object-center"
+                referrerPolicy="no-referrer"
               />
             </div>
             <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>

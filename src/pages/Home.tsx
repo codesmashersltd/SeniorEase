@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle2, ShieldCheck, Smartphone, Mail, FileText, Users, ArrowRight, PhoneCall, HeartHandshake, Video, Calendar, Star } from 'lucide-react';
 import JoinModal from '../components/JoinModal';
-import heroImage from '../assets/images/senior_tech_support_1784443978651.jpg';
-import featureImage from '../assets/images/senior_couple_computer_learning_1784446449833.jpg';
+
+const heroImage = '/se121.jpg';
+const featureImage = '/images/senior_couple_computer_learning_1784446449833.jpg';
 
 export default function Home() {
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
@@ -17,6 +18,7 @@ export default function Home() {
             src={heroImage} 
             alt="Seniors using technology" 
             className="w-full h-full object-cover"
+            referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-white/45 backdrop-blur-[1px]"></div>
         </div>
@@ -44,6 +46,7 @@ export default function Home() {
                   src={heroImage} 
                   alt="Seniors using technology" 
                   className="w-full h-full object-cover object-center"
+                  referrerPolicy="no-referrer"
                 />
               </div>
               <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/10"></div>
@@ -137,6 +140,7 @@ export default function Home() {
                   src={featureImage} 
                   alt="Senior couple smiling and learning computer skills together" 
                   className="object-cover w-full h-full"
+                  referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>

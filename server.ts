@@ -129,6 +129,17 @@ async function startServer() {
     // SPA fallback — serve index.html for ALL non-asset routes
     // This makes React Router work for /admin, /admin/dashboard, /account, etc.
     app.get("*", (req, res) => {
+      // Do not serve index.html for static assets / physical files that were not found
+      const ext = path.extname(req.path).toLowerCase();
+      const isAssetRoute = req.path.startsWith("/assets/") || req.path.startsWith("/images/") || [
+        ".js", ".css", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".woff", ".woff2", ".ttf", ".json", ".xml", ".txt"
+      ].includes(ext);
+
+      if (isAssetRoute) {
+        res.status(404).send("Asset not found");
+        return;
+      }
+
       const indexPath = path.resolve(distPath, "index.html");
       res.sendFile(indexPath, (err) => {
         if (err) {
