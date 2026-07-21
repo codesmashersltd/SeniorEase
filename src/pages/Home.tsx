@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle2, ShieldCheck, Smartphone, Mail, FileText, Users, ArrowRight, PhoneCall, HeartHandshake, Video, Calendar, Star } from 'lucide-react';
 import JoinModal from '../components/JoinModal';
-import heroImage from '../assets/images/se121.jpg';
+import heroImage from '../assets/images/intro_page.jpg';
 import featureImage from '../assets/images/senior_couple_computer_1784467962096.jpg';
 
 export default function Home() {
