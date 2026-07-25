@@ -215,15 +215,7 @@ const routes = [
           <h1 style="font-size: 2.8rem; font-weight: 800; margin-top: 10px; color: #0f172a;">Our Support Services</h1>
           <p style="font-size: 1.25rem; color: #475569; margin-bottom: 30px;">Simple training, patient troubleshooting, and friendly guidance for smartphones, tablets, banking, and online safety.</p>
           
-          <h2 style="font-size: 1.8rem; font-weight: 700; color: #0f172a; margin-top: 30px;">How We Can Help You:</h2>
-          <ul style="line-height: 2; color: #475569; padding-left: 20px; font-size: 1.1rem;">
-            <li><strong>Smartphone & Tablet Help:</strong> Learn apps, send photos on WhatsApp, and video call family.</li>
-            <li><strong>Safe Online Accounts:</strong> Access online banking safely, manage energy/water utilities, and pay securely.</li>
-            <li><strong>Anti-Scam Awareness:</strong> Identify fraudulent messages, fake links, and dangerous phishing scams.</li>
-            <li><strong>Digital Confidence Training:</strong> Empowering seniors to navigate modern web interfaces with absolute peace of mind.</li>
-          </ul>
-
-          <h2 style="font-size: 1.8rem; font-weight: 700; color: #0f172a; margin-top: 40px;">Who Can Benefit?</h2>
+          <h2 style="font-size: 1.8rem; font-weight: 700; color: #0f172a; margin-top: 30px;">Who Can Benefit?</h2>
           <ul style="line-height: 2; color: #475569; padding-left: 20px; font-size: 1.1rem;">
             <li><strong>Older adults learning new technology:</strong> Build confidence with smartphones, tablets, or computers at a calm, comfortable pace.</li>
             <li><strong>Family members supporting loved ones:</strong> Ensure your parents or grandparents have dependable, friendly, UK-based technical support.</li>
@@ -231,6 +223,14 @@ const routes = [
             <li><strong>Users needing ongoing digital guidance:</strong> Regular check-ins, continuous learning, and a reliable helping hand for day-to-day questions.</li>
             <li><strong>Seniors wanting to stay safe from scams:</strong> Learn to recognize fake emails, fraudulent text messages, and phishing attempts.</li>
             <li><strong>Anyone seeking patient, jargon-free support:</strong> Real human conversations and respectful step-by-step explanations without automated menus.</li>
+          </ul>
+
+          <h2 style="font-size: 1.8rem; font-weight: 700; color: #0f172a; margin-top: 40px;">Services We Offer</h2>
+          <ul style="line-height: 2; color: #475569; padding-left: 20px; font-size: 1.1rem;">
+            <li><strong>Smartphone & Tablet Help:</strong> Learn apps, send photos on WhatsApp, and video call family.</li>
+            <li><strong>Safe Online Accounts:</strong> Access online banking safely, manage energy/water utilities, and pay securely.</li>
+            <li><strong>Anti-Scam Awareness:</strong> Identify fraudulent messages, fake links, and dangerous phishing scams.</li>
+            <li><strong>Digital Confidence Training:</strong> Empowering seniors to navigate modern web interfaces with absolute peace of mind.</li>
           </ul>
 
           <h2 style="font-size: 1.8rem; font-weight: 700; color: #0f172a; margin-top: 40px;">Why customers choose SeniorEase</h2>

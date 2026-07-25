@@ -198,51 +198,6 @@ export default function Services() {
         </motion.div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            className="grid md:grid-cols-2 gap-8 lg:gap-10"
-          >
-            {services.map((service, index) => (
-              <motion.div 
-                key={index} 
-                variants={cardVariants}
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="bg-white p-8 md:p-10 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full group"
-              >
-                <div className="bg-teal-50 group-hover:bg-teal-100 transition-colors duration-300 w-20 h-20 rounded-2xl flex items-center justify-center text-teal-600 mb-8">
-                  <service.icon size={40} />
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-teal-700 transition-colors duration-300">{service.title}</h2>
-                <p className="text-lg text-gray-600 mb-8 leading-relaxed">{service.description}</p>
-                
-                <ul className="space-y-4 mb-8 flex-grow">
-                  {service.items.map((item, i) => (
-                    <li key={i} className="flex items-start gap-4">
-                      <div className="w-2 h-2 rounded-full bg-teal-500 mt-2.5 shrink-0"></div>
-                      <span className="text-gray-700 text-lg">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {service.note && (
-                  <div className="bg-amber-50 border border-amber-100 p-5 rounded-2xl mt-auto">
-                    <p className="text-sm text-amber-800 font-medium leading-relaxed">
-                      <span className="font-bold">Important Note:</span> {service.note}
-                    </p>
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
       {/* Who Can Benefit Section */}
       <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -314,6 +269,69 @@ export default function Services() {
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
                 <p className="text-slate-600 leading-relaxed text-base flex-1">{item.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Services Grid */}
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={fadeInUp}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-100 text-teal-800 font-semibold text-sm mb-4 border border-teal-200">
+              What We Do
+            </span>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6">
+              Services We Offer
+            </h2>
+            <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
+              Explore our comprehensive range of patient, step-by-step digital learning and support services designed to keep you connected, secure, and confident.
+            </p>
+          </motion.div>
+
+          <motion.div 
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid md:grid-cols-2 gap-8 lg:gap-10"
+          >
+            {services.map((service, index) => (
+              <motion.div 
+                key={index} 
+                variants={cardVariants}
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                className="bg-white p-8 md:p-10 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full group"
+              >
+                <div className="bg-teal-50 group-hover:bg-teal-100 transition-colors duration-300 w-20 h-20 rounded-2xl flex items-center justify-center text-teal-600 mb-8">
+                  <service.icon size={40} />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-teal-700 transition-colors duration-300">{service.title}</h2>
+                <p className="text-lg text-gray-600 mb-8 leading-relaxed">{service.description}</p>
+                
+                <ul className="space-y-4 mb-8 flex-grow">
+                  {service.items.map((item, i) => (
+                    <li key={i} className="flex items-start gap-4">
+                      <div className="w-2 h-2 rounded-full bg-teal-500 mt-2.5 shrink-0"></div>
+                      <span className="text-gray-700 text-lg">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {service.note && (
+                  <div className="bg-amber-50 border border-amber-100 p-5 rounded-2xl mt-auto">
+                    <p className="text-sm text-amber-800 font-medium leading-relaxed">
+                      <span className="font-bold">Important Note:</span> {service.note}
+                    </p>
+                  </div>
+                )}
               </motion.div>
             ))}
           </motion.div>
