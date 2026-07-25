@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Heart, Shield, Users, CheckCircle2, Lightbulb, Smile, Clock, Phone } from 'lucide-react';
+import { Heart, Shield, Users, CheckCircle2, Lightbulb, Smile, Clock, Phone, MapPin, Lock, CalendarCheck, Tag, EyeOff, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 import aboutHeroImage from '../assets/images/seniors_learning_tablets_1784467977256.jpg';
 
@@ -200,6 +200,85 @@ export default function About() {
                 <p className="text-white font-medium text-lg text-center">SeniorEase exists to make everyday online life feel easier and less stressful for everyone involved.</p>
               </div>
             </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Why Customers Trust Us */}
+      <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={fadeInUp}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-4 border border-teal-500/30">
+              Our Guarantee to You
+            </span>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6">
+              Why Customers Trust Us
+            </h2>
+            <p className="text-lg md:text-xl text-slate-300 leading-relaxed">
+              We know that inviting digital support into your daily routine requires complete confidence. Here is how we ensure every interaction is safe, transparent, and dependable for seniors and families alike.
+            </p>
+          </motion.div>
+
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {[
+              {
+                title: 'UK-based support',
+                description: 'Every phone call, email, and WhatsApp message is handled by our friendly, dedicated support team located right here in the UK. You will always speak with someone calm, patient, and easy to understand—no rushed automated menus.',
+                icon: <MapPin className="text-teal-400" size={28} />
+              },
+              {
+                title: 'Secure payments',
+                description: 'All transactions and subscription billings are protected with bank-grade encryption. We partner with industry-leading, verified payment processors so your financial details are always kept strictly confidential and secure.',
+                icon: <Lock className="text-teal-400" size={28} />
+              },
+              {
+                title: 'Cancel anytime',
+                description: 'We believe in earning your trust every single month. You are never locked into long-term contracts or complicated tie-ins. You can cancel your subscription at any time with complete ease through your portal or via support.',
+                icon: <CalendarCheck className="text-teal-400" size={28} />
+              },
+              {
+                title: 'Transparent pricing',
+                description: 'What you see on our pricing plans is exactly what you pay. We make all membership tiers straightforward and easy to understand, ensuring you and your family can choose the right level of care without any guesswork.',
+                icon: <Tag className="text-teal-400" size={28} />
+              },
+              {
+                title: 'No hidden fees',
+                description: 'There are no surprise call-out charges, unexpected setup costs, or mystery bill extras. You receive comprehensive digital education and assistance for one predictable, simple monthly membership fee.',
+                icon: <EyeOff className="text-teal-400" size={28} />
+              },
+              {
+                title: 'Privacy-first approach',
+                description: 'We treat your personal data with the utmost respect and care. We adhere strictly to UK GDPR regulations, never sell your data to third parties, and ensure your personal family communications remain completely private.',
+                icon: <ShieldCheck className="text-teal-400" size={28} />
+              }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                variants={fadeInUp}
+                whileHover={{ y: -5 }}
+                className="bg-slate-800/80 p-8 rounded-2xl border border-slate-700/80 hover:border-teal-500/50 transition-all duration-300 shadow-lg flex flex-col"
+              >
+                <div className="w-14 h-14 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center mb-6 shrink-0">
+                  {item.icon}
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
+                <p className="text-slate-300 leading-relaxed text-base flex-1">{item.description}</p>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </section>

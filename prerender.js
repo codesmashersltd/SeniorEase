@@ -188,6 +188,16 @@ const routes = [
             <li><strong>Simple & Jargon-Free:</strong> No confusing tech words, only real everyday concepts.</li>
             <li><strong>Reassuring & Safe:</strong> Ensuring seniors feel secure using online services.</li>
           </ul>
+
+          <h2 style="font-size: 1.8rem; font-weight: 700; color: #0f172a; margin-top: 40px;">Why Customers Trust Us</h2>
+          <ul style="line-height: 2; color: #475569; padding-left: 20px;">
+            <li><strong>UK-based support:</strong> Friendly, dedicated support team located in the UK with calm, patient instruction.</li>
+            <li><strong>Secure payments:</strong> All transactions are protected with bank-grade encryption and verified processors.</li>
+            <li><strong>Cancel anytime:</strong> Never locked into long-term contracts; cancel anytime with ease.</li>
+            <li><strong>Transparent pricing:</strong> Straightforward membership tiers with clear pricing and no guesswork.</li>
+            <li><strong>No hidden fees:</strong> No surprise call-out charges or setup costs—just one predictable monthly fee.</li>
+            <li><strong>Privacy-first approach:</strong> Strictly adhering to UK GDPR regulations and never selling data to third parties.</li>
+          </ul>
         </main>
         ${footerHTML}
       </div>
