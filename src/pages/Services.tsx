@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Smartphone, Video, Mail, ShieldAlert, FileEdit, Users, ArrowRight, ShoppingBag, PlayCircle, Lock, Tag, MapPin, Laptop, CalendarCheck, ShieldCheck } from 'lucide-react';
+import { Smartphone, Video, Mail, ShieldAlert, FileEdit, Users, ArrowRight, ShoppingBag, PlayCircle, Lock, Tag, MapPin, Laptop, CalendarCheck, ShieldCheck, UserCheck, HeartHandshake, Compass, Shield, Smile } from 'lucide-react';
 import { motion } from 'motion/react';
 import servicesHeroImage from '../assets/images/seniors_laptop_learning_1784467992551.jpg';
 
@@ -237,6 +237,83 @@ export default function Services() {
                     </p>
                   </div>
                 )}
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Who Can Benefit Section */}
+      <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={fadeInUp}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-100 text-teal-800 font-semibold text-sm mb-4 border border-teal-200">
+              Tailored For You
+            </span>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6">
+              Who Can Benefit?
+            </h2>
+            <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
+              Our service is built around patience, simplicity, and respect. Whether you are taking your first steps into the digital world or looking for reliable backup for a loved one, SeniorEase is designed to help.
+            </p>
+          </motion.div>
+
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {[
+              {
+                title: 'Older adults learning new technology',
+                description: 'Perfect for seniors who want to build confidence with smartphones, tablets, or computers at their own calm, comfortable pace without feeling rushed or overwhelmed.',
+                icon: <UserCheck className="text-teal-600" size={28} />
+              },
+              {
+                title: 'Family members supporting loved ones',
+                description: 'Ideal for adult children and relatives who want to ensure their parents or grandparents have dependable, friendly, UK-based technical support whenever they need assistance.',
+                icon: <HeartHandshake className="text-teal-600" size={28} />
+              },
+              {
+                title: 'People new to smartphones',
+                description: 'Designed specifically for individuals who have recently switched to a smartphone or touch-screen tablet and need clear, jargon-free guidance on everyday apps and settings.',
+                icon: <Smartphone className="text-teal-600" size={28} />
+              },
+              {
+                title: 'Users needing ongoing digital guidance',
+                description: 'For anyone who wants regular check-ins, continuous learning, and a reliable helping hand to answer day-to-day questions as new digital tools and updates emerge.',
+                icon: <Compass className="text-teal-600" size={28} />
+              },
+              {
+                title: 'Seniors wanting to stay safe from scams',
+                description: 'Essential for older adults seeking to recognize fake emails, fraudulent text messages, and phishing attempts, ensuring they can navigate the internet securely and fearlessly.',
+                icon: <Shield className="text-teal-600" size={28} />
+              },
+              {
+                title: 'Anyone seeking patient, jargon-free support',
+                description: 'For individuals who are tired of complicated technical terms and automated phone menus, offering real human conversations and respectful step-by-step explanations.',
+                icon: <Smile className="text-teal-600" size={28} />
+              }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                variants={fadeInUp}
+                whileHover={{ y: -5 }}
+                className="bg-white p-8 rounded-2xl border border-slate-200/80 hover:border-teal-500/50 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col"
+              >
+                <div className="w-14 h-14 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center mb-6 shrink-0">
+                  {item.icon}
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
+                <p className="text-slate-600 leading-relaxed text-base flex-1">{item.description}</p>
               </motion.div>
             ))}
           </motion.div>
