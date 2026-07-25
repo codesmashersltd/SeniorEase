@@ -4,6 +4,7 @@ import { Mail, Phone, Clock, MessageSquare, ArrowRight, CheckCircle2, X, MapPin 
 import { motion, AnimatePresence } from 'motion/react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import { isSpamContent } from '../lib/spamFilter';
 import contactHeroImage from '../assets/images/seniors_contact_hero_1784468041599.jpg';
 
 export default function Contact() {
@@ -30,6 +31,13 @@ export default function Contact() {
         source: 'Web',
         createdAt: serverTimestamp()
       };
+      
+      if (isSpamContent(ticketPayload)) {
+        alert("We were unable to submit your request. Our system detected promotional or marketing keywords. Please ensure your enquiry is strictly regarding digital support services for seniors.");
+        setIsSubmitting(false);
+        return;
+      }
+
       console.log('Sending Contact Ticket:', ticketPayload);
       
       await addDoc(collection(db, 'tickets'), ticketPayload);

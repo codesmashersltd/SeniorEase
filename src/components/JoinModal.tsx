@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, CheckCircle2, Loader2, ShieldCheck, Info } from 'lucide-react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import { isSpamContent } from '../lib/spamFilter';
 
 interface JoinModalProps {
   isOpen: boolean;
@@ -78,6 +79,13 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
         source: 'Web',
         createdAt: serverTimestamp()
       };
+      
+      if (isSpamContent(ticketPayload)) {
+        alert("We were unable to submit your request. Our system detected promotional or marketing keywords. Please ensure your enquiry is strictly regarding digital support services for seniors.");
+        setIsSubmitting(false);
+        return;
+      }
+
       console.log('Attempting to add ticket:', ticketPayload);
 
       // Save as lead/joinee ticket in Firestore ONLY IF NOT selecting a plan (to avoid double entry)

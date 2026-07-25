@@ -35,9 +35,15 @@ import {
   Plus,
   ArrowUpRight,
   ArrowDownRight,
-  Key
+  Key,
+  Eye,
+  X,
+  Mail,
+  Phone,
+  Tag
 } from 'lucide-react';
 import { auth, db } from '../../lib/firebase';
+import { isSpamContent } from '../../lib/spamFilter';
 import { 
   collection, 
   query, 
@@ -88,6 +94,7 @@ export default function AdminDashboard() {
   const [resetStatus, setResetStatus] = useState<{ success: boolean; message: string } | null>(null);
   const [visiblePasswords, setVisiblePasswords] = useState<Record<string, boolean>>({});
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [viewingTicket, setViewingTicket] = useState<any | null>(null);
 
   const togglePasswordVisibility = (docId: string) => {
     setVisiblePasswords(prev => ({
@@ -212,7 +219,16 @@ export default function AdminDashboard() {
     fetchCreds();
 
     const unsubTickets = onSnapshot(collection(db, 'tickets'), (snap) => {
-      const tickets = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      const rawTickets = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      const tickets: any[] = [];
+      rawTickets.forEach((t: any) => {
+        if (isSpamContent(t)) {
+          console.warn(`[Spam Filter] Flagged and excluding spam ticket: ${t.ticketId || t.id}`);
+          deleteDoc(doc(db, 'tickets', t.id)).catch(e => console.error("Could not delete spam ticket:", e));
+        } else {
+          tickets.push(t);
+        }
+      });
       // Sort by newest first
       tickets.sort((a: any, b: any) => {
         const timeA = a.createdAt?.seconds || 0;
@@ -243,7 +259,17 @@ export default function AdminDashboard() {
     });
 
     const unsubNewJoinees = onSnapshot(collection(db, 'new_joinees'), (snap) => {
-      setData(prev => ({ ...prev, newJoinees: snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a: any, b: any) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)) }));
+      const rawJoinees = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      const newJoinees: any[] = [];
+      rawJoinees.forEach((j: any) => {
+        if (isSpamContent(j)) {
+          deleteDoc(doc(db, 'new_joinees', j.id)).catch(() => {});
+        } else {
+          newJoinees.push(j);
+        }
+      });
+      newJoinees.sort((a: any, b: any) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      setData(prev => ({ ...prev, newJoinees }));
     }, (err) => {
       console.error('New Joinees sync error:', err);
       setLoading(false);
@@ -636,12 +662,15 @@ export default function AdminDashboard() {
                       <div className="divide-y divide-gray-50">
                         {data.tickets.filter(t => t.status === 'Open').slice(0, 5).map((t) => (
                           <div key={t.id} className="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                            <div className="flex items-center gap-4">
-                              <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-600">
+                            <div 
+                              onClick={() => setViewingTicket(t)}
+                              className="flex items-center gap-4 cursor-pointer group flex-1"
+                            >
+                              <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-600 group-hover:bg-teal-50 group-hover:text-teal-600 transition-colors">
                                 {t.name?.[0] || 'U'}
                               </div>
                               <div>
-                                <p className="font-bold text-gray-900 truncate max-w-[200px]">
+                                <p className="font-bold text-gray-900 truncate max-w-[200px] group-hover:text-teal-600 transition-colors">
                                   <span className="text-teal-600 mr-2">{t.ticketId || '#TKT'}</span>
                                   {t.subject || t.enquiryType}
                                 </p>
@@ -651,10 +680,11 @@ export default function AdminDashboard() {
                             <div className="flex items-center gap-3">
                               <span className="px-2.5 py-1 bg-orange-100 text-orange-700 text-[10px] font-black rounded-full">OPEN</span>
                               <button 
-                                onClick={() => updateTicketStatus(t.id, t.status)}
+                                onClick={() => setViewingTicket(t)}
                                 className="p-2 text-gray-400 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all"
+                                title="View Complete Message"
                               >
-                                <ExternalLink size={16} />
+                                <Eye size={16} />
                               </button>
                             </div>
                           </div>
@@ -847,9 +877,23 @@ export default function AdminDashboard() {
                               </td>
                               <td className="px-6 py-4">
                                 {activeTab === 'tickets' ? (
-                                  <div>
-                                    <p className="text-sm font-bold text-gray-900">{item.name || 'Anonymous'}</p>
-                                    <p className="text-xs text-gray-500 truncate max-w-[150px]">{item.subject || item.enquiryType}</p>
+                                  <div 
+                                    onClick={() => setViewingTicket(item)}
+                                    className="cursor-pointer group py-1"
+                                    title="Click to view full message"
+                                  >
+                                    <p className="text-sm font-bold text-gray-900 group-hover:text-teal-600 transition-colors flex items-center gap-1.5">
+                                      {item.name || 'Anonymous'}
+                                      <Eye size={14} className="opacity-0 group-hover:opacity-100 text-teal-600 transition-opacity" />
+                                    </p>
+                                    <p className="text-xs text-gray-500 font-semibold truncate max-w-[180px]">{item.subject || item.enquiryType}</p>
+                                    <p className="text-xs text-gray-400 line-clamp-1 max-w-[220px] italic mt-0.5 group-hover:text-gray-600">
+                                      {item.message || 'Click to view details...'}
+                                    </p>
+                                    <span className="inline-flex items-center gap-1 text-[10px] text-teal-600 font-bold mt-1 group-hover:underline">
+                                      <Eye size={11} />
+                                      View complete message
+                                    </span>
                                   </div>
                                 ) : activeTab === 'new-joinees' ? (
                                   <div>
@@ -958,13 +1002,22 @@ export default function AdminDashboard() {
                                     </>
                                   )}
                                   {activeTab === 'tickets' && (
-                                    <button 
-                                      onClick={() => updateTicketStatus(item.id, item.status === 'Open' ? 'Closed' : 'Open')}
-                                      className="p-2 text-teal-600 hover:bg-teal-50 rounded-lg transition-all"
-                                      title="Toggle Status"
-                                    >
-                                      <RefreshCcw size={16} />
-                                    </button>
+                                    <>
+                                      <button 
+                                        onClick={() => setViewingTicket(item)}
+                                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                                        title="View Complete Message"
+                                      >
+                                        <Eye size={16} />
+                                      </button>
+                                      <button 
+                                        onClick={() => updateTicketStatus(item.id, item.status === 'Open' ? 'Closed' : 'Open')}
+                                        className="p-2 text-teal-600 hover:bg-teal-50 rounded-lg transition-all"
+                                        title="Toggle Status"
+                                      >
+                                        <RefreshCcw size={16} />
+                                      </button>
+                                    </>
                                   )}
                                   <button 
                                     onClick={() => deleteRecord(activeTab === 'logs' ? 'loginLogs' : (activeTab === 'renewals' ? 'customers' : (activeTab === 'new-joinees' ? 'new_joinees' : activeTab)), item.docId || item.id)}
@@ -1310,6 +1363,138 @@ export default function AdminDashboard() {
                 </div>
               )}
             </motion.div>
+          </AnimatePresence>
+
+          {/* Support Ticket Complete Message Popup Modal */}
+          <AnimatePresence>
+            {viewingTicket && (
+              <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                  className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden border border-gray-100 flex flex-col max-h-[90vh]"
+                >
+                  {/* Modal Header */}
+                  <div className="px-8 py-6 bg-slate-900 text-white flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-2xl bg-teal-500/20 text-teal-400 flex items-center justify-center font-bold">
+                        <MessageSquare size={20} />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-mono font-black text-teal-400 uppercase tracking-wider bg-teal-950/80 px-2 py-0.5 rounded border border-teal-800">
+                            {viewingTicket.ticketId || `TKT-${viewingTicket.id?.slice(-4).toUpperCase()}`}
+                          </span>
+                          <span className={`text-[10px] font-black px-2 py-0.5 rounded uppercase ${
+                            viewingTicket.status === 'Open' ? 'bg-orange-500/20 text-orange-400' :
+                            viewingTicket.status === 'Closed' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-blue-500/20 text-blue-400'
+                          }`}>
+                            {viewingTicket.status || 'Open'}
+                          </span>
+                        </div>
+                        <h3 className="text-lg font-bold text-white mt-1">
+                          {viewingTicket.subject || viewingTicket.enquiryType || 'Support Enquiry'}
+                        </h3>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setViewingTicket(null)}
+                      className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-full transition-all"
+                    >
+                      <X size={20} />
+                    </button>
+                  </div>
+
+                  {/* Modal Body */}
+                  <div className="p-8 overflow-y-auto space-y-6 flex-1 text-left">
+                    {/* Sender Info Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-5 rounded-2xl border border-slate-100">
+                      <div>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Sender Name</p>
+                        <p className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                          <User size={16} className="text-teal-600 shrink-0" />
+                          {viewingTicket.name || 'Anonymous'}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Email Address</p>
+                        <p className="text-sm font-bold text-slate-800 flex items-center gap-2 break-all">
+                          <Mail size={16} className="text-teal-600 shrink-0" />
+                          <a href={`mailto:${viewingTicket.email}`} className="hover:underline text-teal-700">
+                            {viewingTicket.email || 'No email provided'}
+                          </a>
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Phone Number</p>
+                        <p className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                          <Phone size={16} className="text-teal-600 shrink-0" />
+                          {viewingTicket.phone || 'No phone provided'}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Submission Source & Time</p>
+                        <p className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                          <Tag size={16} className="text-teal-600 shrink-0" />
+                          {viewingTicket.source || 'Web'} • {viewingTicket.createdAt?.seconds ? new Date(viewingTicket.createdAt.seconds * 1000).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' }) : 'Recent'}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Full Message Content */}
+                    <div>
+                      <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+                        <MessageSquare size={14} className="text-teal-600" />
+                        Complete Message Content
+                      </h4>
+                      <div className="bg-slate-50/80 rounded-2xl p-6 border border-slate-200/80 text-slate-800 text-sm md:text-base leading-relaxed whitespace-pre-wrap font-sans selection:bg-teal-100 min-h-[120px]">
+                        {viewingTicket.message || viewingTicket.subject || 'No detailed message body was provided.'}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Modal Footer */}
+                  <div className="px-8 py-5 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-slate-500">Change Status:</span>
+                      <select
+                        value={viewingTicket.status || 'Open'}
+                        onChange={(e) => {
+                          const newStatus = e.target.value;
+                          updateTicketStatus(viewingTicket.id, newStatus);
+                          setViewingTicket({ ...viewingTicket, status: newStatus });
+                        }}
+                        className="text-xs font-black uppercase px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-800 focus:ring-2 focus:ring-teal-500 cursor-pointer"
+                      >
+                        <option value="Open">Open</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Closed">Closed</option>
+                      </select>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => {
+                          deleteRecord('tickets', viewingTicket.id);
+                          setViewingTicket(null);
+                        }}
+                        className="px-4 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition-all border border-transparent hover:border-red-100 flex items-center gap-1.5 cursor-pointer"
+                      >
+                        <Trash2 size={14} />
+                        Delete Ticket
+                      </button>
+                      <button
+                        onClick={() => setViewingTicket(null)}
+                        className="px-6 py-2 rounded-xl bg-teal-600 text-white text-xs font-bold hover:bg-teal-700 transition-all shadow-md shadow-teal-600/20 cursor-pointer"
+                      >
+                        Close Window
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            )}
           </AnimatePresence>
         </main>
 

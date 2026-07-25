@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { LogIn, User, AlertCircle, CheckCircle2, X, LogOut, Info, HeartHandshake, Loader2, Lock } from 'lucide-react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import { isSpamContent } from '../lib/spamFilter';
 
 export default function MyAccount() {
   const [customerName, setCustomerName] = useState('');
@@ -165,6 +166,10 @@ export default function MyAccount() {
   };
 
   const handleRequestLearning = async (serviceName: string) => {
+    if (isSpamContent(serviceName) || isSpamContent(customerName)) {
+      alert("We were unable to submit your request. Promotional or marketing content detected.");
+      return;
+    }
     try {
       const randomTicketNumber = Math.floor(100000 + Math.random() * 900000);
       const ticketStr = `TKT-${randomTicketNumber}`;
