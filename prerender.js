@@ -222,6 +222,16 @@ const routes = [
             <li><strong>Anti-Scam Awareness:</strong> Identify fraudulent messages, fake links, and dangerous phishing scams.</li>
             <li><strong>Digital Confidence Training:</strong> Empowering seniors to navigate modern web interfaces with absolute peace of mind.</li>
           </ul>
+
+          <h2 style="font-size: 1.8rem; font-weight: 700; color: #0f172a; margin-top: 40px;">Why customers choose SeniorEase</h2>
+          <ul style="line-height: 2; color: #475569; padding-left: 20px; font-size: 1.1rem;">
+            <li><strong>Secure customer portal:</strong> Access your centralized dashboard with bank-grade encryption to log support requests and track learning.</li>
+            <li><strong>Transparent monthly billing:</strong> Straightforward, predictable pricing with zero surprises, no hidden call-out fees, or setup extras.</li>
+            <li><strong>Dedicated UK support:</strong> Friendly, patient support team based in the UK explaining things clearly without technical jargon.</li>
+            <li><strong>Non-medical digital assistance:</strong> Exclusively practical technology education and software support without overstepping into medical care.</li>
+            <li><strong>Cancel anytime:</strong> Zero long-term contracts or lock-in periods; upgrade, downgrade, or cancel your plan at any time with total ease.</li>
+            <li><strong>Privacy-focused service:</strong> Treating personal data and family communications with respect and strictly adhering to UK GDPR standards.</li>
+          </ul>
         </main>
         ${footerHTML}
       </div>

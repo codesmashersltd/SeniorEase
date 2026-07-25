@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Smartphone, Video, Mail, ShieldAlert, FileEdit, Users, ArrowRight, ShoppingBag, PlayCircle } from 'lucide-react';
+import { Smartphone, Video, Mail, ShieldAlert, FileEdit, Users, ArrowRight, ShoppingBag, PlayCircle, Lock, Tag, MapPin, Laptop, CalendarCheck, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 import servicesHeroImage from '../assets/images/seniors_laptop_learning_1784467992551.jpg';
 
@@ -237,6 +237,85 @@ export default function Services() {
                     </p>
                   </div>
                 )}
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Why Customers Choose SeniorEase Trust Panel */}
+      <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-teal-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={fadeInUp}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-4 border border-teal-500/30">
+              Trusted Digital Assistance
+            </span>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6">
+              Why customers choose SeniorEase
+            </h2>
+            <p className="text-lg md:text-xl text-slate-300 leading-relaxed">
+              We provide calm, patient software tools and practical digital education designed specifically for seniors and their families across the UK. Here is what sets our service apart.
+            </p>
+          </motion.div>
+
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {[
+              {
+                title: 'Secure customer portal',
+                description: 'Access your centralized SeniorEase dashboard with complete peace of mind. Our online portal uses bank-grade encryption so you can safely log support requests, track learning progress, and manage family accounts in one secure place.',
+                icon: <Lock className="text-teal-400" size={28} />
+              },
+              {
+                title: 'Transparent monthly billing',
+                description: 'Enjoy straightforward, predictable monthly pricing with zero surprises. What you see on our pricing plans is exactly what you pay—no hidden call-out fees, no setup extras, and no confusing billing cycles.',
+                icon: <Tag className="text-teal-400" size={28} />
+              },
+              {
+                title: 'Dedicated UK support',
+                description: 'Every phone call, email, and WhatsApp query is answered by our friendly, patient support team based right here in the UK. You will always speak with a calm human who explains things clearly without technical jargon.',
+                icon: <MapPin className="text-teal-400" size={28} />
+              },
+              {
+                title: 'Non-medical digital assistance',
+                description: 'We specialize exclusively in practical technology education and everyday software support. From smartphones and tablets to online shopping and video calling, we make digital tools accessible without overstepping into medical or personal care.',
+                icon: <Laptop className="text-teal-400" size={28} />
+              },
+              {
+                title: 'Cancel anytime',
+                description: 'We believe in earning your trust every single month. Our subscriptions come with zero long-term contracts or complicated lock-in periods, allowing you or your family to upgrade, downgrade, or cancel your plan at any time with total ease.',
+                icon: <CalendarCheck className="text-teal-400" size={28} />
+              },
+              {
+                title: 'Privacy-focused service',
+                description: 'We treat your personal data and family communications with the highest level of respect. Adhering strictly to UK GDPR standards, we never sell your information or share your private details with third parties.',
+                icon: <ShieldCheck className="text-teal-400" size={28} />
+              }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                variants={fadeInUp}
+                whileHover={{ y: -5 }}
+                className="bg-slate-800/80 p-8 rounded-2xl border border-slate-700/80 hover:border-teal-500/50 transition-all duration-300 shadow-lg flex flex-col"
+              >
+                <div className="w-14 h-14 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center mb-6 shrink-0">
+                  {item.icon}
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
+                <p className="text-slate-300 leading-relaxed text-base flex-1">{item.description}</p>
               </motion.div>
             ))}
           </motion.div>
