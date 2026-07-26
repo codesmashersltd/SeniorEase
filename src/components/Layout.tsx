@@ -59,7 +59,7 @@ export default function Layout() {
       />
       {/* Navigation */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="flex justify-between h-20">
             <div className="flex items-center">
               <Link to="/" className="flex items-center gap-2 group">
@@ -149,9 +149,9 @@ export default function Layout() {
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white pt-16 pb-8 border-t border-gray-800" aria-label="Footer">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-7 gap-8 lg:gap-10 mb-12">
-            <div className="col-span-1 md:col-span-2">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 gap-8 lg:gap-10 mb-12">
+            <div className="col-span-1 md:col-span-3 lg:col-span-2">
               <Link to="/" className="flex items-center gap-2 mb-6 inline-flex" aria-label="SeniorEase Home">
                 <div className="bg-teal-500 text-white p-2 rounded-xl">
                   <HeartHandshake size={24} />
@@ -232,17 +232,9 @@ export default function Layout() {
               </ul>
             </div>
 
-            <div>
+            <div className="md:col-span-2 lg:col-span-1">
               <h3 className="text-lg font-semibold mb-6 text-white border-b border-gray-800 pb-2">Contact</h3>
               <div className="space-y-4 text-gray-300 text-sm">
-                <p className="flex flex-col gap-0.5">
-                  <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Email</span>
-                  <a href="mailto:support@senioreease.com" className="hover:text-white text-gray-200 transition-colors">support@senioreease.com</a>
-                </p>
-                <p className="flex flex-col gap-0.5">
-                  <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Phone</span>
-                  <a href="tel:+443304010019" className="hover:text-white text-gray-200 transition-colors">+44 (0) 330 401 0019</a>
-                </p>
                 <p className="flex flex-col gap-0.5">
                   <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Address</span>
                   <span className="leading-relaxed text-gray-300">
@@ -252,8 +244,12 @@ export default function Layout() {
                   </span>
                 </p>
                 <p className="flex flex-col gap-0.5">
-                  <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">WhatsApp</span>
-                  <span className="text-gray-300">Available to members</span>
+                  <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Phone</span>
+                  <a href="tel:+443304010019" className="hover:text-white text-gray-200 transition-colors">+44 (0) 330 401 0019</a>
+                </p>
+                <p className="flex flex-col gap-0.5">
+                  <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Email</span>
+                  <a href="mailto:support@senioreease.com" className="hover:text-white text-gray-200 transition-colors break-all">support@senioreease.com</a>
                 </p>
               </div>
             </div>

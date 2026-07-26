@@ -151,7 +151,7 @@ export default function Pricing() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
+          className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 text-center relative z-10"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
             Transparent Subscriptions
@@ -194,13 +194,13 @@ export default function Pricing() {
 
       {/* Pricing Cards */}
       <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <motion.div 
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto"
+            className="grid md:grid-cols-3 gap-8 w-full max-w-[1920px] mx-auto"
           >
             
             {/* Essential Plan */}
@@ -375,7 +375,7 @@ export default function Pricing() {
 
       {/* Payment Options Section */}
       <section className="py-16 bg-gray-50 border-t border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Payment Methods & Options</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -485,7 +485,7 @@ export default function Pricing() {
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
           variants={staggerContainer}
-          className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8"
+          className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <motion.div variants={fadeInUp} className="flex items-start gap-4 p-6 bg-teal-50 rounded-2xl border border-teal-100 hover:shadow-md transition-shadow h-full">
@@ -545,7 +545,7 @@ export default function Pricing() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"
+          className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Not Sure Which Plan Is Right?</h2>
           <p className="text-xl text-gray-600 mb-8 leading-relaxed">

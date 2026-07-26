@@ -44,7 +44,7 @@ export default function About() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center"
+          className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10 text-center"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
             Our Mission & Vision
@@ -73,7 +73,7 @@ export default function About() {
 
       {/* Identity Clarification Notice Banner */}
       <section className="bg-teal-900 text-white py-6 border-y border-teal-800 shadow-inner">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-4 text-left">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 flex items-center gap-4 text-left">
           <div className="p-2.5 rounded-xl bg-teal-800/80 text-teal-300 shrink-0 hidden sm:block">
             <span className="text-xl font-bold">ℹ️</span>
           </div>
@@ -88,7 +88,7 @@ export default function About() {
 
       {/* Why We Started Section */}
       <section className="py-24 bg-gradient-to-b from-teal-50/50 to-white border-b border-teal-100/60">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -125,7 +125,7 @@ export default function About() {
 
       {/* Our Story */}
       <section className="py-24 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -181,7 +181,7 @@ export default function About() {
 
       {/* Core Values Section */}
       <section className="py-24 bg-gray-50 border-t border-b border-gray-200">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -270,7 +270,7 @@ export default function About() {
 
       {/* Support for Seniors. Peace of Mind for Families. */}
       <section className="py-24 bg-teal-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 text-center">
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -287,7 +287,7 @@ export default function About() {
 
       {/* Our Mission & Why We Exist */}
       <section className="py-24 bg-gray-50 border-y border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -355,7 +355,7 @@ export default function About() {
       <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-600/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10">
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -432,7 +432,7 @@ export default function About() {
 
       {/* Our Approach & Important Note */}
       <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <motion.div
               initial="hidden"
@@ -504,7 +504,7 @@ export default function About() {
           />
         </div>
 
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10 text-center">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

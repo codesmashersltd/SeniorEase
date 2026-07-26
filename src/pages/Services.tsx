@@ -161,7 +161,7 @@ export default function Services() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
+          className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 text-center relative z-10"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
             Interactive SaaS Features
@@ -206,7 +206,7 @@ export default function Services() {
 
       {/* Who Can Benefit Section */}
       <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -283,7 +283,7 @@ export default function Services() {
 
       {/* Services Grid */}
       <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -348,7 +348,7 @@ export default function Services() {
       <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-teal-600/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10">
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -430,7 +430,7 @@ export default function Services() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={staggerContainer}
-          className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
+          className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10"
         >
           <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 tracking-tight">Choose the Right Monthly Plan</motion.h2>
           <motion.p variants={fadeInUp} className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">

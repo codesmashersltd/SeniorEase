@@ -8,7 +8,7 @@ export default function SLA() {
 
   return (
     <div className="bg-white py-24">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         <h1 className="text-4xl font-bold text-gray-900 mb-8">Service Level Agreement (SLA)</h1>
         
         <div className="prose prose-teal max-w-none text-gray-600 space-y-8">

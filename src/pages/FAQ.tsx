@@ -82,7 +82,7 @@ export default function FAQ() {
         {/* Mobile background (soft dark gradient) */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 md:hidden"></div>
 
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 text-center relative z-10">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
             Got Questions?
           </span>
@@ -110,7 +110,7 @@ export default function FAQ() {
 
       {/* FAQs Content */}
       <section className="py-20 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           
           {/* Category Filter Pills */}
           <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
@@ -224,7 +224,7 @@ export default function FAQ() {
 
       {/* CTA */}
       <section className="py-24 bg-white text-center border-t border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Still Have Questions?</h2>
           <p className="text-lg text-gray-600 mb-8 max-w-xl mx-auto">
             Our friendly, patient support team is always here to help you or your loved ones get started.

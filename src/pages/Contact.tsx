@@ -75,7 +75,7 @@ export default function Contact() {
         {/* Mobile background (soft dark gradient) */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 md:hidden"></div>
 
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 text-center relative z-10">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
             Get In Touch
           </span>
@@ -106,7 +106,7 @@ export default function Contact() {
 
       {/* Contact Details & Form */}
       <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="grid md:grid-cols-2 gap-16">
             
             {/* Contact Details */}
@@ -114,26 +114,6 @@ export default function Contact() {
               <h2 className="text-3xl font-bold text-gray-900 mb-8">Get in Touch</h2>
               
               <div className="space-y-8">
-                <div className="flex items-start gap-4">
-                  <div className="bg-teal-100 p-3 rounded-xl text-teal-600 shrink-0">
-                    <Mail size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Email</h3>
-                    <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline font-medium">support@senioreease.com</a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="bg-teal-100 p-3 rounded-xl text-teal-600 shrink-0">
-                    <Phone size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Phone</h3>
-                    <a href="tel:+443304010019" className="text-teal-600 hover:underline font-medium">+44 (0) 330 401 0019</a>
-                  </div>
-                </div>
-
                 <div className="flex items-start gap-4">
                   <div className="bg-teal-100 p-3 rounded-xl text-teal-600 shrink-0">
                     <MapPin size={24} />
@@ -150,11 +130,21 @@ export default function Contact() {
 
                 <div className="flex items-start gap-4">
                   <div className="bg-teal-100 p-3 rounded-xl text-teal-600 shrink-0">
-                    <Clock size={24} />
+                    <Phone size={24} />
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Business Hours</h3>
-                    <p className="text-gray-600">Monday to Friday<br/>9:00 AM – 5:30 PM (UK Time)</p>
+                    <h3 className="font-bold text-gray-900 mb-1">Phone</h3>
+                    <a href="tel:+443304010019" className="text-teal-600 hover:underline font-medium">+44 (0) 330 401 0019</a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="bg-teal-100 p-3 rounded-xl text-teal-600 shrink-0">
+                    <Mail size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Email</h3>
+                    <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline font-medium">support@senioreease.com</a>
                   </div>
                 </div>
 
@@ -164,7 +154,18 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">WhatsApp</h3>
-                    <p className="text-gray-600">Available for members as part of support access.</p>
+                    <p className="text-gray-900 font-semibold">Available to members</p>
+                    <p className="text-gray-600 text-sm mt-0.5">Direct messaging support is included with active member subscriptions.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="bg-teal-100 p-3 rounded-xl text-teal-600 shrink-0">
+                    <Clock size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Business Hours</h3>
+                    <p className="text-gray-600">Monday to Friday<br/>9:00 AM – 5:30 PM (UK Time)</p>
                   </div>
                 </div>
               </div>
@@ -222,7 +223,7 @@ export default function Contact() {
 
       {/* CTA */}
       <section className="py-24 bg-white text-center">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Want to Get Started Instead?</h2>
           <Link
             to="/pricing"

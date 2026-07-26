@@ -31,7 +31,7 @@ export default function Home() {
         {/* Mobile background (soft gradient) */}
         <div className="absolute inset-0 bg-gradient-to-b from-teal-50/50 via-white to-slate-50 md:hidden"></div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10">
           <div className="text-center max-w-4xl mx-auto px-4 py-4 md:py-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-100/95 text-teal-950 font-semibold text-xs md:text-sm mb-6 md:mb-8 border border-teal-200 shadow-sm backdrop-blur-sm">
               <ShieldCheck size={16} className="text-teal-700" />
@@ -97,7 +97,7 @@ export default function Home() {
 
       {/* Hero Supporting Text */}
       <section className="bg-teal-50 py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Technology should make life easier — not more stressful.</h2>
           <p className="text-xl text-gray-700 mb-6 leading-relaxed">
             At SeniorEase, our dedicated Software as a Service (SaaS) platform provides calm, friendly, ongoing support tools for senior citizens who need educate on phones, apps, online tasks, and everyday digital problems.
@@ -110,7 +110,7 @@ export default function Home() {
 
       {/* How We Educate */}
       <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">How Our SaaS Platform Educates Seniors to Feel More Confident Online</h2>
@@ -165,7 +165,7 @@ export default function Home() {
 
       {/* Our Services Grid */}
       <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">What SeniorEase SaaS Platform Provides</h2>
             <p className="text-xl text-gray-600 mb-4">SeniorEase is a powerful Software as a Service (SaaS) platform providing digital dashboard tools and non-medical digital support for senior citizens and their families.
@@ -205,7 +205,7 @@ Through our portal, you can request educate on common everyday tasks such as:</p
 
       {/* Who SeniorEase Is For */}
       <section className="py-24 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Who Our Software Is For</h2>
@@ -255,7 +255,7 @@ Through our portal, you can request educate on common everyday tasks such as:</p
 
       {/* Why Choose Us */}
       <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="bg-teal-900 rounded-[3rem] p-8 md:p-16 overflow-hidden relative">
             <div className="absolute top-0 right-0 w-64 h-64 bg-teal-800 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2"></div>
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-teal-800 rounded-full blur-3xl opacity-50 translate-y-1/2 -translate-x-1/2"></div>
@@ -291,7 +291,7 @@ Through our portal, you can request educate on common everyday tasks such as:</p
 
       {/* Final CTA */}
       <section className="py-24 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 tracking-tight">Ready to Make Everyday Technology Easier?</h2>
           <p className="text-xl text-gray-600 mb-12 leading-relaxed">
             Whether you’re looking for support for yourself or peace of mind for a loved one, SeniorEase is here to educate.
