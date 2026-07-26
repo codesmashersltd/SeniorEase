@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { HelpCircle, ArrowRight } from 'lucide-react';
+import { HelpCircle, ArrowRight, Landmark, ShieldCheck, Calendar, Bell, RefreshCw, CheckCircle2, FileText } from 'lucide-react';
 import faqHeroImage from '../assets/images/seniors_faq_hero_1784468031510.jpg';
 
 export default function FAQ() {
-  const faqs = [
+  const [activeCategory, setActiveCategory] = useState<'all' | 'general' | 'direct-debit'>('all');
+
+  const generalFaqs = [
     {
       q: "What does the SeniorEase SaaS Platform educate on?",
       a: "The SeniorEase SaaS Platform educates on everyday digital tasks such as smartphones, WhatsApp, emails, video calls, online forms, reminders, and general digital confidence support via our secure portal."
@@ -18,7 +21,7 @@ export default function FAQ() {
     },
     {
       q: "How do I cancel my membership?",
-      a: "You can request cancellation before your next billing date by contacting us using the contact details on our website."
+      a: "You can request cancellation before your next billing date by contacting us using the contact details on our website or directly through your self-service account dashboard."
     },
     {
       q: "Can a family member purchase a plan on behalf of a loved one?",
@@ -31,6 +34,29 @@ export default function FAQ() {
     {
       q: "Do you offer emergency support?",
       a: "No. SeniorEase is not an emergency service. If urgent learning is needed, customers should contact the appropriate emergency or professional service."
+    }
+  ];
+
+  const directDebitFaqs = [
+    {
+      q: "When will payment be collected?",
+      a: "When you set up a Direct Debit mandate with SeniorEase through our secure partner GoCardless, your first monthly payment is typically collected within 3 to 5 working days after mandate confirmation. Subsequent monthly payments are automatically collected on or around the same date each month. You will always receive an automated email confirmation prior to any funds being debited from your bank account."
+    },
+    {
+      q: "How do I cancel my subscription and Direct Debit?",
+      a: "Cancelling your subscription is simple, transparent, and hassle-free. You can cancel at any time through your SeniorEase online account dashboard or by emailing our customer support team at support@senioreease.com. When your subscription is cancelled, we immediately cancel your GoCardless Direct Debit mandate so no further automated billing occurs. Furthermore, you retain the absolute right under UK banking rules to cancel the Direct Debit instruction directly with your bank or building society at any time."
+    },
+    {
+      q: "Will I receive advance notice before collections?",
+      a: "Yes, absolutely! In strict accordance with the UK Direct Debit Guarantee and GoCardless banking protocols, you will always receive advance notification by email (typically 3 working days prior) before any payment is collected from your bank account. This advance notice clearly states the collection amount, due date, and mandate reference number, ensuring total financial clarity and peace of mind."
+    },
+    {
+      q: "What is the Direct Debit Guarantee?",
+      a: "The Direct Debit Guarantee is offered by all UK banks and building societies that accept instructions to pay Direct Debits. It protects you against incorrect payments: if an error is made in the payment of your Direct Debit by SeniorEase, GoCardless, or your bank, you are entitled to a full and immediate refund of the amount paid from your bank or building society. Additionally, if you receive a refund you are not entitled to, you must pay it back when requested."
+    },
+    {
+      q: "Can I change my bank details or payment method later?",
+      a: "Yes! If you change your bank account or wish to switch your payment method (for example, moving from debit card billing via Stripe to Direct Debit via GoCardless, or vice versa), simply log into your SeniorEase dashboard and visit the 'Billing & Payment Methods' section. From there, you can securely update your bank details or set up a new mandate without any interruption to your tech support coverage. Our team is also happy to assist you over the phone or by email if needed."
     }
   ];
 
@@ -77,27 +103,127 @@ export default function FAQ() {
         </div>
       </section>
 
-      {/* FAQs List */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-6">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
-                <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-start gap-3">
-                  <span className="text-teal-600 font-black">{index + 1}.</span>
-                  {faq.q}
-                </h3>
-                <p className="text-gray-600 leading-relaxed pl-7">{faq.a}</p>
-              </div>
-            ))}
+      {/* FAQs Content */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Category Filter Pills */}
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
+            <button
+              onClick={() => setActiveCategory('all')}
+              className={`px-6 py-3 rounded-full font-bold text-sm md:text-base transition-all shadow-sm ${
+                activeCategory === 'all'
+                  ? 'bg-teal-600 text-white shadow-teal-600/25 scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+              }`}
+            >
+              All Questions ({generalFaqs.length + directDebitFaqs.length})
+            </button>
+            <button
+              onClick={() => setActiveCategory('general')}
+              className={`px-6 py-3 rounded-full font-bold text-sm md:text-base transition-all shadow-sm ${
+                activeCategory === 'general'
+                  ? 'bg-teal-600 text-white shadow-teal-600/25 scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+              }`}
+            >
+              General & Support ({generalFaqs.length})
+            </button>
+            <button
+              onClick={() => setActiveCategory('direct-debit')}
+              className={`inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm md:text-base transition-all shadow-sm ${
+                activeCategory === 'direct-debit'
+                  ? 'bg-teal-600 text-white shadow-teal-600/25 scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+              }`}
+            >
+              <Landmark size={18} className={activeCategory === 'direct-debit' ? 'text-teal-200' : 'text-teal-600'} />
+              Direct Debit & Billing ({directDebitFaqs.length})
+            </button>
           </div>
+
+          {/* General & Support Section */}
+          {(activeCategory === 'all' || activeCategory === 'general') && (
+            <div className="mb-16">
+              {activeCategory === 'all' && (
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 bg-teal-100 text-teal-700 rounded-xl flex items-center justify-center font-bold">
+                    <HelpCircle size={22} />
+                  </div>
+                  <h2 className="text-2xl font-extrabold text-gray-900">General Platform & Tech Support FAQs</h2>
+                </div>
+              )}
+              <div className="space-y-6">
+                {generalFaqs.map((faq, index) => (
+                  <div key={index} className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 transition-all hover:border-teal-200">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+                      <span className="text-teal-600 font-black shrink-0">{index + 1}.</span>
+                      <span>{faq.q}</span>
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed pl-7">{faq.a}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Direct Debit & Billing Section */}
+          {(activeCategory === 'all' || activeCategory === 'direct-debit') && (
+            <div className="mb-8">
+              {activeCategory === 'all' && (
+                <div className="flex items-center gap-3 mb-6 pt-6 border-t border-gray-200">
+                  <div className="w-10 h-10 bg-teal-100 text-teal-700 rounded-xl flex items-center justify-center font-bold">
+                    <Landmark size={22} />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-extrabold text-gray-900">Direct Debit & Payment FAQs</h2>
+                    <p className="text-sm text-gray-500">Secure automated billing powered by GoCardless & protected by the UK Direct Debit Guarantee</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Direct Debit Guarantee Badge Banner */}
+              <div className="bg-gradient-to-r from-teal-900 to-slate-900 text-white p-6 md:p-8 rounded-3xl shadow-md mb-8 border border-teal-700 flex flex-col md:flex-row items-center gap-6">
+                <div className="w-16 h-16 bg-teal-500/20 border border-teal-400/30 text-teal-300 rounded-2xl flex items-center justify-center shrink-0">
+                  <ShieldCheck size={36} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                    <span>Protected by the UK Direct Debit Guarantee</span>
+                  </h3>
+                  <p className="text-teal-100 text-sm md:text-base leading-relaxed">
+                    All Direct Debit collections are processed securely by <strong>GoCardless</strong> and are fully protected by the UK Consumer Direct Debit Guarantee. You receive advance notice prior to any collection, and you are entitled to an immediate refund from your bank in the unlikely event of any error.
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                {directDebitFaqs.map((faq, index) => (
+                  <div key={index} className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 transition-all hover:border-teal-200 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-teal-50/50 rounded-bl-full -mr-6 -mt-6 -z-0 pointer-events-none"></div>
+                    <div className="relative z-10">
+                      <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+                        <span className="text-teal-600 font-black shrink-0">{index + 1}.</span>
+                        <span>{faq.q}</span>
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed pl-7">{faq.a}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-white text-center">
+      <section className="py-24 bg-white text-center border-t border-gray-100">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Still Have Questions?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Still Have Questions?</h2>
+          <p className="text-lg text-gray-600 mb-8 max-w-xl mx-auto">
+            Our friendly, patient support team is always here to help you or your loved ones get started.
+          </p>
           <Link
             to="/contact"
             className="inline-flex items-center gap-2 bg-teal-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-teal-700 transition-colors shadow-lg"

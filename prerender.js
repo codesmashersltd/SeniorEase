@@ -327,7 +327,7 @@ const routes = [
             </div>
             <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
               <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">How does billing work?</h3>
-              <p style="color: #475569; margin-bottom: 0;">Subscriptions are processed securely via Stripe. Payments are billed automatically on a rolling monthly basis on the date you subscribe. There are absolutely no contracts or hidden fees.</p>
+              <p style="color: #475569; margin-bottom: 0;">Subscriptions are processed securely via Stripe or GoCardless Direct Debit. Payments are billed automatically on a rolling monthly basis on the date you subscribe. There are absolutely no contracts or hidden fees.</p>
             </div>
             <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
               <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">Can I cancel or change plans?</h3>
@@ -336,6 +336,32 @@ const routes = [
             <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
               <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">Who is this service designed for?</h3>
               <p style="color: #475569; margin-bottom: 0;">It's designed for senior citizens who want to become confident online and families who want reassurance that their older loved ones have expert, safe, friendly tech support always ready to help.</p>
+            </div>
+
+            <h2 style="font-size: 1.8rem; font-weight: bold; color: #0f172a; margin-top: 30px; margin-bottom: 10px;">Direct Debit & Payment FAQs</h2>
+            <div style="background: #0f172a; color: white; padding: 25px; border-radius: 12px; border: 1px solid #1e293b; margin-bottom: 10px;">
+              <h3 style="color: #2dd4bf; margin-top: 0; font-weight: bold;">Protected by the UK Direct Debit Guarantee</h3>
+              <p style="color: #94a3b8; margin-bottom: 0; line-height: 1.6;">All Direct Debit collections are processed securely by GoCardless and are fully protected by the UK Consumer Direct Debit Guarantee. You receive advance notice prior to any collection, and you are entitled to an immediate refund from your bank in the unlikely event of any error.</p>
+            </div>
+            <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
+              <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">When will payment be collected?</h3>
+              <p style="color: #475569; margin-bottom: 0;">When you set up a Direct Debit mandate with SeniorEase through our secure partner GoCardless, your first monthly payment is typically collected within 3 to 5 working days after mandate confirmation. Subsequent monthly payments are automatically collected on or around the same date each month. You will always receive an automated email confirmation prior to any funds being debited from your bank account.</p>
+            </div>
+            <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
+              <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">How do I cancel my subscription and Direct Debit?</h3>
+              <p style="color: #475569; margin-bottom: 0;">Cancelling your subscription is simple, transparent, and hassle-free. You can cancel at any time through your SeniorEase online account dashboard or by emailing our customer support team at support@senioreease.com. When your subscription is cancelled, we immediately cancel your GoCardless Direct Debit mandate so no further automated billing occurs. Furthermore, you retain the absolute right under UK banking rules to cancel the Direct Debit instruction directly with your bank or building society at any time.</p>
+            </div>
+            <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
+              <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">Will I receive advance notice before collections?</h3>
+              <p style="color: #475569; margin-bottom: 0;">Yes, absolutely! In strict accordance with the UK Direct Debit Guarantee and GoCardless banking protocols, you will always receive advance notification by email (typically 3 working days prior) before any payment is collected from your bank account. This advance notice clearly states the collection amount, due date, and mandate reference number, ensuring total financial clarity and peace of mind.</p>
+            </div>
+            <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
+              <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">What is the Direct Debit Guarantee?</h3>
+              <p style="color: #475569; margin-bottom: 0;">The Direct Debit Guarantee is offered by all UK banks and building societies that accept instructions to pay Direct Debits. It protects you against incorrect payments: if an error is made in the payment of your Direct Debit by SeniorEase, GoCardless, or your bank, you are entitled to a full and immediate refund of the amount paid from your bank or building society. Additionally, if you receive a refund you are not entitled to, you must pay it back when requested.</p>
+            </div>
+            <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
+              <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">Can I change my bank details or payment method later?</h3>
+              <p style="color: #475569; margin-bottom: 0;">Yes! If you change your bank account or wish to switch your payment method (for example, moving from debit card billing via Stripe to Direct Debit via GoCardless, or vice versa), simply log into your SeniorEase dashboard and visit the 'Billing & Payment Methods' section. From there, you can securely update your bank details or set up a new mandate without any interruption to your tech support coverage. Our team is also happy to assist you over the phone or by email if needed.</p>
             </div>
           </div>
         </main>
