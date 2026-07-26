@@ -2,8 +2,13 @@ import { Link } from 'react-router-dom';
 import { MousePointerClick, PlayCircle, PhoneCall, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 import howItWorksHeroImage from '../assets/images/seniors_how_it_works_1784468007445.jpg';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function HowItWorks() {
+  usePageMeta(
+    "How It Works | SeniorEase - Easy Support Steps",
+    "Discover our easy 3-step setup to get digital support and learning with SeniorEase. No complex procedures, simple clear guidance."
+  );
   const steps = [
     {
       icon: <MousePointerClick className="w-10 h-10 text-teal-600" />,

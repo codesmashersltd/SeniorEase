@@ -609,10 +609,23 @@ for (const route of routes) {
     `<meta name="description" content="${route.description}" />`
   );
 
-  // 3. Replace og:description tag if present
+  // 3. Replace og:title tag if present
+  pageHtml = pageHtml.replace(
+    /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/gi,
+    `<meta property="og:title" content="${route.title}" />`
+  );
+
+  // 4. Replace og:description tag if present
   pageHtml = pageHtml.replace(
     /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/gi,
     `<meta property="og:description" content="${route.description}" />`
+  );
+
+  // 5. Replace og:url tag if present
+  const fullUrl = `https://www.senioreease.com${route.path === "/" ? "" : route.path}`;
+  pageHtml = pageHtml.replace(
+    /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/gi,
+    `<meta property="og:url" content="${fullUrl}" />`
   );
 
   // 4. Inject static content inside <div id="root"></div>

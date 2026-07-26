@@ -1,4 +1,11 @@
+import { usePageMeta } from '../hooks/usePageMeta';
+
 export default function Refund() {
+  usePageMeta(
+    "Refund & Cancellation Policy | SeniorEase",
+    "Learn about our clear refund and subscription cancellation policies. Cancel anytime with ease, 14-day cooling-off period, and transparent terms."
+  );
+
   return (
     <div className="bg-white py-24">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">

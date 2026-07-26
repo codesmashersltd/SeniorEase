@@ -1,4 +1,11 @@
+import { usePageMeta } from '../hooks/usePageMeta';
+
 export default function SLA() {
+  usePageMeta(
+    "Service Level Agreement (SLA) | SeniorEase",
+    "Read our Service Level Agreement outlining support response times, service availability commitments, and our dedicated customer support guidelines."
+  );
+
   return (
     <div className="bg-white py-24">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">

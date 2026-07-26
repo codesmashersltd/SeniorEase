@@ -1,6 +1,12 @@
 import React from 'react';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function GDPR() {
+  usePageMeta(
+    "GDPR Compliance Statement | SeniorEase",
+    "Learn about our commitment to General Data Protection Regulation (GDPR) and how we safeguard user data and privacy in the UK."
+  );
+
   return (
     <div className="bg-gray-50 min-h-screen py-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

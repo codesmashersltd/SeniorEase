@@ -1,38 +1,19 @@
 import { Link } from 'react-router-dom';
 import { CheckCircle2, Info, CreditCard, Landmark, ShieldCheck, FileText } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'motion/react';
 import JoinModal from '../components/JoinModal';
 import pricingHeroImage from '../assets/images/seniors_pricing_hero_1784468020091.jpg';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function Pricing() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<{ name: string; price: string } | null>(null);
 
-  // SEO & AI Bot Accessibility: dynamically update page title and meta description
-  useEffect(() => {
-    const originalTitle = document.title;
-    const metaDescription = document.querySelector('meta[name="description"]');
-    const originalDescription = metaDescription ? metaDescription.getAttribute('content') : '';
-
-    document.title = "Simple Pricing Plans | SeniorEase - Digital Support & Education";
-    
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Explore simple and clear monthly pricing plans for SeniorEase digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.');
-    } else {
-      const newMeta = document.createElement('meta');
-      newMeta.name = 'description';
-      newMeta.content = 'Explore simple and clear monthly pricing plans for SeniorEase digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.';
-      document.head.appendChild(newMeta);
-    }
-
-    return () => {
-      document.title = originalTitle;
-      if (metaDescription && originalDescription) {
-        metaDescription.setAttribute('content', originalDescription);
-      }
-    };
-  }, []);
+  usePageMeta(
+    "Simple Pricing Plans | SeniorEase - Digital Support & Education",
+    "Explore simple and clear monthly pricing plans for SeniorEase digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers."
+  );
 
   // Structured Data (JSON-LD) for Search Engines and AI bots to parse pricing accurately
   const pricingSchema = {

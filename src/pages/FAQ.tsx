@@ -2,8 +2,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { HelpCircle, ArrowRight, Landmark, ShieldCheck, Calendar, Bell, RefreshCw, CheckCircle2, FileText } from 'lucide-react';
 import faqHeroImage from '../assets/images/seniors_faq_hero_1784468031510.jpg';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function FAQ() {
+  usePageMeta(
+    "Frequently Asked Questions | SeniorEase",
+    "Find clear answers to common questions about SeniorEase tech support, billing, device coverage, cancellations, and security training."
+  );
   const [activeCategory, setActiveCategory] = useState<'all' | 'general' | 'direct-debit'>('all');
 
   const generalFaqs = [

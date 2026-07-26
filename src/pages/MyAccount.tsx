@@ -4,8 +4,14 @@ import { LogIn, User, AlertCircle, CheckCircle2, X, LogOut, Info, HeartHandshake
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { isSpamContent } from '../lib/spamFilter';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function MyAccount() {
+  usePageMeta(
+    "Customer Portal & Dashboard | SeniorEase",
+    "Access your SeniorEase customer dashboard to manage your tech support subscription, view session histories, and request assistance."
+  );
+
   const [customerName, setCustomerName] = useState('');
   const [customerId, setCustomerId] = useState('');
   const [password, setPassword] = useState('');

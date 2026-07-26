@@ -1,6 +1,12 @@
 import { DownloadCloud, Smartphone, HeartHandshake, ShieldCheck } from 'lucide-react';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function MobileAppGuide() {
+  usePageMeta(
+    "Mobile App Guide | SeniorEase",
+    "Discover how to download, set up, and use the SeniorEase mobile companion app on your smartphone or tablet with confidence."
+  );
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
       <div className="max-w-md w-full bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">

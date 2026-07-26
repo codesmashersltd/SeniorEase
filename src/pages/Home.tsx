@@ -4,8 +4,14 @@ import { CheckCircle2, ShieldCheck, Smartphone, Mail, FileText, Users, ArrowRigh
 import JoinModal from '../components/JoinModal';
 import heroImage from '../assets/images/se121_1784612335331.jpg';
 import featureImage from '../assets/images/senior_couple_computer_1784467962096.jpg';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function Home() {
+  usePageMeta(
+    "SeniorEase - Digital Tech Support & Learning for Seniors",
+    "SeniorEase makes smartphone, tablet, and computer technology simple and accessible for older adults in the UK with friendly one-on-one guidance."
+  );
+
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
 
   return (

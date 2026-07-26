@@ -1,6 +1,12 @@
 import React from 'react';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function NHSStandards() {
+  usePageMeta(
+    "NHS Standards Alignment | SeniorEase",
+    "Our technical systems and support protocols align with NHS Digital service standards for digital health accessibility and patient safety."
+  );
+
   return (
     <div className="bg-white py-24">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">

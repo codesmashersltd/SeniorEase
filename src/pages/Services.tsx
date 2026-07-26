@@ -2,8 +2,14 @@ import { Link } from 'react-router-dom';
 import { Smartphone, Video, Mail, ShieldAlert, FileEdit, Users, ArrowRight, ShoppingBag, PlayCircle, Lock, Tag, MapPin, Laptop, CalendarCheck, ShieldCheck, UserCheck, HeartHandshake, Compass, Shield, Smile } from 'lucide-react';
 import { motion } from 'motion/react';
 import servicesHeroImage from '../assets/images/seniors_laptop_learning_1784467992551.jpg';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function Services() {
+  usePageMeta(
+    "Our Services | SeniorEase - Digital Support Platform",
+    "SeniorEase provides simple digital learning, smartphone and tablet guidance, scam awareness, online account setups, and patient technology assistance tailored for UK seniors."
+  );
+
   const services = [
     {
       icon: Smartphone,

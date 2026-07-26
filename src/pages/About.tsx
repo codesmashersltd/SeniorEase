@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
 import { Heart, Shield, Users, CheckCircle2, Lightbulb, Smile, Clock, Phone, MapPin, Lock, CalendarCheck, Tag, EyeOff, ShieldCheck, Award, HeartHandshake } from 'lucide-react';
 import { motion } from 'motion/react';
+import { usePageMeta } from '../hooks/usePageMeta';
 import aboutHeroImage from '../assets/images/seniors_learning_tablets_1784467977256.jpg';
 
 export default function About() {
+  usePageMeta(
+    "About Us | SeniorEase - Empowering Senior Digital Confidence",
+    "Learn about SeniorEase's mission to make technology less stressful and more accessible for older adults in the UK. Discover our story and values."
+  );
+
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }

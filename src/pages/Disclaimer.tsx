@@ -1,8 +1,13 @@
 import React from 'react';
 import { ShieldAlert } from 'lucide-react';
 import { motion } from 'motion/react';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function Disclaimer() {
+  usePageMeta(
+    "Disclaimer | SeniorEase",
+    "Important legal disclosures and disclaimers regarding SeniorEase technical support, educational materials, and third-party device guidance."
+  );
   return (
     <div className="bg-gray-50 py-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

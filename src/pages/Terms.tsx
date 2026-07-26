@@ -1,4 +1,11 @@
+import { usePageMeta } from '../hooks/usePageMeta';
+
 export default function Terms() {
+  usePageMeta(
+    "Terms & Conditions | SeniorEase",
+    "Read the terms and conditions governing SeniorEase digital education and technical support services for older adults in the UK."
+  );
+
   return (
     <div className="bg-white py-24">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">

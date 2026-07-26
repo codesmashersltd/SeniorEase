@@ -541,12 +541,23 @@ async function startServer() {
                   <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
                 </div>
-                <h2>1. Welcome</h2>
-                <p>Welcome to SeniorEase.</p>
-                <p>These Terms & Conditions govern your access to and use of the SeniorEase website, customer portal, subscription services, and digital technical support services. Please read these Terms carefully before using our website or purchasing any of our services.</p>
-                <p>By visiting our website, creating an account, purchasing a subscription, or using our services, you agree to be bound by these Terms & Conditions.</p>
-                <h2>2. About SeniorEase</h2>
-                <p>SeniorEase is a subscription-based digital education and technical support service designed to help senior citizens become more confident using everyday technology. Our support team provides friendly, patient, and practical guidance to assist customers with smartphones, tablets, computers, and recognizing online scams.</p>
+                <h2>1. Welcome & Scope of Agreement</h2>
+                <p>Welcome to SeniorEase. These Terms & Conditions govern your access to and use of the SeniorEase website, customer portal, subscription plans, and digital technical support services in the United Kingdom.</p>
+                <p>By visiting our website, registering an account, or purchasing a subscription plan, you agree to be bound by these Terms & Conditions. If you do not agree, please do not use our services.</p>
+                <h2>2. About SeniorEase Services</h2>
+                <p>SeniorEase provides practical digital education, smartphone/tablet guidance, scam awareness training, and friendly technical tutoring for senior citizens and their families. We offer support via phone, email, WhatsApp, and scheduled video sessions.</p>
+                <h2>3. Subscription Plans, Billing & Pricing</h2>
+                <ul>
+                  <li><strong>Monthly Subscriptions:</strong> We offer simple monthly subscription plans (Essential Care £9.99/mo, Plus Care £17.99/mo, Family Care £29.99/mo).</li>
+                  <li><strong>Payment Methods:</strong> Payments are collected securely via Direct Debit powered by GoCardless or debit/credit cards powered by Stripe.</li>
+                  <li><strong>Direct Debit Guarantee:</strong> All GoCardless transactions are fully protected by the UK Direct Debit Guarantee, ensuring advance notice of collections and immediate refunds for any disputed collection.</li>
+                </ul>
+                <h2>4. Cancellation & Cooling-Off Period</h2>
+                <p>In accordance with the UK Consumer Contracts Regulations 2013, consumers have a 14-day statutory cooling-off period from the date of subscription purchase to cancel for a full refund, provided service has not commenced with express consent. You may cancel your ongoing subscription at any time via support@senioreease.com or calling +44 (0) 330 401 0019 without cancellation fees.</p>
+                <h2>5. Customer Responsibilities & Acceptable Use</h2>
+                <p>Customers agree to use our support services respectfully and lawfully. Our tutoring is educational; we do not provide emergency medical help, financial planning, or hardware repair services.</p>
+                <h2>6. Limitation of Liability & Governing Law</h2>
+                <p>SeniorEase exercises reasonable care and skill in providing assistance. These Terms are governed by the laws of England and Wales, and subject to the exclusive jurisdiction of the UK courts.</p>
               </main>
               ${footerHTML}
             </div>
@@ -564,10 +575,20 @@ async function startServer() {
                   <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
                   <p style="margin: 5px 0 0 0;"><strong>Email:</strong> privacy@senioreease.com</p>
                 </div>
-                <h2>Our Commitment to Your Privacy</h2>
-                <p>SeniorEase is committed to protecting your privacy and security. This Privacy Policy explains how we collect, use, store, and share your personal data when you visit our website, register for an account, purchase a subscription, or receive technical support from us.</p>
-                <h2>What Information We Collect</h2>
-                <p>We only collect the minimum required information necessary to provide you with secure, reliable tech support. This includes: name, contact information (phone number, email, address), and billing information processed securely via Stripe.</p>
+                <h2>1. Our Commitment to Your Privacy</h2>
+                <p>SeniorEase is committed to protecting your privacy and personal data in compliance with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.</p>
+                <h2>2. What Information We Collect</h2>
+                <ul>
+                  <li><strong>Personal Identifiers:</strong> Name, postal address, email address, and telephone number.</li>
+                  <li><strong>Support & Device Logs:</strong> Notes on digital tutoring sessions, device types (smartphone, tablet, laptop), and learning progress.</li>
+                  <li><strong>Billing Information:</strong> Payment transactions are processed securely via encrypted third-party processors (Stripe and GoCardless). We never store full card numbers or bank details on our servers.</li>
+                </ul>
+                <h2>3. How We Use Your Data</h2>
+                <p>We use your personal data to deliver digital support sessions, manage subscription billing, communicate appointment reminders, and send learning progress summaries to designated family members (with consent).</p>
+                <h2>4. Data Retention & Security</h2>
+                <p>We retain customer records only as long as necessary to provide ongoing support and comply with UK tax and accounting laws (typically 6 years post-cancellation). All data is encrypted in transit and at rest using bank-grade security protocols.</p>
+                <h2>5. Your Statutory Privacy Rights</h2>
+                <p>You have the right to request access to your data, request correction of inaccuracies, request erasure ("right to be forgotten"), or withdraw consent at any time by contacting privacy@senioreease.com.</p>
               </main>
               ${footerHTML}
             </div>
@@ -717,10 +738,23 @@ async function startServer() {
           `<meta name="description" content="${pageDescription}" />`
         );
 
-        // 3. Replace og:description tag if present
+        // 3. Replace og:title tag if present
+        modifiedHtml = modifiedHtml.replace(
+          /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/gi,
+          `<meta property="og:title" content="${pageTitle}" />`
+        );
+
+        // 4. Replace og:description tag if present
         modifiedHtml = modifiedHtml.replace(
           /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/gi,
           `<meta property="og:description" content="${pageDescription}" />`
+        );
+
+        // 5. Replace og:url tag if present
+        const fullUrl = `https://www.senioreease.com${normalizedPath === "/" ? "" : normalizedPath}`;
+        modifiedHtml = modifiedHtml.replace(
+          /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/gi,
+          `<meta property="og:url" content="${fullUrl}" />`
         );
 
         // 4. Inject static content inside <div id="root"></div>

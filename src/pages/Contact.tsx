@@ -6,8 +6,14 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { isSpamContent } from '../lib/spamFilter';
 import contactHeroImage from '../assets/images/seniors_contact_hero_1784468041599.jpg';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function Contact() {
+  usePageMeta(
+    "Contact Support | SeniorEase - Here to Assist You",
+    "Get in touch with the SeniorEase support team. Phone us on +44 330 401 0019, email support@senioreease.com, or book an introductory call."
+  );
+
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 

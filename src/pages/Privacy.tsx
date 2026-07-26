@@ -1,4 +1,11 @@
+import { usePageMeta } from '../hooks/usePageMeta';
+
 export default function Privacy() {
+  usePageMeta(
+    "Privacy Policy | SeniorEase",
+    "SeniorEase values your privacy. Read our comprehensive UK policy on how we gather, protect, and handle your personal data securely."
+  );
+
   return (
     <div className="bg-white py-24">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
