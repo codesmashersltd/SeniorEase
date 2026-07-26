@@ -102,10 +102,10 @@ export default function Safeguarding() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-extrabold text-amber-950 mb-3 flex items-center gap-2">
-                    <span>Core Operational Statement</span>
+                    <span>Our Safeguarding Commitment</span>
                   </h2>
                   <p className="text-xl font-bold text-amber-900 mb-4 leading-snug">
-                    &ldquo;Customer risk profile (vulnerable adults): Mitigated by comprehensive safeguarding + strict no-guarantee language, but recognized as inherent to our SaaS model.&rdquo;
+                    &ldquo;We know that many of the people we support are more vulnerable to online risks because of age, isolation, or unfamiliarity with technology. We can&apos;t make that risk disappear completely — no one can — but we&apos;ve built real safeguards into how we work, and we&apos;re upfront about where our role ends and a bank, family member, or the authorities should take over.&rdquo;
                   </p>
                   <p className="text-gray-700 leading-relaxed text-base md:text-lg">
                     When providing digital technology tutoring and non-medical online guidance to senior citizens, we recognize that our customer base inherently includes individuals who may be vulnerable due to age, isolation, or digital unfamiliarity. While no software platform can eliminate 100% of online risks, we enforce rigorous, multi-layered safeguarding protocols combined with clear, advisory-only boundaries to protect our users and empower their families.

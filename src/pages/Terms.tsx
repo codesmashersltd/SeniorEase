@@ -101,11 +101,11 @@ export default function Terms() {
           <hr className="border-gray-200" />
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Customer Risk Profile (Vulnerable Adults) &amp; Safeguarding Mitigation</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Protecting Vulnerable Adults &amp; Safeguarding Commitment</h2>
             <div className="bg-amber-50 p-6 rounded-2xl border border-amber-200 text-amber-950 mb-4">
-              <p className="font-bold text-amber-900 mb-2">Operational Governance Acknowledgement:</p>
+              <p className="font-bold text-amber-900 mb-2">Our Safeguarding Commitment:</p>
               <p className="font-semibold text-amber-950 leading-relaxed">
-                &ldquo;Customer risk profile (vulnerable adults): Mitigated by comprehensive safeguarding + strict no-guarantee language, but recognized as inherent to our SaaS model.&rdquo;
+                &ldquo;We know that many of the people we support are more vulnerable to online risks because of age, isolation, or unfamiliarity with technology. We can&apos;t make that risk disappear completely — no one can — but we&apos;ve built real safeguards into how we work, and we&apos;re upfront about where our role ends and a bank, family member, or the authorities should take over.&rdquo;
               </p>
             </div>
             <ul className="list-disc pl-6 space-y-2">

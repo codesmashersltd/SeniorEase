@@ -79,13 +79,13 @@ export default function Disclaimer() {
             <hr className="border-gray-200" />
 
             <section id="disclaimer-section-3">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">3. No Guaranteed Outcomes &amp; Vulnerable Adult Risk Profile</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">3. No Guaranteed Outcomes &amp; Protecting Vulnerable Adults</h2>
               <div className="bg-amber-50 p-6 rounded-2xl border border-amber-200 text-amber-950 mb-6 shadow-sm">
                 <p className="font-bold text-amber-900 text-lg mb-2 flex items-center gap-2">
-                  <span>🛡️ Core Governance Principle:</span>
+                  <span>🛡️ Our Safeguarding Commitment:</span>
                 </p>
                 <p className="font-semibold text-amber-950 text-base leading-relaxed mb-3">
-                  &ldquo;Customer risk profile (vulnerable adults): Mitigated by comprehensive safeguarding + strict no-guarantee language, but recognized as inherent to our service model.&rdquo;
+                  &ldquo;We know that many of the people we support are more vulnerable to online risks because of age, isolation, or unfamiliarity with technology. We can&apos;t make that risk disappear completely — no one can — but we&apos;ve built real safeguards into how we work, and we&apos;re upfront about where our role ends and a bank, family member, or the authorities should take over.&rdquo;
                 </p>
                 <p className="text-sm text-amber-900 leading-relaxed mb-4">
                   We acknowledge that serving older adults involves an inherent customer risk profile due to cognitive variance and third-party scam targeting. To mitigate this, we enforce strict safeguarding rules (such as zero access to banking apps and patient pacing) combined with transparent no-guarantee language.
