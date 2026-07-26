@@ -35,7 +35,7 @@ export default function Home() {
               Friendly Digital Support Platform for <span className="text-teal-700">Senior Citizens</span> in the UK
             </h1>
             <p className="text-base md:text-xl text-gray-900 font-semibold md:font-bold mb-6 md:mb-10 leading-relaxed max-w-3xl mx-auto md:drop-shadow-[0_1px_1px_rgba(255,255,255,0.9)]">
-              Senior Ease is a Software as a Service (SaaS) platform that assists older adults with everyday technology — combining intuitive secure software with friendly digital confidence support.
+              SeniorEase UK is a Software as a Service (SaaS) platform that assists older adults with everyday technology — combining intuitive secure software with friendly digital confidence support.
             </p>
 
             {/* Mobile Hero Image - Visible ONLY on mobile so the image is fully shown and has natural proportions */}
@@ -203,7 +203,7 @@ Through our portal, you can request educate on common everyday tasks such as:</p
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Who Our Software Is For</h2>
-              <p className="text-xl text-gray-600">The Senior Ease SaaS Platform is designed for:</p>
+              <p className="text-xl text-gray-600">The SeniorEase UK SaaS Platform is designed for:</p>
             </div>
 
             <div className="space-y-6 mb-12">
@@ -258,7 +258,7 @@ Through our portal, you can request educate on common everyday tasks such as:</p
               <div className="text-center max-w-3xl mx-auto mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Why Families Choose SeniorEase</h2>
                 <p className="text-xl text-teal-100 leading-relaxed">
-                  We know that technology can feel overwhelming — especially when everyday tasks become more digital. Senior Ease is designed to provide calm, practical support without pressure, jargon, or confusion.
+                  We know that technology can feel overwhelming — especially when everyday tasks become more digital. SeniorEase UK is designed to provide calm, practical support without pressure, jargon, or confusion.
                 </p>
               </div>
               

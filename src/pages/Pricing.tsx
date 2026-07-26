@@ -15,14 +15,14 @@ export default function Pricing() {
     const metaDescription = document.querySelector('meta[name="description"]');
     const originalDescription = metaDescription ? metaDescription.getAttribute('content') : '';
 
-    document.title = "Simple Pricing Plans | Senior Ease - Digital Support & Education";
+    document.title = "Simple Pricing Plans | SeniorEase UK - Digital Support & Education";
     
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Explore simple and clear monthly pricing plans for Senior Ease digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.');
+      metaDescription.setAttribute('content', 'Explore simple and clear monthly pricing plans for SeniorEase UK digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.');
     } else {
       const newMeta = document.createElement('meta');
       newMeta.name = 'description';
-      newMeta.content = 'Explore simple and clear monthly pricing plans for Senior Ease digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.';
+      newMeta.content = 'Explore simple and clear monthly pricing plans for SeniorEase UK digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.';
       document.head.appendChild(newMeta);
     }
 
@@ -38,13 +38,13 @@ export default function Pricing() {
   const pricingSchema = {
     "@context": "https://schema.org",
     "@type": "ProductCollection",
-    "name": "Senior Ease Subscription Plans",
+    "name": "SeniorEase UK Subscription Plans",
     "description": "Digital education and technology support subscriptions designed to help senior citizens become confident using everyday technology.",
     "provider": {
       "@type": "Organization",
-      "name": "Senior Ease",
-      "url": "https://www.senioreease.com",
-      "email": "support@senioreease.com",
+      "name": "SeniorEase UK",
+      "url": "https://www.seniorease.co.uk",
+      "email": "support@seniorease.co.uk",
       "telephone": "+443304010019"
     },
     "itemListElement": [
@@ -67,7 +67,7 @@ export default function Pricing() {
               "unitCode": "MON"
             }
           },
-          "url": "https://www.senioreease.com/pricing"
+          "url": "https://www.seniorease.co.uk/pricing"
         }
       },
       {
@@ -89,7 +89,7 @@ export default function Pricing() {
               "unitCode": "MON"
             }
           },
-          "url": "https://www.senioreease.com/pricing"
+          "url": "https://www.seniorease.co.uk/pricing"
         }
       },
       {
@@ -111,7 +111,7 @@ export default function Pricing() {
               "unitCode": "MON"
             }
           },
-          "url": "https://www.senioreease.com/pricing"
+          "url": "https://www.seniorease.co.uk/pricing"
         }
       }
     ]
@@ -431,7 +431,7 @@ export default function Pricing() {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 size={18} className="text-teal-600 mt-0.5 shrink-0" /> 
-                  <span>Senior Ease is a non-medical, non-emergency support service.</span>
+                  <span>SeniorEase UK is a non-medical, non-emergency support service.</span>
                 </li>
               </ul>
               <div className="bg-gray-50 p-4 rounded-xl text-sm text-gray-600 italic border border-gray-100 mt-auto">
@@ -441,7 +441,7 @@ export default function Pricing() {
           </div>
           
           <motion.div variants={fadeInUp} className="text-center text-sm text-gray-600 bg-gray-50 p-4 rounded-xl border border-gray-200">
-            <p>All plans are billed monthly and renew automatically until cancelled. You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline font-semibold">support@senioreease.com</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken. Please see our <Link to="/refund" className="text-teal-600 hover:underline font-semibold">Refund & Cancellation Policy</Link> and <Link to="/terms" className="text-teal-600 hover:underline font-semibold">Terms & Conditions</Link> for full details. If paying by BACS Direct Debit, your membership will be activated once the payment has been successfully processed and confirmed.</p>
+            <p>All plans are billed monthly and renew automatically until cancelled. You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@seniorease.co.uk" className="text-teal-600 hover:underline font-semibold">support@seniorease.co.uk</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken. Please see our <Link to="/refund" className="text-teal-600 hover:underline font-semibold">Refund & Cancellation Policy</Link> and <Link to="/terms" className="text-teal-600 hover:underline font-semibold">Terms & Conditions</Link> for full details. If paying by BACS Direct Debit, your membership will be activated once the payment has been successfully processed and confirmed.</p>
           </motion.div>
         </motion.div>
       </section>
@@ -457,7 +457,7 @@ export default function Pricing() {
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Not Sure Which Plan Is Right?</h2>
           <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-            We understand that every customer’s needs are different. If you’d like to understand how Senior Ease works before subscribing, you can request a free introductory call.
+            We understand that every customer’s needs are different. If you’d like to understand how SeniorEase UK works before subscribing, you can request a free introductory call.
           </p>
           <button
             onClick={() => {

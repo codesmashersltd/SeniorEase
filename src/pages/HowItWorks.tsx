@@ -96,7 +96,7 @@ export default function HowItWorks() {
             How It Works
           </h1>
           <p className="text-lg md:text-2xl text-teal-100 font-medium leading-relaxed max-w-3xl mx-auto mb-8 md:mb-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
-            Getting started with the Senior Ease software platform is simple and straightforward. Here is our step-by-step process for onboarding and requesting digital support.
+            Getting started with the SeniorEase UK software platform is simple and straightforward. Here is our step-by-step process for onboarding and requesting digital support.
           </p>
 
           {/* Mobile Hero Image */}

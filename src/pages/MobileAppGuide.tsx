@@ -14,7 +14,7 @@ export default function MobileAppGuide() {
           <div className="bg-white p-4 rounded-full shadow-lg mb-6 relative z-10">
             <HeartHandshake className="text-teal-600" size={56} />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2 relative z-10">Senior Ease App</h1>
+          <h1 className="text-3xl font-bold text-white mb-2 relative z-10">SeniorEase UK App</h1>
           <p className="text-teal-100 font-medium relative z-10">Your digital companion</p>
         </div>
 

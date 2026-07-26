@@ -7,9 +7,9 @@ export default function SLA() {
         <div className="prose prose-teal max-w-none text-gray-600 space-y-8">
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-1">
             <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
-            <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
-            <p className="font-semibold text-gray-900">Business Name: Senior Ease</p>
-            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
+            <p className="font-semibold text-gray-900">Website: <a href="https://www.seniorease.co.uk" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.co.uk</a></p>
+            <p className="font-semibold text-gray-900">Business Name: SeniorEase UK</p>
+            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@seniorease.co.uk" className="text-teal-600 hover:underline">support@seniorease.co.uk</a></p>
             <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
           </div>
 
@@ -18,7 +18,7 @@ export default function SLA() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Introduction</h2>
             <p className="mb-4">
-              This Service Level Agreement ("SLA") explains the level of service customers can reasonably expect from Senior Ease.
+              This Service Level Agreement ("SLA") explains the level of service customers can reasonably expect from SeniorEase UK.
             </p>
             <p className="mb-4 font-semibold text-gray-900">It outlines:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -40,16 +40,16 @@ export default function SLA() {
               By purchasing or using our services, you agree to this Service Level Agreement.
             </p>
             <p>
-              This SLA forms part of the agreement between you and Senior Ease.
+              This SLA forms part of the agreement between you and SeniorEase UK.
             </p>
           </section>
 
           <hr className="border-gray-200" />
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">2. About Senior Ease</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">2. About SeniorEase UK</h2>
             <p className="mb-4">
-              Senior Ease is a subscription-based digital education and technical support service designed to help senior citizens become more confident using everyday technology.
+              SeniorEase UK is a subscription-based digital education and technical support service designed to help senior citizens become more confident using everyday technology.
             </p>
             <p className="mb-4 font-semibold text-gray-900">
               Our trained support team provides friendly, patient, and practical guidance to assist customers with common digital tasks, including:
@@ -76,7 +76,7 @@ export default function SLA() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Scope of Our Services</h2>
             <p className="mb-4">
-              Senior Ease provides guidance and practical assistance relating to everyday digital technology.
+              SeniorEase UK provides guidance and practical assistance relating to everyday digital technology.
             </p>
             <p className="mb-4 font-semibold text-gray-900">Our support may include:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -103,7 +103,7 @@ export default function SLA() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Services Outside Our Scope</h2>
             <p className="mb-4 font-semibold text-gray-900">
-              To ensure customers clearly understand our service, Senior Ease does not provide:
+              To ensure customers clearly understand our service, SeniorEase UK does not provide:
             </p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
               <li>emergency assistance;</li>
@@ -137,7 +137,7 @@ export default function SLA() {
               <li>WhatsApp support;</li>
               <li>Scheduled support sessions;</li>
               <li>Secure customer portal; or</li>
-              <li>Other communication methods agreed between Senior Ease and the customer.</li>
+              <li>Other communication methods agreed between SeniorEase UK and the customer.</li>
             </ul>
             <p>
               The communication methods available to you will depend on the subscription plan you have purchased.
@@ -226,7 +226,7 @@ export default function SLA() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Response Time Targets</h2>
             <p className="mb-4">
-              Senior Ease aims to respond to customer enquiries within the following target times during normal business hours.
+              SeniorEase UK aims to respond to customer enquiries within the following target times during normal business hours.
             </p>
             
             <div className="overflow-x-auto my-6 border border-gray-100 rounded-xl">
@@ -311,7 +311,7 @@ export default function SLA() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Service Quality Standards</h2>
             <p className="mb-4">
-              Senior Ease is committed to delivering a friendly, patient, and professional support experience.
+              SeniorEase UK is committed to delivering a friendly, patient, and professional support experience.
             </p>
             <p className="mb-4">
               We aim to provide our services with reasonable care and skill, using clear and easy-to-understand communication that supports customers in developing confidence when using everyday technology.
@@ -338,7 +338,7 @@ export default function SLA() {
               Protecting our customers' personal information and online security is an important part of our service.
             </p>
             <p className="mb-4 font-semibold text-teal-700">
-              During support sessions, Senior Ease will never ask customers to disclose:
+              During support sessions, SeniorEase UK will never ask customers to disclose:
             </p>
             <ul className="list-disc pl-6 mb-4 space-y-1 text-teal-900 font-medium">
               <li>online banking passwords;</li>
@@ -361,7 +361,7 @@ export default function SLA() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">13. Remote Assistance</h2>
             <p className="mb-4">
-              Senior Ease primarily provides guidance through telephone, email, WhatsApp, scheduled support sessions, and our customer portal.
+              SeniorEase UK primarily provides guidance through telephone, email, WhatsApp, scheduled support sessions, and our customer portal.
             </p>
             <p className="mb-4 font-semibold text-gray-900">
               If remote access assistance is ever offered, it will only take place:
@@ -375,7 +375,7 @@ export default function SLA() {
               Customers remain in control of their device throughout the session and may end the session at any time.
             </p>
             <p>
-              Senior Ease will never remotely access a customer's device without their express permission.
+              SeniorEase UK will never remotely access a customer's device without their express permission.
             </p>
           </section>
 
@@ -408,7 +408,7 @@ export default function SLA() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">15. Support for Family Members and Authorised Representatives</h2>
             <p className="mb-4">
-              Many Senior Ease subscriptions are purchased or managed by adult children, carers, or other authorised representatives on behalf of senior citizens.
+              Many SeniorEase UK subscriptions are purchased or managed by adult children, carers, or other authorised representatives on behalf of senior citizens.
             </p>
             <p className="mb-4">
               Where authorised by the customer, we may communicate with a nominated family member or authorised representative regarding:
@@ -444,7 +444,7 @@ export default function SLA() {
               <li>other software or online platforms.</li>
             </ul>
             <p className="mb-4 font-semibold text-gray-900">
-              Senior Ease does not control these third-party services and cannot guarantee:
+              SeniorEase UK does not control these third-party services and cannot guarantee:
             </p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
               <li>their availability;</li>
@@ -490,7 +490,7 @@ export default function SLA() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">18. Force Majeure</h2>
             <p className="mb-4">
-              Senior Ease shall not be responsible for delays or failures in providing services where those delays or failures arise from events beyond our reasonable control.
+              SeniorEase UK shall not be responsible for delays or failures in providing services where those delays or failures arise from events beyond our reasonable control.
             </p>
             <p className="mb-4 font-semibold text-gray-900">Such events may include:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -557,7 +557,7 @@ export default function SLA() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">21. No Guarantee of Specific Outcomes</h2>
             <p className="mb-4">
-              Senior Ease is committed to providing high-quality guidance and technical support.
+              SeniorEase UK is committed to providing high-quality guidance and technical support.
             </p>
             <p className="mb-4 font-semibold text-gray-900">However, we cannot guarantee:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -581,9 +581,9 @@ export default function SLA() {
               If you have any questions about this Service Level Agreement or our support services, please contact us.
             </p>
             <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100/50">
-              <p className="font-bold text-teal-900 mb-2">Senior Ease</p>
-              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.senioreease.com" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
-              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-700 hover:underline">support@senioreease.com</a></p>
+              <p className="font-bold text-teal-900 mb-2">SeniorEase UK</p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.seniorease.co.uk" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.co.uk</a></p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@seniorease.co.uk" className="text-teal-700 hover:underline">support@seniorease.co.uk</a></p>
               <p className="mb-3"><span className="font-semibold text-teal-800">Telephone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
               <p className="font-semibold text-teal-900 mt-2">Business Hours:</p>
               <p className="text-teal-800">Monday to Friday</p>

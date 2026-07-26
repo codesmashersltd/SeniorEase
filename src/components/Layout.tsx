@@ -30,11 +30,14 @@ export default function Layout() {
   const siteSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Senior Ease",
-    "url": "https://www.senioreease.com",
-    "logo": "https://www.senioreease.com/logo.svg",
-    "email": "support@senioreease.com",
+    "name": "SeniorEase UK",
+    "url": "https://www.seniorease.co.uk",
+    "logo": "https://www.seniorease.co.uk/logo.svg",
+    "email": "support@seniorease.co.uk",
     "telephone": "+443304010019",
+    "description": "UK Digital Technology Learning & Support Platform for Seniors. We provide smartphone, tablet, computer, and anti-scam assistance.",
+    "disambiguatingDescription": "SeniorEase UK is a digital technology education and technical support platform for older adults in the United Kingdom. It is an independent SaaS tech support service and is distinct from and not affiliated with any US or international senior living community discovery platforms or residential care directories.",
+    "knowsAbout": ["Digital Technology Support for Seniors", "Smartphone Learning", "Scam Awareness", "Tablet Training", "Online Banking Help"],
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "167-169 Great Portland Street, 5th Floor",
@@ -43,7 +46,7 @@ export default function Layout() {
       "addressCountry": "GB"
     },
     "sameAs": [
-      "https://www.senioreease.com"
+      "https://www.seniorease.co.uk"
     ]
   };
 
@@ -234,7 +237,7 @@ export default function Layout() {
               <div className="space-y-4 text-gray-300 text-sm">
                 <p className="flex flex-col gap-0.5">
                   <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Email</span>
-                  <a href="mailto:support@senioreease.com" className="hover:text-white text-gray-200 transition-colors">support@senioreease.com</a>
+                  <a href="mailto:support@seniorease.co.uk" className="hover:text-white text-gray-200 transition-colors">support@seniorease.co.uk</a>
                 </p>
                 <p className="flex flex-col gap-0.5">
                   <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Phone</span>
@@ -257,7 +260,12 @@ export default function Layout() {
           </div>
           
           <div className="pt-8 border-t border-gray-800 text-center md:text-left text-gray-300 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>&copy; {new Date().getFullYear()} SeniorEase. All rights reserved.</p>
+            <div>
+              <p>&copy; {new Date().getFullYear()} SeniorEase UK. All rights reserved.</p>
+              <p className="text-xs text-gray-400 mt-1.5 max-w-xl leading-relaxed">
+                <strong className="text-teal-400">Important Notice:</strong> SeniorEase UK (seniorease.co.uk) is a digital technology education and technical support service for older adults. We are an independent UK technology support platform and are <span className="underline decoration-teal-500">not affiliated</span> with any senior living, residential care homes, or property discovery platforms.
+              </p>
+            </div>
             <div className="max-w-2xl text-xs text-gray-400 text-center md:text-right space-y-2">
               <p>Monthly SaaS plans renew automatically until cancelled. Please review our legal and software billing policies before subscribing.</p>
             </div>

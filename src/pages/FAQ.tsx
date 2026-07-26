@@ -5,12 +5,12 @@ import faqHeroImage from '../assets/images/seniors_faq_hero_1784468031510.jpg';
 export default function FAQ() {
   const faqs = [
     {
-      q: "What does the Senior Ease SaaS Platform educate on?",
-      a: "The Senior Ease SaaS Platform educates on everyday digital tasks such as smartphones, WhatsApp, emails, video calls, online forms, reminders, and general digital confidence support via our secure portal."
+      q: "What does the SeniorEase UK SaaS Platform educate on?",
+      a: "The SeniorEase UK SaaS Platform educates on everyday digital tasks such as smartphones, WhatsApp, emails, video calls, online forms, reminders, and general digital confidence support via our secure portal."
     },
     {
-      q: "Is Senior Ease a care or medical service?",
-      a: "No. Senior Ease is strictly a Software as a Service (SaaS). We provide software tools, dashboards, and friendly digital assistance only. We are not a medical, emergency, nursing, or regulated care provider."
+      q: "Is SeniorEase UK a care or medical service?",
+      a: "No. SeniorEase UK is strictly a Software as a Service (SaaS). We provide software tools, dashboards, and friendly digital assistance only. We are not a medical, emergency, nursing, or regulated care provider."
     },
     {
       q: "How do the SaaS monthly plans work?",
@@ -30,7 +30,7 @@ export default function FAQ() {
     },
     {
       q: "Do you offer emergency support?",
-      a: "No. Senior Ease is not an emergency service. If urgent learning is needed, customers should contact the appropriate emergency or professional service."
+      a: "No. SeniorEase UK is not an emergency service. If urgent learning is needed, customers should contact the appropriate emergency or professional service."
     }
   ];
 

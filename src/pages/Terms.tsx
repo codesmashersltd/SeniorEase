@@ -7,9 +7,9 @@ export default function Terms() {
         <div className="prose prose-teal max-w-none text-gray-600 space-y-8">
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-1">
             <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
-            <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
-            <p className="font-semibold text-gray-900">Business Name: Senior Ease</p>
-            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
+            <p className="font-semibold text-gray-900">Website: <a href="https://www.seniorease.co.uk" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.co.uk</a></p>
+            <p className="font-semibold text-gray-900">Business Name: SeniorEase UK</p>
+            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@seniorease.co.uk" className="text-teal-600 hover:underline">support@seniorease.co.uk</a></p>
             <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
           </div>
 
@@ -18,10 +18,10 @@ export default function Terms() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Welcome</h2>
             <p className="mb-4">
-              Welcome to Senior Ease.
+              Welcome to SeniorEase UK.
             </p>
             <p className="mb-4">
-              These Terms & Conditions govern your access to and use of the Senior Ease website, customer portal, subscription services, and digital technical support services.
+              These Terms & Conditions govern your access to and use of the SeniorEase UK website, customer portal, subscription services, and digital technical support services.
             </p>
             <p className="mb-4">
               Please read these Terms carefully before using our website or purchasing any of our services.
@@ -37,9 +37,9 @@ export default function Terms() {
           <hr className="border-gray-200" />
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">2. About Senior Ease</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">2. About SeniorEase UK</h2>
             <p className="mb-4">
-              Senior Ease is a subscription-based digital education and technical support service designed to help senior citizens become more confident using everyday technology.
+              SeniorEase UK is a subscription-based digital education and technical support service designed to help senior citizens become more confident using everyday technology.
             </p>
             <p className="mb-4 font-semibold text-gray-900">
               Our support team provides friendly, patient, and practical guidance to assist customers with common digital tasks, including:
@@ -57,10 +57,10 @@ export default function Terms() {
               <li>improving general digital confidence.</li>
             </ul>
             <p className="mb-4">
-              Support is provided by members of the Senior Ease team through communication channels appropriate to your chosen subscription plan.
+              Support is provided by members of the SeniorEase UK team through communication channels appropriate to your chosen subscription plan.
             </p>
             <p className="mb-4 font-semibold text-gray-900">
-              Senior Ease provides education and guidance only.
+              SeniorEase UK provides education and guidance only.
             </p>
             <p>
               We do not take control of customer accounts without permission, make decisions on behalf of customers, or provide regulated professional advice.
@@ -72,7 +72,7 @@ export default function Terms() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Services We Do Not Provide</h2>
             <p className="mb-4 font-semibold text-gray-900">
-              To ensure customers clearly understand the scope of our services, Senior Ease does not provide:
+              To ensure customers clearly understand the scope of our services, SeniorEase UK does not provide:
             </p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
               <li>medical advice;</li>
@@ -125,7 +125,7 @@ export default function Terms() {
 
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Our Services</h2>
-            <p className="mb-4 font-semibold text-gray-900">Depending on the subscription selected, Senior Ease may provide:</p>
+            <p className="mb-4 font-semibold text-gray-900">Depending on the subscription selected, SeniorEase UK may provide:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
               <li>telephone support;</li>
               <li>email support;</li>
@@ -153,7 +153,7 @@ export default function Terms() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Membership Plans</h2>
             <p className="mb-4">
-              Senior Ease offers subscription-based membership plans.
+              SeniorEase UK offers subscription-based membership plans.
             </p>
             <p className="mb-4">
               Each plan includes different levels of support, communication methods, response times, and service allowances.
@@ -177,7 +177,7 @@ export default function Terms() {
               Unless otherwise stated, subscriptions are billed monthly.
             </p>
             <p className="mb-4">
-              By subscribing you authorise Senior Ease, or our authorised payment provider, to collect recurring payments until your subscription is cancelled.
+              By subscribing you authorise SeniorEase UK, or our authorised payment provider, to collect recurring payments until your subscription is cancelled.
             </p>
             <p className="mb-4">
               Subscriptions automatically renew at the end of each billing period unless cancelled in accordance with these Terms.
@@ -203,7 +203,7 @@ export default function Terms() {
 
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Payments</h2>
-            <p className="mb-4 font-semibold text-gray-900">Senior Ease accepts payment through:</p>
+            <p className="mb-4 font-semibold text-gray-900">SeniorEase UK accepts payment through:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
               <li>Stripe;</li>
               <li>Stripe Invoicing;</li>
@@ -219,7 +219,7 @@ export default function Terms() {
               Payment card information is processed directly by Stripe.
             </p>
             <p className="mb-4 font-semibold text-gray-900">
-              Senior Ease does not store complete payment card details.
+              SeniorEase UK does not store complete payment card details.
             </p>
             <p className="mb-4">
               Customers choosing BACS Bank Transfer will receive our bank details together with payment instructions.
@@ -285,7 +285,7 @@ export default function Terms() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Support Standards</h2>
             <p className="mb-4">
-              Senior Ease is committed to providing friendly, patient, and professional technical education and support.
+              SeniorEase UK is committed to providing friendly, patient, and professional technical education and support.
             </p>
             <p className="mb-4">
               Support is delivered by members of our trained support team using the communication methods available under your chosen subscription plan.
@@ -322,7 +322,7 @@ export default function Terms() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Scope of Our Support</h2>
             <p className="mb-4">
-              Senior Ease provides education and guidance to help customers improve their confidence when using everyday technology.
+              SeniorEase UK provides education and guidance to help customers improve their confidence when using everyday technology.
             </p>
             <p className="mb-4 font-semibold text-gray-900">Examples of support include:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -351,7 +351,7 @@ export default function Terms() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Services Outside Our Scope</h2>
             <p className="mb-4 font-semibold text-gray-900">
-              To protect both our customers and our staff, Senior Ease does not provide services outside our published scope.
+              To protect both our customers and our staff, SeniorEase UK does not provide services outside our published scope.
             </p>
             <p className="mb-4 font-semibold text-gray-900">Examples include:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -394,7 +394,7 @@ export default function Terms() {
               <li>ensuring the information they provide to us is accurate.</li>
             </ul>
             <p>
-              Senior Ease cannot accept responsibility for missed appointments resulting from incorrect information, changes made by third parties, communication failures, or circumstances outside our reasonable control.
+              SeniorEase UK cannot accept responsibility for missed appointments resulting from incorrect information, changes made by third parties, communication failures, or circumstances outside our reasonable control.
             </p>
           </section>
 
@@ -444,7 +444,7 @@ export default function Terms() {
               <li>video calling platforms.</li>
             </ul>
             <p className="mb-4">
-              These websites are operated independently of Senior Ease.
+              These websites are operated independently of SeniorEase UK.
             </p>
             <p className="mb-4 font-semibold text-gray-900">We are not responsible for:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -489,7 +489,7 @@ export default function Terms() {
 
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">17. Electronic Communications</h2>
-            <p className="mb-4 font-semibold text-gray-900">By creating an account or purchasing a subscription, you agree that Senior Ease may communicate with you electronically. This may include:</p>
+            <p className="mb-4 font-semibold text-gray-900">By creating an account or purchasing a subscription, you agree that SeniorEase UK may communicate with you electronically. This may include:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
               <li>subscription confirmations;</li>
               <li>invoices;</li>
@@ -540,7 +540,7 @@ export default function Terms() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">19. Force Majeure</h2>
             <p className="mb-4">
-              Senior Ease shall not be liable for any delay or failure to perform its obligations where such delay or failure results from events beyond our reasonable control.
+              SeniorEase UK shall not be liable for any delay or failure to perform its obligations where such delay or failure results from events beyond our reasonable control.
             </p>
             <p className="mb-4 font-semibold text-gray-900">These events may include, but are not limited to:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -615,7 +615,7 @@ export default function Terms() {
           <hr className="border-gray-200" />
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">22. Suspension or Termination by Senior Ease</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">22. Suspension or Termination by SeniorEase UK</h2>
             <p className="mb-4">
               We hope never to suspend or terminate a customer's subscription. However, we reserve the right to do so where reasonably necessary.
             </p>
@@ -627,7 +627,7 @@ export default function Terms() {
               <li>these Terms are seriously breached;</li>
               <li>abusive or threatening behaviour is directed towards our staff;</li>
               <li>our services are used for unlawful purposes;</li>
-              <li>continued provision of services would expose Senior Ease, our staff, or other customers to risk.</li>
+              <li>continued provision of services would expose SeniorEase UK, our staff, or other customers to risk.</li>
             </ul>
             <p className="mb-4">
               Where appropriate, we will attempt to contact you before taking action.
@@ -645,7 +645,7 @@ export default function Terms() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">23. Intellectual Property</h2>
             <p className="mb-4">
-              All intellectual property rights in the Senior Ease website, customer portal, educational materials, guides, documents, graphics, branding, logos, software, and content remain the property of Senior Ease or our licensors.
+              All intellectual property rights in the SeniorEase UK website, customer portal, educational materials, guides, documents, graphics, branding, logos, software, and content remain the property of SeniorEase UK or our licensors.
             </p>
             <p className="mb-4">
               Your subscription gives you a limited, non-exclusive, non-transferable licence to access and use our services for your personal, non-commercial use.
@@ -698,7 +698,7 @@ export default function Terms() {
               <li>any liability that cannot legally be excluded under the laws of England and Wales.</li>
             </ul>
             <p className="mb-4">
-              Subject to the above, Senior Ease shall not be liable for any indirect, incidental, special, or consequential loss arising from the use of our services.
+              Subject to the above, SeniorEase UK shall not be liable for any indirect, incidental, special, or consequential loss arising from the use of our services.
             </p>
             <p className="mb-4 font-semibold text-gray-905">This includes, but is not limited to:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -712,7 +712,7 @@ export default function Terms() {
               Our services are intended to provide digital education and technical guidance. Customers remain responsible for decisions they make when using technology, online services, or third-party platforms.
             </p>
             <p>
-              Where permitted by law, our total liability arising from any claim relating to your subscription shall not exceed the amount paid by you to Senior Ease during the 12 months immediately preceding the event giving rise to the claim.
+              Where permitted by law, our total liability arising from any claim relating to your subscription shall not exceed the amount paid by you to SeniorEase UK during the 12 months immediately preceding the event giving rise to the claim.
             </p>
           </section>
 
@@ -784,7 +784,7 @@ export default function Terms() {
               <li>any documents expressly incorporated by reference,</li>
             </ul>
             <p className="mb-4">
-              constitute the entire agreement between you and Senior Ease regarding your use of our services.
+              constitute the entire agreement between you and SeniorEase UK regarding your use of our services.
             </p>
             <p className="mb-4">
               They replace any previous agreements, understandings, or representations relating to the same subject matter.
@@ -793,7 +793,7 @@ export default function Terms() {
               If any provision of these Terms is found to be invalid or unenforceable, the remaining provisions shall continue in full force and effect.
             </p>
             <p>
-              A failure by Senior Ease to enforce any provision of these Terms shall not constitute a waiver of that provision or any other right.
+              A failure by SeniorEase UK to enforce any provision of these Terms shall not constitute a waiver of that provision or any other right.
             </p>
           </section>
 
@@ -805,9 +805,9 @@ export default function Terms() {
               If you have any questions about these Terms & Conditions, please contact us.
             </p>
             <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100/50">
-              <p className="font-bold text-teal-900 mb-2">Senior Ease</p>
-              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.senioreease.com" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
-              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-700 hover:underline">support@senioreease.com</a></p>
+              <p className="font-bold text-teal-900 mb-2">SeniorEase UK</p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.seniorease.co.uk" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.co.uk</a></p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@seniorease.co.uk" className="text-teal-700 hover:underline">support@seniorease.co.uk</a></p>
               <p><span className="font-semibold text-teal-800">Telephone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
             </div>
           </section>

@@ -7,9 +7,9 @@ export default function Refund() {
         <div className="prose prose-teal max-w-none text-gray-600 space-y-8">
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-1">
             <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
-            <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
-            <p className="font-semibold text-gray-900">Business Name: Senior Ease</p>
-            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
+            <p className="font-semibold text-gray-900">Website: <a href="https://www.seniorease.co.uk" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.co.uk</a></p>
+            <p className="font-semibold text-gray-900">Business Name: SeniorEase UK</p>
+            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@seniorease.co.uk" className="text-teal-600 hover:underline">support@seniorease.co.uk</a></p>
             <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
           </div>
 
@@ -18,7 +18,7 @@ export default function Refund() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Introduction</h2>
             <p className="mb-4">
-              Senior Ease is committed to providing a fair, transparent, and straightforward subscription service.
+              SeniorEase UK is committed to providing a fair, transparent, and straightforward subscription service.
             </p>
             <p className="mb-4">
               This Refund & Cancellation Policy explains how cancellations, recurring payments, refunds, and billing matters are handled for our subscription-based digital education and technical support services.
@@ -34,9 +34,9 @@ export default function Refund() {
           <hr className="border-gray-200" />
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">2. About Senior Ease</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">2. About SeniorEase UK</h2>
             <p className="mb-4">
-              Senior Ease is a subscription-based digital education and technical support service designed to help senior citizens become more confident using everyday technology.
+              SeniorEase UK is a subscription-based digital education and technical support service designed to help senior citizens become more confident using everyday technology.
             </p>
             <p className="mb-4 font-semibold text-gray-900">
               Our friendly support team provides guidance on everyday digital tasks, including:
@@ -66,7 +66,7 @@ export default function Refund() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Subscription Plans</h2>
             <p className="mb-4">
-              Senior Ease offers monthly subscription plans.
+              SeniorEase UK offers monthly subscription plans.
             </p>
             <p className="mb-4">
               Your chosen subscription, pricing, included services, and billing frequency will always be displayed before your purchase is completed.
@@ -98,7 +98,7 @@ export default function Refund() {
               Customers paying by card will complete their payment on Stripe's secure hosted payment page.
             </p>
             <p className="mb-4">
-              Senior Ease does not store or have access to your complete payment card details.
+              SeniorEase UK does not store or have access to your complete payment card details.
             </p>
             <p className="mb-4">
               Customers choosing BACS Bank Transfer will receive our bank account details together with payment instructions.
@@ -161,7 +161,7 @@ export default function Refund() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">7. No Long-Term Commitment</h2>
             <p className="mb-4">
-              Senior Ease subscriptions are designed to provide flexibility.
+              SeniorEase UK subscriptions are designed to provide flexibility.
             </p>
             <p className="mb-4 font-semibold text-gray-900">Unless otherwise stated:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -244,7 +244,7 @@ export default function Refund() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">11. One-Off Services and Future Add-On Services</h2>
             <p className="mb-4">
-              From time to time, Senior Ease may offer optional services in addition to our subscription plans, such as:
+              From time to time, SeniorEase UK may offer optional services in addition to our subscription plans, such as:
             </p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
               <li>one-off technical support sessions;</li>
@@ -416,9 +416,9 @@ export default function Refund() {
               If you have any questions about this Refund & Cancellation Policy or wish to discuss your subscription, please contact us.
             </p>
             <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100/50">
-              <p className="font-bold text-teal-900 mb-2">Senior Ease</p>
-              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.senioreease.com" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
-              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-700 hover:underline">support@senioreease.com</a></p>
+              <p className="font-bold text-teal-900 mb-2">SeniorEase UK</p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.seniorease.co.uk" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.co.uk</a></p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@seniorease.co.uk" className="text-teal-700 hover:underline">support@seniorease.co.uk</a></p>
               <p className="mb-3"><span className="font-semibold text-teal-800">Telephone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
               <p className="font-semibold text-teal-900 mt-2">Business Hours:</p>
               <p className="text-teal-800">Monday to Friday</p>

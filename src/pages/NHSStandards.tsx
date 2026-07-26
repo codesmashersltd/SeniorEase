@@ -10,9 +10,9 @@ export default function NHSStandards() {
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-1">
             <p className="font-bold text-gray-900 text-lg mb-2">Commitment to Accessibility, Privacy and Good Practice</p>
             <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
-            <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
-            <p className="font-semibold text-gray-900">Business Name: Senior Ease</p>
-            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
+            <p className="font-semibold text-gray-900">Website: <a href="https://www.seniorease.co.uk" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.co.uk</a></p>
+            <p className="font-semibold text-gray-900">Business Name: SeniorEase UK</p>
+            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@seniorease.co.uk" className="text-teal-600 hover:underline">support@seniorease.co.uk</a></p>
             <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
           </div>
 
@@ -21,13 +21,13 @@ export default function NHSStandards() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Our Commitment</h2>
             <p className="mb-4">
-              At Senior Ease, we are committed to providing a safe, accessible, and user-friendly digital education and technical support service for senior citizens across the United Kingdom.
+              At SeniorEase UK, we are committed to providing a safe, accessible, and user-friendly digital education and technical support service for senior citizens across the United Kingdom.
             </p>
             <p className="mb-4">
               Our services are designed around the principles of accessibility, privacy, transparency, and continuous improvement. We aim to help older adults use everyday technology with greater confidence through clear guidance provided by our trained support team.
             </p>
             <p>
-              While Senior Ease is an independent company and not part of the National Health Service (NHS), we seek to follow recognised UK good practices for accessibility, information security, and data protection where they are appropriate to our services.
+              While SeniorEase UK is an independent company and not part of the National Health Service (NHS), we seek to follow recognised UK good practices for accessibility, information security, and data protection where they are appropriate to our services.
             </p>
           </section>
 
@@ -79,7 +79,7 @@ export default function NHSStandards() {
             <p className="mb-4">
               Protecting personal information is a fundamental part of our service.
             </p>
-            <p className="mb-4 font-semibold text-gray-900">Senior Ease processes personal information in accordance with:</p>
+            <p className="mb-4 font-semibold text-gray-900">SeniorEase UK processes personal information in accordance with:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
               <li>the UK General Data Protection Regulation (UK GDPR);</li>
               <li>the Data Protection Act 2018; and</li>
@@ -120,7 +120,7 @@ export default function NHSStandards() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Safe Digital Guidance</h2>
             <p className="mb-4">
-              Senior Ease provides educational guidance to help customers use everyday technology more safely.
+              SeniorEase UK provides educational guidance to help customers use everyday technology more safely.
             </p>
             <p className="mb-4 font-semibold text-gray-900">Our support may include guidance on:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -159,7 +159,7 @@ export default function NHSStandards() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Continuous Improvement</h2>
             <p className="mb-4">
-              Senior Ease is committed to continually improving our services.
+              SeniorEase UK is committed to continually improving our services.
             </p>
             <p className="mb-4 font-semibold text-gray-900">We regularly review:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -197,7 +197,7 @@ export default function NHSStandards() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Our Services</h2>
             <p className="mb-4">
-              Senior Ease provides subscription-based digital education and technical support.
+              SeniorEase UK provides subscription-based digital education and technical support.
             </p>
             <p className="mb-4 font-semibold text-gray-900">Our services may include guidance relating to:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -229,7 +229,7 @@ export default function NHSStandards() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Independence</h2>
             <p className="mb-4">
-              Senior Ease is an independent company.
+              SeniorEase UK is an independent company.
             </p>
             <p className="mb-4">
               We are not part of, affiliated with, authorised by, or endorsed by the National Health Service (NHS), NHS England, or any NHS organisation, unless this is expressly stated in writing.
@@ -247,9 +247,9 @@ export default function NHSStandards() {
               If you have any questions about this statement or our services, please contact us.
             </p>
             <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100/50">
-              <p className="font-bold text-teal-900 mb-2">Senior Ease</p>
-              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.senioreease.com" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
-              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-700 hover:underline">support@senioreease.com</a></p>
+              <p className="font-bold text-teal-900 mb-2">SeniorEase UK</p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.seniorease.co.uk" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.co.uk</a></p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@seniorease.co.uk" className="text-teal-700 hover:underline">support@seniorease.co.uk</a></p>
               <p className="mb-3"><span className="font-semibold text-teal-800">Telephone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
               <p className="font-semibold text-teal-900 mt-2">Business Hours:</p>
               <p className="text-teal-800">Monday to Friday</p>

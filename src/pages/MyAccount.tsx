@@ -207,7 +207,7 @@ export default function MyAccount() {
               <div className="w-16 h-16 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center mb-3">
                 <HeartHandshake size={32} />
               </div>
-              <span className="text-xl font-bold text-teal-800">Senior Ease</span>
+              <span className="text-xl font-bold text-teal-800">SeniorEase UK</span>
             </div>
             
             {!showForgotPassword ? (
