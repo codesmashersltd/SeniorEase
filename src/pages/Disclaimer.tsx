@@ -1,6 +1,7 @@
 import React from 'react';
 import { ShieldAlert } from 'lucide-react';
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function Disclaimer() {
@@ -78,7 +79,22 @@ export default function Disclaimer() {
             <hr className="border-gray-200" />
 
             <section id="disclaimer-section-3">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">3. No Guaranteed Outcomes</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">3. No Guaranteed Outcomes &amp; Vulnerable Adult Risk Profile</h2>
+              <div className="bg-amber-50 p-6 rounded-2xl border border-amber-200 text-amber-950 mb-6 shadow-sm">
+                <p className="font-bold text-amber-900 text-lg mb-2 flex items-center gap-2">
+                  <span>🛡️ Core Governance Principle:</span>
+                </p>
+                <p className="font-semibold text-amber-950 text-base leading-relaxed mb-3">
+                  &ldquo;Customer risk profile (vulnerable adults): Mitigated by comprehensive safeguarding + strict no-guarantee language, but recognized as inherent to our service model.&rdquo;
+                </p>
+                <p className="text-sm text-amber-900 leading-relaxed mb-4">
+                  We acknowledge that serving older adults involves an inherent customer risk profile due to cognitive variance and third-party scam targeting. To mitigate this, we enforce strict safeguarding rules (such as zero access to banking apps and patient pacing) combined with transparent no-guarantee language.
+                </p>
+                <Link to="/safeguarding" className="inline-flex items-center gap-1.5 text-sm font-bold text-amber-900 bg-amber-200/80 hover:bg-amber-300 px-4 py-2 rounded-xl transition-colors">
+                  <span>View Full Safeguarding &amp; Risk Charter</span>
+                  <span>&rarr;</span>
+                </Link>
+              </div>
               <p className="mb-3">
                 While we provide training in scam and fraud awareness, digital literacy, and safe technology use:
               </p>

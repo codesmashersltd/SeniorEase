@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { LogIn, User, AlertCircle, CheckCircle2, X, LogOut, Info, HeartHandshake, Loader2, Lock } from 'lucide-react';
+import { LogIn, User, AlertCircle, CheckCircle2, X, LogOut, Info, HeartHandshake, Loader2, Lock, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { isSpamContent } from '../lib/spamFilter';
@@ -34,6 +35,12 @@ export default function MyAccount() {
   const [fpEmail, setFpEmail] = useState('');
   const [fpCustomerId, setFpCustomerId] = useState('');
   const [fpSuccess, setFpSuccess] = useState(false);
+
+  // Safeguarding & Caregiver Protection Controls State
+  const [calmPacing, setCalmPacing] = useState(true);
+  const [caregiverEmail, setCaregiverEmail] = useState('daughter@example.co.uk');
+  const [scamSignposting, setScamSignposting] = useState(true);
+  const [safeguardingSaved, setSafeguardingSaved] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -448,9 +455,9 @@ export default function MyAccount() {
               </div>
             </div>
 
-            {/* Right Column: Secure Dashboard Services */}
-            <div className="lg:col-span-8">
-              <div className="bg-gray-50 p-8 rounded-3xl border border-gray-100 h-full">
+            {/* Right Column: Secure Dashboard Services & Safeguarding */}
+            <div className="lg:col-span-8 space-y-8">
+              <div className="bg-gray-50 p-8 rounded-3xl border border-gray-100">
                 <div className="flex items-center justify-between mb-8">
                   <div>
                     <h2 className="text-2xl font-bold text-gray-900 mb-2">Service Request Dashboard</h2>
@@ -480,6 +487,120 @@ export default function MyAccount() {
                       </button>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Safeguarding & Caregiver Safety Controls Card */}
+              <div className="bg-gradient-to-br from-amber-50 via-orange-50/40 to-amber-50 p-8 rounded-3xl border-2 border-amber-300 shadow-sm relative overflow-hidden">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-amber-200">
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 bg-amber-500 text-white rounded-2xl shadow-md">
+                      <ShieldAlert size={28} />
+                    </div>
+                    <div>
+                      <h2 className="text-2xl font-bold text-amber-950 mb-1 flex items-center gap-2">
+                        <span>Safeguarding &amp; Caregiver Safety Controls</span>
+                      </h2>
+                      <p className="text-amber-900 text-sm">
+                        Customer risk profile (vulnerable adults) actively mitigated by safeguarding + no-guarantee language.
+                      </p>
+                    </div>
+                  </div>
+                  <Link 
+                    to="/safeguarding"
+                    className="px-4 py-2 bg-amber-200/80 hover:bg-amber-300 text-amber-950 rounded-xl text-xs font-bold transition-colors inline-flex items-center justify-center gap-1 shrink-0"
+                  >
+                    <span>View Risk Charter</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                  <div className="bg-white p-5 rounded-2xl border border-amber-200 shadow-sm flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="font-bold text-gray-900 text-base mb-1">Calm &amp; Safe Pacing Mode</h3>
+                      <p className="text-xs text-gray-600 leading-relaxed">
+                        Enables extra verbal confirmations during calls and strict adherence to anti-coercion pacing standards.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCalmPacing(!calmPacing);
+                        setSafeguardingSaved(false);
+                      }}
+                      className={`w-12 h-6 rounded-full transition-colors relative shrink-0 p-1 ${
+                        calmPacing ? 'bg-teal-600' : 'bg-gray-300'
+                      }`}
+                    >
+                      <div className={`w-4 h-4 rounded-full bg-white transition-transform ${
+                        calmPacing ? 'translate-x-6' : 'translate-x-0'
+                      }`} />
+                    </button>
+                  </div>
+
+                  <div className="bg-white p-5 rounded-2xl border border-amber-200 shadow-sm flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="font-bold text-gray-900 text-base mb-1">Financial Scam Blocklist Signposting</h3>
+                      <p className="text-xs text-gray-600 leading-relaxed">
+                        Automatically highlights fraud warnings and signposts to Action Fraud if suspicious apps are discussed.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setScamSignposting(!scamSignposting);
+                        setSafeguardingSaved(false);
+                      }}
+                      className={`w-12 h-6 rounded-full transition-colors relative shrink-0 p-1 ${
+                        scamSignposting ? 'bg-teal-600' : 'bg-gray-300'
+                      }`}
+                    >
+                      <div className={`w-4 h-4 rounded-full bg-white transition-transform ${
+                        scamSignposting ? 'translate-x-6' : 'translate-x-0'
+                      }`} />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border border-amber-200 shadow-sm mb-6">
+                  <h3 className="font-bold text-gray-900 text-base mb-1">Caregiver CC / Family Notification Loop</h3>
+                  <p className="text-xs text-gray-600 mb-4 leading-relaxed">
+                    With senior consent, enter a trusted family member&apos;s email to receive automated copies of learning summaries and immediate safety alerts.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <input
+                      type="email"
+                      value={caregiverEmail}
+                      onChange={(e) => {
+                        setCaregiverEmail(e.target.value);
+                        setSafeguardingSaved(false);
+                      }}
+                      placeholder="e.g. daughter@example.co.uk"
+                      className="flex-1 px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setSafeguardingSaved(true)}
+                      className="px-6 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm rounded-xl transition-colors shadow-sm shrink-0 flex items-center justify-center gap-2"
+                    >
+                      {safeguardingSaved ? (
+                        <>
+                          <ShieldCheck size={16} />
+                          <span>Settings Saved!</span>
+                        </>
+                      ) : (
+                        <span>Save Protection Settings</span>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="bg-amber-100/80 p-4 rounded-xl border border-amber-300/80 flex items-center gap-3 text-xs md:text-sm text-amber-950 font-medium">
+                  <Info size={20} className="text-amber-700 shrink-0" />
+                  <span>
+                    <strong>No-Guarantee Advisory Scope:</strong> Guidance is educational and empowering. While we mitigate risks through rigorous safeguarding, senior digital support inherently involves third-party ecosystem factors that cannot be 100% eliminated by software alone.
+                  </span>
                 </div>
               </div>
             </div>

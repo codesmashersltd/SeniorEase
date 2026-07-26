@@ -101,7 +101,24 @@ export default function Terms() {
           <hr className="border-gray-200" />
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Limitation of Liability</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Customer Risk Profile (Vulnerable Adults) &amp; Safeguarding Mitigation</h2>
+            <div className="bg-amber-50 p-6 rounded-2xl border border-amber-200 text-amber-950 mb-4">
+              <p className="font-bold text-amber-900 mb-2">Operational Governance Acknowledgement:</p>
+              <p className="font-semibold text-amber-950 leading-relaxed">
+                &ldquo;Customer risk profile (vulnerable adults): Mitigated by comprehensive safeguarding + strict no-guarantee language, but recognized as inherent to our SaaS model.&rdquo;
+              </p>
+            </div>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>Inherent Risk Recognition:</strong> We acknowledge that serving older adults involves an inherent customer risk profile due to cognitive variance, digital unfamiliarity, and third-party scam targeting.</li>
+              <li><strong>Active Safeguarding Layer:</strong> To mitigate this risk, SeniorEase enforces strict operational safeguards, including our Zero Financial Access rule (advisors will never ask for bank details or remote control of financial apps), patient anti-coercion pacing, and statutory signposting to UK fraud bodies.</li>
+              <li><strong>Advisory Scope:</strong> Our Services provide educational digital guidance only. We do not act as statutory caregivers, medical advisors, or IT security guarantors. For complete details, see our <Link to="/safeguarding" className="text-teal-600 hover:underline font-medium">Safeguarding &amp; Risk Charter</Link>.</li>
+            </ul>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Limitation of Liability</h2>
             <ul className="list-disc pl-6 space-y-2">
               <li>SeniorEase provides technology education and guidance on a reasonable-skill-and-care basis but does not guarantee specific outcomes (e.g. complete elimination of scam risk).</li>
               <li>To the fullest extent permitted by law, SeniorEase's total liability for any claim arising from the Services is limited to the amount paid by the customer in the 12 months preceding the claim.</li>
@@ -112,7 +129,7 @@ export default function Terms() {
           <hr className="border-gray-200" />
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Data Protection</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Data Protection</h2>
             <p>
               Your personal data is handled in accordance with our <Link to="/privacy" className="text-teal-600 hover:underline font-medium">Privacy Policy</Link> and applicable UK GDPR / Data Protection Act 2018 requirements.
             </p>
@@ -121,7 +138,7 @@ export default function Terms() {
           <hr className="border-gray-200" />
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Termination</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Termination</h2>
             <p>
               We may suspend or terminate an account where these Terms are breached, where payment fails and is not resolved within a reasonable period, or where continued provision of the Service is not reasonably possible.
             </p>
@@ -130,7 +147,7 @@ export default function Terms() {
           <hr className="border-gray-200" />
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Changes to These Terms</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Changes to These Terms</h2>
             <p>
               We may update these Terms from time to time. Material changes will be notified by email or via the website at least 14 days before they take effect.
             </p>
@@ -139,7 +156,7 @@ export default function Terms() {
           <hr className="border-gray-200" />
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Governing Law</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Governing Law</h2>
             <p>
               These Terms are governed by the laws of England and Wales. Any disputes will be subject to the exclusive jurisdiction of the courts of England and Wales.
             </p>
@@ -148,7 +165,7 @@ export default function Terms() {
           <hr className="border-gray-200" />
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Intellectual Property</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">13. Intellectual Property</h2>
             <p>
               All website content, logos, branding, software, graphics, text, and training materials are owned by or licensed to SeniorEase and are protected by applicable intellectual property laws. You may not copy, reproduce, distribute, or modify any content without our prior written permission.
             </p>
@@ -157,7 +174,7 @@ export default function Terms() {
           <hr className="border-gray-200" />
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">13. Contact Us</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">14. Contact Us</h2>
             <p className="mb-6">
               Questions about these Terms can be sent to:
             </p>

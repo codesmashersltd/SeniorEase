@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function NHSStandards() {
@@ -59,6 +60,21 @@ export default function NHSStandards() {
 
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Safeguarding and Vulnerable Adults</h2>
+            <div className="bg-amber-50 p-6 rounded-2xl border border-amber-200 text-amber-950 mb-6 shadow-sm">
+              <p className="font-bold text-amber-900 text-lg mb-2 flex items-center gap-2">
+                <span>🛡️ Governance &amp; Customer Risk Profile:</span>
+              </p>
+              <p className="font-semibold text-amber-950 text-base leading-relaxed mb-3">
+                &ldquo;Customer risk profile (vulnerable adults): Mitigated by comprehensive safeguarding + strict no-guarantee language, but recognized as inherent to our service model.&rdquo;
+              </p>
+              <p className="text-sm text-amber-900 leading-relaxed mb-4">
+                We operate under a structured governance model that pairs active protection (Zero Financial Access, Calm Pacing, and Caregiver Notification loops) with transparent no-guarantee advisory language.
+              </p>
+              <Link to="/safeguarding" className="inline-flex items-center gap-1.5 text-sm font-bold text-amber-900 bg-amber-200/80 hover:bg-amber-300 px-4 py-2 rounded-xl transition-colors">
+                <span>Read Full Safeguarding &amp; Risk Charter</span>
+                <span>&rarr;</span>
+              </Link>
+            </div>
             <p className="mb-3">We recognise that many of our customers may be vulnerable due to age, isolation, or unfamiliarity with technology. Because of this:</p>
             <ul className="list-disc pl-6 space-y-3">
               <li>All support staff receive training on safeguarding awareness and respectful, patient communication with older adults.</li>
