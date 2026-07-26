@@ -6,8 +6,8 @@ import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function Safeguarding() {
   usePageMeta(
-    "Safeguarding & Vulnerable Adult Risk Charter | SeniorEase",
-    "Our comprehensive framework mitigating the customer risk profile of vulnerable adults through proactive safeguarding and strict no-guarantee language."
+    "Our Commitment to Protecting Vulnerable Adults | SeniorEase",
+    "Our transparent safeguarding policy explaining how we actively protect older adults while maintaining clear, supportive guidance."
   );
 
   // State for Interactive Caregiver Safety Checklist
@@ -81,13 +81,13 @@ export default function Safeguarding() {
             <div className="relative z-10 max-w-4xl mx-auto">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/20 text-amber-300 font-bold text-sm mb-6 border border-amber-500/30 backdrop-blur-md">
                 <ShieldAlert size={18} className="text-amber-400" />
-                <span>Governance &amp; Customer Protection Policy</span>
+                <span>Customer Protection &amp; Safeguarding Policy</span>
               </div>
               <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
-                Safeguarding &amp; Vulnerable Adult Risk Charter
+                Our Commitment to Protecting Vulnerable Adults
               </h1>
               <p className="text-teal-100 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto font-medium">
-                Our transparent governance framework addressing how customer risk profiles are actively mitigated while acknowledging the operational realities of digital assistance.
+                Our transparent safeguarding policy explaining how we actively support and protect older adults while maintaining clear, honest boundaries about online security.
               </p>
             </div>
           </div>
@@ -455,7 +455,7 @@ export default function Safeguarding() {
 
             {/* Bottom Navigation CTA */}
             <div className="bg-gray-100 p-8 rounded-3xl text-center space-y-4">
-              <h3 className="text-2xl font-bold text-gray-900">Have Questions About Our Risk Profile Governance?</h3>
+              <h3 className="text-2xl font-bold text-gray-900">Have Questions About Our Safeguarding Commitment?</h3>
               <p className="text-gray-600 max-w-xl mx-auto">
                 We believe that transparent governance protects everyone. Review our full legal framework or contact our support team today.
               </p>

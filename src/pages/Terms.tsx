@@ -111,7 +111,7 @@ export default function Terms() {
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Inherent Risk Recognition:</strong> We acknowledge that serving older adults involves an inherent customer risk profile due to cognitive variance, digital unfamiliarity, and third-party scam targeting.</li>
               <li><strong>Active Safeguarding Layer:</strong> To mitigate this risk, SeniorEase enforces strict operational safeguards, including our Zero Financial Access rule (advisors will never ask for bank details or remote control of financial apps), patient anti-coercion pacing, and statutory signposting to UK fraud bodies.</li>
-              <li><strong>Advisory Scope:</strong> Our Services provide educational digital guidance only. We do not act as statutory caregivers, medical advisors, or IT security guarantors. For complete details, see our <Link to="/safeguarding" className="text-teal-600 hover:underline font-medium">Safeguarding &amp; Risk Charter</Link>.</li>
+              <li><strong>Advisory Scope:</strong> Our Services provide educational digital guidance only. We do not act as statutory caregivers, medical advisors, or IT security guarantors. For complete details, see our <Link to="/safeguarding" className="text-teal-600 hover:underline font-medium">Commitment to Protecting Vulnerable Adults</Link>.</li>
             </ul>
           </section>
 

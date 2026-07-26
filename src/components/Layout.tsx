@@ -57,25 +57,6 @@ export default function Layout() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }}
       />
-      {/* Top Governance Announcement Bar */}
-      <div className="bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 text-teal-100 py-2 px-4 text-xs sm:text-sm font-medium border-b border-teal-800 shadow-sm">
-        <div className="w-full max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2.5 py-0.5 rounded-full text-xs font-bold shrink-0 flex items-center gap-1">
-              <span>🛡️ Safeguarding Policy</span>
-            </span>
-            <span className="truncate max-w-xl md:max-w-none">Customer risk profile (vulnerable adults) actively mitigated by safeguarding + no-guarantee language.</span>
-          </div>
-          <div className="flex items-center gap-4 shrink-0">
-            <Link to="/safeguarding" className="text-amber-400 hover:text-amber-300 underline font-bold transition-colors">
-              Risk Charter &amp; Checklist &rarr;
-            </Link>
-            <Link to="/auditor-verification" className="bg-teal-700/80 hover:bg-teal-600 text-white px-2.5 py-0.5 rounded-full text-xs font-bold transition-colors flex items-center gap-1 shadow-sm">
-              <span>🔍 Domain Audit Gateway</span>
-            </Link>
-          </div>
-        </div>
-      </div>
       {/* Navigation */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
@@ -223,12 +204,7 @@ export default function Layout() {
               <ul className="space-y-4">
                 <li>
                   <Link to="/safeguarding" className="text-amber-400 hover:text-amber-300 font-bold transition-colors text-sm flex items-center gap-1">
-                    <span>🛡️ Safeguarding Charter</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/auditor-verification" className="text-teal-300 hover:text-white font-bold transition-colors text-sm flex items-center gap-1">
-                    <span>🔍 Auditor &amp; Domain Verification</span>
+                    <span>🛡️ Protecting Vulnerable Adults</span>
                   </Link>
                 </li>
                 <li>

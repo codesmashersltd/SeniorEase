@@ -502,7 +502,7 @@ export default function MyAccount() {
                         <span>Safeguarding &amp; Caregiver Safety Controls</span>
                       </h2>
                       <p className="text-amber-900 text-sm">
-                        Customer risk profile (vulnerable adults) actively mitigated by safeguarding + no-guarantee language.
+                        We actively support and protect vulnerable adults with robust safeguarding and clear, honest boundaries.
                       </p>
                     </div>
                   </div>
@@ -510,7 +510,7 @@ export default function MyAccount() {
                     to="/safeguarding"
                     className="px-4 py-2 bg-amber-200/80 hover:bg-amber-300 text-amber-950 rounded-xl text-xs font-bold transition-colors inline-flex items-center justify-center gap-1 shrink-0"
                   >
-                    <span>View Risk Charter</span>
+                    <span>View Safeguarding Commitment</span>
                     <span>&rarr;</span>
                   </Link>
                 </div>

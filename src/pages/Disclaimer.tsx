@@ -91,7 +91,7 @@ export default function Disclaimer() {
                   We acknowledge that serving older adults involves an inherent customer risk profile due to cognitive variance and third-party scam targeting. To mitigate this, we enforce strict safeguarding rules (such as zero access to banking apps and patient pacing) combined with transparent no-guarantee language.
                 </p>
                 <Link to="/safeguarding" className="inline-flex items-center gap-1.5 text-sm font-bold text-amber-900 bg-amber-200/80 hover:bg-amber-300 px-4 py-2 rounded-xl transition-colors">
-                  <span>View Full Safeguarding &amp; Risk Charter</span>
+                  <span>View Our Commitment to Protecting Vulnerable Adults</span>
                   <span>&rarr;</span>
                 </Link>
               </div>

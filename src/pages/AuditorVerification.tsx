@@ -235,7 +235,7 @@ export default function AuditorVerification() {
                       <li>
                         <Link to="/safeguarding" className="text-amber-300 hover:text-white flex items-center justify-between p-2 rounded-lg bg-teal-800/60 hover:bg-teal-800 transition-colors">
                           <span className="font-bold flex items-center gap-1.5">
-                            <span>🛡️ Safeguarding &amp; Risk Charter</span>
+                            <span>🛡️ Commitment to Protecting Vulnerable Adults</span>
                           </span>
                           <span>&rarr;</span>
                         </Link>
@@ -392,7 +392,7 @@ export default function AuditorVerification() {
                       </div>
                       <div className="flex items-center gap-2 text-sm text-gray-200">
                         <Check size={16} className="text-green-400 shrink-0" />
-                        <span>UK GDPR &amp; Vulnerable Adult Risk Charter Active</span>
+                        <span>UK GDPR &amp; Vulnerable Adult Protection Policy Active</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-gray-200">
                         <Check size={16} className="text-green-400 shrink-0" />

@@ -71,7 +71,7 @@ export default function NHSStandards() {
                 We operate under a structured governance model that pairs active protection (Zero Financial Access, Calm Pacing, and Caregiver Notification loops) with transparent no-guarantee advisory language.
               </p>
               <Link to="/safeguarding" className="inline-flex items-center gap-1.5 text-sm font-bold text-amber-900 bg-amber-200/80 hover:bg-amber-300 px-4 py-2 rounded-xl transition-colors">
-                <span>Read Full Safeguarding &amp; Risk Charter</span>
+                <span>Read Our Commitment to Protecting Vulnerable Adults</span>
                 <span>&rarr;</span>
               </Link>
             </div>
