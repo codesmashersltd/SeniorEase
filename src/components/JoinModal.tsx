@@ -319,14 +319,14 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                       </p>
                       <p>
                         <span className="font-bold text-gray-900">Cancellation Policy: </span>
-                        You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@seniorease.co.uk" className="text-teal-600 hover:underline">support@seniorease.co.uk</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken.
+                        You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken.
                       </p>
                       <p>
                         Your membership begins once your first payment has been successfully processed. If paying by BACS Direct Debit, your membership will be activated once the payment has been successfully processed and confirmed. You'll receive a confirmation email and receipt after every successful payment.
                       </p>
                       <p className="text-[10px] text-gray-500 border-t border-gray-200 pt-2">
                         <span className="font-bold text-gray-700 block mb-0.5">Disclaimer & Identity Notice:</span>
-                        SeniorEase UK provides software learning and tech support for senior citizens in the UK. We are NOT affiliated with any senior living, retirement home, or residential care discovery platforms. We do not provide medical, emergency, legal, financial, or regulated care services.
+                        SeniorEase provides software learning and tech support for senior citizens in the UK. We are NOT affiliated with any senior living, retirement home, or residential care discovery platforms. We do not provide medical, emergency, legal, financial, or regulated care services.
                       </p>
                     </div>
 

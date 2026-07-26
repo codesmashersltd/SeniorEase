@@ -37,9 +37,9 @@ const getHeader = (active) => `
 const footerHTML = `
   <footer style="background: #0f172a; color: #94a3b8; padding: 40px 20px; border-top: 1px solid #1e293b; font-family: system-ui, -apple-system, sans-serif; text-align: center; font-size: 0.9rem; margin-top: 60px;">
     <div style="max-width: 1200px; margin: 0 auto;">
-      <p>&copy; 2026 SeniorEase UK. All rights reserved.</p>
+      <p>&copy; 2026 SeniorEase. All rights reserved.</p>
       <p style="margin-top: 10px; font-size: 0.8rem; color: #64748b; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.5;">
-        <strong style="color: #2dd4bf;">Important Notice:</strong> SeniorEase UK (seniorease.co.uk) is a digital technology learning and support SaaS service for older adults. We are an independent UK technology support platform and are <span style="text-decoration: underline; color: #99f6e4;">not affiliated</span> with any senior living, residential care homes, or property discovery platforms.
+        <strong style="color: #2dd4bf;">Important Notice:</strong> SeniorEase (senioreease.com) is a digital technology learning and support SaaS service for older adults. We are an independent UK technology support platform and are <span style="text-decoration: underline; color: #99f6e4;">not affiliated</span> with any senior living, residential care homes, or property discovery platforms.
       </p>
       <p style="margin-top: 15px; display: flex; justify-content: center; flex-wrap: wrap; gap: 15px;">
         <a href="/terms" style="color: #0d9488; text-decoration: none;">Terms & Conditions</a>
@@ -96,7 +96,7 @@ const routes = [
   {
     path: "/pricing",
     title: "Simple Pricing Plans | SeniorEase - Digital Support & Education",
-    description: "Explore simple and clear monthly pricing plans for SeniorEase UK digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.",
+    description: "Explore simple and clear monthly pricing plans for SeniorEase digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.",
     staticHTML: `
       <div style="font-family: system-ui, -apple-system, sans-serif; color: #1e293b; background-color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column;">
         ${getHeader("pricing")}
@@ -163,6 +163,33 @@ const routes = [
               <a href="/pricing" style="display: block; text-align: center; background: #0d9488; color: white; padding: 12px; border-radius: 8px; font-weight: bold; text-decoration: none; margin-top: 30px;">Get Started</a>
             </div>
           </div>
+
+          <div style="margin-top: 50px; background: #f8fafc; padding: 30px; border-radius: 16px; border: 1px solid #e2e8f0;">
+            <h2 style="font-size: 1.8rem; font-weight: bold; color: #0f172a; text-align: center; margin-bottom: 20px;">Payment Methods & Options</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+              <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <h3 style="color: #0f172a; font-size: 1.2rem; margin: 0 0 10px 0;">Pay by Direct Debit (GoCardless)</h3>
+                <ul style="color: #475569; padding-left: 20px; line-height: 1.6;">
+                  <li>Payments collected securely through GoCardless</li>
+                  <li>Protected by the Direct Debit Guarantee</li>
+                  <li>Advance notice before collections</li>
+                  <li>Easy cancellation process</li>
+                </ul>
+              </div>
+              <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <h3 style="color: #0f172a; font-size: 1.2rem; margin: 0 0 10px 0;">Pay by Card (Stripe)</h3>
+                <ul style="color: #475569; padding-left: 20px; line-height: 1.6;">
+                  <li>Secure payments powered by Stripe</li>
+                  <li>Supports all major debit and credit cards</li>
+                  <li>256-bit bank-grade SSL encryption</li>
+                  <li>Instant automated payment receipts</li>
+                </ul>
+              </div>
+            </div>
+            <div style="background: #0f172a; color: white; padding: 20px; border-radius: 12px; margin-top: 20px;">
+              <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;"><strong>Note: Invoices & Payment Links:</strong> We will send the invoice along with the payment link directly to your registered email address, and you can make the payment as per your desire using your preferred payment method.</p>
+            </div>
+          </div>
         </main>
         ${footerHTML}
       </div>
@@ -181,7 +208,7 @@ const routes = [
           <p style="font-size: 1.25rem; color: #475569; line-height: 1.6; font-weight: bold; margin-bottom: 30px;">Helping senior citizens feel more confident, comfortable, and supported in today’s fast-paced digital world.</p>
           
           <h2 style="font-size: 1.8rem; font-weight: 700; color: #0f172a; margin-top: 30px;">Technology Shouldn’t Feel Overwhelming</h2>
-          <p style="color: #475569;">SeniorEase UK was created to provide a Software as a Service (SaaS) platform that makes everyday technology feel less overwhelming for older adults and their families. As more parts of life move online, many senior citizens are left feeling confused, frustrated, or unsupported when it comes to using phones, apps, emails, online forms, and digital communication tools. SeniorEase UK exists to provide secure tools, a centralized dashboard, and practical learning that makes everyday digital life easier to manage.</p>
+          <p style="color: #475569;">SeniorEase was created to provide a Software as a Service (SaaS) platform that makes everyday technology feel less overwhelming for older adults and their families. As more parts of life move online, many senior citizens are left feeling confused, frustrated, or unsupported when it comes to using phones, apps, emails, online forms, and digital communication tools. SeniorEase exists to provide secure tools, a centralized dashboard, and practical learning that makes everyday digital life easier to manage.</p>
           <p style="color: #475569;">At SeniorEase, we created a comprehensive SaaS platform and support subscription to help make everyday technology easier, calmer, and less intimidating. We provide the software tools and the patient, friendly voice on the end of the phone when things go wrong.</p>
           
           <h3 style="font-size: 1.4rem; font-weight: 700; color: #0f172a; margin-top: 30px;">We believe seniors deserve support that is:</h3>
@@ -304,7 +331,7 @@ const routes = [
             </div>
             <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
               <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">Can I cancel or change plans?</h3>
-              <p style="color: #475569; margin-bottom: 0;">Yes, absolutely! You can cancel, upgrade, or downgrade your subscription at any time. Simply sign into your dashboard, click "Cancel Subscription", or email support@seniorease.co.uk and we will take care of it immediately.</p>
+              <p style="color: #475569; margin-bottom: 0;">Yes, absolutely! You can cancel, upgrade, or downgrade your subscription at any time. Simply sign into your dashboard, click "Cancel Subscription", or email support@senioreease.com and we will take care of it immediately.</p>
             </div>
             <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
               <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">Who is this service designed for?</h3>
@@ -319,7 +346,7 @@ const routes = [
   {
     path: "/contact",
     title: "Contact Support | SeniorEase - Here to Assist You",
-    description: "Get in touch with the SeniorEase UK support team. Phone us on +44 330 401 0019, email support@seniorease.co.uk, or book an introductory call.",
+    description: "Get in touch with the SeniorEase support team. Phone us on +44 330 401 0019, email support@senioreease.com, or book an introductory call.",
     staticHTML: `
       <div style="font-family: system-ui, -apple-system, sans-serif; color: #1e293b; background-color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column;">
         ${getHeader("contact")}
@@ -331,7 +358,7 @@ const routes = [
           <div style="background: white; padding: 35px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
             <h2 style="font-size: 1.5rem; color: #1e293b; margin-top: 0; margin-bottom: 20px; font-weight: bold;">Contact Information</h2>
             <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Telephone Support:</strong> <a href="tel:+443304010019" style="color: #0d9488; text-decoration: none; font-weight: 600;">+44 (0) 330 401 0019</a></p>
-            <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Email Support:</strong> <a href="mailto:support@seniorease.co.uk" style="color: #0d9488; text-decoration: none; font-weight: 600;">support@seniorease.co.uk</a></p>
+            <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Email Support:</strong> <a href="mailto:support@senioreease.com" style="color: #0d9488; text-decoration: none; font-weight: 600;">support@senioreease.com</a></p>
             <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Business Address:</strong> SeniorEase, 86-90 Paul Street, London, EC2A 4NE, United Kingdom</p>
             <p style="font-size: 1.1rem; color: #334155; margin-bottom: 0;"><strong>Office Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM GMT</p>
           </div>
@@ -351,16 +378,16 @@ const routes = [
           <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Terms & Conditions</h1>
           <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
             <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase UK</p>
-            <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@seniorease.co.uk</p>
+            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+            <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
             <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
           </div>
           <h2>1. Welcome</h2>
-          <p>Welcome to SeniorEase UK.</p>
-          <p>These Terms & Conditions govern your access to and use of the SeniorEase UK website, customer portal, subscription services, and digital technical support services. Please read these Terms carefully before using our website or purchasing any of our services.</p>
+          <p>Welcome to SeniorEase.</p>
+          <p>These Terms & Conditions govern your access to and use of the SeniorEase website, customer portal, subscription services, and digital technical support services. Please read these Terms carefully before using our website or purchasing any of our services.</p>
           <p>By visiting our website, creating an account, purchasing a subscription, or using our services, you agree to be bound by these Terms & Conditions.</p>
-          <h2>2. About SeniorEase UK</h2>
-          <p>SeniorEase UK is a subscription-based digital education and technical support service designed to help senior citizens become more confident using everyday technology. Our support team provides friendly, patient, and practical guidance to assist customers with smartphones, tablets, computers, and recognizing online scams.</p>
+          <h2>2. About SeniorEase</h2>
+          <p>SeniorEase is a subscription-based digital education and technical support service designed to help senior citizens become more confident using everyday technology. Our support team provides friendly, patient, and practical guidance to assist customers with smartphones, tablets, computers, and recognizing online scams.</p>
         </main>
         ${footerHTML}
       </div>
@@ -377,8 +404,8 @@ const routes = [
           <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Privacy Policy</h1>
           <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
             <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase UK</p>
-            <p style="margin: 5px 0 0 0;"><strong>Email:</strong> privacy@seniorease.co.uk</p>
+            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+            <p style="margin: 5px 0 0 0;"><strong>Email:</strong> privacy@senioreease.com</p>
           </div>
           <h2>Our Commitment to Your Privacy</h2>
           <p>SeniorEase is committed to protecting your privacy and security. This Privacy Policy explains how we collect, use, store, and share your personal data when you visit our website, register for an account, purchase a subscription, or receive technical support from us.</p>
@@ -400,11 +427,11 @@ const routes = [
           <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Refund & Cancellation Policy</h1>
           <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
             <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase UK</p>
-            <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@seniorease.co.uk</p>
+            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+            <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
           </div>
           <h2>Subscription Cancellation</h2>
-          <p>You can cancel your subscription at any time. Cancellation will prevent future automated billing, and your service will remain active until the end of your current paid billing period. To cancel, use the self-service dashboard or email us at support@seniorease.co.uk.</p>
+          <p>You can cancel your subscription at any time. Cancellation will prevent future automated billing, and your service will remain active until the end of your current paid billing period. To cancel, use the self-service dashboard or email us at support@senioreease.com.</p>
           <h2>14-Day Cooling-off Period & Refunds</h2>
           <p>In accordance with UK Consumer Contracts Regulations, you have the right to cancel your subscription within 14 days of purchase and request a full refund, provided you have not utilized the service's direct support features.</p>
         </main>
@@ -423,7 +450,7 @@ const routes = [
           <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Service Level Agreement (SLA)</h1>
           <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
             <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase UK</p>
+            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
           </div>
           <h2>Service Response Commitments</h2>
           <p>At SeniorEase, we commit to high-quality assistance. Support tickets and calls receive prioritized queues based on your subscription tier:</p>
@@ -447,7 +474,7 @@ const routes = [
           <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Disclaimer</h1>
           <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
             <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase UK</p>
+            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
           </div>
           <h2>Information & Services Disclaimer</h2>
           <p>The information and support services provided by SeniorEase are intended solely for educational and general digital confidence building. While we make every effort to provide accurate, safe, and up-to-date guidance, technology platforms change rapidly. SeniorEase does not guarantee that third-party systems, applications, or devices will always function error-free.</p>
@@ -467,7 +494,7 @@ const routes = [
           <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">GDPR Compliance</h1>
           <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
             <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase UK</p>
+            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
           </div>
           <h2>GDPR Protection Principles</h2>
           <p>SeniorEase fully adheres to General Data Protection Regulation (GDPR) guidelines to ensure that senior citizen and family member records are handled transparently, securely, and with clear user consent. You have the right to request access to, correction of, or permanent erasure of your personal data at any time.</p>
@@ -487,7 +514,7 @@ const routes = [
           <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">NHS Standards Alignment</h1>
           <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
             <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase UK</p>
+            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
           </div>
           <h2>Digital Accessibility & Safety</h2>
           <p>We build our portal interfaces and support services following NHS Digital Service Manual standards, ensuring high-contrast design, clean font sizes, keyboard accessibility, and safe assistance processes when tutoring seniors on accessing their local GP accounts, NHS app, or online medical services.</p>

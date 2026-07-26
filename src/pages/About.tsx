@@ -74,7 +74,7 @@ export default function About() {
           <div>
             <h3 className="text-sm font-bold text-teal-200 uppercase tracking-wider mb-1">Brand Identity Notice</h3>
             <p className="text-xs sm:text-sm text-teal-100 leading-relaxed">
-              <strong>SeniorEase UK (seniorease.co.uk)</strong> is a dedicated software (SaaS) and digital technology education platform for older adults in the United Kingdom. We provide friendly tech support, smartphone learning, and anti-scam awareness. <span className="underline decoration-teal-400 font-semibold">We are NOT affiliated</span> with any senior living, retirement home, care home discovery platforms, or residential property directories.
+              <strong>SeniorEase (senioreease.com)</strong> is a dedicated software (SaaS) and digital technology education platform for older adults in the United Kingdom. We provide friendly tech support, smartphone learning, and anti-scam awareness. <span className="underline decoration-teal-400 font-semibold">We are NOT affiliated</span> with any senior living, retirement home, care home discovery platforms, or residential property directories.
             </p>
           </div>
         </div>
@@ -102,7 +102,7 @@ export default function About() {
             className="prose prose-lg text-gray-600 mx-auto"
           >
             <motion.p variants={fadeInUp} className="mb-6 text-xl leading-relaxed">
-              SeniorEase UK was created to provide a Software as a Service (SaaS) platform that makes everyday technology feel less overwhelming for older adults and their families. As more parts of life move online, many senior citizens are left feeling confused, frustrated, or unsupported when it comes to using phones, apps, emails, online forms, and digital communication tools. SeniorEase UK exists to provide secure tools, a centralized dashboard, and practical learning that makes everyday digital life easier to manage.
+              SeniorEase was created to provide a Software as a Service (SaaS) platform that makes everyday technology feel less overwhelming for older adults and their families. As more parts of life move online, many senior citizens are left feeling confused, frustrated, or unsupported when it comes to using phones, apps, emails, online forms, and digital communication tools. SeniorEase exists to provide secure tools, a centralized dashboard, and practical learning that makes everyday digital life easier to manage.
             </motion.p>
             <motion.p variants={fadeInUp} className="mb-6 text-xl leading-relaxed">
               Everyday life now depends more than ever on smartphones, apps, emails, online accounts, and digital communication. From booking a doctor's appointment to staying in touch with grandchildren, the world has moved online.
@@ -147,7 +147,7 @@ export default function About() {
           >
             <motion.h2 variants={fadeInUp} className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Support for Seniors. Peace of Mind for Families.</motion.h2>
             <motion.p variants={fadeInUp} className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-              SeniorEase UK is designed not only for older adults, but also for families who want extra reassurance for a loved one. Whether it’s educate on WhatsApp, video calls, online forms, or simply feeling more confident with everyday technology, we aim to provide support that feels calm, practical, and easy to access.
+              SeniorEase is designed not only for older adults, but also for families who want extra reassurance for a loved one. Whether it’s educate on WhatsApp, video calls, online forms, or simply feeling more confident with everyday technology, we aim to provide support that feels calm, practical, and easy to access.
             </motion.p>
           </motion.div>
         </div>

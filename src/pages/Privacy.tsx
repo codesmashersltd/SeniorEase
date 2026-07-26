@@ -7,9 +7,9 @@ export default function Privacy() {
         <div className="prose prose-teal max-w-none text-gray-600 space-y-8">
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-1">
             <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
-            <p className="font-semibold text-gray-900">Website: <a href="https://www.seniorease.co.uk" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.co.uk</a></p>
-            <p className="font-semibold text-gray-900">Business Name: SeniorEase UK</p>
-            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@seniorease.co.uk" className="text-teal-600 hover:underline">support@seniorease.co.uk</a></p>
+            <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
+            <p className="font-semibold text-gray-900">Business Name: SeniorEase</p>
+            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
             <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
           </div>
 
@@ -18,7 +18,7 @@ export default function Privacy() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Introduction</h2>
             <p className="mb-4">
-              SeniorEase UK respects your privacy and is committed to protecting your personal information.
+              SeniorEase respects your privacy and is committed to protecting your personal information.
               This Privacy Policy explains how we collect, use, store, protect, and share your personal information when you:
             </p>
             <ul className="list-disc pl-6 mb-4 space-y-2">
@@ -40,7 +40,7 @@ export default function Privacy() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Who We Are</h2>
             <p className="mb-4">
-              SeniorEase UK is a subscription-based digital education and technical support service designed to help senior citizens become more confident when using everyday technology.
+              SeniorEase is a subscription-based digital education and technical support service designed to help senior citizens become more confident when using everyday technology.
             </p>
             <p className="mb-4 font-semibold text-gray-900">
               Our support team provides friendly, patient guidance to help customers understand and use digital services such as:
@@ -59,10 +59,10 @@ export default function Privacy() {
               <li>digital confidence and everyday technology.</li>
             </ul>
             <p className="mb-4">
-              SeniorEase UK is not a medical provider, healthcare organisation, financial adviser, legal adviser, or emergency assistance service.
+              SeniorEase is not a medical provider, healthcare organisation, financial adviser, legal adviser, or emergency assistance service.
             </p>
             <p>
-              For the purposes of the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018, SeniorEase UK acts as the Data Controller for the personal information described in this Privacy Policy.
+              For the purposes of the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018, SeniorEase acts as the Data Controller for the personal information described in this Privacy Policy.
             </p>
           </section>
 
@@ -74,9 +74,9 @@ export default function Privacy() {
               If you have any questions regarding this Privacy Policy or how we use your personal information, you may contact us using the details below.
             </p>
             <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
-              <p className="font-bold text-gray-900 mb-2">SeniorEase UK</p>
-              <p className="mb-1"><span className="font-medium text-gray-500">Website:</span> <a href="https://www.seniorease.co.uk" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.co.uk</a></p>
-              <p className="mb-1"><span className="font-medium text-gray-500">Email:</span> <a href="mailto:support@seniorease.co.uk" className="text-teal-600 hover:underline">support@seniorease.co.uk</a></p>
+              <p className="font-bold text-gray-900 mb-2">SeniorEase</p>
+              <p className="mb-1"><span className="font-medium text-gray-500">Website:</span> <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
+              <p className="mb-1"><span className="font-medium text-gray-500">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
               <p><span className="font-medium text-gray-500">Telephone:</span> <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
             </div>
           </section>
@@ -128,7 +128,7 @@ export default function Privacy() {
                 </ul>
                 <div className="text-sm bg-gray-50 p-4 rounded-xl text-gray-600">
                   <p className="font-semibold text-gray-900 mb-1">Payments are securely processed by Stripe.</p>
-                  <p className="mb-1">SeniorEase UK does not store or have access to your complete payment card details.</p>
+                  <p className="mb-1">SeniorEase does not store or have access to your complete payment card details.</p>
                   <p>Payment information is processed securely by Stripe in accordance with Stripe's own Privacy Policy.</p>
                 </div>
               </div>
@@ -185,7 +185,7 @@ export default function Privacy() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Information We Do Not Intentionally Collect</h2>
             <p className="mb-4">
-              SeniorEase UK is a digital education and technical support service.
+              SeniorEase is a digital education and technical support service.
             </p>
             <p className="font-semibold text-gray-900 mb-2">We do not intentionally request or require:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -231,7 +231,7 @@ export default function Privacy() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">7. How We Use Your Personal Information</h2>
             <p className="mb-4">
-              SeniorEase UK only uses personal information where there is a legitimate reason to do so. We use your information to deliver our services, manage your subscription, improve customer experience, and comply with our legal obligations.
+              SeniorEase only uses personal information where there is a legitimate reason to do so. We use your information to deliver our services, manage your subscription, improve customer experience, and comply with our legal obligations.
             </p>
             <p className="font-semibold text-gray-900 mb-2">We may use your personal information to:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -263,7 +263,7 @@ export default function Privacy() {
             <div className="space-y-6">
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">A. Performance of a Contract</h3>
-                <p className="mb-2">Most of the information we process is necessary to fulfil the agreement between you and SeniorEase UK.</p>
+                <p className="mb-2">Most of the information we process is necessary to fulfil the agreement between you and SeniorEase.</p>
                 <p className="mb-2 font-medium text-gray-700">This includes:</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>creating your account;</li>
@@ -315,7 +315,7 @@ export default function Privacy() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Payments and Billing</h2>
             <p className="mb-4">
-              SeniorEase UK offers subscription-based services.
+              SeniorEase offers subscription-based services.
             </p>
             <p className="font-semibold text-gray-900 mb-2">We currently accept payments through:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -326,10 +326,10 @@ export default function Privacy() {
               After a subscription is confirmed, we may send customers an invoice and a secure payment link using Stripe Invoicing. Stripe's hosted payment page allows customers to pay securely using the payment methods supported by Stripe. All payment pages are hosted and secured by Stripe.
             </p>
             <p className="mb-4">
-              When you make a payment using Stripe, your payment card information is processed securely by Stripe. SeniorEase UK does not store or have access to your complete payment card details. Stripe processes payment information in accordance with its own Privacy Policy and security standards.
+              When you make a payment using Stripe, your payment card information is processed securely by Stripe. SeniorEase does not store or have access to your complete payment card details. Stripe processes payment information in accordance with its own Privacy Policy and security standards.
             </p>
             <p className="mb-4">
-              Where you choose to pay by BACS Bank Transfer, payments are made directly between your bank and SeniorEase UK using the bank account details provided by us. We do not collect or store your online banking passwords, PINs, or other banking security credentials.
+              Where you choose to pay by BACS Bank Transfer, payments are made directly between your bank and SeniorEase using the bank account details provided by us. We do not collect or store your online banking passwords, PINs, or other banking security credentials.
             </p>
             <p className="font-semibold text-gray-900 mb-2">To manage your subscription, we may receive and retain limited payment-related information, including:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -388,7 +388,7 @@ export default function Privacy() {
 
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Communications With Our Support Team</h2>
-            <p className="font-semibold text-gray-900 mb-2">If you contact SeniorEase UK by:</p>
+            <p className="font-semibold text-gray-900 mb-2">If you contact SeniorEase by:</p>
             <ul className="list-disc pl-6 mb-4 space-y-1">
               <li>telephone;</li>
               <li>email;</li>
@@ -489,7 +489,7 @@ export default function Privacy() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">15. How We Protect Your Personal Information</h2>
             <p className="mb-4">
-              SeniorEase UK is committed to protecting your personal information.
+              SeniorEase is committed to protecting your personal information.
               We use appropriate technical and organisational measures designed to safeguard your information against unauthorised access, loss, misuse, alteration, or disclosure.
             </p>
             <p className="font-semibold text-gray-900 mb-2">These measures may include:</p>
@@ -584,7 +584,7 @@ export default function Privacy() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">19. Children's Privacy</h2>
             <p className="mb-4">
-              SeniorEase UK is designed for adults and is not intended for children under the age of 18.
+              SeniorEase is designed for adults and is not intended for children under the age of 18.
               We do not knowingly collect personal information from children.
             </p>
             <p>
@@ -597,7 +597,7 @@ export default function Privacy() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">20. Information Provided by Family Members or Authorised Representatives</h2>
             <p className="mb-4">
-              Many SeniorEase UK subscriptions are purchased or managed by adult children, family members, carers, or other authorised representatives on behalf of senior citizens.
+              Many SeniorEase subscriptions are purchased or managed by adult children, family members, carers, or other authorised representatives on behalf of senior citizens.
             </p>
             <p className="mb-4">
               Where a family member or authorised representative provides personal information about another individual, they should ensure they have the appropriate authority or permission to do so.
@@ -641,9 +641,9 @@ export default function Privacy() {
               If you have any questions about this Privacy Policy or how we handle your personal information, please contact us.
             </p>
             <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100/50">
-              <p className="font-bold text-teal-900 mb-2">SeniorEase UK</p>
-              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.seniorease.co.uk" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.co.uk</a></p>
-              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@seniorease.co.uk" className="text-teal-700 hover:underline">support@seniorease.co.uk</a></p>
+              <p className="font-bold text-teal-900 mb-2">SeniorEase</p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.senioreease.com" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-700 hover:underline">support@senioreease.com</a></p>
               <p><span className="font-semibold text-teal-800">Telephone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
             </div>
           </section>

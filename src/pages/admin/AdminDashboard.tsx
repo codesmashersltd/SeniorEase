@@ -526,7 +526,7 @@ export default function AdminDashboard() {
             <div className="bg-teal-600 p-2 rounded-lg shadow-sm">
               <HeartHandshake className="h-5 w-5 text-white" />
             </div>
-            <span className="font-display font-bold text-xl text-gray-900 tracking-tight">SeniorEase UK</span>
+            <span className="font-display font-bold text-xl text-gray-900 tracking-tight">SeniorEase</span>
           </div>
         </div>
 
@@ -626,7 +626,7 @@ export default function AdminDashboard() {
                   {/* Company Logo Display (as requested) */}
                   <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center justify-center text-center">
                     <HeartHandshake className="h-16 w-16 text-teal-600 mb-4" />
-                    <h2 className="text-2xl font-display font-black text-gray-900 tracking-tight">SeniorEase UK Admin</h2>
+                    <h2 className="text-2xl font-display font-black text-gray-900 tracking-tight">SeniorEase Admin</h2>
                     <p className="text-gray-500 font-sans">Global Infrastructure & Pipeline Management</p>
                   </div>
 

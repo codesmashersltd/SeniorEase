@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { CheckCircle2, Info } from 'lucide-react';
+import { CheckCircle2, Info, CreditCard, Landmark, ShieldCheck, FileText } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import JoinModal from '../components/JoinModal';
@@ -15,14 +15,14 @@ export default function Pricing() {
     const metaDescription = document.querySelector('meta[name="description"]');
     const originalDescription = metaDescription ? metaDescription.getAttribute('content') : '';
 
-    document.title = "Simple Pricing Plans | SeniorEase UK - Digital Support & Education";
+    document.title = "Simple Pricing Plans | SeniorEase - Digital Support & Education";
     
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Explore simple and clear monthly pricing plans for SeniorEase UK digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.');
+      metaDescription.setAttribute('content', 'Explore simple and clear monthly pricing plans for SeniorEase digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.');
     } else {
       const newMeta = document.createElement('meta');
       newMeta.name = 'description';
-      newMeta.content = 'Explore simple and clear monthly pricing plans for SeniorEase UK digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.';
+      newMeta.content = 'Explore simple and clear monthly pricing plans for SeniorEase digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.';
       document.head.appendChild(newMeta);
     }
 
@@ -38,13 +38,13 @@ export default function Pricing() {
   const pricingSchema = {
     "@context": "https://schema.org",
     "@type": "ProductCollection",
-    "name": "SeniorEase UK Subscription Plans",
+    "name": "SeniorEase Subscription Plans",
     "description": "Digital education and technology support subscriptions designed to help senior citizens become confident using everyday technology.",
     "provider": {
       "@type": "Organization",
-      "name": "SeniorEase UK",
-      "url": "https://www.seniorease.co.uk",
-      "email": "support@seniorease.co.uk",
+      "name": "SeniorEase",
+      "url": "https://www.senioreease.com",
+      "email": "support@senioreease.com",
       "telephone": "+443304010019"
     },
     "itemListElement": [
@@ -67,7 +67,7 @@ export default function Pricing() {
               "unitCode": "MON"
             }
           },
-          "url": "https://www.seniorease.co.uk/pricing"
+          "url": "https://www.senioreease.com/pricing"
         }
       },
       {
@@ -89,7 +89,7 @@ export default function Pricing() {
               "unitCode": "MON"
             }
           },
-          "url": "https://www.seniorease.co.uk/pricing"
+          "url": "https://www.senioreease.com/pricing"
         }
       },
       {
@@ -111,7 +111,7 @@ export default function Pricing() {
               "unitCode": "MON"
             }
           },
-          "url": "https://www.seniorease.co.uk/pricing"
+          "url": "https://www.senioreease.com/pricing"
         }
       }
     ]
@@ -386,6 +386,111 @@ export default function Pricing() {
         </div>
       </section>
 
+      {/* Payment Options Section */}
+      <section className="py-16 bg-gray-50 border-t border-b border-gray-200">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Payment Methods & Options</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              We offer secure, flexible, and trusted payment options designed for peace of mind. Choose the payment method that suits you best.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            {/* Direct Debit */}
+            <motion.div 
+              whileHover={{ y: -4, transition: { duration: 0.2 } }}
+              className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-teal-50 rounded-bl-full -mr-8 -mt-8 -z-0"></div>
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 bg-teal-100 text-teal-700 rounded-2xl flex items-center justify-center font-bold">
+                    <Landmark size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Pay by Direct Debit</h3>
+                    <p className="text-xs font-semibold text-teal-700 uppercase tracking-wider">Powered by GoCardless</p>
+                  </div>
+                </div>
+                
+                <ul className="space-y-3.5 text-gray-700 text-sm mb-6 flex-grow">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-teal-600 mt-0.5 shrink-0" />
+                    <span><strong>Payments collected securely through GoCardless</strong> for automated, hassle-free monthly billing.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-teal-600 mt-0.5 shrink-0" />
+                    <span><strong>Protected by the Direct Debit Guarantee</strong>, offering full UK consumer banking protection.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-teal-600 mt-0.5 shrink-0" />
+                    <span><strong>Advance notice before collections:</strong> You will always receive notification prior to any debit being made from your account.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-teal-600 mt-0.5 shrink-0" />
+                    <span><strong>Easy cancellation process:</strong> Cancel your Direct Debit mandate at any time directly through your bank or our dashboard.</span>
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+
+            {/* Card Payments */}
+            <motion.div 
+              whileHover={{ y: -4, transition: { duration: 0.2 } }}
+              className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-bl-full -mr-8 -mt-8 -z-0"></div>
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 bg-indigo-100 text-indigo-700 rounded-2xl flex items-center justify-center font-bold">
+                    <CreditCard size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Pay by Credit / Debit Card</h3>
+                    <p className="text-xs font-semibold text-indigo-700 uppercase tracking-wider">Powered by Stripe</p>
+                  </div>
+                </div>
+
+                <ul className="space-y-3.5 text-gray-700 text-sm mb-6 flex-grow">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-indigo-600 mt-0.5 shrink-0" />
+                    <span><strong>Secure payments powered by Stripe</strong>, a world-recognized leader in bank-grade online payment processing.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-indigo-600 mt-0.5 shrink-0" />
+                    <span><strong>Supports all major payment cards</strong> including Visa, Mastercard, Maestro, and American Express.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-indigo-600 mt-0.5 shrink-0" />
+                    <span><strong>256-bit SSL encryption:</strong> Your card details are securely encrypted and never stored on SeniorEase servers.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-indigo-600 mt-0.5 shrink-0" />
+                    <span><strong>Instant automated confirmation:</strong> Immediate digital receipts and subscription activation upon payment processing.</span>
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Invoice Note Box */}
+          <div className="bg-teal-900 text-white p-6 md:p-8 rounded-3xl shadow-md flex flex-col md:flex-row items-center gap-6 border border-teal-800">
+            <div className="w-14 h-14 bg-teal-800 text-teal-300 rounded-2xl flex items-center justify-center shrink-0">
+              <FileText size={28} />
+            </div>
+            <div>
+              <h4 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
+                <span>Note: Invoices & Payment Links</span>
+              </h4>
+              <p className="text-teal-100 text-sm md:text-base leading-relaxed">
+                We clearly understand that every customer has different payment preferences. <strong>We will send the invoice along with the payment link</strong> directly to your registered email address, and you can make the payment as per your desire using whichever method is most convenient for you!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Note & SLA Summary */}
       <section className="py-12 bg-white border-b border-gray-100">
         <motion.div 
@@ -431,7 +536,7 @@ export default function Pricing() {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 size={18} className="text-teal-600 mt-0.5 shrink-0" /> 
-                  <span>SeniorEase UK is a non-medical, non-emergency support service.</span>
+                  <span>SeniorEase is a non-medical, non-emergency support service.</span>
                 </li>
               </ul>
               <div className="bg-gray-50 p-4 rounded-xl text-sm text-gray-600 italic border border-gray-100 mt-auto">
@@ -441,7 +546,7 @@ export default function Pricing() {
           </div>
           
           <motion.div variants={fadeInUp} className="text-center text-sm text-gray-600 bg-gray-50 p-4 rounded-xl border border-gray-200">
-            <p>All plans are billed monthly and renew automatically until cancelled. You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@seniorease.co.uk" className="text-teal-600 hover:underline font-semibold">support@seniorease.co.uk</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken. Please see our <Link to="/refund" className="text-teal-600 hover:underline font-semibold">Refund & Cancellation Policy</Link> and <Link to="/terms" className="text-teal-600 hover:underline font-semibold">Terms & Conditions</Link> for full details. If paying by BACS Direct Debit, your membership will be activated once the payment has been successfully processed and confirmed.</p>
+            <p>All plans are billed monthly and renew automatically until cancelled. You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline font-semibold">support@senioreease.com</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken. Please see our <Link to="/refund" className="text-teal-600 hover:underline font-semibold">Refund & Cancellation Policy</Link> and <Link to="/terms" className="text-teal-600 hover:underline font-semibold">Terms & Conditions</Link> for full details. If paying by BACS Direct Debit, your membership will be activated once the payment has been successfully processed and confirmed.</p>
           </motion.div>
         </motion.div>
       </section>
@@ -457,7 +562,7 @@ export default function Pricing() {
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Not Sure Which Plan Is Right?</h2>
           <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-            We understand that every customer’s needs are different. If you’d like to understand how SeniorEase UK works before subscribing, you can request a free introductory call.
+            We understand that every customer’s needs are different. If you’d like to understand how SeniorEase works before subscribing, you can request a free introductory call.
           </p>
           <button
             onClick={() => {

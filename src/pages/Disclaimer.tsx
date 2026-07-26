@@ -21,7 +21,7 @@ export default function Disclaimer() {
               <ShieldAlert className="w-16 h-16 text-teal-300 mx-auto mb-6" id="disclaimer-icon" />
               <h1 className="text-4xl font-bold text-white mb-4" id="disclaimer-title">Disclaimer</h1>
               <p className="text-teal-100 text-lg max-w-2xl mx-auto" id="disclaimer-subtitle">
-                This Disclaimer explains the scope and limitations of the services provided by SeniorEase UK.
+                This Disclaimer explains the scope and limitations of the services provided by SeniorEase.
               </p>
             </div>
           </div>
@@ -29,9 +29,9 @@ export default function Disclaimer() {
           <div className="p-8 md:p-12 prose prose-teal max-w-none text-gray-600 space-y-8" id="disclaimer-body">
             <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-1" id="disclaimer-metadata">
               <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
-              <p className="font-semibold text-gray-900">Business Name: SeniorEase UK</p>
-              <p className="font-semibold text-gray-900">Website: <a href="https://www.seniorease.co.uk" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.co.uk</a></p>
-              <p className="font-semibold text-gray-900">Email: <a href="mailto:support@seniorease.co.uk" className="text-teal-600 hover:underline">support@seniorease.co.uk</a></p>
+              <p className="font-semibold text-gray-900">Business Name: SeniorEase</p>
+              <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
+              <p className="font-semibold text-gray-900">Email: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
               <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
             </div>
 
@@ -40,13 +40,13 @@ export default function Disclaimer() {
             <section id="disclaimer-section-1">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Introduction & Brand Identity Notice</h2>
               <p className="mb-4 font-medium text-gray-800 bg-amber-50 p-4 rounded-xl border border-amber-200">
-                <strong>Important Identity Clarification:</strong> SeniorEase UK (seniorease.co.uk) is an independent UK Software-as-a-Service (SaaS) and digital technology support platform for older adults. We are strictly a technology education service and are <span className="underline decoration-amber-500 font-bold">not affiliated</span> with any residential care homes, retirement communities, or senior living discovery platforms.
+                <strong>Important Identity Clarification:</strong> SeniorEase (senioreease.com) is an independent UK Software-as-a-Service (SaaS) and digital technology support platform for older adults. We are strictly a technology education service and are <span className="underline decoration-amber-500 font-bold">not affiliated</span> with any residential care homes, retirement communities, or senior living discovery platforms.
               </p>
               <p className="mb-4">
-                This Disclaimer explains the scope and limitations of the technology learning services provided by SeniorEase UK.
+                This Disclaimer explains the scope and limitations of the technology learning services provided by SeniorEase.
               </p>
               <p className="mb-4">
-                SeniorEase UK is a subscription-based digital education and technical support service that helps senior citizens in the United Kingdom develop confidence in using everyday technology.
+                SeniorEase is a subscription-based digital education and technical support service that helps senior citizens in the United Kingdom develop confidence in using everyday technology.
               </p>
               <p className="mb-4">
                 Our trained support team provides friendly, patient, and practical guidance. We do not provide professional services that require regulation or licensing.
@@ -76,7 +76,7 @@ export default function Disclaimer() {
             <section id="disclaimer-section-3">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Digital Education and Technical Support</h2>
               <p className="mb-4">
-                SeniorEase UK provides guidance to help customers use everyday digital technology more confidently.
+                SeniorEase provides guidance to help customers use everyday digital technology more confidently.
               </p>
               <p className="mb-4 font-semibold text-gray-900">Our services may include assistance with:</p>
               <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -103,7 +103,7 @@ export default function Disclaimer() {
             <section id="disclaimer-section-4">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">4. No Professional Advice</h2>
               <p className="mb-4">
-                SeniorEase UK does not provide regulated professional advice.
+                SeniorEase does not provide regulated professional advice.
               </p>
               <p className="mb-4 font-semibold text-gray-900">In particular, we do not provide:</p>
               <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -126,7 +126,7 @@ export default function Disclaimer() {
             <section id="disclaimer-section-5">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Not an Emergency Service</h2>
               <p className="mb-4">
-                SeniorEase UK is not an emergency service.
+                SeniorEase is not an emergency service.
               </p>
               <p className="mb-4 font-semibold text-gray-900">We do not provide:</p>
               <ul className="list-disc pl-6 mb-4 space-y-1">
@@ -149,7 +149,7 @@ export default function Disclaimer() {
                 Many support requests involve products or services provided by independent third parties, including mobile network operators, internet service providers, device manufacturers, software providers, banks, government services, and online platforms.
               </p>
               <p className="mb-4 font-semibold text-gray-900">
-                SeniorEase UK does not own or control these third-party services and cannot guarantee:
+                SeniorEase does not own or control these third-party services and cannot guarantee:
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-1">
                 <li>their availability;</li>
@@ -176,7 +176,7 @@ export default function Disclaimer() {
                 This guidance is intended to improve awareness only.
               </p>
               <p className="mb-4">
-                SeniorEase UK cannot guarantee that fraud, scams, identity theft, or cybercrime will be prevented or detected.
+                SeniorEase cannot guarantee that fraud, scams, identity theft, or cybercrime will be prevented or detected.
               </p>
               <p>
                 If you believe you have been the victim of fraud or a scam, you should immediately contact your bank, payment provider, or the appropriate law enforcement authority.
@@ -196,7 +196,7 @@ export default function Disclaimer() {
                 <li>following guidance provided by third-party service providers where applicable.</li>
               </ul>
               <p>
-                SeniorEase UK provides guidance and support, but customers remain responsible for their own actions and decisions.
+                SeniorEase provides guidance and support, but customers remain responsible for their own actions and decisions.
               </p>
             </section>
 
@@ -223,7 +223,7 @@ export default function Disclaimer() {
                 Nothing in this Disclaimer excludes or limits any liability that cannot legally be excluded under the laws of England and Wales.
               </p>
               <p className="mb-4 font-semibold text-gray-900">
-                Subject to applicable law, SeniorEase UK shall not be liable for any indirect, incidental, consequential, or special loss arising from:
+                Subject to applicable law, SeniorEase shall not be liable for any indirect, incidental, consequential, or special loss arising from:
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-1">
                 <li>the use of our website or services;</li>
@@ -275,9 +275,9 @@ export default function Disclaimer() {
                 If you have any questions about this Disclaimer or our services, please contact us:
               </p>
               <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100/50" id="disclaimer-contact-box">
-                <p className="font-bold text-teal-900 mb-2">SeniorEase UK</p>
-                <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.seniorease.co.uk" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.co.uk</a></p>
-                <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@seniorease.co.uk" className="text-teal-700 hover:underline">support@seniorease.co.uk</a></p>
+                <p className="font-bold text-teal-900 mb-2">SeniorEase</p>
+                <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.senioreease.com" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
+                <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-700 hover:underline">support@senioreease.com</a></p>
                 <p className="mb-3"><span className="font-semibold text-teal-800">Telephone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
                 <p className="font-semibold text-teal-900 mt-2">Business Hours:</p>
                 <p className="text-teal-800">Monday to Friday</p>
