@@ -21,6 +21,7 @@ import MyAccount from './pages/MyAccount';
 import GDPR from './pages/GDPR';
 import NHSStandards from './pages/NHSStandards';
 import Safeguarding from './pages/Safeguarding';
+import AuditorVerification from './pages/AuditorVerification';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import MobileAppGuide from './pages/MobileAppGuide';
@@ -49,6 +50,7 @@ export default function App() {
           <Route path="gdpr" element={<GDPR />} />
           <Route path="nhs-standards" element={<NHSStandards />} />
           <Route path="safeguarding" element={<Safeguarding />} />
+          <Route path="auditor-verification" element={<AuditorVerification />} />
           <Route path="mobile-app" element={<MobileAppGuide />} />
         </Route>
       </Routes>

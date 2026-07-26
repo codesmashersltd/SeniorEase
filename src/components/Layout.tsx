@@ -66,9 +66,14 @@ export default function Layout() {
             </span>
             <span className="truncate max-w-xl md:max-w-none">Customer risk profile (vulnerable adults) actively mitigated by safeguarding + no-guarantee language.</span>
           </div>
-          <Link to="/safeguarding" className="text-amber-400 hover:text-amber-300 underline font-bold transition-colors shrink-0">
-            Read Risk Charter &amp; Checklist &rarr;
-          </Link>
+          <div className="flex items-center gap-4 shrink-0">
+            <Link to="/safeguarding" className="text-amber-400 hover:text-amber-300 underline font-bold transition-colors">
+              Risk Charter &amp; Checklist &rarr;
+            </Link>
+            <Link to="/auditor-verification" className="bg-teal-700/80 hover:bg-teal-600 text-white px-2.5 py-0.5 rounded-full text-xs font-bold transition-colors flex items-center gap-1 shadow-sm">
+              <span>🔍 Domain Audit Gateway</span>
+            </Link>
+          </div>
         </div>
       </div>
       {/* Navigation */}
@@ -219,6 +224,11 @@ export default function Layout() {
                 <li>
                   <Link to="/safeguarding" className="text-amber-400 hover:text-amber-300 font-bold transition-colors text-sm flex items-center gap-1">
                     <span>🛡️ Safeguarding Charter</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/auditor-verification" className="text-teal-300 hover:text-white font-bold transition-colors text-sm flex items-center gap-1">
+                    <span>🔍 Auditor &amp; Domain Verification</span>
                   </Link>
                 </li>
                 <li>
