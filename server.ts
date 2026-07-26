@@ -520,7 +520,7 @@ async function startServer() {
                   <h2 style="font-size: 1.5rem; color: #1e293b; margin-top: 0; margin-bottom: 20px; font-weight: bold;">Contact Information</h2>
                   <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Telephone Support:</strong> <a href="tel:+443304010019" style="color: #0d9488; text-decoration: none; font-weight: 600;">+44 (0) 330 401 0019</a></p>
                   <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Email Support:</strong> <a href="mailto:support@senioreease.com" style="color: #0d9488; text-decoration: none; font-weight: 600;">support@senioreease.com</a></p>
-                  <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Business Address:</strong> SeniorEase, 86-90 Paul Street, London, EC2A 4NE, United Kingdom</p>
+                  <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Business Address:</strong> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
                   <p style="font-size: 1.1rem; color: #334155; margin-bottom: 0;"><strong>Office Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM GMT</p>
                 </div>
               </main>
@@ -538,33 +538,69 @@ async function startServer() {
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
                   <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Company Registration Number:</strong> [Pending — to be added upon incorporation]</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Registered/Trading Address:</strong> 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Contact:</strong> support@senioreease.com | +44 (0) 330 401 0019</p>
                 </div>
-                <h2>1. Welcome & Scope of Agreement</h2>
-                <p>Welcome to SeniorEase. These Terms & Conditions govern your access to and use of the SeniorEase website, customer portal, subscription plans, and digital technical support services in the United Kingdom.</p>
-                <p>By visiting our website, registering an account, or purchasing a subscription plan, you agree to be bound by these Terms & Conditions. If you do not agree, please do not use our services.</p>
-                <h2>2. About SeniorEase Services</h2>
-                <p>SeniorEase provides practical digital education, smartphone/tablet guidance, scam awareness training, and friendly technical tutoring for senior citizens and their families. We offer support via phone, email, WhatsApp, and scheduled video sessions.</p>
-                <h2>3. Subscription Plans, Billing & Pricing</h2>
+                <p>These Terms & Conditions ("Terms") govern your access to and use of the SeniorEase website (senioreease.com) and the digital technology learning and support services we provide ("Services"). By registering for an account, booking a session, or purchasing a subscription, you agree to be bound by these Terms. If you do not agree, please do not use our Services.</p>
+                <h2>1. About Our Services</h2>
+                <p>SeniorEase is a Software as a Service (SaaS) platform providing digital technology education and support for older adults in the United Kingdom, including but not limited to:</p>
                 <ul>
-                  <li><strong>Monthly Subscriptions:</strong> We offer simple monthly subscription plans (Essential Care £9.99/mo, Plus Care £17.99/mo, Family Care £29.99/mo).</li>
-                  <li><strong>Payment Methods:</strong> Payments are collected securely via Direct Debit powered by GoCardless or debit/credit cards powered by Stripe.</li>
-                  <li><strong>Direct Debit Guarantee:</strong> All GoCardless transactions are fully protected by the UK Direct Debit Guarantee, ensuring advance notice of collections and immediate refunds for any disputed collection.</li>
+                  <li>Smartphone, tablet, and computer tutoring</li>
+                  <li>Guidance on messaging, video calling, and email</li>
+                  <li>Scam and fraud awareness training</li>
+                  <li>Progress updates shared with a nominated family member or carer (where authorized by the customer)</li>
                 </ul>
-                <h2>4. Cancellation & Cooling-Off Period</h2>
-                <p>In accordance with the UK Consumer Contracts Regulations 2013, consumers have a 14-day statutory cooling-off period from the date of subscription purchase to cancel for a full refund, provided service has not commenced with express consent. You may cancel your ongoing subscription at any time via support@senioreease.com or calling +44 (0) 330 401 0019 without cancellation fees.</p>
-                <h2>5. Customer Responsibilities & Acceptable Use</h2>
-                <p>Customers agree to use our support services respectfully and lawfully. Our tutoring is educational; we do not provide emergency medical help, financial planning, or hardware repair services.</p>
-                <h2>6. Limitation of Liability & Governing Law</h2>
-                <p>SeniorEase exercises reasonable care and skill in providing assistance. These Terms are governed by the laws of England and Wales, and subject to the exclusive jurisdiction of the UK courts.</p>
+                <p>SeniorEase provides educational and support guidance only. We are not a healthcare, medical, or care provider, and our Services do not constitute medical, legal, or financial advice.</p>
+                <h2>2. Eligibility and Accounts</h2>
+                <ul>
+                  <li>You must be 18 years or older to create an account and enter into a subscription on behalf of yourself or a family member.</li>
+                  <li>You are responsible for providing accurate registration information and for maintaining the confidentiality of your account credentials.</li>
+                  <li>Where a subscription is purchased by a family member on behalf of a senior relative, the purchasing party confirms they have the authority and consent of the person receiving the Service to share relevant personal information and training progress.</li>
+                </ul>
+                <h2>3. Subscription Plans and Payment</h2>
+                <ul>
+                  <li>Current pricing plans are published on our Pricing page and form part of these Terms.</li>
+                  <li>Payments are processed securely through Stripe. SeniorEase does not store full payment card details.</li>
+                  <li>Subscriptions renew automatically at the end of each billing cycle (monthly or annual, as selected) unless cancelled in accordance with our Refund & Cancellation Policy.</li>
+                  <li>We reserve the right to change subscription pricing with at least 30 days' written notice before the change takes effect for existing subscribers.</li>
+                </ul>
+                <h2>4. Cancellations and Refunds</h2>
+                <p>Cancellation and refund terms are set out in full in our separate Refund & Cancellation Policy, which forms part of these Terms.</p>
+                <h2>5. Customer Responsibilities</h2>
+                <p>You agree to:</p>
+                <ul>
+                  <li>Provide a safe and reasonable environment for any in-person or remote support sessions.</li>
+                  <li>Use the Services for lawful, personal, non-commercial purposes only.</li>
+                  <li>Not share account access with individuals outside your household without our consent.</li>
+                </ul>
+                <h2>6. Family Notifications</h2>
+                <p>Where enabled, SeniorEase may share training logs and learning progress with a nominated family member or carer, solely for the purpose of providing reassurance and support. This feature requires the explicit consent of the senior customer and can be switched off at any time by contacting support@senioreease.com.</p>
+                <h2>7. Limitation of Liability</h2>
+                <ul>
+                  <li>SeniorEase provides technology education and guidance on a reasonable-skill-and-care basis but does not guarantee specific outcomes (e.g. complete elimination of scam risk).</li>
+                  <li>To the fullest extent permitted by law, SeniorEase's total liability for any claim arising from the Services is limited to the amount paid by the customer in the 12 months preceding the claim.</li>
+                  <li>Nothing in these Terms excludes or limits liability for death or personal injury caused by negligence, fraud, or any other liability that cannot be excluded under UK law.</li>
+                </ul>
+                <h2>8. Data Protection</h2>
+                <p>Your personal data is handled in accordance with our Privacy Policy and applicable UK GDPR / Data Protection Act 2018 requirements.</p>
+                <h2>9. Termination</h2>
+                <p>We may suspend or terminate an account where these Terms are breached, where payment fails and is not resolved within a reasonable period, or where continued provision of the Service is not reasonably possible.</p>
+                <h2>10. Changes to These Terms</h2>
+                <p>We may update these Terms from time to time. Material changes will be notified by email or via the website at least 14 days before they take effect.</p>
+                <h2>11. Governing Law</h2>
+                <p>These Terms are governed by the laws of England and Wales. Any disputes will be subject to the exclusive jurisdiction of the courts of England and Wales.</p>
+                <h2>12. Intellectual Property</h2>
+                <p>All website content, logos, branding, software, graphics, text, and training materials are owned by or licensed to SeniorEase and are protected by applicable intellectual property laws. You may not copy, reproduce, distribute, or modify any content without our prior written permission.</p>
+                <h2>13. Contact Us</h2>
+                <p>Questions about these Terms can be sent to:<br /><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
               </main>
               ${footerHTML}
             </div>
           `;
         } else if (normalizedPath === "/privacy") {
           pageTitle = "Privacy Policy | SeniorEase";
-          pageDescription = "SeniorEase values your privacy. Read our policy on how we gather, protect, and handle your personal data.";
+          pageDescription = "SeniorEase respects your privacy. Read our UK GDPR compliant policy on how we collect, use, store, protect, and share your personal data securely.";
           staticHTML = `
             <div style="font-family: system-ui, -apple-system, sans-serif; color: #1e293b; background-color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column;">
               ${getHeader("")}
@@ -572,23 +608,75 @@ async function startServer() {
                 <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Privacy Policy</h1>
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
                   <p style="margin: 5px 0 0 0;"><strong>Email:</strong> privacy@senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
                 </div>
-                <h2>1. Our Commitment to Your Privacy</h2>
-                <p>SeniorEase is committed to protecting your privacy and personal data in compliance with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.</p>
-                <h2>2. What Information We Collect</h2>
+                <p>SeniorEase respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, store, protect, and share your personal data when you visit our website, create an account, purchase a subscription, receive technical support or training from us, or contact our support team.</p>
+                <p>This policy applies to all users of senioreease.com and our associated Services, and is written to comply with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.</p>
+                <h2>1. Information We Collect</h2>
+                <p>We only collect the minimum information necessary to provide secure, reliable support. This includes:</p>
                 <ul>
-                  <li><strong>Personal Identifiers:</strong> Name, postal address, email address, and telephone number.</li>
-                  <li><strong>Support & Device Logs:</strong> Notes on digital tutoring sessions, device types (smartphone, tablet, laptop), and learning progress.</li>
-                  <li><strong>Billing Information:</strong> Payment transactions are processed securely via encrypted third-party processors (Stripe and GoCardless). We never store full card numbers or bank details on our servers.</li>
+                  <li><strong>Identity data:</strong> name, date of birth (where relevant for account verification)</li>
+                  <li><strong>Contact data:</strong> phone number, email address, postal address</li>
+                  <li><strong>Billing data:</strong> processed securely via Stripe; SeniorEase does not store full card numbers</li>
+                  <li><strong>Support and training data:</strong> session notes, learning progress, and topics covered during tutoring sessions</li>
+                  <li><strong>Family/carer data:</strong> where a family member sets up or manages an account on behalf of a senior relative, we collect that family member's contact details for billing and notification purposes</li>
+                  <li><strong>Technical data:</strong> IP address, browser type, and device information collected automatically via our website</li>
                 </ul>
-                <h2>3. How We Use Your Data</h2>
-                <p>We use your personal data to deliver digital support sessions, manage subscription billing, communicate appointment reminders, and send learning progress summaries to designated family members (with consent).</p>
-                <h2>4. Data Retention & Security</h2>
-                <p>We retain customer records only as long as necessary to provide ongoing support and comply with UK tax and accounting laws (typically 6 years post-cancellation). All data is encrypted in transit and at rest using bank-grade security protocols.</p>
-                <h2>5. Your Statutory Privacy Rights</h2>
-                <p>You have the right to request access to your data, request correction of inaccuracies, request erasure ("right to be forgotten"), or withdraw consent at any time by contacting privacy@senioreease.com.</p>
+                <h2>2. How We Use Your Information</h2>
+                <p>We use your personal data to:</p>
+                <ul>
+                  <li>Provide and manage your subscription and support sessions</li>
+                  <li>Process payments securely through Stripe</li>
+                  <li>Send appointment reminders, service updates, and (where consented) family progress notifications</li>
+                  <li>Respond to support requests and enquiries</li>
+                  <li>Improve our Services and website</li>
+                  <li>Comply with legal and regulatory obligations</li>
+                </ul>
+                <h2>3. Legal Basis for Processing</h2>
+                <p>Under UK GDPR, we rely on the following legal bases:</p>
+                <ul>
+                  <li><strong>Contract:</strong> processing necessary to deliver the Services you've subscribed to</li>
+                  <li><strong>Consent:</strong> where you (or the account holder) opt in to family progress notifications or marketing communications</li>
+                  <li><strong>Legitimate interests:</strong> to improve our Services, prevent fraud, and maintain the security of our systems</li>
+                  <li><strong>Legal obligation:</strong> where we must retain records for tax, accounting, or regulatory purposes</li>
+                </ul>
+                <p>You may withdraw consent at any time by contacting privacy@senioreease.com; this will not affect the lawfulness of processing carried out before withdrawal.</p>
+                <h2>4. Family and Carer Notifications</h2>
+                <p>Where enabled, we share training progress and session summaries with a nominated family member or carer. This is only done with the explicit, informed consent of the senior customer at the time of sign-up; and limited to training/session summaries — not full session content or sensitive personal disclosures. This feature can be switched off at any time by contacting privacy@senioreease.com.</p>
+                <h2>5. Sharing Your Information</h2>
+                <p>We do not sell your personal data. We share information only with:</p>
+                <ul>
+                  <li><strong>Stripe (payment processing)</strong> — see Stripe's own privacy policy at stripe.com/privacy</li>
+                  <li><strong>Service delivery partners</strong> (e.g. scheduling, email/SMS notification providers) strictly as needed to deliver the Service</li>
+                  <li><strong>Regulators or law enforcement</strong>, where required by law</li>
+                </ul>
+                <p>All third-party processors are required to handle your data securely and only for the purposes we specify.</p>
+                <h2>6. International Data Transfers</h2>
+                <p>Some of our service providers (including Stripe) may process data outside the UK. Where this occurs, we ensure appropriate safeguards are in place, such as Standard Contractual Clauses or an equivalent adequacy mechanism recognised under UK GDPR.</p>
+                <h2>7. Data Retention</h2>
+                <p>We retain personal data only for as long as necessary to provide the Services and meet legal obligations:</p>
+                <ul>
+                  <li><strong>Active account data:</strong> retained for the duration of your subscription</li>
+                  <li><strong>Billing records:</strong> retained for 6 years to meet UK tax and accounting requirements</li>
+                  <li><strong>Closed account data:</strong> deleted or anonymised within 12 months of account closure, unless a longer retention period is required by law</li>
+                </ul>
+                <h2>8. Your Rights</h2>
+                <p>Under UK GDPR, you have the right to access the personal data we hold about you, request correction of inaccurate data, request erasure of your data ("right to be forgotten"), object to or restrict certain processing, request data portability, withdraw consent at any time, or lodge a complaint with the Information Commissioner's Office (ICO) at ico.org.uk if you believe your data has been mishandled.</p>
+                <p>To exercise any of these rights, contact privacy@senioreease.com. We aim to respond within one month, as required by law.</p>
+                <h2>9. Cookies</h2>
+                <p>Our website uses cookies to support core functionality and, where applicable, analytics. You can control or disable cookies through your browser settings. For details on the specific cookies we use, see our Cookie Policy (or the cookie banner presented on first visit).</p>
+                <h2>10. Children's Privacy</h2>
+                <p>Our Services are intended for adult users. We do not knowingly collect personal data from individuals under 18. Where a family member manages an account on behalf of a senior relative, only the necessary contact and billing details of the managing adult are collected.</p>
+                <h2>11. Data Security</h2>
+                <p>We use appropriate technical and organisational measures — including encrypted payment processing via Stripe and access controls on internal systems — to protect your personal data against unauthorised access, loss, or misuse.</p>
+                <h2>12. Changes to This Policy</h2>
+                <p>We may update this Privacy Policy from time to time. Material changes will be notified by email or via a notice on our website at least 14 days before they take effect. The "Effective Date" at the top of this page will always reflect the latest version.</p>
+                <h2>13. Contact Us</h2>
+                <p>If you have any questions about this Privacy Policy or how we handle your data:<br /><strong>Email:</strong> privacy@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
+                <p>You may also contact the ICO directly at ico.org.uk if you are not satisfied with our response.</p>
               </main>
               ${footerHTML}
             </div>
@@ -647,7 +735,7 @@ async function startServer() {
           `;
         } else if (normalizedPath === "/sla") {
           pageTitle = "Service Level Agreement (SLA) | SeniorEase";
-          pageDescription = "Our commitment to high-quality service, support response times, and platform availability.";
+          pageDescription = "Read our Service Level Agreement outlining support response times, service availability commitments, and our dedicated customer support guidelines.";
           staticHTML = `
             <div style="font-family: system-ui, -apple-system, sans-serif; color: #1e293b; background-color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column;">
               ${getHeader("")}
@@ -655,14 +743,56 @@ async function startServer() {
                 <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Service Level Agreement (SLA)</h1>
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
                 </div>
-                <h2>Service Response Commitments</h2>
-                <p>At SeniorEase, we commit to high-quality assistance. Support tickets and calls receive prioritized queues based on your subscription tier:</p>
+                <h2>1. Introduction</h2>
+                <p>This Service Level Agreement ("SLA") explains the level of service customers can reasonably expect from SeniorEase. It outlines the services we provide, the scope of our support, our standard support hours, how quickly we respond to enquiries and issues, what happens if we don't meet these standards, and what falls outside the scope of this SLA. This SLA forms part of, and should be read alongside, our Terms &amp; Conditions.</p>
+                <h2>2. Services Covered</h2>
+                <p>This SLA applies to all SeniorEase subscription plans and covers:</p>
                 <ul>
-                  <li><strong>Family Care & Plus Care:</strong> Under 4 hours response window during office hours.</li>
-                  <li><strong>Essential Care:</strong> Under 24 hours response window during office hours.</li>
+                  <li><strong>Scheduled one-to-one tutoring sessions</strong> (smartphone, tablet, and computer support)</li>
+                  <li><strong>Scam and fraud awareness training</strong></li>
+                  <li><strong>General technical support</strong> via phone and email</li>
+                  <li><strong>Family progress notifications</strong> (where enabled)</li>
                 </ul>
+                <h2>3. Support Hours</h2>
+                <ul>
+                  <li><strong>Standard support hours:</strong> Monday to Friday, 9:00 AM – 5:00 PM GMT/BST</li>
+                  <li>Support requests received outside these hours will be addressed on the next business day.</li>
+                  <li>Scheduled tutoring sessions may be booked within standard support hours, subject to availability.</li>
+                </ul>
+                <h2>4. Response Times</h2>
+                <ul>
+                  <li><strong>General enquiry (email/phone):</strong> Within 1 business day</li>
+                  <li><strong>Technical support issue:</strong> Within 1 business day</li>
+                  <li><strong>Urgent/safety-related concern (e.g. suspected scam in progress):</strong> Within 4 business hours</li>
+                  <li><strong>Booking or rescheduling request:</strong> Within 1 business day</li>
+                </ul>
+                <p><em>These are target response times, not guaranteed resolution times — some issues may take longer to fully resolve depending on complexity.</em></p>
+                <h2>5. Session Scheduling and Rescheduling</h2>
+                <ul>
+                  <li>Sessions should be rescheduled or cancelled with at least 24 hours' notice where possible.</li>
+                  <li>If SeniorEase needs to reschedule a confirmed session, we will notify the customer as early as possible and offer the next available alternative slot at no extra cost.</li>
+                  <li>Repeated late cancellations (less than 2 hours' notice) by the customer may be treated as a completed session, in line with our Refund &amp; Cancellation Policy.</li>
+                </ul>
+                <h2>6. Platform Availability</h2>
+                <p>Where SeniorEase provides access to an online account portal or app, we aim for at least 99% monthly uptime, excluding scheduled maintenance windows (which will be communicated in advance where possible).</p>
+                <h2>7. What This SLA Does Not Cover</h2>
+                <p>This SLA does not guarantee or cover: faults or limitations of the customer's own device, software, or internet connection; issues arising from third-party apps or services outside SeniorEase's control (e.g. WhatsApp, Zoom, the customer's email provider); complete prevention of scams or fraud — we provide training and guidance, not a guarantee of outcome; delays caused by circumstances outside our reasonable control (e.g. network outages, extreme weather).</p>
+                <h2>8. Escalation Process</h2>
+                <p>If a customer is not satisfied with the resolution of a support request:<br />
+                1. Contact support@senioreease.com referencing the original request.<br />
+                2. If unresolved within 5 business days, the matter will be escalated to a senior member of the support team for review.<br />
+                3. If still unresolved, the customer may raise the matter formally in writing, and SeniorEase will respond with a final position within 10 business days.</p>
+                <h2>9. Remedies for Missed Commitments</h2>
+                <p>Where SeniorEase fails to meet the response times or scheduling commitments set out in this SLA: the customer may request a complimentary make-up session, or a pro-rated credit against their next billing cycle, at SeniorEase's discretion, reflecting the missed service.</p>
+                <h2>10. Reviews and Changes to This SLA</h2>
+                <p>This SLA is reviewed periodically and may be updated to reflect changes in our Services. Material changes will be communicated to active subscribers by email at least 14 days before they take effect.</p>
+                <h2>11. Contact Us</h2>
+                <p><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
               </main>
               ${footerHTML}
             </div>
@@ -678,9 +808,14 @@ async function startServer() {
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
                   <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
                 </div>
-                <h2>Information & Services Disclaimer</h2>
-                <p>The information and support services provided by SeniorEase are intended solely for educational and general digital confidence building. While we make every effort to provide accurate, safe, and up-to-date guidance, technology platforms change rapidly. SeniorEase does not guarantee that third-party systems, applications, or devices will always function error-free.</p>
+                <h2>1. Educational & Supportive Nature of Service</h2>
+                <p>The information, guides, and tutoring sessions provided by SeniorEase are intended solely for educational purposes and general digital confidence building. We are an independent UK technology support service and are not affiliated with, endorsed by, or acting on behalf of any third-party device manufacturers (Apple, Samsung, Microsoft) or government/health bodies (NHS, GOV.UK).</p>
+                <h2>2. No Regulated Professional Advice</h2>
+                <p>Our support team does not provide regulated financial, legal, medical, or tax advice. While we assist seniors in navigating online portals safely, all decisions made within personal banking, healthcare, or government portals remain the sole responsibility of the user.</p>
+                <h2>3. Third-Party Device & Software Limitations</h2>
+                <p>Technology platforms change rapidly. SeniorEase does not guarantee that third-party systems, operating systems, or applications will function error-free or remain unchanged.</p>
               </main>
               ${footerHTML}
             </div>
@@ -692,13 +827,20 @@ async function startServer() {
             <div style="font-family: system-ui, -apple-system, sans-serif; color: #1e293b; background-color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column;">
               ${getHeader("")}
               <main style="max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.7; flex: 1;">
-                <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">GDPR Compliance</h1>
+                <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">GDPR Compliance Statement</h1>
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
                   <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Data Protection Contact:</strong> privacy@senioreease.com</p>
                 </div>
-                <h2>GDPR Protection Principles</h2>
-                <p>SeniorEase fully adheres to General Data Protection Regulation (GDPR) guidelines to ensure that senior citizen and family member records are handled transparently, securely, and with clear user consent. You have the right to request access to, correction of, or permanent erasure of your personal data at any time.</p>
+                <h2>1. Commitment to Data Protection</h2>
+                <p>SeniorEase fully adheres to the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. We ensure all senior citizen and family member records are processed lawfully, transparently, and securely.</p>
+                <h2>2. Lawful Basis for Processing</h2>
+                <p>We process personal data under the lawful bases of Contract Performance (delivering paid tech support and subscriptions), Legal Obligation (tax/billing compliance), and Consent (family member notification updates).</p>
+                <h2>3. Data Minimisation & Encryption</h2>
+                <p>We collect only essential contact and tutoring notes. All billing data is handled by Stripe and GoCardless under strict PCI-DSS Level 1 compliance. All data at rest and in transit is safeguarded with 256-bit TLS encryption.</p>
+                <h2>4. Your Data Subject Rights</h2>
+                <p>You have the absolute right to request Subject Access Requests (SAR), data rectification, or permanent erasure ("Right to be Forgotten") at any time by emailing privacy@senioreease.com. We respond to all GDPR requests within 30 days.</p>
               </main>
               ${footerHTML}
             </div>
@@ -714,9 +856,14 @@ async function startServer() {
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
                   <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
                 </div>
-                <h2>Digital Accessibility & Safety</h2>
-                <p>We build our portal interfaces and support services following NHS Digital Service Manual standards, ensuring high-contrast design, clean font sizes, keyboard accessibility, and safe assistance processes when tutoring seniors on accessing their local GP accounts, NHS app, or online medical services.</p>
+                <h2>1. Digital Accessibility & Design Standards</h2>
+                <p>We build our portal interfaces and learning guides following NHS Digital Service Manual and WCAG 2.1 AA accessibility standards. This includes high-contrast color palettes, readable typography, keyboard navigability, and clear icon sizing designed specifically for older adults.</p>
+                <h2>2. Patient Safety & Online Health Guidance</h2>
+                <p>When tutoring seniors on accessing their GP online portal, NHS App, or repeat prescription services, our support team adheres strictly to non-diagnostic, procedural guidance protocols. We never ask for or store medical records, NHS numbers, or private login passwords.</p>
+                <h2>3. Safeguarding & Vulnerable Adult Protections</h2>
+                <p>Our team is trained in digital safeguarding for older adults, recognizing cognitive fatigue, and protecting seniors from health-related phishing scams and fraudulent online medical sales.</p>
               </main>
               ${footerHTML}
             </div>
