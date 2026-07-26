@@ -371,16 +371,25 @@ async function startServer() {
                 <h1 style="font-size: 2.8rem; font-weight: 800; margin-top: 10px; color: #0f172a;">About SeniorEase</h1>
                 <p style="font-size: 1.25rem; color: #475569; line-height: 1.6; font-weight: bold; margin-bottom: 30px;">Helping senior citizens feel more confident, comfortable, and supported in today’s fast-paced digital world.</p>
                 
+                <h2 style="font-size: 1.8rem; font-weight: 700; color: #0f172a; margin-top: 30px;">Why We Started</h2>
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+                  <p style="color: #166534; font-size: 1.15rem; font-weight: bold; margin-top: 0;">SeniorEase was founded with one simple goal: to help older adults feel confident using everyday technology.</p>
+                  <p style="color: #15803d; margin-bottom: 0;">We believe no one should feel excluded from digital life because technology feels confusing or intimidating. Our mission is to provide friendly, patient, and reliable digital support that empowers seniors to stay connected, independent, and secure.</p>
+                </div>
+
                 <h2 style="font-size: 1.8rem; font-weight: 700; color: #0f172a; margin-top: 30px;">Technology Shouldn’t Feel Overwhelming</h2>
                 <p style="color: #475569;">SeniorEase was created to provide a Software as a Service (SaaS) platform that makes everyday technology feel less overwhelming for older adults and their families. As more parts of life move online, many senior citizens are left feeling confused, frustrated, or unsupported when it comes to using phones, apps, emails, online forms, and digital communication tools. SeniorEase exists to provide secure tools, a centralized dashboard, and practical learning that makes everyday digital life easier to manage.</p>
                 <p style="color: #475569;">At SeniorEase, we created a comprehensive SaaS platform and support subscription to help make everyday technology easier, calmer, and less intimidating. We provide the software tools and the patient, friendly voice on the end of the phone when things go wrong.</p>
                 
-                <h3 style="font-size: 1.4rem; font-weight: 700; color: #0f172a; margin-top: 30px;">We believe seniors deserve support that is:</h3>
+                <h3 style="font-size: 1.4rem; font-weight: 700; color: #0f172a; margin-top: 30px;">Our Core Values</h3>
+                <p style="color: #475569;">Everything we build, teach, and communicate at SeniorEase is guided by six fundamental principles:</p>
                 <ul style="line-height: 2; color: #475569; padding-left: 20px;">
-                  <li><strong>Patient & Unrushed:</strong> We move at your pace with clear, calm instruction.</li>
-                  <li><strong>Respectful & Kind:</strong> Treating our seniors with the dignity they deserve.</li>
-                  <li><strong>Simple & Jargon-Free:</strong> No confusing tech words, only real everyday concepts.</li>
-                  <li><strong>Reassuring & Safe:</strong> Ensuring seniors feel secure using online services.</li>
+                  <li><strong>Compassion:</strong> We lead with empathy, understanding the emotional hurdles that can accompany learning new technology.</li>
+                  <li><strong>Patience:</strong> We never rush, never judge, and always move at a calm, unrushed pace that suits you.</li>
+                  <li><strong>Simplicity:</strong> We strip away confusing tech jargon and explain everyday digital tasks in clear, plain English.</li>
+                  <li><strong>Security:</strong> We prioritize your digital safety, helping you identify scams and keep personal accounts protected.</li>
+                  <li><strong>Respect:</strong> We treat every older adult with the warmth, patience, and dignity they truly deserve.</li>
+                  <li><strong>Reliability:</strong> You and your family can always depend on us for consistent, trustworthy UK-based support.</li>
                 </ul>
               </main>
               ${footerHTML}
