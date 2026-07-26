@@ -48,7 +48,7 @@ const footerHTML = `
         <a href="/sla" style="color: #0d9488; text-decoration: none;">SLA Agreement</a>
         <a href="/disclaimer" style="color: #0d9488; text-decoration: none;">Disclaimer</a>
         <a href="/gdpr" style="color: #0d9488; text-decoration: none;">GDPR Compliance</a>
-        <a href="/nhs-standards" style="color: #0d9488; text-decoration: none;">NHS Standards</a>
+        <a href="/nhs-standards" style="color: #0d9488; text-decoration: none;">Our Commitment</a>
       </p>
     </div>
   </footer>
@@ -734,24 +734,54 @@ const routes = [
   },
   {
     path: "/nhs-standards",
-    title: "NHS Standards Alignment | SeniorEase",
-    description: "Our technical systems and support protocols align with NHS Digital service standards for digital health accessibility.",
+    title: "Our Standards & Commitment | SeniorEase",
+    description: "Read our commitment to accessibility, privacy, safeguarding, and good practice for senior citizens across the United Kingdom.",
     staticHTML: `
       <div style="font-family: system-ui, -apple-system, sans-serif; color: #1e293b; background-color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column;">
         ${getHeader("")}
         <main style="max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.7; flex: 1;">
-          <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">NHS Standards Alignment</h1>
+          <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Our Standards</h1>
           <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
-            <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
+            <p style="margin: 0; font-size: 1.1rem;"><strong>Commitment to Accessibility, Privacy and Good Practice</strong></p>
+            <p style="margin: 8px 0 0 0;"><strong>Effective Date:</strong> 01 June 2026</p>
+            <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
             <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
             <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
+            <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
           </div>
-          <h2>1. Digital Accessibility & Design Standards</h2>
-          <p>We build our portal interfaces and learning guides following NHS Digital Service Manual and WCAG 2.1 AA accessibility standards. This includes high-contrast color palettes, readable typography, keyboard navigability, and clear icon sizing designed specifically for older adults.</p>
-          <h2>2. Patient Safety & Online Health Guidance</h2>
-          <p>When tutoring seniors on accessing their GP online portal, NHS App, or repeat prescription services, our support team adheres strictly to non-diagnostic, procedural guidance protocols. We never ask for or store medical records, NHS numbers, or private login passwords.</p>
-          <h2>3. Safeguarding & Vulnerable Adult Protections</h2>
-          <p>Our team is trained in digital safeguarding for older adults, recognizing cognitive fatigue, and protecting seniors from health-related phishing scams and fraudulent online medical sales.</p>
+          <div style="background: #fffbeb; padding: 15px 20px; border-radius: 12px; border: 1px solid #fde68a; color: #78350f; margin-bottom: 25px;">
+            <p style="margin: 0;"><strong>Important:</strong> SeniorEase is an independent, privately operated digital technology support service. We are not part of, endorsed by, or affiliated with the NHS, any NHS trust, or any other public healthcare body. Any reference to health, wellbeing, or safeguarding on this page reflects our own internal standards and good practice, not a formal certification or partnership.</p>
+          </div>
+          <h2>1. Our Commitment</h2>
+          <p>At SeniorEase, we are committed to providing a safe, accessible, and user-friendly digital education and technical support service for senior citizens across the United Kingdom. Our services are designed around the principles of accessibility, privacy, transparency, and continuous improvement. We aim to help older adults use everyday technology with greater confidence through clear guidance provided by our trained support team.</p>
+          <h2>2. Accessibility Standards</h2>
+          <p>We design our website, communications, and training materials with accessibility in mind, including:</p>
+          <ul>
+            <li>Clear, plain-English guidance suitable for beginners and those with limited digital experience</li>
+            <li>Large, legible text and high-contrast design where possible</li>
+            <li>Patient, jargon-free verbal explanations during support sessions</li>
+            <li>Flexibility to accommodate hearing, vision, or mobility considerations on request</li>
+          </ul>
+          <p>We welcome feedback on how we can make our Services more accessible — contact support@senioreease.com with any suggestions.</p>
+          <h2>3. Safeguarding and Vulnerable Adults</h2>
+          <p>We recognise that many of our customers may be vulnerable due to age, isolation, or unfamiliarity with technology. Because of this:</p>
+          <ul>
+            <li>All support staff receive training on safeguarding awareness and respectful, patient communication with older adults.</li>
+            <li>We do not pressure customers into purchases, upgrades, or decisions during support sessions.</li>
+            <li>Where a customer discloses signs of financial abuse, scam victimisation, or safeguarding concerns, our team follows an internal escalation process and, where appropriate, signposts the customer to relevant support organisations (such as Action Fraud, Age UK, or the customer's GP or local authority safeguarding team).</li>
+            <li>SeniorEase is not a substitute for statutory health, social care, or safeguarding services.</li>
+          </ul>
+          <h2>4. Privacy and Data Handling</h2>
+          <p>Our approach to personal data is governed by our full Privacy Policy, which explains what we collect, why, and your rights under UK GDPR.</p>
+          <h2>5. Staff Training and Conduct</h2>
+          <ul>
+            <li>All support staff complete an induction covering our accessibility, safeguarding, and privacy standards before working with customers.</li>
+            <li>Staff conduct is expected to reflect patience, respect, and clarity at all times, particularly given the nature of our customer base.</li>
+          </ul>
+          <h2>6. Continuous Improvement</h2>
+          <p>We review our practices periodically, incorporating customer feedback, to ensure our Services remain safe, accessible, and appropriate for the people we support. Suggestions can be sent to support@senioreease.com at any time.</p>
+          <h2>7. Contact Us</h2>
+          <p><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
         </main>
         ${footerHTML}
       </div>
