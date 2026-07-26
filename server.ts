@@ -799,23 +799,62 @@ async function startServer() {
           `;
         } else if (normalizedPath === "/disclaimer") {
           pageTitle = "Disclaimer | SeniorEase";
-          pageDescription = "Important disclosures regarding our technical support services and limits of liability.";
+          pageDescription = "Important legal disclosures and disclaimers regarding SeniorEase technical support, educational materials, and third-party device guidance.";
           staticHTML = `
             <div style="font-family: system-ui, -apple-system, sans-serif; color: #1e293b; background-color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column;">
               ${getHeader("")}
               <main style="max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.7; flex: 1;">
                 <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Disclaimer</h1>
+                <p style="font-size: 1.1rem; color: #475569;">This Disclaimer explains the scope and limitations of the services provided by SeniorEase.</p>
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
                   <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
                 </div>
-                <h2>1. Educational & Supportive Nature of Service</h2>
-                <p>The information, guides, and tutoring sessions provided by SeniorEase are intended solely for educational purposes and general digital confidence building. We are an independent UK technology support service and are not affiliated with, endorsed by, or acting on behalf of any third-party device manufacturers (Apple, Samsung, Microsoft) or government/health bodies (NHS, GOV.UK).</p>
-                <h2>2. No Regulated Professional Advice</h2>
-                <p>Our support team does not provide regulated financial, legal, medical, or tax advice. While we assist seniors in navigating online portals safely, all decisions made within personal banking, healthcare, or government portals remain the sole responsibility of the user.</p>
-                <h2>3. Third-Party Device & Software Limitations</h2>
-                <p>Technology platforms change rapidly. SeniorEase does not guarantee that third-party systems, operating systems, or applications will function error-free or remain unchanged.</p>
+                <h2>1. Introduction & Brand Identity Notice</h2>
+                <p>SeniorEase (senioreease.com) is an independent UK digital technology learning and support SaaS service for older adults.</p>
+                <ul>
+                  <li>We are not affiliated with any senior living provider, residential care home, or property discovery platform, including any similarly named business or service operating under the "SeniorEase" name elsewhere.</li>
+                  <li>We are not part of, endorsed by, or affiliated with the NHS, any NHS trust, or any other public healthcare body. Any reference to health, wellbeing, or safeguarding standards on our website reflects our own internal practices, not a formal certification, partnership, or endorsement.</li>
+                </ul>
+                <p style="background: #fffbeb; padding: 15px; border-radius: 8px; border: 1px solid #fde68a; color: #78350f;">If you believe you have reached this page in error while looking for a different organisation, please contact us and we will do our best to point you in the right direction.</p>
+                <h2>2. No Professional, Medical, Legal, or Financial Advice</h2>
+                <p>SeniorEase provides general digital technology education and support only. Nothing on our website or delivered during a support session constitutes:</p>
+                <ul>
+                  <li>Medical or health advice</li>
+                  <li>Legal advice</li>
+                  <li>Financial or investment advice</li>
+                  <li>Formal social care or safeguarding assessment</li>
+                </ul>
+                <p>If you require advice in any of these areas, please consult a qualified, regulated professional or relevant statutory body.</p>
+                <h2>3. No Guaranteed Outcomes</h2>
+                <p>While we provide training in scam and fraud awareness, digital literacy, and safe technology use:</p>
+                <ul>
+                  <li>We cannot guarantee that a customer will avoid scams, fraud, or unwanted contact after completing our training.</li>
+                  <li>Learning outcomes vary between individuals, and we cannot guarantee a specific level of digital proficiency will be reached within any given timeframe.</li>
+                  <li>Our guidance reflects best practice and common scam patterns known to us at the time of training, which may not cover every emerging threat.</li>
+                </ul>
+                <h2>4. Third-Party Services and Platforms</h2>
+                <p>Our support sessions may reference or make use of third-party platforms such as WhatsApp, Zoom, FaceTime, or various email providers. SeniorEase:</p>
+                <ul>
+                  <li>Does not own, operate, or control these third-party platforms.</li>
+                  <li>Is not responsible for their availability, functionality, security practices, or any changes they make to their services.</li>
+                  <li>Recommends customers refer to each platform's own terms and privacy policy for details on how their data is handled.</li>
+                </ul>
+                <h2>5. Accuracy of Information</h2>
+                <p>We take reasonable care to ensure the information provided on our website and during support sessions is accurate and up to date. However:</p>
+                <ul>
+                  <li>Technology, scams, and platform features change frequently, and some information may become outdated between updates.</li>
+                  <li>We do not warrant that all content is complete, current, or error-free, and recommend verifying critical information (e.g. current scam trends) through official sources such as Action Fraud or your bank.</li>
+                </ul>
+                <h2>6. Limitation of Liability</h2>
+                <p>This Disclaimer should be read alongside our Terms & Conditions, which sets out the full limitation of liability applicable to our Services. To the fullest extent permitted by law, SeniorEase accepts no liability for losses arising from reliance on general guidance provided through our Services, except where such liability cannot be excluded under UK law (e.g. death, personal injury, or fraud caused by our negligence).</p>
+                <h2>7. Changes to This Disclaimer</h2>
+                <p>We may update this Disclaimer from time to time to reflect changes in our Services or applicable law. The "Effective Date" above will always reflect the most recent version.</p>
+                <h2>8. Contact Us</h2>
+                <p><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
               </main>
               ${footerHTML}
             </div>
