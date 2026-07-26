@@ -1,127 +1,114 @@
 import React from 'react';
+import { ShieldCheck, ExternalLink } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function GDPR() {
   usePageMeta(
-    "GDPR Compliance Statement | SeniorEase",
-    "Learn about our commitment to General Data Protection Regulation (GDPR) and how we safeguard user data and privacy in the UK."
+    "GDPR Compliance | SeniorEase",
+    "Summary of how SeniorEase complies with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018."
   );
 
   return (
-    <div className="bg-gray-50 min-h-screen py-24">
+    <div className="bg-gray-50 py-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 prose prose-teal max-w-none">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">GDPR Compliance Statement</h1>
-          
-          <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-            At our company, we are committed to protecting and respecting your privacy. As a UK-based SaaS startup, we adhere to the principles and requirements of the General Data Protection Regulation (GDPR) and the UK GDPR framework to ensure that personal data is handled securely, transparently, and responsibly.
-          </p>
-
-          <div className="space-y-8 text-gray-700">
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Our Commitment to Data Protection</h2>
-              <p>
-                We take data privacy seriously. Any personal information collected through our platform is processed lawfully, fairly, and in a transparent manner. We only collect data that is necessary to provide and improve our services, particularly those designed to support senior citizens and enhance their digital experience.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Data We Collect</h2>
-              <p className="mb-4">We may collect and process the following types of personal data:</p>
-              <ul className="list-disc pl-6 space-y-2 mb-4">
-                <li>Basic identification information (such as name and contact details)</li>
-                <li>Account and usage data</li>
-                <li>Communication data (such as messages or support inquiries)</li>
-                <li>Technical data (such as device type, IP address, and browser information)</li>
-              </ul>
-              <p>We ensure that all data collection is relevant, limited, and aligned with specific purposes.</p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">3. How We Use Personal Data</h2>
-              <p className="mb-4">Your data is used to:</p>
-              <ul className="list-disc pl-6 space-y-2 mb-4">
-                <li>Provide and maintain our services</li>
-                <li>Enable key features such as communication tools and safety alerts</li>
-                <li>Improve user experience and platform functionality</li>
-                <li>Offer customer support</li>
-                <li>Comply with legal and regulatory obligations</li>
-              </ul>
-              <p>We do not sell or misuse your personal data.</p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Lawful Basis for Processing</h2>
-              <p className="mb-4">We process personal data under one or more of the following lawful bases:</p>
-              <ul className="list-disc pl-6 space-y-2">
-                <li>User consent</li>
-                <li>Performance of a contract</li>
-                <li>Compliance with legal obligations</li>
-                <li>Legitimate interests, where these do not override your rights</li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Data Security</h2>
-              <p>
-                We implement appropriate technical and organizational measures to safeguard personal data against unauthorized access, loss, or misuse. This includes secure servers, encryption where applicable, and strict access controls.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Data Sharing</h2>
-              <p>
-                We only share personal data with trusted third parties when necessary to deliver our services (such as hosting providers or support tools), and only under strict data protection agreements. We ensure all third parties comply with GDPR standards.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Data Retention</h2>
-              <p>
-                We retain personal data only for as long as necessary to fulfill the purposes for which it was collected, or to comply with legal requirements. When data is no longer needed, it is securely deleted or anonymized.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Your Rights Under GDPR</h2>
-              <p className="mb-4">As a user, you have the right to:</p>
-              <ul className="list-disc pl-6 space-y-2 mb-4">
-                <li>Access your personal data</li>
-                <li>Request correction of inaccurate data</li>
-                <li>Request deletion of your data (“right to be forgotten”)</li>
-                <li>Restrict or object to processing</li>
-                <li>Data portability</li>
-                <li>Withdraw consent at any time</li>
-              </ul>
-              <p>Requests can be made by contacting us directly, and we will respond within the legally required timeframe.</p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Cookies and Tracking</h2>
-              <p>
-                We may use cookies and similar technologies to enhance user experience and analyze platform performance. You will be informed and given control over cookie preferences where required.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Changes to This Policy</h2>
-              <p>
-                We may update this GDPR statement from time to time to reflect changes in legal requirements or our services. Any updates will be communicated clearly on our platform.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Contact Us</h2>
-              <p>
-                If you have any questions about this GDPR Compliance Statement or how your data is handled, please contact us through our official communication channels.
-              </p>
-            </section>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden"
+          id="gdpr-container"
+        >
+          <div className="bg-teal-900 p-8 md:p-12 text-center relative overflow-hidden" id="gdpr-header">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-teal-800 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-teal-800 rounded-full blur-3xl opacity-50 translate-y-1/2 -translate-x-1/2"></div>
             
-            <p className="pt-8 border-t border-gray-100 text-gray-500 italic mt-8 text-center md:text-left">
-              We are dedicated to maintaining the trust of our users by ensuring that privacy, security, and transparency remain at the heart of everything we do.
-            </p>
+            <div className="relative z-10">
+              <ShieldCheck className="w-16 h-16 text-teal-300 mx-auto mb-6" id="gdpr-icon" />
+              <h1 className="text-4xl font-bold text-white mb-4" id="gdpr-title">GDPR Compliance</h1>
+              <p className="text-teal-100 text-lg max-w-2xl mx-auto" id="gdpr-subtitle">
+                How SeniorEase complies with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.
+              </p>
+            </div>
           </div>
-        </div>
+
+          <div className="p-8 md:p-12 prose prose-teal max-w-none text-gray-600 space-y-8" id="gdpr-body">
+            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-2" id="gdpr-metadata">
+              <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
+              <p className="font-semibold text-gray-900">Business Name: SeniorEase</p>
+              <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
+              <p className="font-semibold text-gray-900">Email: <a href="mailto:privacy@senioreease.com" className="text-teal-600 hover:underline">privacy@senioreease.com</a></p>
+              <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
+            </div>
+
+            <p className="text-lg text-gray-700 leading-relaxed">
+              This page summarises how SeniorEase complies with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. For the full legal detail on what we collect, why, and how, please see our <Link to="/privacy" className="text-teal-600 hover:underline font-semibold">Privacy Policy</Link>.
+            </p>
+
+            <hr className="border-gray-200" />
+
+            <section id="gdpr-section-1">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Our Approach</h2>
+              <p className="leading-relaxed">
+                SeniorEase takes data protection seriously, particularly given the nature of our customers. We are guided by the core principles of UK GDPR: we collect only what we need, we&apos;re clear about why we need it, we keep it secure, and we give you control over it.
+              </p>
+            </section>
+
+            <hr className="border-gray-200" />
+
+            <section id="gdpr-section-2">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">2. What This Means in Practice</h2>
+              <ul className="list-disc pl-6 space-y-3">
+                <li><strong className="text-gray-900">Minimal data collection</strong> — we only collect the information required to deliver our Services (see our Privacy Policy for the full list).</li>
+                <li><strong className="text-gray-900">Clear consent</strong> — where we rely on your consent (for example, sharing training progress with a family member), you can withdraw it at any time.</li>
+                <li><strong className="text-gray-900">Secure payment handling</strong> — all billing is processed via Stripe; we do not store full card details ourselves.</li>
+                <li><strong className="text-gray-900">Data retention limits</strong> — we don&apos;t keep your data longer than necessary, and closed accounts are deleted or anonymised in line with our published retention periods.</li>
+                <li><strong className="text-gray-900">Your rights are respected</strong> — access, correction, erasure, portability, and objection requests are handled promptly by our team.</li>
+              </ul>
+            </section>
+
+            <hr className="border-gray-200" />
+
+            <section id="gdpr-section-3">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Data Protection Contact</h2>
+              <p className="mb-4">
+                For any question about how your data is handled, or to exercise your rights under UK GDPR:
+              </p>
+              <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100/50 space-y-1 mb-4" id="gdpr-contact-box">
+                <p className="font-bold text-teal-900 mb-1">SeniorEase Data Protection</p>
+                <p><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:privacy@senioreease.com" className="text-teal-700 hover:underline">privacy@senioreease.com</a></p>
+                <p><span className="font-semibold text-teal-800">Phone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
+              </div>
+              <p className="text-gray-700 leading-relaxed">
+                We aim to acknowledge data protection queries within 5 business days and resolve formal requests within one calendar month, as required by law.
+              </p>
+            </section>
+
+            <hr className="border-gray-200" />
+
+            <section id="gdpr-section-4">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Your Right to Complain</h2>
+              <p className="mb-4 leading-relaxed">
+                If you&apos;re ever unhappy with how we&apos;ve handled your personal data, we&apos;d like the chance to put it right directly — but you also have the right to complain to the UK&apos;s independent regulator:
+              </p>
+              <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-1" id="gdpr-ico-box">
+                <p className="font-bold text-slate-900 mb-1">Information Commissioner&apos;s Office (ICO)</p>
+                <p><span className="font-semibold text-slate-700">Website:</span> <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline inline-flex items-center gap-1">ico.org.uk <ExternalLink className="w-3.5 h-3.5" /></a></p>
+                <p><span className="font-semibold text-slate-700">Telephone:</span> <a href="tel:03031231113" className="text-teal-600 hover:underline">0303 123 1113</a></p>
+              </div>
+            </section>
+
+            <hr className="border-gray-200" />
+
+            <section id="gdpr-section-5">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Where to Find the Full Detail</h2>
+              <p className="leading-relaxed">
+                This page is a summary for quick reference. The complete, legally detailed account of our data processing — including legal basis, international transfers, retention periods, and third-party processors — is set out in our <Link to="/privacy" className="text-teal-600 hover:underline font-semibold">Privacy Policy</Link>.
+              </p>
+            </section>
+          </div>
+        </motion.div>
       </div>
     </div>
   );

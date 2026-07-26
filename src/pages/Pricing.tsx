@@ -364,6 +364,12 @@ export default function Pricing() {
             </motion.div>
 
           </motion.div>
+
+          <div className="mt-12 text-center">
+            <div className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-slate-800/80 border border-slate-700/80 text-teal-300 text-xs sm:text-sm font-semibold px-6 py-3 rounded-full shadow-lg backdrop-blur-sm">
+              <span>🔒 Secure payments</span> • <span>🛡️ SSL encrypted</span> • <span>🇬🇧 UK-based support</span> • <span>📋 GDPR compliant</span>
+            </div>
+          </div>
         </div>
       </section>
 

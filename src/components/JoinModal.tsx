@@ -375,6 +375,10 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                     plan ? `Register for ${plan.price}/month` : 'Request Free Call'
                   )}
                 </button>
+
+                <p className="text-[11px] text-center font-semibold text-teal-800 tracking-tight pt-1">
+                  Secure payments • SSL encrypted • UK-based support • GDPR compliant
+                </p>
               </div>
             </form>
           )}

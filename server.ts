@@ -208,7 +208,12 @@ async function startServer() {
         const footerHTML = `
           <footer style="background: #0f172a; color: #94a3b8; padding: 40px 20px; border-top: 1px solid #1e293b; font-family: system-ui, -apple-system, sans-serif; text-align: center; font-size: 0.9rem; margin-top: 60px;">
             <div style="max-width: 1200px; margin: 0 auto;">
-              <p>&copy; 2026 SeniorEase. All rights reserved.</p>
+              <div style="padding: 15px 0; border-bottom: 1px solid #1e293b; margin-bottom: 20px;">
+                <p style="font-size: 0.85rem; font-weight: 600; color: #2dd4bf; margin: 0; letter-spacing: 0.5px;">
+                  Secure payments • SSL encrypted • UK-based support • GDPR compliant
+                </p>
+              </div>
+              <p>&copy; 2026 ABC Technologies Ltd. Trading as SeniorEase. All rights reserved.</p>
               <p style="margin-top: 10px; font-size: 0.8rem; color: #64748b; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.5;">
                 <strong style="color: #2dd4bf;">Important Notice:</strong> SeniorEase (senioreease.com) is a digital technology learning and support SaaS service for older adults. We are an independent UK technology support platform and are <span style="text-decoration: underline; color: #99f6e4;">not affiliated</span> with any senior living, residential care homes, or property discovery platforms.
               </p>
@@ -860,26 +865,40 @@ async function startServer() {
             </div>
           `;
         } else if (normalizedPath === "/gdpr") {
-          pageTitle = "GDPR Compliance Statement | SeniorEase";
-          pageDescription = "Learn about our commitment to General Data Protection Regulation (GDPR) and how we safeguard user privacy in the UK and Europe.";
+          pageTitle = "GDPR Compliance | SeniorEase";
+          pageDescription = "Summary of how SeniorEase complies with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.";
           staticHTML = `
             <div style="font-family: system-ui, -apple-system, sans-serif; color: #1e293b; background-color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column;">
               ${getHeader("")}
               <main style="max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.7; flex: 1;">
-                <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">GDPR Compliance Statement</h1>
+                <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">GDPR Compliance</h1>
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
                   <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Data Protection Contact:</strong> privacy@senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> privacy@senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
                 </div>
-                <h2>1. Commitment to Data Protection</h2>
-                <p>SeniorEase fully adheres to the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. We ensure all senior citizen and family member records are processed lawfully, transparently, and securely.</p>
-                <h2>2. Lawful Basis for Processing</h2>
-                <p>We process personal data under the lawful bases of Contract Performance (delivering paid tech support and subscriptions), Legal Obligation (tax/billing compliance), and Consent (family member notification updates).</p>
-                <h2>3. Data Minimisation & Encryption</h2>
-                <p>We collect only essential contact and tutoring notes. All billing data is handled by Stripe and GoCardless under strict PCI-DSS Level 1 compliance. All data at rest and in transit is safeguarded with 256-bit TLS encryption.</p>
-                <h2>4. Your Data Subject Rights</h2>
-                <p>You have the absolute right to request Subject Access Requests (SAR), data rectification, or permanent erasure ("Right to be Forgotten") at any time by emailing privacy@senioreease.com. We respond to all GDPR requests within 30 days.</p>
+                <p style="font-size: 1.1rem; color: #475569;">This page summarises how SeniorEase complies with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. For the full legal detail on what we collect, why, and how, please see our <a href="/privacy" style="color: #0d9488; text-decoration: none; font-weight: 600;">Privacy Policy</a>.</p>
+                <h2>1. Our Approach</h2>
+                <p>SeniorEase takes data protection seriously, particularly given the nature of our customers. We are guided by the core principles of UK GDPR: we collect only what we need, we're clear about why we need it, we keep it secure, and we give you control over it.</p>
+                <h2>2. What This Means in Practice</h2>
+                <ul>
+                  <li><strong>Minimal data collection</strong> — we only collect the information required to deliver our Services (see our Privacy Policy for the full list).</li>
+                  <li><strong>Clear consent</strong> — where we rely on your consent (for example, sharing training progress with a family member), you can withdraw it at any time.</li>
+                  <li><strong>Secure payment handling</strong> — all billing is processed via Stripe; we do not store full card details ourselves.</li>
+                  <li><strong>Data retention limits</strong> — we don't keep your data longer than necessary, and closed accounts are deleted or anonymised in line with our published retention periods.</li>
+                  <li><strong>Your rights are respected</strong> — access, correction, erasure, portability, and objection requests are handled promptly by our team.</li>
+                </ul>
+                <h2>3. Data Protection Contact</h2>
+                <p>For any question about how your data is handled, or to exercise your rights under UK GDPR:</p>
+                <p><strong>Email:</strong> privacy@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019</p>
+                <p>We aim to acknowledge data protection queries within 5 business days and resolve formal requests within one calendar month, as required by law.</p>
+                <h2>4. Your Right to Complain</h2>
+                <p>If you're ever unhappy with how we've handled your personal data, we'd like the chance to put it right directly — but you also have the right to complain to the UK's independent regulator:</p>
+                <p><strong>Information Commissioner's Office (ICO)</strong><br />Website: ico.org.uk<br />Telephone: 0303 123 1113</p>
+                <h2>5. Where to Find the Full Detail</h2>
+                <p>This page is a summary for quick reference. The complete, legally detailed account of our data processing — including legal basis, international transfers, retention periods, and third-party processors — is set out in our <a href="/privacy" style="color: #0d9488; text-decoration: none; font-weight: 600;">Privacy Policy</a>.</p>
               </main>
               ${footerHTML}
             </div>
