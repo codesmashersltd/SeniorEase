@@ -585,10 +585,41 @@ async function startServer() {
                   <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
                   <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
                 </div>
-                <h2>Subscription Cancellation</h2>
-                <p>You can cancel your subscription at any time. Cancellation will prevent future automated billing, and your service will remain active until the end of your current paid billing period. To cancel, use the self-service dashboard or email us at support@senioreease.com.</p>
-                <h2>14-Day Cooling-off Period & Refunds</h2>
-                <p>In accordance with UK Consumer Contracts Regulations, you have the right to cancel your subscription within 14 days of purchase and request a full refund, provided you have not utilized the service's direct support features.</p>
+                <h2>1. Free Introductory Call</h2>
+                <p>Our free introductory call carries no charge and no obligation to continue. No refund is applicable as no payment is taken.</p>
+                <h2>2. Cancelling a Subscription</h2>
+                <ul>
+                  <li>You may cancel your subscription at any time by emailing support@senioreease.com, calling +44 (0) 330 401 0019, or through your account dashboard (once available).</li>
+                  <li>Cancellations take effect at the end of the current paid billing period. You will continue to have access to your Services until that date, and no further payments will be taken afterward.</li>
+                  <li>We do not charge cancellation fees.</li>
+                </ul>
+                <h2>3. Cooling-Off Period (Right to Cancel)</h2>
+                <p>In line with the UK Consumer Contracts Regulations 2013, if you are a consumer purchasing a subscription remotely (e.g. online or by phone), you have the right to cancel within <strong>14 days</strong> of your purchase for a full refund, provided the Service has not been fully delivered within that period with your express consent to begin immediately.</p>
+                <ul>
+                  <li>If you request that support begins immediately within the 14-day window and later cancel, we may deduct a reasonable amount reflecting the sessions or support already provided.</li>
+                  <li>To exercise this right, contact us at support@senioreease.com within 14 days of purchase.</li>
+                </ul>
+                <h2>4. Refunds Outside the Cooling-Off Period</h2>
+                <p>After the 14-day cooling-off period, subscription fees are generally non-refundable for the current billing period, except in the following cases:</p>
+                <ul>
+                  <li><strong>Service unavailability:</strong> If we are unable to deliver a scheduled session and cannot offer a reasonable rescheduled alternative, the missed session will be refunded or credited.</li>
+                  <li><strong>Billing error:</strong> If you are charged in error (e.g. duplicate charge, incorrect amount), the error will be corrected and refunded in full within 10 business days of confirmation.</li>
+                  <li><strong>Exceptional circumstances:</strong> Refund requests due to bereavement, hospitalisation, or a change in the customer's care needs will be considered on a case-by-case basis and handled sensitively.</li>
+                </ul>
+                <h2>5. How Refunds Are Processed</h2>
+                <ul>
+                  <li>Approved refunds are returned to the original payment method via Stripe.</li>
+                  <li>Refunds are typically processed within 5–10 business days, though your bank or card issuer may take longer to reflect the refund.</li>
+                </ul>
+                <h2>6. Family/Third-Party Purchasers</h2>
+                <p>Where a subscription is purchased by a family member on behalf of a senior relative, refund and cancellation requests may be made by either the purchaser or the service recipient, provided identity can be reasonably confirmed.</p>
+                <h2>7. Disputing a Charge</h2>
+                <p>If you believe a charge is incorrect, please contact us first at support@senioreease.com before raising a dispute with your bank or card provider — most issues can be resolved directly and more quickly this way. We aim to acknowledge all billing queries within 2 business days.</p>
+                <h2>8. Changes to This Policy</h2>
+                <p>We may update this policy from time to time. Any changes will be posted on this page with a revised effective date, and material changes affecting existing subscribers will be communicated by email at least 14 days in advance.</p>
+                <div style="background: #fffbeb; border: 1px solid #fde68a; padding: 15px; border-radius: 12px; margin-top: 30px; font-style: italic; color: #92400e; font-size: 0.9rem;">
+                  [Internal note: confirm final cancellation cut-off timing (billing-period-end vs. immediate) and any minimum-term contract terms with the pricing team before publishing, so this matches the actual plans listed on /pricing.]
+                </div>
               </main>
               ${footerHTML}
             </div>
