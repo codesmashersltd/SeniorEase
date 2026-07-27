@@ -7,7 +7,7 @@ import { db } from '../lib/firebase';
 import { isSpamContent } from '../lib/spamFilter';
 import { generateInvoicePDF } from '../lib/generateInvoicePDF';
 import { usePageMeta } from '../hooks/usePageMeta';
-import loginBgImage from '../assets/images/senior_couple_computer_learning_1784446449833.jpg';
+import loginBgImage from '../assets/images/seniors_login_portal_hero_1785144603212.jpg';
 
 export default function MyAccount() {
   usePageMeta(
@@ -310,13 +310,14 @@ export default function MyAccount() {
             <img 
               src={loginBgImage} 
               alt="Seniors learning digital skills with confidence" 
-              className="w-full h-full object-cover object-center opacity-30 transform scale-105"
+              className="w-full h-full object-cover object-center opacity-85 transition-all duration-[10s] ease-out"
+              style={{ transform: 'scaleX(-1.05) scaleY(1.05)' }}
               referrerPolicy="no-referrer"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-900/80 to-teal-950/90 backdrop-blur-[3px]"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/75 via-slate-900/35 to-teal-950/50"></div>
           </div>
-          <div className="absolute top-1/4 left-10 w-96 h-96 bg-teal-500/15 rounded-full blur-[120px] pointer-events-none"></div>
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-emerald-500/15 rounded-full blur-[120px] pointer-events-none"></div>
+          <div className="absolute top-1/4 left-10 w-96 h-96 bg-teal-500/25 rounded-full blur-[120px] pointer-events-none animate-pulse"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-emerald-500/25 rounded-full blur-[120px] pointer-events-none"></div>
         </>
       )}
 
@@ -368,23 +369,23 @@ export default function MyAccount() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="lg:col-span-6 bg-white/95 backdrop-blur-xl p-8 sm:p-10 rounded-3xl shadow-2xl border border-white/40 max-w-md w-full mx-auto text-gray-900"
+              className="lg:col-span-6 bg-slate-900/60 sm:bg-slate-900/50 backdrop-blur-xl p-8 sm:p-10 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] border border-white/20 max-w-md w-full mx-auto text-white"
             >
             <div className="flex flex-col items-center mb-8">
-              <div className="w-16 h-16 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center mb-3">
+              <div className="w-16 h-16 bg-gradient-to-br from-teal-500/30 to-emerald-500/20 text-teal-300 border border-teal-400/30 rounded-2xl flex items-center justify-center mb-3 shadow-inner">
                 <HeartHandshake size={32} />
               </div>
-              <span className="text-xl font-bold text-teal-800">SeniorEase</span>
+              <span className="text-xl font-bold tracking-wide text-white">SeniorEase</span>
             </div>
             
             {!showForgotPassword ? (
               <>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2 text-center">My Account</h1>
-                <p className="text-gray-600 text-center mb-8">Enter your credentials to access your account.</p>
+                <h1 className="text-3xl font-bold text-white mb-2 text-center">My Account</h1>
+                <p className="text-teal-100/80 text-center mb-8 text-sm">Enter your credentials to access your account.</p>
                 
                 <form onSubmit={handleLogin} className="space-y-6">
                   <div>
-                    <label htmlFor="customerName" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="customerName" className="block text-sm font-medium text-teal-100 mb-2">
                       Full Name
                     </label>
                     <input
@@ -392,12 +393,12 @@ export default function MyAccount() {
                       id="customerName"
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/25 text-white placeholder-teal-100/40 focus:bg-white/15 focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all outline-none"
                       placeholder="e.g. John Doe"
                     />
                   </div>
                   <div>
-                    <label htmlFor="customerId" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="customerId" className="block text-sm font-medium text-teal-100 mb-2">
                       Unique Customer ID
                     </label>
                     <input
@@ -405,12 +406,12 @@ export default function MyAccount() {
                       id="customerId"
                       value={customerId}
                       onChange={(e) => setCustomerId(e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/25 text-white placeholder-teal-100/40 focus:bg-white/15 focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all outline-none"
                       placeholder="e.g. SE-12345"
                     />
                   </div>
                   <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="password" className="block text-sm font-medium text-teal-100 mb-2">
                       Password
                     </label>
                     <input
@@ -418,7 +419,7 @@ export default function MyAccount() {
                       id="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/25 text-white placeholder-teal-100/40 focus:bg-white/15 focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all outline-none"
                       placeholder="••••••••"
                     />
                   </div>
@@ -429,16 +430,16 @@ export default function MyAccount() {
                         setShowForgotPassword(true);
                         setError('');
                       }} 
-                      className="text-sm font-bold text-teal-600 hover:text-teal-700 transition-colors"
+                      className="text-sm font-bold text-teal-300 hover:text-teal-200 transition-colors"
                     >
                       Forgot Password?
                     </button>
                   </div>
-                  {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                  {error && <p className="text-red-400 bg-red-950/50 p-3 rounded-xl border border-red-500/30 text-sm mt-2">{error}</p>}
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-teal-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
+                    className="w-full bg-gradient-to-r from-teal-500 to-emerald-600 text-white px-6 py-3.5 rounded-xl font-bold hover:from-teal-600 hover:to-emerald-700 transition-all shadow-lg shadow-teal-950/50 flex items-center justify-center gap-2 disabled:opacity-50"
                   >
                     {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Login'}
                   </button>
@@ -452,20 +453,20 @@ export default function MyAccount() {
                     setFpSuccess(false);
                     setError('');
                   }}
-                  className="mb-6 text-sm font-bold text-teal-600 hover:text-teal-700 transition-colors flex items-center gap-1"
+                  className="mb-6 text-sm font-bold text-teal-300 hover:text-teal-200 transition-colors flex items-center gap-1"
                 >
                   &larr; Back to Login
                 </button>
                 
-                <h1 className="text-3xl font-bold text-gray-900 mb-2 text-center">Reset Password</h1>
+                <h1 className="text-3xl font-bold text-white mb-2 text-center">Reset Password</h1>
                 
                 {fpSuccess ? (
                   <div className="text-center py-6">
-                    <div className="w-16 h-16 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-teal-500/20 text-teal-300 border border-teal-400/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <CheckCircle2 size={32} />
                     </div>
-                    <p className="text-gray-900 font-medium mb-2">Instructions Sent!</p>
-                    <p className="text-gray-600 mb-6">
+                    <p className="text-white font-bold text-lg mb-2">Instructions Sent!</p>
+                    <p className="text-teal-100/80 mb-6 text-sm leading-relaxed">
                       If the details match an active account, securing password reset instructions have been sent to your email.
                     </p>
                     <button
@@ -475,19 +476,19 @@ export default function MyAccount() {
                         setFpEmail('');
                         setFpCustomerId('');
                       }}
-                      className="w-full bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-bold hover:bg-gray-200 transition-colors shadow-sm"
+                      className="w-full bg-white/15 text-white px-6 py-3 rounded-xl font-bold hover:bg-white/25 transition-colors border border-white/20 shadow-sm"
                     >
                       Return to Login
                     </button>
                   </div>
                 ) : (
                   <>
-                    <p className="text-gray-600 text-center mb-8 text-sm">
+                    <p className="text-teal-100/80 text-center mb-8 text-sm">
                       Please enter your Email and Unique Customer ID to reset your password.
                     </p>
                     <form onSubmit={handleForgotPassword} className="space-y-6">
                       <div>
-                        <label htmlFor="fpEmail" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="fpEmail" className="block text-sm font-medium text-teal-100 mb-2">
                           Email Address
                         </label>
                         <input
@@ -495,12 +496,12 @@ export default function MyAccount() {
                           id="fpEmail"
                           value={fpEmail}
                           onChange={(e) => setFpEmail(e.target.value)}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                          className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/25 text-white placeholder-teal-100/40 focus:bg-white/15 focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all outline-none"
                           placeholder="your@email.com"
                         />
                       </div>
                       <div>
-                        <label htmlFor="fpCustomerId" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="fpCustomerId" className="block text-sm font-medium text-teal-100 mb-2">
                           Unique Customer ID
                         </label>
                         <input
@@ -508,14 +509,14 @@ export default function MyAccount() {
                           id="fpCustomerId"
                           value={fpCustomerId}
                           onChange={(e) => setFpCustomerId(e.target.value)}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                          className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/25 text-white placeholder-teal-100/40 focus:bg-white/15 focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all outline-none"
                           placeholder="e.g. SE-12345"
                         />
                       </div>
-                      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                      {error && <p className="text-red-400 bg-red-950/50 p-3 rounded-xl border border-red-500/30 text-sm mt-2">{error}</p>}
                       <button
                         type="submit"
-                        className="w-full bg-teal-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md"
+                        className="w-full bg-gradient-to-r from-teal-500 to-emerald-600 text-white px-6 py-3.5 rounded-xl font-bold hover:from-teal-600 hover:to-emerald-700 transition-all shadow-lg shadow-teal-950/50"
                       >
                         Reset Password
                       </button>

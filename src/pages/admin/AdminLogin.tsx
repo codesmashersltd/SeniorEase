@@ -5,6 +5,7 @@ import { Mail, Key, AlertCircle, Loader2 } from 'lucide-react';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth, db } from '../../lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import adminBgImage from '../../assets/images/senior_tech_support_hero_1784467941699.jpg';
 
 export default function AdminLogin() {
   const [activeTab, setActiveTab] = useState<'email' | 'google'>('google');
@@ -81,16 +82,35 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4 selection:bg-[#009688] selection:text-white">
-      <div className="w-full max-w-[480px]">
+    <div className="relative min-h-screen bg-slate-900 flex flex-col items-center justify-center p-4 overflow-hidden selection:bg-[#009688] selection:text-white">
+      {/* Attractive Background Image & Overlay */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src={adminBgImage} 
+          alt="SeniorEase Admin Hub" 
+          className="w-full h-full object-cover object-center opacity-50 transform scale-105 transition-all duration-[10s] ease-out"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950/85 via-slate-900/60 to-teal-950/80"></div>
+      </div>
+      <div className="absolute top-10 left-10 w-96 h-96 bg-teal-500/20 rounded-full blur-[120px] pointer-events-none animate-pulse"></div>
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-emerald-500/20 rounded-full blur-[120px] pointer-events-none"></div>
+
+      <div className="w-full max-w-[500px] bg-slate-900/60 sm:bg-slate-900/50 backdrop-blur-xl p-8 sm:p-10 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] border border-white/20 relative z-10 text-white">
+        {/* Decorative header accent */}
+        <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 rounded-t-3xl"></div>
+
         {/* Header */}
-        <div className="mb-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <h1 className="text-4xl font-bold text-[#092C4C] mb-2">Welcome back</h1>
-          <p className="text-gray-500 font-medium">Sign in to manage your services pipeline.</p>
+        <div className="mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 text-center">
+          <div className="w-14 h-14 bg-gradient-to-br from-teal-500/30 to-emerald-500/20 text-teal-300 border border-teal-400/30 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner font-bold text-2xl">
+            🔒
+          </div>
+          <h1 className="text-3xl font-bold text-white mb-1">Admin Portal</h1>
+          <p className="text-teal-100/80 font-medium text-sm">Sign in to manage your customer pipeline and support team.</p>
         </div>
 
         {/* Tabs */}
-        <div className="bg-gray-100/80 p-1.5 rounded-xl flex mb-8 animate-in fade-in duration-700 delay-200">
+        <div className="bg-white/10 p-1.5 rounded-xl flex mb-8 border border-white/15 animate-in fade-in duration-700 delay-200">
           <button
             onClick={() => {
               setActiveTab('email');
@@ -98,7 +118,7 @@ export default function AdminLogin() {
               setUnauthorizedDomain(null);
             }}
             className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-bold transition-all duration-300 ${
-              activeTab === 'email' ? 'bg-white text-[#009688] shadow-sm' : 'text-gray-500 hover:text-gray-700'
+              activeTab === 'email' ? 'bg-teal-600 text-white shadow-md' : 'text-teal-100/70 hover:text-white'
             }`}
           >
             Email & Password
@@ -110,7 +130,7 @@ export default function AdminLogin() {
               setUnauthorizedDomain(null);
             }}
             className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-bold transition-all duration-300 ${
-              activeTab === 'google' ? 'bg-white text-[#009688] shadow-sm' : 'text-gray-500 hover:text-gray-700'
+              activeTab === 'google' ? 'bg-teal-600 text-white shadow-md' : 'text-teal-100/70 hover:text-white'
             }`}
           >
             Google
@@ -118,25 +138,25 @@ export default function AdminLogin() {
         </div>
 
         {error && (
-          <div className="mb-6 bg-red-50 border border-red-100 text-red-600 p-4 rounded-xl flex items-start gap-3 text-sm animate-in fade-in slide-in-from-top-2 duration-300">
-            <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" />
+          <div className="mb-6 bg-red-950/80 border border-red-500/40 text-red-300 p-4 rounded-xl flex items-start gap-3 text-sm animate-in fade-in slide-in-from-top-2 duration-300">
+            <AlertCircle className="h-5 w-5 shrink-0 mt-0.5 text-red-400" />
             <div className="space-y-1">
-              <p className="font-semibold">{error}</p>
+              <p className="font-semibold text-white">{error}</p>
               {unauthorizedDomain && (
-                <div className="mt-3 text-xs text-red-700 space-y-2 border-t border-red-200/60 pt-3">
+                <div className="mt-3 text-xs text-red-200 space-y-2 border-t border-red-500/30 pt-3">
                   <p>
-                    The domain <strong className="font-black underline">{unauthorizedDomain}</strong> is not listed as an Authorized Domain in your Firebase project <code className="bg-red-100/80 px-1.5 py-0.5 rounded font-mono text-red-800">gen-lang-client-0483352558</code>.
+                    The domain <strong className="font-black underline">{unauthorizedDomain}</strong> is not listed as an Authorized Domain in your Firebase project <code className="bg-red-900/80 px-1.5 py-0.5 rounded font-mono text-white">gen-lang-client-0483352558</code>.
                   </p>
-                  <p className="font-bold">How to resolve this in Firebase Console:</p>
-                  <ol className="list-decimal pl-4 space-y-1 text-red-800 font-medium">
-                    <li>Go to the <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer" className="underline font-bold hover:text-red-900">Firebase Console</a>.</li>
-                    <li>Open your project: <strong className="font-bold">gen-lang-client-0483352558</strong>.</li>
-                    <li>Navigate to <strong className="font-bold">Build &gt; Authentication &gt; Settings</strong> tab.</li>
-                    <li>Scroll down to <strong className="font-bold">Authorized domains</strong>.</li>
-                    <li>Click <strong className="font-bold">Add domain</strong> and add <code className="bg-red-100/80 px-1 py-0.5 rounded font-mono">{unauthorizedDomain}</code>.</li>
+                  <p className="font-bold text-white">How to resolve this in Firebase Console:</p>
+                  <ol className="list-decimal pl-4 space-y-1 text-red-200 font-medium">
+                    <li>Go to the <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer" className="underline font-bold text-white hover:text-red-100">Firebase Console</a>.</li>
+                    <li>Open your project: <strong className="font-bold text-white">gen-lang-client-0483352558</strong>.</li>
+                    <li>Navigate to <strong className="font-bold text-white">Build &gt; Authentication &gt; Settings</strong> tab.</li>
+                    <li>Scroll down to <strong className="font-bold text-white">Authorized domains</strong>.</li>
+                    <li>Click <strong className="font-bold text-white">Add domain</strong> and add <code className="bg-red-900/80 px-1 py-0.5 rounded font-mono text-white">{unauthorizedDomain}</code>.</li>
                   </ol>
-                  <p className="pt-2 border-t border-red-200/40 text-[11px] text-red-600 italic">
-                    💡 <strong>Immediate Workaround:</strong> Switch to the <strong>"Email & Password"</strong> tab above to sign in instantly with default credentials (default username: <code className="bg-red-100/80 px-1 py-0.5 rounded font-mono font-bold">Administrator</code>, password: <code className="bg-red-100/80 px-1 py-0.5 rounded font-mono font-bold">123456</code>).
+                  <p className="pt-2 border-t border-red-500/30 text-[11px] text-red-300 italic">
+                    💡 <strong>Immediate Workaround:</strong> Switch to the <strong>"Email & Password"</strong> tab above to sign in instantly with default credentials (default username: <code className="bg-red-900/80 px-1 py-0.5 rounded font-mono font-bold text-white">Administrator</code>, password: <code className="bg-red-900/80 px-1 py-0.5 rounded font-mono font-bold text-white">123456</code>).
                   </p>
                 </div>
               )}
@@ -149,39 +169,39 @@ export default function AdminLogin() {
           {activeTab === 'email' ? (
             <form onSubmit={handleCustomLogin} className="space-y-6">
               <div className="space-y-2">
-                <label className="text-sm font-bold text-[#092C4C]">Email Address</label>
+                <label className="text-sm font-bold text-teal-100">Email Address</label>
                 <div className="relative group">
                   <input
                     type="text"
                     placeholder="Administrator"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full h-14 bg-gray-50 border border-gray-100 rounded-xl pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
+                    className="w-full h-14 bg-white/10 border border-white/25 rounded-xl pl-12 pr-4 text-sm text-white placeholder-teal-100/40 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all"
                     required
                   />
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-[#009688] transition-colors" />
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-teal-300 group-focus-within:text-teal-200 transition-colors" />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-bold text-[#092C4C]">Password</label>
+                <label className="text-sm font-bold text-teal-100">Password</label>
                 <div className="relative group">
                   <input
                     type="password"
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full h-14 bg-gray-50 border border-gray-100 rounded-xl pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
+                    className="w-full h-14 bg-white/10 border border-white/25 rounded-xl pl-12 pr-4 text-sm text-white placeholder-teal-100/40 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all"
                     required
                   />
-                  <Key className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-[#009688] transition-colors" />
+                  <Key className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-teal-300 group-focus-within:text-teal-200 transition-colors" />
                 </div>
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full h-14 bg-[#009688] hover:bg-[#00796B] text-white font-bold rounded-xl transition-all shadow-lg shadow-[#009688]/20 flex items-center justify-center disabled:opacity-50 active:scale-[0.98]"
+                className="w-full h-14 bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-teal-950/50 flex items-center justify-center disabled:opacity-50 active:scale-[0.98]"
               >
                 {loading ? <Loader2 className="h-6 w-6 animate-spin text-white" /> : 'Sign In'}
               </button>
@@ -191,10 +211,10 @@ export default function AdminLogin() {
               <button
                 onClick={handleGoogleLogin}
                 disabled={loading}
-                className="w-full h-14 border border-gray-200 rounded-xl flex items-center justify-center gap-4 hover:bg-gray-50 hover:border-gray-300 transition-all font-bold text-[#092C4C] active:scale-[0.98]"
+                className="w-full h-14 bg-white/10 border border-white/25 rounded-xl flex items-center justify-center gap-4 hover:bg-white/20 transition-all font-bold text-white shadow-sm active:scale-[0.98]"
               >
                 {loading ? (
-                  <Loader2 className="h-6 w-6 animate-spin text-[#009688]" />
+                  <Loader2 className="h-6 w-6 animate-spin text-teal-300" />
                 ) : (
                   <>
                     <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" className="h-5 w-5" referrerPolicy="no-referrer" />
@@ -202,7 +222,7 @@ export default function AdminLogin() {
                   </>
                 )}
               </button>
-              <p className="text-xs text-center text-gray-400 italic">
+              <p className="text-xs text-center text-teal-100/60 italic">
                 Authorized primary admin: yashkumars@gmail.com
               </p>
             </div>
@@ -211,17 +231,17 @@ export default function AdminLogin() {
 
         {/* Footer */}
         <div className="mt-12 text-center text-sm space-y-8 animate-in fade-in duration-1000 delay-500">
-          <p className="text-[#009688] font-bold hover:underline cursor-pointer transition-all">Don't have an account? Register</p>
+          <p className="text-teal-300 font-bold hover:underline cursor-pointer transition-all">Don't have an account? Register</p>
           
           <div className="relative py-4">
-            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-100"></div></div>
-            <div className="relative flex justify-center"><span className="bg-white px-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-300">Secure Access</span></div>
+            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/15"></div></div>
+            <div className="relative flex justify-center"><span className="bg-slate-900 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-teal-200/60">Secure Access</span></div>
           </div>
 
           <div className="space-y-4">
-            <p className="text-gray-400 font-medium px-10">Access your dashboard securely from any device.</p>
-            <p className="text-[10px] text-gray-400 font-medium max-w-[320px] mx-auto leading-relaxed">
-              By continuing, you agree to our <span className="text-[#009688] font-bold hover:underline cursor-pointer">Terms of Service</span> and <span className="text-[#009688] font-bold hover:underline cursor-pointer">Privacy Policy</span>.
+            <p className="text-teal-100/80 font-medium px-10">Access your dashboard securely from any device.</p>
+            <p className="text-[10px] text-teal-100/60 font-medium max-w-[320px] mx-auto leading-relaxed">
+              By continuing, you agree to our <span className="text-teal-300 font-bold hover:underline cursor-pointer">Terms of Service</span> and <span className="text-teal-300 font-bold hover:underline cursor-pointer">Privacy Policy</span>.
             </p>
           </div>
         </div>
