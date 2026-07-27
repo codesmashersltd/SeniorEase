@@ -278,7 +278,7 @@ export default function AuditorVerification() {
                       </li>
                       <li>
                         <Link to="/nhs-standards" className="text-teal-100 hover:text-white flex items-center justify-between p-2 rounded-lg hover:bg-teal-800 transition-colors">
-                          <span>NHS &amp; Care Standards</span>
+                          <span>Our Commitment</span>
                           <span>&rarr;</span>
                         </Link>
                       </li>
