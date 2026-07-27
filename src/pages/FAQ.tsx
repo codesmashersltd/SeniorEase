@@ -9,7 +9,7 @@ export default function FAQ() {
     "Frequently Asked Questions | SeniorEase",
     "Find clear answers to common questions about SeniorEase tech support, billing, device coverage, cancellations, and security training."
   );
-  const [activeCategory, setActiveCategory] = useState<'all' | 'general' | 'direct-debit'>('all');
+  const [activeCategory, setActiveCategory] = useState<'all' | 'general' | 'direct-debit' | 'refunds'>('all');
 
   const generalFaqs = [
     {
@@ -39,6 +39,37 @@ export default function FAQ() {
     {
       q: "Do you offer emergency support?",
       a: "No. SeniorEase is not an emergency service. If urgent learning is needed, customers should contact the appropriate emergency or professional service."
+    }
+  ];
+
+  const refundCancellationFaqs = [
+    {
+      q: "What is your refund policy for monthly subscription plans?",
+      a: "We operate with a transparent, customer-first refund policy. Under the UK Consumer Contracts Regulations, new subscribers are entitled to a 14-day statutory cooling-off period. If you cancel within these 14 days and have not utilized our 1-on-1 tutoring or technical support helpline, you will receive a 100% full refund immediately. If services were used during this period, a pro-rata refund may be issued reflecting the active days of coverage."
+    },
+    {
+      q: "How do I request a cancellation or refund?",
+      a: "You can request a cancellation or refund at any time with zero hassle. Simply log into your SeniorEase 'My Account' dashboard and click 'Cancel Subscription', or reach out directly to our UK customer care team via email at support@senioreease.com or by telephone. We process all requests promptly without restrictive retention scripts or hidden hoops."
+    },
+    {
+      q: "How quickly are approved refunds processed?",
+      a: "Once approved by our billing team, refunds are initiated immediately. Depending on your bank or payment card provider, credited funds typically appear back in your original account or card within 3 to 5 business days. If you paid via GoCardless Direct Debit, your bank will process the refund directly to your bank account under UK banking protocols."
+    },
+    {
+      q: "What happens to my portal access after I cancel my subscription?",
+      a: "When you cancel a monthly subscription, your membership coverage, technical helpline access, and family safeguarding alerts remain fully active until the end of your current paid billing period. After that date, your account transitions to a free status—you will not be billed again, but your history and official tax invoices remain accessible in your dashboard."
+    },
+    {
+      q: "Can I pause or suspend my membership instead of cancelling?",
+      a: "Yes, absolutely! If you or your senior loved one is going on holiday, spending time in hospital, or simply taking a break from digital learning, you can request a temporary subscription pause for up to 3 months. Your assigned tutor and account preferences will be preserved at zero cost until you are ready to resume."
+    },
+    {
+      q: "Are there any cancellation fees, penalties, or lock-in contracts?",
+      a: "Never. SeniorEase is strictly a flexible month-to-month SaaS platform. There are zero cancellation fees, no hidden exit charges, and no long-term lock-in contracts. You remain in total control of your subscription at all times."
+    },
+    {
+      q: "What if an accidental duplicate payment or Direct Debit error occurs?",
+      a: "If a billing error or accidental duplicate collection occurs, you are fully protected. Under the UK Direct Debit Guarantee and our internal billing pledge, any erroneous charges made by SeniorEase or GoCardless will be refunded in full immediately upon notification."
     }
   ];
 
@@ -122,7 +153,7 @@ export default function FAQ() {
                   : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
               }`}
             >
-              All Questions ({generalFaqs.length + directDebitFaqs.length})
+              All Questions ({generalFaqs.length + directDebitFaqs.length + refundCancellationFaqs.length})
             </button>
             <button
               onClick={() => setActiveCategory('general')}
@@ -133,6 +164,17 @@ export default function FAQ() {
               }`}
             >
               General & Support ({generalFaqs.length})
+            </button>
+            <button
+              onClick={() => setActiveCategory('refunds')}
+              className={`inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm md:text-base transition-all shadow-sm ${
+                activeCategory === 'refunds'
+                  ? 'bg-teal-600 text-white shadow-teal-600/25 scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+              }`}
+            >
+              <RefreshCw size={18} className={activeCategory === 'refunds' ? 'text-teal-200' : 'text-teal-600'} />
+              Refunds & Cancellations ({refundCancellationFaqs.length})
             </button>
             <button
               onClick={() => setActiveCategory('direct-debit')}
@@ -166,6 +208,53 @@ export default function FAQ() {
                       <span>{faq.q}</span>
                     </h3>
                     <p className="text-gray-600 leading-relaxed pl-7">{faq.a}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Refunds & Cancellations Section */}
+          {(activeCategory === 'all' || activeCategory === 'refunds') && (
+            <div className="mb-16">
+              {activeCategory === 'all' && (
+                <div className="flex items-center gap-3 mb-6 pt-6 border-t border-gray-200">
+                  <div className="w-10 h-10 bg-teal-100 text-teal-700 rounded-xl flex items-center justify-center font-bold">
+                    <RefreshCw size={22} />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-extrabold text-gray-900">Refunds, Cancellations & Billing Policy FAQs</h2>
+                    <p className="text-sm text-gray-500">Transparent month-to-month terms, 14-day statutory cooling-off period, and zero lock-in contracts</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Refund Policy Highlight Box */}
+              <div className="bg-gradient-to-r from-teal-900 via-slate-900 to-teal-950 text-white p-6 md:p-8 rounded-3xl shadow-md mb-8 border border-teal-700 flex flex-col md:flex-row items-center gap-6">
+                <div className="w-16 h-16 bg-teal-500/20 border border-teal-400/30 text-teal-300 rounded-2xl flex items-center justify-center shrink-0">
+                  <CheckCircle2 size={36} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                    <span>Our 100% No-Hassle Cancellation & Refund Pledge</span>
+                  </h3>
+                  <p className="text-teal-100 text-sm md:text-base leading-relaxed">
+                    We believe in earning our customers' trust every single month. You can cancel your subscription with a single click in your dashboard or by sending us an email. If you cancel within the first 14 days without using our tutoring services, you receive an immediate, full 100% refund under UK consumer protection laws.
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                {refundCancellationFaqs.map((faq, index) => (
+                  <div key={index} className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 transition-all hover:border-teal-200 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-teal-50/50 rounded-bl-full -mr-6 -mt-6 -z-0 pointer-events-none"></div>
+                    <div className="relative z-10">
+                      <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+                        <span className="text-teal-600 font-black shrink-0">{index + 1}.</span>
+                        <span>{faq.q}</span>
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed pl-7">{faq.a}</p>
+                    </div>
                   </div>
                 ))}
               </div>
