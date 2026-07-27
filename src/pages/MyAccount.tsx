@@ -7,6 +7,7 @@ import { db } from '../lib/firebase';
 import { isSpamContent } from '../lib/spamFilter';
 import { generateInvoicePDF } from '../lib/generateInvoicePDF';
 import { usePageMeta } from '../hooks/usePageMeta';
+import loginBgImage from '../assets/images/senior_couple_computer_learning_1784446449833.jpg';
 
 export default function MyAccount() {
   usePageMeta(
@@ -301,14 +302,74 @@ export default function MyAccount() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-24">
-      <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+    <div className={`min-h-screen ${!isLoggedIn ? 'bg-gradient-to-br from-slate-900 via-slate-950 to-teal-950 py-12 md:py-20 flex items-center justify-center relative overflow-hidden' : 'bg-gray-50 py-24'}`}>
+      {/* Background glow and image when in login mode */}
+      {!isLoggedIn && (
+        <>
+          <div className="absolute inset-0 z-0">
+            <img 
+              src={loginBgImage} 
+              alt="Seniors learning digital skills with confidence" 
+              className="w-full h-full object-cover object-center opacity-30 transform scale-105"
+              referrerPolicy="no-referrer"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-900/80 to-teal-950/90 backdrop-blur-[3px]"></div>
+          </div>
+          <div className="absolute top-1/4 left-10 w-96 h-96 bg-teal-500/15 rounded-full blur-[120px] pointer-events-none"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-emerald-500/15 rounded-full blur-[120px] pointer-events-none"></div>
+        </>
+      )}
+
+      <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10">
         {!isLoggedIn ? (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 max-w-md mx-auto"
-          >
+          <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left Column: Welcoming Brand & Value Proposition */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7 }}
+              className="lg:col-span-6 text-white text-center lg:text-left hidden lg:block"
+            >
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-400/30 backdrop-blur-md shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
+                UK Secure Member Portal
+              </span>
+              <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
+                Welcome to Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-emerald-200">Digital Hub</span>
+              </h1>
+              <p className="text-teal-100/90 text-lg font-medium leading-relaxed mb-8 max-w-md">
+                Sign in to view your learning progress, manage your subscription, download official receipts, or request immediate 1-on-1 technical assistance.
+              </p>
+              
+              <div className="space-y-4 max-w-md">
+                <div className="flex items-center gap-3 bg-white/10 p-4 rounded-2xl border border-white/15 backdrop-blur-md shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-teal-500/30 flex items-center justify-center text-teal-300 shrink-0 font-bold text-lg">
+                    🛡️
+                  </div>
+                  <div className="text-left text-sm">
+                    <div className="font-bold text-white">Bank-Grade Security</div>
+                    <div className="text-teal-200 text-xs">UK GDPR compliant & encrypted member portal</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 bg-white/10 p-4 rounded-2xl border border-white/15 backdrop-blur-md shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/30 flex items-center justify-center text-emerald-300 shrink-0 font-bold text-lg">
+                    🤝
+                  </div>
+                  <div className="text-left text-sm">
+                    <div className="font-bold text-white">Patient UK Support Desk</div>
+                    <div className="text-teal-200 text-xs">Friendly team ready to assist you every step of the way</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right Column / Center on Mobile: The Login Card */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="lg:col-span-6 bg-white/95 backdrop-blur-xl p-8 sm:p-10 rounded-3xl shadow-2xl border border-white/40 max-w-md w-full mx-auto text-gray-900"
+            >
             <div className="flex flex-col items-center mb-8">
               <div className="w-16 h-16 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center mb-3">
                 <HeartHandshake size={32} />
@@ -463,7 +524,8 @@ export default function MyAccount() {
                 )}
               </>
             )}
-          </motion.div>
+            </motion.div>
+          </div>
         ) : (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -643,7 +705,7 @@ export default function MyAccount() {
                         </div>
                         <h2 className="text-3xl font-extrabold tracking-tight mb-2">Payments, Renewals &amp; Invoices</h2>
                         <p className="text-teal-100 text-sm max-w-xl leading-relaxed">
-                          Manage your subscription renewals, make instant direct payments via Card or Bacs Direct Debit, and download UK official tax receipts.
+                          Manage your subscription renewals, make instant direct payments via Card or Bacs Direct Debit, and download UK official payment receipts.
                         </p>
                       </div>
                       <button
@@ -796,7 +858,7 @@ export default function MyAccount() {
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-gray-100">
                       <div>
                         <h3 className="text-xl font-bold text-gray-900 mb-1">Payment History &amp; Invoices</h3>
-                        <p className="text-sm text-gray-500">View past payments and download official tax invoices</p>
+                        <p className="text-sm text-gray-500">View past payments and download official payment receipts</p>
                       </div>
                       <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-xl self-start sm:self-center">
                         {(['All', 'Card', 'Bacs Direct Debit'] as const).map(f => (

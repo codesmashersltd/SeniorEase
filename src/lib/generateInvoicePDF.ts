@@ -207,7 +207,7 @@ export function generateInvoicePDF(inv: InvoiceData, customer: CustomerInfo = {}
   
   doc.setFontSize(8);
   doc.setTextColor(140, 140, 140);
-  doc.text('SeniorEase Digital Support Ltd • Registered in England & Wales • Official Subscription Tax Invoice', 105, 282, { align: 'center' });
+  doc.text('SeniorEase Digital Support Ltd • Registered in England & Wales • Official Subscription Payment Receipt', 105, 282, { align: 'center' });
   doc.text('Page 1 of 1', 105, 287, { align: 'center' });
 
   // Save PDF

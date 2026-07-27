@@ -133,63 +133,80 @@ export default function Pricing() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingSchema) }}
       />
       {/* Hero Section */}
-      <section className="relative text-white py-16 md:py-40 overflow-hidden bg-slate-900">
-        <div className="absolute inset-0 hidden md:block">
-          <img 
-            src={pricingHeroImage} 
-            alt="Happy seniors enjoying their afternoon with ease of mind" 
-            className="w-full h-full object-cover object-center"
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-slate-950/65 backdrop-blur-[0.5px]"></div>
+      <section className="relative bg-gradient-to-br from-slate-900 via-slate-950 to-teal-950 text-white py-16 md:py-28 overflow-hidden border-b border-teal-900/40">
+        {/* Subtle background glow */}
+        <div className="absolute top-1/3 right-1/4 w-[500px] h-[300px] bg-teal-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            
+            {/* Left Column: Text */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="lg:col-span-7 text-center lg:text-left"
+            >
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
+                Transparent Subscriptions
+              </span>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tight text-white leading-[1.1]">
+                Simple <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-300">Plans</span>
+              </h1>
+              <p className="text-lg sm:text-xl md:text-2xl text-teal-100/90 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0 mb-8">
+                Choose the level of support that suits you or your loved one best. Our plans are designed to provide calm, practical digital learning on a monthly basis.
+              </p>
+              
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs sm:text-sm text-teal-200/80 font-semibold">
+                <span className="flex items-center gap-1.5 bg-white/5 px-3.5 py-2 rounded-xl border border-white/10">
+                  <CheckCircle2 size={16} className="text-teal-400" /> Cancel Anytime
+                </span>
+                <span className="flex items-center gap-1.5 bg-white/5 px-3.5 py-2 rounded-xl border border-white/10">
+                  <CheckCircle2 size={16} className="text-teal-400" /> No Hidden Fees
+                </span>
+                <span className="flex items-center gap-1.5 bg-white/5 px-3.5 py-2 rounded-xl border border-white/10">
+                  <CheckCircle2 size={16} className="text-teal-400" /> No Setup Costs
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Right Column: Hero Image Fully Displayed */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="lg:col-span-5 relative"
+            >
+              <div className="relative mx-auto max-w-lg lg:max-w-none">
+                {/* Decorative border frame effect */}
+                <div className="absolute -inset-1.5 bg-gradient-to-r from-teal-500/40 via-emerald-500/30 to-teal-500/40 rounded-[2rem] blur-md opacity-75"></div>
+                
+                <div className="relative rounded-[1.75rem] overflow-hidden shadow-2xl bg-slate-800 border border-teal-400/30 aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3]">
+                  <img 
+                    src={pricingHeroImage} 
+                    alt="Happy seniors enjoying their afternoon with ease of mind" 
+                    className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[1.75rem]"></div>
+                </div>
+
+                {/* Floating badge */}
+                <div className="absolute -bottom-4 -left-4 sm:left-4 bg-slate-900/95 text-white p-3.5 sm:p-4 rounded-2xl border border-teal-500/30 shadow-xl flex items-center gap-3 backdrop-blur-md">
+                  <div className="w-10 h-10 rounded-xl bg-teal-500/20 flex items-center justify-center text-teal-300 font-bold text-lg shrink-0">
+                    🏷️
+                  </div>
+                  <div className="text-left">
+                    <div className="text-xs font-bold text-teal-300 uppercase tracking-wider">Month-to-Month</div>
+                    <div className="text-xs sm:text-sm font-semibold text-gray-200">100% flexible & secure</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
         </div>
-
-        {/* Mobile background (soft dark gradient) */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 md:hidden"></div>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 text-center relative z-10"
-        >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-500/30 backdrop-blur-md">
-            Transparent Subscriptions
-          </span>
-          <h1 className="text-4xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
-            Simple Plans
-          </h1>
-          <p className="text-base md:text-xl text-teal-100 leading-relaxed max-w-3xl mx-auto font-medium mb-8 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
-            Choose the level of support that suits you or your loved one best. Our plans are designed to provide calm, practical digital learning on a monthly basis.
-          </p>
-
-          {/* Mobile Hero Image */}
-          <div className="block md:hidden mb-8 relative">
-            <div className="aspect-[16/10] rounded-2xl overflow-hidden shadow-xl border border-teal-500/20">
-              <img 
-                src={pricingHeroImage} 
-                alt="Happy seniors enjoying their afternoon with ease of mind" 
-                className="w-full h-full object-cover object-center"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-            <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>
-          </div>
-          
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-white font-bold text-sm md:text-xl bg-slate-950/85 inline-flex px-8 py-4 md:py-5 rounded-2xl md:rounded-full border border-teal-500/30 backdrop-blur-md shadow-2xl">
-            <span className="flex items-center gap-2.5">
-              <CheckCircle2 size={20} className="text-teal-300" /> Cancel Anytime
-            </span>
-            <span className="hidden md:inline text-teal-500/80 text-2xl">•</span>
-            <span className="flex items-center gap-2.5">
-              <CheckCircle2 size={20} className="text-teal-300" /> No Hidden Fees
-            </span>
-            <span className="hidden md:inline text-teal-500/80 text-2xl">•</span>
-            <span className="flex items-center gap-2.5">
-              <CheckCircle2 size={20} className="text-teal-300" /> No Setup Costs
-            </span>
-          </div>
-        </motion.div>
       </section>
 
       {/* Pricing Cards */}

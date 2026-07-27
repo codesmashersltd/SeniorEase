@@ -46,6 +46,8 @@ export default function App() {
           <Route path="sla" element={<SLA />} />
           <Route path="disclaimer" element={<Disclaimer />} />
           <Route path="account" element={<MyAccount />} />
+          <Route path="login" element={<MyAccount />} />
+          <Route path="signin" element={<MyAccount />} />
           <Route path="gdpr" element={<GDPR />} />
           <Route path="nhs-standards" element={<NHSStandards />} />
           <Route path="safeguarding" element={<Safeguarding />} />
