@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { LogIn, User, AlertCircle, CheckCircle2, X, LogOut, Info, HeartHandshake, Loader2, Lock, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { LogIn, User, AlertCircle, CheckCircle2, X, LogOut, Info, HeartHandshake, Loader2, Lock, ShieldAlert, ShieldCheck, CreditCard, Receipt, Download, Calendar, Printer, FileText, Banknote, Building2, ChevronRight, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
@@ -41,6 +41,50 @@ export default function MyAccount() {
   const [caregiverEmail, setCaregiverEmail] = useState('daughter@example.co.uk');
   const [scamSignposting, setScamSignposting] = useState(true);
   const [safeguardingSaved, setSafeguardingSaved] = useState(false);
+
+  // Dashboard Navigation Tabs State
+  const [activeTab, setActiveTab] = useState<'services' | 'billing' | 'safeguarding'>('services');
+
+  // Payments & Invoices State
+  const [invoices, setInvoices] = useState<any[]>([
+    {
+      id: 'INV-2026-0715',
+      date: '15 July 2026',
+      amount: '£17.99',
+      method: 'Bacs Direct Debit',
+      methodDetails: 'Mandate #SEN-88219 (Bacs)',
+      status: 'Paid',
+      description: 'SeniorEase Plus Membership - Monthly Subscription'
+    },
+    {
+      id: 'INV-2026-0615',
+      date: '15 June 2026',
+      amount: '£17.99',
+      method: 'Card',
+      methodDetails: 'Visa ending in •••• 4242',
+      status: 'Paid',
+      description: 'SeniorEase Plus Membership - Monthly Subscription'
+    },
+    {
+      id: 'INV-2026-0515',
+      date: '15 May 2026',
+      amount: '£17.99',
+      method: 'Card',
+      methodDetails: 'Visa ending in •••• 4242',
+      status: 'Paid',
+      description: 'SeniorEase Plus Membership - Monthly Subscription'
+    }
+  ]);
+  const [paymentFilter, setPaymentFilter] = useState<'All' | 'Card' | 'Bacs Direct Debit'>('All');
+  const [viewingInvoice, setViewingInvoice] = useState<any | null>(null);
+
+  // Direct Payment Modal State
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<'Card' | 'Bacs Direct Debit'>('Card');
+  const [paymentCardNum, setPaymentCardNum] = useState('4242 •••• •••• 4242');
+  const [paymentBacsRef, setPaymentBacsRef] = useState('SEN-88219');
+  const [isProcessingPay, setIsProcessingPay] = useState(false);
+  const [paySuccessMsg, setPaySuccessMsg] = useState('');
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -205,6 +249,81 @@ export default function MyAccount() {
       console.error(err);
       alert('Unable to generate ticket at this time. Please try again.');
     }
+  };
+
+  const handleDirectPayment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsProcessingPay(true);
+    setPaySuccessMsg('');
+    
+    setTimeout(async () => {
+      const newInvId = `INV-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+      const nowStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      
+      const newRecord = {
+        id: newInvId,
+        date: nowStr,
+        amount: '£17.99',
+        method: paymentMethod,
+        methodDetails: paymentMethod === 'Card' ? `Card ending in •••• ${paymentCardNum.slice(-4)}` : `Mandate #${paymentBacsRef} (Bacs)`,
+        status: 'Paid',
+        description: 'SeniorEase Plus Membership - Direct Renewal Payment'
+      };
+      
+      setInvoices(prev => [newRecord, ...prev]);
+      setIsProcessingPay(false);
+      setPaySuccessMsg(`Payment of £17.99 processed successfully via ${paymentMethod}! Invoice ${newInvId} has been generated and saved to your records.`);
+      
+      try {
+        await addDoc(collection(db, 'transactions'), {
+          invoiceId: newInvId,
+          customerId: customerId || 'DEMO',
+          customerName: customerName || 'Demo User',
+          amount: '£17.99',
+          method: paymentMethod,
+          date: serverTimestamp(),
+          status: 'Paid',
+          type: 'Direct Dashboard Renewal'
+        });
+      } catch (err) {
+        console.error('Error logging transaction to Firestore:', err);
+      }
+    }, 1200);
+  };
+
+  const handleDownloadInvoiceFile = (inv: any) => {
+    const content = `========================================================
+SENIOREASE DIGITAL SUPPORT LTD - OFFICIAL TAX INVOICE
+========================================================
+Invoice Reference: ${inv.id}
+Issue Date:        ${inv.date}
+Status:            ${inv.status.toUpperCase()}
+--------------------------------------------------------
+Billed To:
+Customer Name:     ${customerName || 'Demo Customer'}
+Customer ID:       ${customerId || 'DEMO'}
+--------------------------------------------------------
+Description:       ${inv.description}
+Payment Method:    ${inv.method} (${inv.methodDetails})
+--------------------------------------------------------
+Net Amount:        £14.99
+VAT (20%):         £3.00
+TOTAL PAID:        ${inv.amount}
+========================================================
+Thank you for your valued subscription!
+For support inquiries, contact support@seniorease.co.uk
+UK GDPR & Vulnerable Adult Protection Policy Active.
+========================================================`;
+
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `${inv.id}_SeniorEase_Invoice.txt`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.createObjectURL(blob);
   };
 
   return (
@@ -415,6 +534,14 @@ export default function MyAccount() {
                         <li>Scam awareness guidance</li>
                       </ul>
                     </div>
+                    <button
+                      onClick={() => setActiveTab('billing')}
+                      className="mt-4 w-full bg-teal-50 border border-teal-200 text-teal-700 hover:bg-teal-100 font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors shadow-sm"
+                    >
+                      <CreditCard size={15} />
+                      <span>Manage Payments &amp; Invoices</span>
+                      <span>&rarr;</span>
+                    </button>
                   </div>
                   <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 flex flex-col">
                     <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2">Status</h3>
@@ -455,8 +582,46 @@ export default function MyAccount() {
               </div>
             </div>
 
-            {/* Right Column: Secure Dashboard Services & Safeguarding */}
+            {/* Right Column: Secure Dashboard Services, Payments & Safeguarding */}
             <div className="lg:col-span-8 space-y-8">
+              {/* Top Navigation Tabs */}
+              <div className="bg-white p-2 rounded-2xl border border-gray-200 shadow-sm flex flex-wrap gap-2">
+                <button
+                  onClick={() => setActiveTab('services')}
+                  className={`flex-1 min-w-[140px] py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
+                    activeTab === 'services'
+                      ? 'bg-teal-600 text-white shadow-md'
+                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                  }`}
+                >
+                  <HeartHandshake size={18} />
+                  <span>Service Requests</span>
+                </button>
+                <button
+                  onClick={() => setActiveTab('billing')}
+                  className={`flex-1 min-w-[140px] py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
+                    activeTab === 'billing'
+                      ? 'bg-teal-600 text-white shadow-md'
+                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                  }`}
+                >
+                  <CreditCard size={18} />
+                  <span>Payments &amp; Invoices</span>
+                </button>
+                <button
+                  onClick={() => setActiveTab('safeguarding')}
+                  className={`flex-1 min-w-[140px] py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
+                    activeTab === 'safeguarding'
+                      ? 'bg-teal-600 text-white shadow-md'
+                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                  }`}
+                >
+                  <ShieldAlert size={18} />
+                  <span>Safeguarding Controls</span>
+                </button>
+              </div>
+
+              {activeTab === 'services' && (
               <div className="bg-gray-50 p-8 rounded-3xl border border-gray-100">
                 <div className="flex items-center justify-between mb-8">
                   <div>
@@ -489,8 +654,249 @@ export default function MyAccount() {
                   ))}
                 </div>
               </div>
+              )}
+
+              {activeTab === 'billing' && (
+                <div className="space-y-8">
+                  {/* Top Header Card */}
+                  <div className="bg-gradient-to-r from-teal-900 via-teal-800 to-teal-900 text-white p-8 rounded-3xl shadow-md relative overflow-hidden">
+                    <div className="absolute right-0 top-0 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                      <div>
+                        <div className="inline-flex items-center gap-1.5 bg-teal-500/20 text-teal-300 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+                          <Receipt size={14} />
+                          <span>Billing &amp; Financial Management</span>
+                        </div>
+                        <h2 className="text-3xl font-extrabold tracking-tight mb-2">Payments, Renewals &amp; Invoices</h2>
+                        <p className="text-teal-100 text-sm max-w-xl leading-relaxed">
+                          Manage your subscription renewals, make instant direct payments via Card or Bacs Direct Debit, and download UK official tax receipts.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setPaySuccessMsg('');
+                          setShowPaymentModal(true);
+                        }}
+                        className="bg-amber-400 hover:bg-amber-300 text-amber-950 px-6 py-3.5 rounded-2xl font-extrabold text-sm shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 shrink-0 self-start md:self-center"
+                      >
+                        <CreditCard size={18} />
+                        <span>Make Direct Payment</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Upcoming Renewal Card */}
+                  <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-gray-100">
+                      <div className="flex items-center gap-3">
+                        <div className="p-3 bg-amber-100 text-amber-700 rounded-2xl">
+                          <Calendar size={24} />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-900">Upcoming Subscription Renewal</h3>
+                          <p className="text-sm text-gray-500">Next scheduled automated billing cycle</p>
+                        </div>
+                      </div>
+                      <span className="inline-flex items-center gap-1.5 bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold self-start sm:self-center">
+                        <Clock size={14} />
+                        <span>Scheduled &amp; Active</span>
+                      </span>
+                    </div>
+
+                    <div className="grid sm:grid-cols-3 gap-6 mb-6">
+                      <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Next Renewal Date</p>
+                        <p className="text-lg font-bold text-gray-900">15 August 2026</p>
+                        <p className="text-xs text-teal-600 font-medium mt-1">Automatic recurring billing</p>
+                      </div>
+                      <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Renewal Amount</p>
+                        <p className="text-lg font-bold text-gray-900">£17.99 / month</p>
+                        <p className="text-xs text-gray-500 font-medium mt-1">Includes 20% UK VAT</p>
+                      </div>
+                      <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Payment Method</p>
+                        <p className="text-lg font-bold text-gray-900 truncate">Bacs Direct Debit</p>
+                        <p className="text-xs text-gray-500 font-medium mt-1">Mandate #SEN-88219</p>
+                      </div>
+                    </div>
+
+                    <div className="bg-amber-50 border border-amber-200/80 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div className="flex items-start gap-3">
+                        <Info size={18} className="text-amber-700 shrink-0 mt-0.5" />
+                        <p className="text-xs md:text-sm text-amber-900 leading-relaxed font-medium">
+                          You can renew early or settle outstanding balance directly using your Credit/Debit Card or UK Bacs Direct Debit without waiting for automatic deduction.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setPaySuccessMsg('');
+                          setShowPaymentModal(true);
+                        }}
+                        className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition-colors shadow-sm shrink-0 whitespace-nowrap"
+                      >
+                        Pay Early / Renew Now
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Registered Payment Methods Summary */}
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center gap-2.5">
+                            <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl">
+                              <CreditCard size={20} />
+                            </div>
+                            <div>
+                              <h4 className="font-bold text-gray-900">Credit / Debit Card</h4>
+                              <p className="text-xs text-gray-500">Instant online card payments</p>
+                            </div>
+                          </div>
+                          <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Verified</span>
+                        </div>
+                        <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-4">
+                          <p className="text-sm font-bold text-gray-800 tracking-wider">•••• •••• •••• 4242</p>
+                          <div className="flex items-center justify-between text-xs text-gray-500 mt-1">
+                            <span>Expires: 08/28</span>
+                            <span>Visa / Mastercard</span>
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setPaymentMethod('Card');
+                          setPaySuccessMsg('');
+                          setShowPaymentModal(true);
+                        }}
+                        className="w-full bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 py-2 rounded-xl text-xs font-bold transition-colors"
+                      >
+                        Pay with Card
+                      </button>
+                    </div>
+
+                    <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center gap-2.5">
+                            <div className="p-2.5 bg-teal-50 text-teal-600 rounded-xl">
+                              <Building2 size={20} />
+                            </div>
+                            <div>
+                              <h4 className="font-bold text-gray-900">Bacs Direct Debit</h4>
+                              <p className="text-xs text-gray-500">UK Bank Account Transfer</p>
+                            </div>
+                          </div>
+                          <span className="bg-teal-100 text-teal-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Primary Mandate</span>
+                        </div>
+                        <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-4">
+                          <p className="text-sm font-bold text-gray-800">Mandate Ref: SEN-88219</p>
+                          <div className="flex items-center justify-between text-xs text-gray-500 mt-1">
+                            <span>Status: Active &amp; Protected</span>
+                            <span>UK Bacs Scheme</span>
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setPaymentMethod('Bacs Direct Debit');
+                          setPaySuccessMsg('');
+                          setShowPaymentModal(true);
+                        }}
+                        className="w-full bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 py-2 rounded-xl text-xs font-bold transition-colors"
+                      >
+                        Pay with Bacs Direct Debit
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Payment History & Downloadable Invoices Table */}
+                  <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-gray-100">
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-1">Payment History &amp; Invoices</h3>
+                        <p className="text-sm text-gray-500">View past payments and download official tax invoices</p>
+                      </div>
+                      <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-xl self-start sm:self-center">
+                        {(['All', 'Card', 'Bacs Direct Debit'] as const).map(f => (
+                          <button
+                            key={f}
+                            onClick={() => setPaymentFilter(f)}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                              paymentFilter === f ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
+                            }`}
+                          >
+                            {f === 'Bacs Direct Debit' ? 'Bacs' : f}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      {invoices
+                        .filter(inv => paymentFilter === 'All' || inv.method === paymentFilter)
+                        .map(inv => (
+                          <div key={inv.id} className="p-4 rounded-2xl border border-gray-100 bg-gray-50/50 hover:bg-gray-50 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div className="flex items-center gap-3.5">
+                              <div className={`p-3 rounded-xl shrink-0 ${
+                                inv.method === 'Card' ? 'bg-blue-100 text-blue-700' : 'bg-teal-100 text-teal-700'
+                              }`}>
+                                {inv.method === 'Card' ? <CreditCard size={20} /> : <Building2 size={20} />}
+                              </div>
+                              <div>
+                                <div className="flex items-center gap-2">
+                                  <span className="font-bold text-gray-900 text-sm">{inv.id}</span>
+                                  <span className="text-xs bg-green-100 text-green-800 font-bold px-2 py-0.5 rounded-md">
+                                    {inv.status}
+                                  </span>
+                                </div>
+                                <p className="text-xs text-gray-500 mt-0.5">{inv.description}</p>
+                                <p className="text-[11px] text-gray-400 mt-1">
+                                  {inv.date} • <span className="font-semibold text-gray-600">{inv.method}</span> ({inv.methodDetails})
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center justify-between sm:justify-end gap-4 border-t sm:border-t-0 pt-3 sm:pt-0 border-gray-200">
+                              <div className="text-left sm:text-right">
+                                <p className="text-base font-extrabold text-gray-900">{inv.amount}</p>
+                                <p className="text-[11px] text-gray-400">VAT included</p>
+                              </div>
+
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() => setViewingInvoice(inv)}
+                                  title="View & Print Invoice Receipt"
+                                  className="p-2 bg-white hover:bg-teal-50 text-gray-700 hover:text-teal-700 border border-gray-200 hover:border-teal-300 rounded-xl transition-all shadow-sm flex items-center gap-1.5 text-xs font-bold"
+                                >
+                                  <FileText size={15} />
+                                  <span className="hidden md:inline">View</span>
+                                </button>
+                                <button
+                                  onClick={() => handleDownloadInvoiceFile(inv)}
+                                  title="Download Invoice (.txt)"
+                                  className="p-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl transition-all shadow-sm flex items-center gap-1.5 text-xs font-bold"
+                                >
+                                  <Download size={15} />
+                                  <span>Download</span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      {invoices.filter(inv => paymentFilter === 'All' || inv.method === paymentFilter).length === 0 && (
+                        <div className="text-center py-8 text-gray-500 text-sm">
+                          No payment records found for the selected filter.
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Safeguarding & Caregiver Safety Controls Card */}
+              {activeTab === 'safeguarding' && (
               <div className="bg-gradient-to-br from-amber-50 via-orange-50/40 to-amber-50 p-8 rounded-3xl border-2 border-amber-300 shadow-sm relative overflow-hidden">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-amber-200">
                   <div className="flex items-center gap-3">
@@ -603,10 +1009,298 @@ export default function MyAccount() {
                   </span>
                 </div>
               </div>
+              )}
             </div>
           </motion.div>
         )}
       </div>
+
+      {/* Direct Payment / Early Renewal Modal */}
+      <AnimatePresence>
+        {showPaymentModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm"
+              onClick={() => !isProcessingPay && setShowPaymentModal(false)}
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative bg-white rounded-3xl shadow-2xl p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto"
+            >
+              {!isProcessingPay && (
+                <button 
+                  onClick={() => setShowPaymentModal(false)}
+                  className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X size={24} />
+                </button>
+              )}
+              
+              <div className="w-16 h-16 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center mb-6">
+                <CreditCard size={32} />
+              </div>
+              
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Subscription Payment</h3>
+              <p className="text-gray-600 mb-6 text-sm">
+                Make an immediate secure payment or early renewal for your SeniorEase monthly subscription.
+              </p>
+
+              {paySuccessMsg ? (
+                <div className="space-y-6">
+                  <div className="bg-green-50 border border-green-200 p-6 rounded-2xl text-center">
+                    <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <CheckCircle2 size={24} />
+                    </div>
+                    <h4 className="font-bold text-green-900 text-lg mb-1">Payment Successful!</h4>
+                    <p className="text-sm text-green-800 leading-relaxed">{paySuccessMsg}</p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setShowPaymentModal(false);
+                      setPaySuccessMsg('');
+                    }}
+                    className="w-full bg-teal-600 text-white px-6 py-3.5 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md"
+                  >
+                    Done &amp; View Receipt
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleDirectPayment} className="space-y-5">
+                  <div className="bg-gray-50 p-4 rounded-2xl border border-gray-200">
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-gray-600 font-medium">Service Plan:</span>
+                      <span className="font-bold text-gray-900">Plus Membership Renewal</span>
+                    </div>
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-gray-600 font-medium">Billing Period:</span>
+                      <span className="font-bold text-gray-900">1 Month (Advance)</span>
+                    </div>
+                    <div className="flex justify-between text-base border-t border-gray-200 pt-2 mt-2">
+                      <span className="font-bold text-gray-900">Total Amount Due:</span>
+                      <span className="font-extrabold text-teal-700">£17.99</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">Select Payment Method</label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setPaymentMethod('Card')}
+                        className={`p-3.5 rounded-xl border text-left font-bold text-xs md:text-sm flex items-center gap-2 transition-all ${
+                          paymentMethod === 'Card'
+                            ? 'border-teal-600 bg-teal-50/80 text-teal-900 shadow-sm'
+                            : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'
+                        }`}
+                      >
+                        <CreditCard size={18} className={paymentMethod === 'Card' ? 'text-teal-600' : 'text-gray-400'} />
+                        <span>Credit / Debit Card</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setPaymentMethod('Bacs Direct Debit')}
+                        className={`p-3.5 rounded-xl border text-left font-bold text-xs md:text-sm flex items-center gap-2 transition-all ${
+                          paymentMethod === 'Bacs Direct Debit'
+                            ? 'border-teal-600 bg-teal-50/80 text-teal-900 shadow-sm'
+                            : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'
+                        }`}
+                      >
+                        <Building2 size={18} className={paymentMethod === 'Bacs Direct Debit' ? 'text-teal-600' : 'text-gray-400'} />
+                        <span>Bacs Direct Debit</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {paymentMethod === 'Card' ? (
+                    <div className="space-y-4 bg-gray-50 p-4 rounded-2xl border border-gray-200">
+                      <div>
+                        <label className="block text-xs font-bold text-gray-700 uppercase mb-1">Card Number</label>
+                        <input
+                          type="text"
+                          value={paymentCardNum}
+                          onChange={(e) => setPaymentCardNum(e.target.value)}
+                          className="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-teal-500 font-mono"
+                          placeholder="•••• •••• •••• ••••"
+                          required
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-bold text-gray-700 uppercase mb-1">Expiry Date</label>
+                          <input
+                            type="text"
+                            defaultValue="08/28"
+                            className="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-teal-500 font-mono"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-gray-700 uppercase mb-1">CVV Security Code</label>
+                          <input
+                            type="password"
+                            defaultValue="888"
+                            maxLength={4}
+                            className="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-teal-500 font-mono"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-4 bg-gray-50 p-4 rounded-2xl border border-gray-200">
+                      <div>
+                        <label className="block text-xs font-bold text-gray-700 uppercase mb-1">UK Bacs Mandate Reference</label>
+                        <input
+                          type="text"
+                          value={paymentBacsRef}
+                          onChange={(e) => setPaymentBacsRef(e.target.value)}
+                          className="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-teal-500 font-mono"
+                          required
+                        />
+                      </div>
+                      <div className="bg-teal-50/60 p-3 rounded-xl border border-teal-100 text-xs text-teal-800 leading-relaxed">
+                        <span className="font-bold">Bacs Direct Debit Guarantee:</span> Your payment is protected by the UK Direct Debit Guarantee scheme. Funds will be initiated from your linked bank account.
+                      </div>
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={isProcessingPay}
+                    className="w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md disabled:opacity-50 flex items-center justify-center gap-2 text-base"
+                  >
+                    {isProcessingPay ? (
+                      <>
+                        <Loader2 className="animate-spin" size={20} />
+                        <span>Processing Payment...</span>
+                      </>
+                    ) : (
+                      <>
+                        <CreditCard size={20} />
+                        <span>Confirm Payment £17.99</span>
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Invoice Viewer & Print Receipt Modal */}
+      <AnimatePresence>
+        {viewingInvoice && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm"
+              onClick={() => setViewingInvoice(null)}
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative bg-white rounded-3xl shadow-2xl p-8 max-w-xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              <button 
+                onClick={() => setViewingInvoice(null)}
+                className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X size={24} />
+              </button>
+              
+              <div className="border-b-2 border-gray-900 pb-6 mb-6 flex items-start justify-between">
+                <div>
+                  <h3 className="text-2xl font-extrabold text-gray-900 tracking-tight">SENIOREASE</h3>
+                  <p className="text-xs text-gray-500 font-medium">Digital Support &amp; Tech Tutoring UK</p>
+                  <p className="text-[11px] text-gray-400 mt-0.5">UK GDPR &amp; Safeguarding Charter Compliant</p>
+                </div>
+                <div className="text-right">
+                  <span className="inline-block bg-teal-100 text-teal-900 font-extrabold text-xs px-3 py-1 rounded-lg uppercase tracking-wider mb-1">
+                    TAX INVOICE
+                  </span>
+                  <p className="text-sm font-bold text-gray-900">{viewingInvoice.id}</p>
+                  <p className="text-xs text-gray-500">{viewingInvoice.date}</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 mb-6 text-xs md:text-sm bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                <div>
+                  <p className="font-bold text-gray-400 uppercase text-[10px] tracking-wider mb-1">Billed To Customer</p>
+                  <p className="font-bold text-gray-900">{customerName || 'Demo Customer'}</p>
+                  <p className="text-gray-600">ID: {customerId || 'DEMO'}</p>
+                  <p className="text-gray-600">{phone || '07700 900000'}</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-bold text-gray-400 uppercase text-[10px] tracking-wider mb-1">Payment Method</p>
+                  <p className="font-bold text-gray-900">{viewingInvoice.method}</p>
+                  <p className="text-gray-600 truncate">{viewingInvoice.methodDetails}</p>
+                  <p className="text-green-700 font-bold mt-1">Status: {viewingInvoice.status.toUpperCase()}</p>
+                </div>
+              </div>
+
+              <div className="border border-gray-200 rounded-2xl overflow-hidden mb-6">
+                <div className="bg-gray-100 px-4 py-2.5 flex justify-between text-xs font-bold text-gray-700 uppercase">
+                  <span>Description</span>
+                  <span>Amount</span>
+                </div>
+                <div className="p-4 flex justify-between text-sm text-gray-800 border-t border-gray-200">
+                  <div>
+                    <p className="font-bold">{viewingInvoice.description}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">Monthly tech tutoring &amp; priority helpline access</p>
+                  </div>
+                  <span className="font-bold">{viewingInvoice.amount}</span>
+                </div>
+                <div className="bg-gray-50 px-4 py-3 border-t border-gray-200 space-y-1.5 text-xs text-gray-600">
+                  <div className="flex justify-between">
+                    <span>Net Amount</span>
+                    <span className="font-medium">£14.99</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>UK VAT (20%)</span>
+                    <span className="font-medium">£3.00</span>
+                  </div>
+                  <div className="flex justify-between text-sm font-extrabold text-gray-900 pt-1 border-t border-gray-200">
+                    <span>Total Paid</span>
+                    <span className="text-teal-700">{viewingInvoice.amount}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <button
+                  onClick={() => handleDownloadInvoiceFile(viewingInvoice)}
+                  className="flex-1 bg-teal-600 hover:bg-teal-700 text-white px-4 py-3 rounded-xl font-bold transition-colors shadow-md flex items-center justify-center gap-2 text-sm"
+                >
+                  <Download size={18} />
+                  <span>Download (.txt file)</span>
+                </button>
+                <button
+                  onClick={() => window.print()}
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-3 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-sm"
+                >
+                  <Printer size={18} />
+                  <span>Print Receipt</span>
+                </button>
+                <button
+                  onClick={() => setViewingInvoice(null)}
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-3 rounded-xl font-bold transition-colors text-sm"
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Change Password Modal */}
       <AnimatePresence>

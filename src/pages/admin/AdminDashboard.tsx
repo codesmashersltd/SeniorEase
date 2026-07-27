@@ -899,6 +899,11 @@ export default function AdminDashboard() {
                                   <div>
                                     <p className="text-sm font-bold text-gray-900">{item.name}</p>
                                     <p className="text-xs text-gray-500 truncate max-w-[150px]">{item.email}</p>
+                                    {item.message && (
+                                      <p className="text-xs text-teal-700 italic mt-1 line-clamp-2 max-w-[220px]" title={item.message}>
+                                        &ldquo;{item.message}&rdquo;
+                                      </p>
+                                    )}
                                   </div>
                                 ) : (
                                   <p className="text-xs text-gray-600 font-medium truncate max-w-[200px]">

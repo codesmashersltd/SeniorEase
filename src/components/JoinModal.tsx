@@ -59,6 +59,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
     const userEmail = (formData.get('email') as string) || '';
     const userPhone = (formData.get('phone') as string) || '';
     const userName = (formData.get('fullName') as string) || 'No Name Provided';
+    const userMessage = ((formData.get('message') as string) || '').trim();
     setEmail(userEmail);
     
     setIsSubmitting(true);
@@ -68,13 +69,16 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
       const newId = `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
       setCustomerId(newId);
 
+      const defaultMessage = plan ? `User wants to purchase ${plan.name} at ${plan.price}` : 'Intro call requested';
+      const finalMessage = userMessage ? `${userMessage} (${defaultMessage})` : defaultMessage;
+
       const ticketPayload = {
         ticketId,
         name: userName,
         email: userEmail,
         phone: userPhone,
         enquiryType: plan ? `Selected Plan: ${plan.name}` : 'Book Intro Call',
-        message: plan ? `User wants to purchase ${plan.name} at ${plan.price}` : 'Intro call requested',
+        message: finalMessage,
         status: 'Open',
         source: 'Web',
         createdAt: serverTimestamp()
@@ -88,13 +92,11 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
 
       console.log('Attempting to add ticket:', ticketPayload);
 
-      // Save as lead/joinee ticket in Firestore ONLY IF NOT selecting a plan (to avoid double entry)
-      if (!plan) {
-        try {
-          await addDoc(collection(db, 'tickets'), ticketPayload);
-        } catch (err: any) {
-          handleFirestoreError(err, OperationType.CREATE, 'tickets');
-        }
+      // Save ticket in Firestore so custom messages appear in Admin Dashboard under Support Tickets
+      try {
+        await addDoc(collection(db, 'tickets'), ticketPayload);
+      } catch (err: any) {
+        handleFirestoreError(err, OperationType.CREATE, 'tickets');
       }
 
       // Save to New Joinees collection for Admin Dashboard
@@ -107,6 +109,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
             phone: userPhone,
             plan: plan.name,
             price: plan.price,
+            message: finalMessage,
             status: 'Pending',
             createdAt: serverTimestamp()
           });
@@ -283,6 +286,19 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                   <label htmlFor="postcode" className="block text-sm font-medium text-gray-700 mb-1.5">Postcode</label>
                   <input required type="text" id="postcode" name="postcode" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow" placeholder="SW1A 1AA" />
                 </div>
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1.5">
+                  Message / What would you like help with? <span className="text-gray-400 font-normal">(Optional)</span>
+                </label>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  rows={3}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow text-sm" 
+                  placeholder="Tell us what digital services or support you would like to opt for (e.g. smartphone help, online banking setup, scam awareness)..." 
+                />
               </div>
 
               <div className="pt-4 space-y-5">
