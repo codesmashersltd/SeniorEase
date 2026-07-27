@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { isSpamContent } from '../lib/spamFilter';
+import { generateInvoicePDF } from '../lib/generateInvoicePDF';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function MyAccount() {
@@ -61,7 +62,7 @@ export default function MyAccount() {
       date: '15 June 2026',
       amount: '£17.99',
       method: 'Card',
-      methodDetails: 'Visa ending in •••• 4242',
+      methodDetails: 'Visa ending in •••• 8391',
       status: 'Paid',
       description: 'SeniorEase Plus Membership - Monthly Subscription'
     },
@@ -70,7 +71,7 @@ export default function MyAccount() {
       date: '15 May 2026',
       amount: '£17.99',
       method: 'Card',
-      methodDetails: 'Visa ending in •••• 4242',
+      methodDetails: 'Visa ending in •••• 8391',
       status: 'Paid',
       description: 'SeniorEase Plus Membership - Monthly Subscription'
     }
@@ -81,7 +82,7 @@ export default function MyAccount() {
   // Direct Payment Modal State
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'Card' | 'Bacs Direct Debit'>('Card');
-  const [paymentCardNum, setPaymentCardNum] = useState('4242 •••• •••• 4242');
+  const [paymentCardNum, setPaymentCardNum] = useState('4532 •••• •••• 8391');
   const [paymentBacsRef, setPaymentBacsRef] = useState('SEN-88219');
   const [isProcessingPay, setIsProcessingPay] = useState(false);
   const [paySuccessMsg, setPaySuccessMsg] = useState('');
@@ -292,38 +293,11 @@ export default function MyAccount() {
   };
 
   const handleDownloadInvoiceFile = (inv: any) => {
-    const content = `========================================================
-SENIOREASE DIGITAL SUPPORT LTD - OFFICIAL TAX INVOICE
-========================================================
-Invoice Reference: ${inv.id}
-Issue Date:        ${inv.date}
-Status:            ${inv.status.toUpperCase()}
---------------------------------------------------------
-Billed To:
-Customer Name:     ${customerName || 'Demo Customer'}
-Customer ID:       ${customerId || 'DEMO'}
---------------------------------------------------------
-Description:       ${inv.description}
-Payment Method:    ${inv.method} (${inv.methodDetails})
---------------------------------------------------------
-Net Amount:        £14.99
-VAT (20%):         £3.00
-TOTAL PAID:        ${inv.amount}
-========================================================
-Thank you for your valued subscription!
-For support inquiries, contact support@seniorease.co.uk
-UK GDPR & Vulnerable Adult Protection Policy Active.
-========================================================`;
-
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', `${inv.id}_SeniorEase_Invoice.txt`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.createObjectURL(blob);
+    generateInvoicePDF(inv, {
+      name: customerName || 'Demo Customer',
+      id: customerId || 'DEMO',
+      phone: phone || '07700 900000',
+    });
   };
 
   return (
@@ -712,7 +686,7 @@ UK GDPR & Vulnerable Adult Protection Policy Active.
                       <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
                         <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Renewal Amount</p>
                         <p className="text-lg font-bold text-gray-900">£17.99 / month</p>
-                        <p className="text-xs text-gray-500 font-medium mt-1">Includes 20% UK VAT</p>
+                        <p className="text-xs text-gray-500 font-medium mt-1">Standard subscription rate</p>
                       </div>
                       <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
                         <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Payment Method</p>
@@ -757,7 +731,7 @@ UK GDPR & Vulnerable Adult Protection Policy Active.
                           <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Verified</span>
                         </div>
                         <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-4">
-                          <p className="text-sm font-bold text-gray-800 tracking-wider">•••• •••• •••• 4242</p>
+                          <p className="text-sm font-bold text-gray-800 tracking-wider">•••• •••• •••• 8391</p>
                           <div className="flex items-center justify-between text-xs text-gray-500 mt-1">
                             <span>Expires: 08/28</span>
                             <span>Visa / Mastercard</span>
@@ -790,11 +764,17 @@ UK GDPR & Vulnerable Adult Protection Policy Active.
                           </div>
                           <span className="bg-teal-100 text-teal-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Primary Mandate</span>
                         </div>
-                        <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-4">
+                        <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-3">
                           <p className="text-sm font-bold text-gray-800">Mandate Ref: SEN-88219</p>
                           <div className="flex items-center justify-between text-xs text-gray-500 mt-1">
                             <span>Status: Active &amp; Protected</span>
                             <span>UK Bacs Scheme</span>
+                          </div>
+                        </div>
+                        <div className="bg-teal-50/70 p-3 rounded-xl border border-teal-100 text-[11px] text-teal-900 mb-4 flex items-start gap-2">
+                          <ShieldCheck size={16} className="text-teal-600 shrink-0 mt-0.5" />
+                          <div>
+                            <span className="font-bold">Direct Debit Guarantee:</span> Protected by UK Banking Standards. Your bank will refund any error immediately. <span className="underline cursor-pointer font-medium hover:text-teal-700" onClick={() => alert("The Direct Debit Guarantee\n\n• This Guarantee is offered by all banks and building societies that accept instructions to pay Direct Debits.\n\n• If there are any changes to the amount, date or frequency of your Direct Debit, SeniorEase Digital Support Ltd will notify you 10 working days in advance of your account being debited or as otherwise agreed.\n\n• If an error is made in the payment of your Direct Debit, by SeniorEase Digital Support Ltd or your bank or building society, you are entitled to a full and immediate refund of the amount paid from your bank or building society.\n\n• You can cancel a Direct Debit at any time by simply contacting your bank or building society. Written confirmation may be required. Please also notify us.")}>Read Full Guarantee</span>
                           </div>
                         </div>
                       </div>
@@ -861,7 +841,7 @@ UK GDPR & Vulnerable Adult Protection Policy Active.
                             <div className="flex items-center justify-between sm:justify-end gap-4 border-t sm:border-t-0 pt-3 sm:pt-0 border-gray-200">
                               <div className="text-left sm:text-right">
                                 <p className="text-base font-extrabold text-gray-900">{inv.amount}</p>
-                                <p className="text-[11px] text-gray-400">VAT included</p>
+                                <p className="text-[11px] text-gray-400">Monthly rate</p>
                               </div>
 
                               <div className="flex items-center gap-2">
@@ -875,11 +855,11 @@ UK GDPR & Vulnerable Adult Protection Policy Active.
                                 </button>
                                 <button
                                   onClick={() => handleDownloadInvoiceFile(inv)}
-                                  title="Download Invoice (.txt)"
+                                  title="Download Official PDF Invoice"
                                   className="p-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl transition-all shadow-sm flex items-center gap-1.5 text-xs font-bold"
                                 >
                                   <Download size={15} />
-                                  <span>Download</span>
+                                  <span>Download PDF</span>
                                 </button>
                               </div>
                             </div>
@@ -1225,7 +1205,7 @@ UK GDPR & Vulnerable Adult Protection Policy Active.
                 </div>
                 <div className="text-right">
                   <span className="inline-block bg-teal-100 text-teal-900 font-extrabold text-xs px-3 py-1 rounded-lg uppercase tracking-wider mb-1">
-                    TAX INVOICE
+                    SUBSCRIPTION INVOICE
                   </span>
                   <p className="text-sm font-bold text-gray-900">{viewingInvoice.id}</p>
                   <p className="text-xs text-gray-500">{viewingInvoice.date}</p>
@@ -1261,12 +1241,8 @@ UK GDPR & Vulnerable Adult Protection Policy Active.
                 </div>
                 <div className="bg-gray-50 px-4 py-3 border-t border-gray-200 space-y-1.5 text-xs text-gray-600">
                   <div className="flex justify-between">
-                    <span>Net Amount</span>
-                    <span className="font-medium">£14.99</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>UK VAT (20%)</span>
-                    <span className="font-medium">£3.00</span>
+                    <span>Monthly Rate</span>
+                    <span className="font-medium">{viewingInvoice.amount}</span>
                   </div>
                   <div className="flex justify-between text-sm font-extrabold text-gray-900 pt-1 border-t border-gray-200">
                     <span>Total Paid</span>
@@ -1281,7 +1257,7 @@ UK GDPR & Vulnerable Adult Protection Policy Active.
                   className="flex-1 bg-teal-600 hover:bg-teal-700 text-white px-4 py-3 rounded-xl font-bold transition-colors shadow-md flex items-center justify-center gap-2 text-sm"
                 >
                   <Download size={18} />
-                  <span>Download (.txt file)</span>
+                  <span>Download PDF Receipt</span>
                 </button>
                 <button
                   onClick={() => window.print()}
