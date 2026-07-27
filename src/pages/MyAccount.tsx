@@ -323,54 +323,62 @@ export default function MyAccount() {
 
       <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10">
         {!isLoggedIn ? (
-          <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Column: Welcoming Brand & Value Proposition */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7 }}
-              className="lg:col-span-6 text-white text-center lg:text-left hidden lg:block"
-            >
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-sm mb-6 border border-teal-400/30 backdrop-blur-md shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
-                UK Secure Member Portal
-              </span>
-              <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
-                Welcome to Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-emerald-200">Digital Hub</span>
-              </h1>
-              <p className="text-teal-100/90 text-lg font-medium leading-relaxed mb-8 max-w-md">
-                Sign in to view your learning progress, manage your subscription, download official receipts, or request immediate 1-on-1 technical assistance.
-              </p>
-              
-              <div className="space-y-4 max-w-md">
-                <div className="flex items-center gap-3 bg-white/10 p-4 rounded-2xl border border-white/15 backdrop-blur-md shadow-sm">
-                  <div className="w-10 h-10 rounded-xl bg-teal-500/30 flex items-center justify-center text-teal-300 shrink-0 font-bold text-lg">
-                    🛡️
-                  </div>
-                  <div className="text-left text-sm">
-                    <div className="font-bold text-white">Bank-Grade Security</div>
-                    <div className="text-teal-200 text-xs">UK GDPR compliant & encrypted member portal</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 bg-white/10 p-4 rounded-2xl border border-white/15 backdrop-blur-md shadow-sm">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/30 flex items-center justify-center text-emerald-300 shrink-0 font-bold text-lg">
-                    🤝
-                  </div>
-                  <div className="text-left text-sm">
-                    <div className="font-bold text-white">Patient UK Support Desk</div>
-                    <div className="text-teal-200 text-xs">Friendly team ready to assist you every step of the way</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left Column: Left intentionally empty on desktop so the couple's faces in the background hero image are 100% clearly visible and unobstructed! */}
+            <div className="hidden lg:block lg:col-span-6"></div>
 
-            {/* Right Column / Center on Mobile: The Login Card */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="lg:col-span-6 bg-slate-900/60 sm:bg-slate-900/50 backdrop-blur-xl p-8 sm:p-10 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] border border-white/20 max-w-md w-full mx-auto text-white"
-            >
+            {/* Right Column: Both Welcome Branding/Cards and Login Box dragged to the right side! */}
+            <div className="lg:col-span-6 max-w-lg w-full mx-auto space-y-6">
+              {/* Written part and security badges dragged to the right side */}
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.7 }}
+                className="text-white text-center lg:text-left bg-slate-900/60 sm:bg-slate-900/50 backdrop-blur-xl p-6 sm:p-8 rounded-3xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 font-semibold text-xs border border-teal-400/30">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse"></span>
+                    UK Secure Member Portal
+                  </span>
+                  <span className="text-xs text-teal-200/80 font-medium">Digital Hub</span>
+                </div>
+                <h1 className="text-2xl lg:text-3xl font-extrabold tracking-tight mb-2 leading-snug">
+                  Welcome to Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-emerald-200">Digital Hub</span>
+                </h1>
+                <p className="text-teal-100/90 text-sm font-medium leading-relaxed mb-5">
+                  Sign in to view your learning progress, manage your subscription, download official receipts, or request immediate 1-on-1 technical assistance.
+                </p>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="flex items-center gap-2.5 bg-white/10 p-3 rounded-xl border border-white/15 backdrop-blur-md shadow-sm">
+                    <div className="w-8 h-8 rounded-lg bg-teal-500/30 flex items-center justify-center text-teal-300 shrink-0 font-bold text-base">
+                      🛡️
+                    </div>
+                    <div className="text-left text-xs">
+                      <div className="font-bold text-white leading-tight">Bank-Grade Security</div>
+                      <div className="text-teal-200 text-[10px] leading-tight mt-0.5">UK GDPR compliant</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2.5 bg-white/10 p-3 rounded-xl border border-white/15 backdrop-blur-md shadow-sm">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/30 flex items-center justify-center text-emerald-300 shrink-0 font-bold text-base">
+                      🤝
+                    </div>
+                    <div className="text-left text-xs">
+                      <div className="font-bold text-white leading-tight">Patient UK Support Desk</div>
+                      <div className="text-teal-200 text-[10px] leading-tight mt-0.5">Friendly support team</div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* The Login Card */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="bg-slate-900/60 sm:bg-slate-900/50 backdrop-blur-xl p-8 sm:p-10 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] border border-white/20 w-full text-white"
+              >
             <div className="flex flex-col items-center mb-8">
               <div className="w-16 h-16 bg-gradient-to-br from-teal-500/30 to-emerald-500/20 text-teal-300 border border-teal-400/30 rounded-2xl flex items-center justify-center mb-3 shadow-inner">
                 <HeartHandshake size={32} />
@@ -525,7 +533,8 @@ export default function MyAccount() {
                 )}
               </>
             )}
-            </motion.div>
+              </motion.div>
+            </div>
           </div>
         ) : (
           <motion.div 
