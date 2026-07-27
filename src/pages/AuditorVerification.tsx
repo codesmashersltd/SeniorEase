@@ -315,15 +315,6 @@ export default function AuditorVerification() {
                           <span className="text-teal-600 font-bold text-lg">&rarr;</span>
                         </Link>
                       </li>
-                      <li>
-                        <Link to="/mobile-app" className="text-gray-800 hover:text-teal-600 flex items-center justify-between p-3 rounded-xl bg-white border border-gray-200 shadow-sm hover:border-teal-300 transition-all">
-                          <div>
-                            <div className="font-bold">SeniorEase Mobile App Guide</div>
-                            <div className="text-xs text-gray-500 font-normal">iOS &amp; Android companion guide</div>
-                          </div>
-                          <span className="text-teal-600 font-bold text-lg">&rarr;</span>
-                        </Link>
-                      </li>
                     </ul>
                   </div>
                 </div>

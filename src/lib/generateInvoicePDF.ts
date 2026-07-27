@@ -51,7 +51,8 @@ export function generateInvoicePDF(inv: InvoiceData, customer: CustomerInfo = {}
 
   // 2. Billing & Invoice Metadata Grid
   const leftX = 15;
-  const rightX = 115;
+  const rightX = 110;
+  const rightAlignX = 195;
   const currentY = 50;
 
   // BILLED TO SECTION (Left Column)
@@ -72,16 +73,18 @@ export function generateInvoicePDF(inv: InvoiceData, customer: CustomerInfo = {}
   if (customer.phone) {
     doc.text(`Phone: ${customer.phone}`, leftX, currentY + 20);
   }
-  doc.text('UK GDPR & Vulnerable Adult Safeguarding Charter Active', leftX, currentY + (customer.phone ? 26 : 20));
+  doc.setFontSize(8.5);
+  doc.setTextColor(100, 116, 139); // Slate 500
+  doc.text('UK GDPR & Safeguarding Charter Active', leftX, customer.phone ? 77 : 71);
 
   // INVOICE DETAILS SECTION (Right Column)
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9);
   doc.setTextColor(...midGray);
   doc.text('INVOICE REFERENCE', rightX, currentY);
-  doc.setFontSize(12);
+  doc.setFontSize(11);
   doc.setTextColor(...tealColor);
-  doc.text(inv.id, rightX + 45, currentY, { align: 'right' });
+  doc.text(inv.id, rightAlignX, currentY, { align: 'right' });
 
   doc.setFontSize(9);
   doc.setTextColor(...midGray);
@@ -89,7 +92,7 @@ export function generateInvoicePDF(inv: InvoiceData, customer: CustomerInfo = {}
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
   doc.setTextColor(...darkGray);
-  doc.text(inv.date, rightX + 45, currentY + 8, { align: 'right' });
+  doc.text(inv.date, rightAlignX, currentY + 8, { align: 'right' });
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9);
@@ -97,7 +100,7 @@ export function generateInvoicePDF(inv: InvoiceData, customer: CustomerInfo = {}
   doc.text('PAYMENT STATUS', rightX, currentY + 16);
   doc.setFontSize(10);
   doc.setTextColor(22, 101, 52); // Dark Green
-  doc.text(inv.status.toUpperCase(), rightX + 45, currentY + 16, { align: 'right' });
+  doc.text(inv.status.toUpperCase(), rightAlignX, currentY + 16, { align: 'right' });
 
   doc.setFontSize(9);
   doc.setTextColor(...midGray);
@@ -105,7 +108,11 @@ export function generateInvoicePDF(inv: InvoiceData, customer: CustomerInfo = {}
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9.5);
   doc.setTextColor(...darkGray);
-  doc.text(`${inv.method} (${inv.methodDetails})`, rightX + 45, currentY + 24, { align: 'right' });
+  doc.text(inv.method, rightAlignX, currentY + 24, { align: 'right' });
+
+  doc.setFontSize(8.5);
+  doc.setTextColor(...midGray);
+  doc.text(inv.methodDetails, rightAlignX, currentY + 30, { align: 'right' });
 
   // 3. Line Items Table
   const tableStartY = 90;
