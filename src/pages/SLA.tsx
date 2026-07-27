@@ -15,7 +15,7 @@ export default function SLA() {
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-2">
             <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
             <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
-            <p className="font-semibold text-gray-900">Business Name: SeniorEase</p>
+            <p className="font-semibold text-gray-900">Company Name: Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
             <p className="font-semibold text-gray-900">Email: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
             <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
           </div>

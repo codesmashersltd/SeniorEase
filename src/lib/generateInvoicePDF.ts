@@ -196,7 +196,7 @@ export function generateInvoicePDF(inv: InvoiceData, customer: CustomerInfo = {}
   doc.setFontSize(8.5);
   doc.setTextColor(60, 60, 60);
   
-  const guaranteeText = `Direct Debit Guarantee & Payment Protection:\nYour payment is strictly protected by UK Banking Standards and the Direct Debit Guarantee scheme. If there are any changes to the amount, date, or frequency of your payment, SeniorEase Digital Support Ltd will notify you in advance. If an error is made in payment by us or your bank, you are entitled to a full and immediate refund.\n\nSupport & Inquiries:\nFor billing assistance, tech tutoring appointments, or subscription updates, please email support@seniorease.co.uk or speak directly with your assigned senior care coordinator. All personal data is protected under UK GDPR.`;
+  const guaranteeText = `Direct Debit Guarantee & Payment Protection:\nYour payment is strictly protected by UK Banking Standards and the Direct Debit Guarantee scheme. If there are any changes to the amount, date, or frequency of your payment, Silverbridge Technologies Ltd. will notify you in advance. If an error is made in payment by us or your bank, you are entitled to a full and immediate refund.\n\nSupport & Inquiries:\nFor billing assistance, tech tutoring appointments, or subscription updates, please email support@seniorease.co.uk or speak directly with your assigned senior care coordinator. All personal data is protected under UK GDPR.`;
   
   const splitText = doc.splitTextToSize(guaranteeText, 166);
   doc.text(splitText, leftX + 7, trustBoxY + 20);
@@ -207,7 +207,7 @@ export function generateInvoicePDF(inv: InvoiceData, customer: CustomerInfo = {}
   
   doc.setFontSize(8);
   doc.setTextColor(140, 140, 140);
-  doc.text('SeniorEase Digital Support Ltd • Registered in England & Wales • Official Subscription Payment Receipt', 105, 282, { align: 'center' });
+  doc.text('Silverbridge Technologies Ltd. • Registered in England & Wales • Official Subscription Payment Receipt', 105, 282, { align: 'center' });
   doc.text('Page 1 of 1', 105, 287, { align: 'center' });
 
   // Save PDF

@@ -15,7 +15,7 @@ export default function Terms() {
         <div className="prose prose-teal max-w-none text-gray-600 space-y-8">
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-2">
             <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
-            <p className="font-semibold text-gray-900">Business Name: SeniorEase</p>
+            <p className="font-semibold text-gray-900">Company Name: Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
             <p className="font-semibold text-gray-900">Company Registration Number: [Pending — to be added upon incorporation]</p>
             <p className="font-semibold text-gray-900">Registered/Trading Address: 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
             <p className="font-semibold text-gray-900">

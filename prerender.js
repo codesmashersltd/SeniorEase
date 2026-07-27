@@ -42,7 +42,7 @@ const footerHTML = `
           Secure payments • SSL encrypted • UK-based support • GDPR compliant
         </p>
       </div>
-      <p>&copy; 2026 ABC Technologies Ltd. Trading as SeniorEase. All rights reserved.</p>
+      <p>&copy; 2026 Silverbridge Technologies Ltd. Trading as SeniorEase. All rights reserved.</p>
       <p style="margin-top: 10px; font-size: 0.8rem; color: #64748b; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.5;">
         <strong style="color: #2dd4bf;">Important Notice:</strong> SeniorEase (senioreease.com) is a digital technology learning and support SaaS service for older adults. We are an independent UK technology support platform and are <span style="text-decoration: underline; color: #99f6e4;">not affiliated</span> with any senior living, residential care homes, or property discovery platforms.
       </p>
@@ -418,7 +418,7 @@ const routes = [
           <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Terms & Conditions</h1>
           <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
             <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+            <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
             <p style="margin: 5px 0 0 0;"><strong>Company Registration Number:</strong> [Pending — to be added upon incorporation]</p>
             <p style="margin: 5px 0 0 0;"><strong>Registered/Trading Address:</strong> 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
             <p style="margin: 5px 0 0 0;"><strong>Contact:</strong> support@senioreease.com | +44 (0) 330 401 0019</p>
@@ -492,7 +492,7 @@ const routes = [
           <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
             <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
             <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
-            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+            <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
             <p style="margin: 5px 0 0 0;"><strong>Email:</strong> privacy@senioreease.com</p>
             <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
           </div>
@@ -576,7 +576,7 @@ const routes = [
           <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Refund & Cancellation Policy</h1>
           <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
             <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+            <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
             <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
           </div>
           <h2>1. Free Introductory Call</h2>
@@ -631,7 +631,7 @@ const routes = [
           <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
             <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
             <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
-            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+            <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
             <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
             <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
           </div>
@@ -697,7 +697,7 @@ const routes = [
           <p style="font-size: 1.1rem; color: #475569;">This Disclaimer explains the scope and limitations of the services provided by SeniorEase.</p>
           <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
             <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+            <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
             <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
             <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
             <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
@@ -760,7 +760,7 @@ const routes = [
           <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">GDPR Compliance</h1>
           <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
             <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+            <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
             <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
             <p style="margin: 5px 0 0 0;"><strong>Email:</strong> privacy@senioreease.com</p>
             <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
@@ -803,7 +803,7 @@ const routes = [
             <p style="margin: 0; font-size: 1.1rem;"><strong>Commitment to Accessibility, Privacy and Good Practice</strong></p>
             <p style="margin: 8px 0 0 0;"><strong>Effective Date:</strong> 01 June 2026</p>
             <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
-            <p style="margin: 5px 0 0 0;"><strong>Business Name:</strong> SeniorEase</p>
+            <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
             <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
             <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
           </div>

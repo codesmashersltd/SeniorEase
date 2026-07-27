@@ -411,8 +411,12 @@ export default function AuditorVerification() {
               <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm grid md:grid-cols-2 gap-8 text-sm md:text-base">
                 <div className="space-y-4">
                   <div>
+                    <span className="text-xs font-bold uppercase tracking-wider text-gray-400 block mb-1">Company Name</span>
+                    <strong className="text-xl text-gray-900">Silverbridge Technologies Ltd.</strong>
+                  </div>
+                  <div>
                     <span className="text-xs font-bold uppercase tracking-wider text-gray-400 block mb-1">Trading Name</span>
-                    <strong className="text-xl text-gray-900">SeniorEase UK</strong>
+                    <strong className="text-lg text-gray-800">SeniorEase UK</strong>
                   </div>
                   <div>
                     <span className="text-xs font-bold uppercase tracking-wider text-gray-400 block mb-1">Official Authorized Domain</span>

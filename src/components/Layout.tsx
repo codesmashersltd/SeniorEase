@@ -263,7 +263,7 @@ export default function Layout() {
 
           <div className="pt-8 border-t border-gray-800 text-center md:text-left text-gray-300 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
-              <p>&copy; {new Date().getFullYear()} ABC Technologies Ltd. Trading as SeniorEase. All rights reserved.</p>
+              <p>&copy; {new Date().getFullYear()} Silverbridge Technologies Ltd. Trading as SeniorEase. All rights reserved.</p>
               <p className="text-xs text-gray-400 mt-1.5 max-w-xl leading-relaxed">
                 <strong className="text-teal-400">Important Notice:</strong> SeniorEase (senioreease.com) is a digital technology education and technical support service for older adults. We are an independent UK technology support platform and are <span className="underline decoration-teal-500">not affiliated</span> with any senior living, residential care homes, or property discovery platforms.
               </p>
