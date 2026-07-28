@@ -52,30 +52,66 @@ async function startServer() {
 
   app.post("/api/checkout", async (req, res) => {
     try {
-      const { planPrice, planName, customerEmail } = req.body;
+      const { planPrice, planName, customerEmail, customerId, fullName } = req.body;
       const stripe = getStripe();
 
       if (process.env.STRIPE_SECRET_KEY) {
-        const numericPrice = parseFloat(planPrice.replace(/[^0-9.]/g, ""));
+        const numericPrice = parseFloat((planPrice || "0").toString().replace(/[^0-9.]/g, ""));
         const unitAmount = Math.round(numericPrice * 100);
 
-        const session = await stripe.checkout.sessions.create({
-          customer_email: customerEmail,
-          line_items: [{
-            price_data: {
-              currency: "gbp",
-              product_data: { name: planName, tax_code: "txcd_10000000" },
-              unit_amount: unitAmount,
-              recurring: { interval: "month" },
-            },
-            quantity: 1,
-          }],
-          mode: "subscription",
-          success_url: `${req.headers.origin}/account?setup_intent=success`,
-          cancel_url: `${req.headers.origin}/pricing?canceled=true`,
+        // 1. Create or retrieve Stripe Customer
+        const customer = await stripe.customers.create({
+          email: customerEmail,
+          name: fullName || customerEmail,
+          metadata: {
+            customerId: customerId || "N/A",
+            plan: planName || "SeniorEase Plan"
+          }
         });
 
-        res.json({ status: "success", url: session.url, session_id: session.id });
+        // 2. Create invoice item for the selected plan
+        await stripe.invoiceItems.create({
+          customer: customer.id,
+          amount: unitAmount,
+          currency: "gbp",
+          description: `${planName} Plan - Monthly Technical Support Coverage (Customer ID: ${customerId || 'N/A'})`,
+        });
+
+        // 3. Create Stripe Invoice with send_invoice collection method
+        const invoice = await stripe.invoices.create({
+          customer: customer.id,
+          collection_method: "send_invoice",
+          days_until_due: 7,
+          pending_invoice_items_behavior: "include",
+          currency: "gbp",
+          description: `Welcome to SeniorEase! Your Unique Customer ID is: ${customerId || 'N/A'}.\nYour secure temporary password for your account dashboard is: Welcome2026! (you can change this after logging in).\n\nWe have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your SeniorEase tech support subscription.`,
+          footer: `SeniorEase Technical Support | Support Email: support@senioreease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${customerId || 'N/A'}`,
+          metadata: {
+            customerId: customerId || "N/A",
+            planName: planName || "",
+          }
+        });
+
+        // 4. Finalize the invoice to generate the hosted payment URL
+        const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id);
+
+        // 5. Send the invoice email directly to the customer via Stripe (using support@senioreease.com sender domain)
+        let sentInvoice = finalizedInvoice;
+        try {
+          sentInvoice = await stripe.invoices.sendInvoice(finalizedInvoice.id);
+          console.log(`[Stripe] Successfully sent invoice email to ${customerEmail} from support@senioreease.com for Invoice ID: ${sentInvoice.id}`);
+        } catch (emailErr: any) {
+          console.warn("[Stripe] Could not send invoice email automatically:", emailErr.message);
+        }
+
+        const paymentUrl = sentInvoice.hosted_invoice_url || finalizedInvoice.hosted_invoice_url || "";
+
+        res.json({
+          status: "success",
+          url: paymentUrl,
+          invoice_id: sentInvoice.id,
+          customer_id: customer.id
+        });
       } else {
         res.json({
           status: "success",
