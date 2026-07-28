@@ -21,7 +21,7 @@ function getStripe(): Stripe {
       console.warn("STRIPE_SECRET_KEY is missing. Payments will not work.");
     }
     stripeClient = new Stripe(key || "sk_test_mock_key", {
-      apiVersion: "2025-01-27.acacia" as any,
+      apiVersion: "2025-03-31.basil" as any,
     });
   }
   return stripeClient;
@@ -60,12 +60,11 @@ async function startServer() {
         const unitAmount = Math.round(numericPrice * 100);
 
         const session = await stripe.checkout.sessions.create({
-          payment_method_types: ["card"],
           customer_email: customerEmail,
           line_items: [{
             price_data: {
               currency: "gbp",
-              product_data: { name: planName },
+              product_data: { name: planName, tax_code: "txcd_10000000" },
               unit_amount: unitAmount,
               recurring: { interval: "month" },
             },

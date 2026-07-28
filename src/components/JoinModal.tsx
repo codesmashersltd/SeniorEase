@@ -288,18 +288,20 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                 </div>
               </div>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Message / What would you like help with? <span className="text-gray-400 font-normal">(Optional)</span>
-                </label>
-                <textarea 
-                  id="message" 
-                  name="message" 
-                  rows={3}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow text-sm" 
-                  placeholder="Tell us what digital services or support you would like to opt for (e.g. smartphone help, online banking setup, scam awareness)..." 
-                />
-              </div>
+              {!plan && (
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1.5">
+                    Message / What would you like help with? <span className="text-gray-400 font-normal">(Optional)</span>
+                  </label>
+                  <textarea 
+                    id="message" 
+                    name="message" 
+                    rows={3}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow text-sm" 
+                    placeholder="Tell us what digital services or support you would like to opt for (e.g. smartphone help, online banking setup, scam awareness)..." 
+                  />
+                </div>
+              )}
 
               <div className="pt-4 space-y-5">
                 {plan && (
