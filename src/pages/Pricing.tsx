@@ -12,7 +12,7 @@ export default function Pricing() {
 
   usePageMeta(
     "Simple Pricing Plans | SeniorEase - Digital Support & Education",
-    "Explore simple and clear monthly pricing plans for SeniorEase digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers."
+    "Explore simple and clear monthly pricing plans for SeniorEase digital education and SeniorEase subscriptions. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers."
   );
 
   // Structured Data (JSON-LD) for Search Engines and AI bots to parse pricing accurately
@@ -414,14 +414,14 @@ export default function Pricing() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900">Pay by Direct Debit</h3>
-                    <p className="text-xs font-semibold text-teal-700 uppercase tracking-wider">Powered by GoCardless</p>
+                    <p className="text-xs font-semibold text-teal-700 uppercase tracking-wider">Powered by Stripe</p>
                   </div>
                 </div>
                 
                 <ul className="space-y-3.5 text-gray-700 text-sm mb-6 flex-grow">
                   <li className="flex items-start gap-3">
                     <CheckCircle2 size={18} className="text-teal-600 mt-0.5 shrink-0" />
-                    <span><strong>Payments collected securely through GoCardless</strong> for automated, hassle-free monthly billing.</span>
+                    <span><strong>Payments collected securely through Stripe Bacs Direct Debit</strong> for automated, hassle-free monthly billing.</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle2 size={18} className="text-teal-600 mt-0.5 shrink-0" />

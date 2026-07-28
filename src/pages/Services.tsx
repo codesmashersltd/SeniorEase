@@ -259,7 +259,7 @@ export default function Services() {
               },
               {
                 title: 'Family members supporting loved ones',
-                description: 'Ideal for adult children and relatives who want to ensure their parents or grandparents have dependable, friendly, UK-based technical support whenever they need assistance.',
+                description: 'Ideal for adult children and relatives who want to ensure their parents or grandparents have dependable, friendly, UK-based customer support whenever they need assistance.',
                 icon: <HeartHandshake className="text-teal-600" size={28} />
               },
               {

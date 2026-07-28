@@ -15,7 +15,7 @@ export default function HowItWorks() {
       title: "Step 1 – Choose Your SaaS Plan & Secure Setup",
       description: "Select the software subscription tier that best matches the support level you or your senior loved one needs. Whether looking for occasional tech learning, scam alerting, or comprehensive family safeguarding, our UK platform provides instant online registration.",
       timeframe: "Instant online activation (under 3 minutes)",
-      whatYouNeed: "Email address & payment method (Card via Stripe or BACS Direct Debit via GoCardless)",
+      whatYouNeed: "Email address & payment method (Card or BACS Direct Debit via Stripe)",
       highlights: "14-Day Statutory Money-Back Guarantee • Zero Lock-In Contracts • UK GDPR Compliant",
       bullets: [
         "Review our transparent, month-to-month pricing tiers.",
@@ -293,9 +293,9 @@ export default function HowItWorks() {
               <div className="w-12 h-12 bg-amber-600 text-white rounded-2xl flex items-center justify-center mb-6 shadow-md">
                 <ShieldCheck size={24} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">GoCardless Direct Debit & Banking Protection</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Stripe BACS Direct Debit & Banking Protection</h3>
               <p className="text-gray-600 leading-relaxed mb-4 text-sm md:text-base">
-                We partner with GoCardless and Stripe to provide industry-leading payment security. Direct Debit customers are covered by the UK Consumer Direct Debit Guarantee—receiving automated email notifications 3 working days before any collection and an immediate banking right to refund in the event of any billing discrepancy.
+                We partner with Stripe to provide industry-leading payment security for both Card and BACS Direct Debit. Direct Debit customers are covered by the UK Consumer Direct Debit Guarantee—receiving automated email notifications 3 working days before any collection and an immediate banking right to refund in the event of any billing discrepancy.
               </p>
               <div className="text-xs font-bold text-amber-800 flex items-center gap-1.5 bg-amber-50 p-3 rounded-xl border border-amber-200/50">
                 <CheckCircle2 size={16} /> UK Direct Debit Guarantee Protected • 3-Day Advance Notice

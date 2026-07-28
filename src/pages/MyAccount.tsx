@@ -12,7 +12,7 @@ import loginBgImage from '../assets/images/seniors_login_portal_hero_17851446032
 export default function MyAccount() {
   usePageMeta(
     "Customer Portal & Dashboard | SeniorEase",
-    "Access your SeniorEase customer dashboard to manage your tech support subscription, view session histories, and request assistance."
+    "Access your SeniorEase customer dashboard to manage your SeniorEase subscription, view session histories, and request assistance."
   );
 
   const [customerName, setCustomerName] = useState('');
@@ -840,13 +840,13 @@ export default function MyAccount() {
                           <p className="text-sm font-bold text-gray-800">Mandate Ref: SEN-88219</p>
                           <div className="flex items-center justify-between text-xs text-gray-500 mt-1">
                             <span>Status: Active &amp; Protected</span>
-                            <span>UK Bacs Scheme</span>
+                            <span>UK Bacs Scheme (via Stripe)</span>
                           </div>
                         </div>
                         <div className="bg-teal-50/70 p-3 rounded-xl border border-teal-100 text-[11px] text-teal-900 mb-4 flex items-start gap-2">
                           <ShieldCheck size={16} className="text-teal-600 shrink-0 mt-0.5" />
                           <div>
-                            <span className="font-bold">Direct Debit Guarantee:</span> Protected by UK Banking Standards. Your bank will refund any error immediately. <span className="underline cursor-pointer font-medium hover:text-teal-700" onClick={() => alert("The Direct Debit Guarantee\n\n• This Guarantee is offered by all banks and building societies that accept instructions to pay Direct Debits.\n\n• If there are any changes to the amount, date or frequency of your Direct Debit, Silverbridge Technologies Ltd. will notify you 10 working days in advance of your account being debited or as otherwise agreed.\n\n• If an error is made in the payment of your Direct Debit, by Silverbridge Technologies Ltd. or your bank or building society, you are entitled to a full and immediate refund of the amount paid from your bank or building society.\n\n• You can cancel a Direct Debit at any time by simply contacting your bank or building society. Written confirmation may be required. Please also notify us.")}>Read Full Guarantee</span>
+                            <span className="font-bold">Direct Debit Guarantee:</span> Protected by UK Banking Standards. Your bank will refund any error immediately. <span className="underline cursor-pointer font-medium hover:text-teal-700" onClick={() => alert("The Direct Debit Guarantee\n\n• This Guarantee is offered by all banks and building societies that accept instructions to pay Direct Debits.\n\n• If there are any changes to the amount, date or frequency of your Direct Debit, SeniorEase will notify you 10 working days in advance of your account being debited or as otherwise agreed.\n\n• If an error is made in the payment of your Direct Debit, by SeniorEase or your bank or building society, you are entitled to a full and immediate refund of the amount paid from your bank or building society.\n\n• You can cancel a Direct Debit at any time by simply contacting your bank or building society. Written confirmation may be required. Please also notify us.")}>Read Full Guarantee</span>
                           </div>
                         </div>
                       </div>
@@ -1216,7 +1216,7 @@ export default function MyAccount() {
                         />
                       </div>
                       <div className="bg-teal-50/60 p-3 rounded-xl border border-teal-100 text-xs text-teal-800 leading-relaxed">
-                        <span className="font-bold">Bacs Direct Debit Guarantee:</span> Your payment is protected by the UK Direct Debit Guarantee scheme. Funds will be initiated from your linked bank account.
+                        <span className="font-bold">Bacs Direct Debit Guarantee:</span> Your Bacs Direct Debit payment is securely processed by Stripe and protected by the UK Direct Debit Guarantee scheme. Funds will be initiated from your linked bank account.
                       </div>
                     </div>
                   )}

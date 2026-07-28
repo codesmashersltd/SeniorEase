@@ -344,7 +344,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                       </p>
                       <p className="text-[10px] text-gray-500 border-t border-gray-200 pt-2">
                         <span className="font-bold text-gray-700 block mb-0.5">Disclaimer & Identity Notice:</span>
-                        SeniorEase provides software learning and tech support for senior citizens in the UK. We are NOT affiliated with any senior living, retirement home, or residential care discovery platforms. We do not provide medical, emergency, legal, financial, or regulated care services.
+                        SeniorEase provides software learning and subscriptions for senior citizens in the UK. We are NOT affiliated with any senior living, retirement home, or residential care discovery platforms. We do not provide medical, emergency, legal, financial, or regulated care services.
                       </p>
                     </div>
 

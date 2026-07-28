@@ -7,7 +7,7 @@ import { usePageMeta } from '../hooks/usePageMeta';
 export default function Disclaimer() {
   usePageMeta(
     "Disclaimer | SeniorEase",
-    "Important legal disclosures and disclaimers regarding SeniorEase technical support, educational materials, and third-party device guidance."
+    "Important legal disclosures and disclaimers regarding SeniorEase subscriptions, educational materials, and third-party device guidance."
   );
 
   return (
@@ -36,7 +36,7 @@ export default function Disclaimer() {
           <div className="p-8 md:p-12 prose prose-teal max-w-none text-gray-600 space-y-8" id="disclaimer-body">
             <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-2" id="disclaimer-metadata">
               <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
-              <p className="font-semibold text-gray-900">Company Name: Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
+              <p className="font-semibold text-gray-900">Company Name: SeniorEase</p>
               <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
               <p className="font-semibold text-gray-900">Email: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
               <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
@@ -161,7 +161,7 @@ export default function Disclaimer() {
                 <p className="font-bold text-teal-900 mb-2">SeniorEase</p>
                 <p><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-700 hover:underline">support@senioreease.com</a></p>
                 <p><span className="font-semibold text-teal-800">Phone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
-                <p><span className="font-semibold text-teal-800">Address:</span> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
+                <p><span className="font-semibold text-teal-800">Address:</span> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
               </div>
             </section>
           </div>

@@ -74,7 +74,7 @@ async function startServer() {
           customer: customer.id,
           amount: unitAmount,
           currency: "gbp",
-          description: `${planName} Plan - Monthly Technical Support Coverage (Customer ID: ${customerId || 'N/A'})`,
+          description: `${planName} Plan - Monthly SeniorEase Subscription Coverage (Customer ID: ${customerId || 'N/A'})`,
         });
 
         // 3. Create Stripe Invoice with send_invoice collection method
@@ -84,8 +84,8 @@ async function startServer() {
           days_until_due: 7,
           pending_invoice_items_behavior: "include",
           currency: "gbp",
-          description: `Welcome to SeniorEase! Your Unique Customer ID is: ${customerId || 'N/A'}.\nYour secure temporary password for your account dashboard is: Welcome2026! (you can change this after logging in).\n\nWe have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your SeniorEase tech support subscription.`,
-          footer: `SeniorEase Technical Support | Support Email: support@senioreease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${customerId || 'N/A'}`,
+          description: `Welcome to SeniorEase! Your Unique Customer ID is: ${customerId || 'N/A'}.\nYour secure temporary password for your account dashboard is: Welcome2026! (you can change this after logging in).\n\nWe have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your SeniorEase subscription.`,
+          footer: `SeniorEase Subscription | Support Email: support@senioreease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${customerId || 'N/A'}`,
           metadata: {
             customerId: customerId || "N/A",
             planName: planName || "",
@@ -248,7 +248,7 @@ async function startServer() {
                   Secure payments • SSL encrypted • UK-based support • GDPR compliant
                 </p>
               </div>
-              <p>&copy; 2026 Silverbridge Technologies Ltd. Trading as SeniorEase. All rights reserved.</p>
+              <p>&copy; 2026 SeniorEase. All rights reserved.</p>
               <p style="margin-top: 10px; font-size: 0.8rem; color: #64748b; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.5;">
                 <strong style="color: #2dd4bf;">Important Notice:</strong> SeniorEase (senioreease.com) is a digital technology learning and support SaaS service for older adults. We are an independent UK technology support platform and are <span style="text-decoration: underline; color: #99f6e4;">not affiliated</span> with any senior living, residential care homes, or property discovery platforms.
               </p>
@@ -274,7 +274,7 @@ async function startServer() {
               <main style="max-width: 1000px; margin: 40px auto; padding: 0 20px; line-height: 1.7; flex: 1;">
                 <div style="text-align: center; margin-bottom: 50px;">
                   <span style="color: #0d9488; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem; display: inline-block; padding: 5px 15px; background: #e0f2fe; border-radius: 9999px;">Friendly UK-Based Assistance</span>
-                  <h1 style="font-size: 3rem; font-weight: 800; margin-top: 15px; color: #0f172a; tracking: -0.02em;">Digital Education & Gentle Tech Support for Seniors</h1>
+                  <h1 style="font-size: 3rem; font-weight: 800; margin-top: 15px; color: #0f172a; tracking: -0.02em;">Digital Education & SeniorEase Subscription for Seniors</h1>
                   <p style="font-size: 1.25rem; color: #475569; max-width: 750px; margin: 20px auto; line-height: 1.6;">SeniorEase is a Software as a Service (SaaS) platform that assists older adults with everyday technology — combining intuitive secure software with friendly digital confidence support.</p>
                   <div style="margin: 30px 0;">
                     <a href="/pricing" style="background: #0d9488; color: white; padding: 14px 28px; text-decoration: none; border-radius: 9999px; font-weight: bold; margin-right: 15px; display: inline-block; box-shadow: 0 4px 6px -1px rgba(13, 148, 136, 0.2);">View Pricing Plans</a>
@@ -302,14 +302,14 @@ async function startServer() {
           `;
         } else if (normalizedPath === "/pricing") {
           pageTitle = "Simple Pricing Plans | SeniorEase - Digital Support & Education";
-          pageDescription = "Explore simple and clear monthly pricing plans for SeniorEase digital education and technical support. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.";
+          pageDescription = "Explore simple and clear monthly pricing plans for SeniorEase digital education and SeniorEase subscriptions. Choose from Essential Care (£9.99/mo), Plus Care (£17.99/mo), or Family Care (£29.99/mo) support tiers.";
           staticHTML = `
             <div style="font-family: system-ui, -apple-system, sans-serif; color: #1e293b; background-color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column;">
               ${getHeader("pricing")}
               <main style="max-width: 1000px; margin: 40px auto; padding: 0 20px; line-height: 1.7; flex: 1;">
                 <div style="text-align: center; margin-bottom: 40px;">
                   <span style="color: #0d9488; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem;">Simple Subscriptions</span>
-                  <h1 style="font-size: 2.8rem; font-weight: 800; margin-top: 10px; color: #0f172a; tracking: -0.02em;">Affordable Tech Support Plans for Seniors</h1>
+                  <h1 style="font-size: 2.8rem; font-weight: 800; margin-top: 10px; color: #0f172a; tracking: -0.02em;">Affordable SeniorEase Subscription Plans for Seniors</h1>
                   <p style="font-size: 1.25rem; color: #475569; max-width: 650px; margin: 20px auto; line-height: 1.6;">Our simple subscription packages are tailored for seniors and their families. Transparent, cancel-anytime, with zero hidden fees.</p>
                 </div>
 
@@ -374,9 +374,9 @@ async function startServer() {
                   <h2 style="font-size: 1.8rem; font-weight: bold; color: #0f172a; text-align: center; margin-bottom: 20px;">Payment Methods & Options</h2>
                   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
                     <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
-                      <h3 style="color: #0f172a; font-size: 1.2rem; margin: 0 0 10px 0;">Pay by Direct Debit (GoCardless)</h3>
+                      <h3 style="color: #0f172a; font-size: 1.2rem; margin: 0 0 10px 0;">Pay by Direct Debit (Stripe)</h3>
                       <ul style="color: #475569; padding-left: 20px; line-height: 1.6;">
-                        <li>Payments collected securely through GoCardless</li>
+                        <li>Payments collected securely through Stripe Bacs Direct Debit</li>
                         <li>Protected by the Direct Debit Guarantee</li>
                         <li>Advance notice before collections</li>
                         <li>Easy cancellation process</li>
@@ -488,7 +488,7 @@ async function startServer() {
           `;
         } else if (normalizedPath === "/faq") {
           pageTitle = "Frequently Asked Questions | SeniorEase";
-          pageDescription = "Find clear answers to common questions about SeniorEase tech support, billing, device coverage, cancellations, and security training.";
+          pageDescription = "Find clear answers to common questions about SeniorEase subscriptions, billing, device coverage, cancellations, and security training.";
           staticHTML = `
             <div style="font-family: system-ui, -apple-system, sans-serif; color: #1e293b; background-color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column;">
               ${getHeader("faq")}
@@ -504,7 +504,7 @@ async function startServer() {
                   </div>
                   <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
                     <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">How does billing work?</h3>
-                    <p style="color: #475569; margin-bottom: 0;">Subscriptions are processed securely via Stripe or GoCardless Direct Debit. Payments are billed automatically on a rolling monthly basis on the date you subscribe. There are absolutely no contracts or hidden fees.</p>
+                    <p style="color: #475569; margin-bottom: 0;">Subscriptions are processed securely via Stripe Card or BACS Direct Debit. Payments are billed automatically on a rolling monthly basis on the date you subscribe. There are absolutely no contracts or hidden fees.</p>
                   </div>
                   <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
                     <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">Can I cancel or change plans?</h3>
@@ -512,33 +512,33 @@ async function startServer() {
                   </div>
                   <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
                     <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">Who is this service designed for?</h3>
-                    <p style="color: #475569; margin-bottom: 0;">It's designed for senior citizens who want to become confident online and families who want reassurance that their older loved ones have expert, safe, friendly tech support always ready to help.</p>
+                    <p style="color: #475569; margin-bottom: 0;">It's designed for senior citizens who want to become confident online and families who want reassurance that their older loved ones have expert, safe, friendly support always ready to help.</p>
                   </div>
 
                   <h2 style="font-size: 1.8rem; font-weight: bold; color: #0f172a; margin-top: 30px; margin-bottom: 10px;">Direct Debit & Payment FAQs</h2>
                   <div style="background: #0f172a; color: white; padding: 25px; border-radius: 12px; border: 1px solid #1e293b; margin-bottom: 10px;">
                     <h3 style="color: #2dd4bf; margin-top: 0; font-weight: bold;">Protected by the UK Direct Debit Guarantee</h3>
-                    <p style="color: #94a3b8; margin-bottom: 0; line-height: 1.6;">All Direct Debit collections are processed securely by GoCardless and are fully protected by the UK Consumer Direct Debit Guarantee. You receive advance notice prior to any collection, and you are entitled to an immediate refund from your bank in the unlikely event of any error.</p>
+                    <p style="color: #94a3b8; margin-bottom: 0; line-height: 1.6;">All Direct Debit collections are processed securely by Stripe and are fully protected by the UK Consumer Direct Debit Guarantee. You receive advance notice prior to any collection, and you are entitled to an immediate refund from your bank in the unlikely event of any error.</p>
                   </div>
                   <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
                     <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">When will payment be collected?</h3>
-                    <p style="color: #475569; margin-bottom: 0;">When you set up a Direct Debit mandate with SeniorEase through our secure partner GoCardless, your first monthly payment is typically collected within 3 to 5 working days after mandate confirmation. Subsequent monthly payments are automatically collected on or around the same date each month. You will always receive an automated email confirmation prior to any funds being debited from your bank account.</p>
+                    <p style="color: #475569; margin-bottom: 0;">When you set up a Direct Debit mandate with SeniorEase through our secure partner Stripe, your first monthly payment is typically collected within 3 to 5 working days after mandate confirmation. Subsequent monthly payments are automatically collected on or around the same date each month. You will always receive an automated email confirmation prior to any funds being debited from your bank account.</p>
                   </div>
                   <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
                     <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">How do I cancel my subscription and Direct Debit?</h3>
-                    <p style="color: #475569; margin-bottom: 0;">Cancelling your subscription is simple, transparent, and hassle-free. You can cancel at any time through your SeniorEase online account dashboard or by emailing our customer support team at support@senioreease.com. When your subscription is cancelled, we immediately cancel your GoCardless Direct Debit mandate so no further automated billing occurs. Furthermore, you retain the absolute right under UK banking rules to cancel the Direct Debit instruction directly with your bank or building society at any time.</p>
+                    <p style="color: #475569; margin-bottom: 0;">Cancelling your subscription is simple, transparent, and hassle-free. You can cancel at any time through your SeniorEase online account dashboard or by emailing our customer support team at support@senioreease.com. When your subscription is cancelled, we immediately cancel your Stripe Bacs Direct Debit mandate so no further automated billing occurs. Furthermore, you retain the absolute right under UK banking rules to cancel the Direct Debit instruction directly with your bank or building society at any time.</p>
                   </div>
                   <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
                     <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">Will I receive advance notice before collections?</h3>
-                    <p style="color: #475569; margin-bottom: 0;">Yes, absolutely! In strict accordance with the UK Direct Debit Guarantee and GoCardless banking protocols, you will always receive advance notification by email (typically 3 working days prior) before any payment is collected from your bank account. This advance notice clearly states the collection amount, due date, and mandate reference number, ensuring total financial clarity and peace of mind.</p>
+                    <p style="color: #475569; margin-bottom: 0;">Yes, absolutely! In strict accordance with the UK Direct Debit Guarantee and Stripe Bacs banking protocols, you will always receive advance notification by email (typically 3 working days prior) before any payment is collected from your bank account. This advance notice clearly states the collection amount, due date, and mandate reference number, ensuring total financial clarity and peace of mind.</p>
                   </div>
                   <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
                     <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">What is the Direct Debit Guarantee?</h3>
-                    <p style="color: #475569; margin-bottom: 0;">The Direct Debit Guarantee is offered by all UK banks and building societies that accept instructions to pay Direct Debits. It protects you against incorrect payments: if an error is made in the payment of your Direct Debit by SeniorEase, GoCardless, or your bank, you are entitled to a full and immediate refund of the amount paid from your bank or building society. Additionally, if you receive a refund you are not entitled to, you must pay it back when requested.</p>
+                    <p style="color: #475569; margin-bottom: 0;">The Direct Debit Guarantee is offered by all UK banks and building societies that accept instructions to pay Direct Debits. It protects you against incorrect payments: if an error is made in the payment of your Direct Debit by SeniorEase, Stripe, or your bank, you are entitled to a full and immediate refund of the amount paid from your bank or building society. Additionally, if you receive a refund you are not entitled to, you must pay it back when requested.</p>
                   </div>
                   <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
                     <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">Can I change my bank details or payment method later?</h3>
-                    <p style="color: #475569; margin-bottom: 0;">Yes! If you change your bank account or wish to switch your payment method (for example, moving from debit card billing via Stripe to Direct Debit via GoCardless, or vice versa), simply log into your SeniorEase dashboard and visit the 'Billing & Payment Methods' section. From there, you can securely update your bank details or set up a new mandate without any interruption to your tech support coverage. Our team is also happy to assist you over the phone or by email if needed.</p>
+                    <p style="color: #475569; margin-bottom: 0;">Yes! If you change your bank account or wish to switch your payment method (for example, moving from debit card billing via Stripe to Bacs Direct Debit via Stripe, or vice versa), simply log into your SeniorEase dashboard and visit the 'Billing & Payment Methods' section. From there, you can securely update your bank details or set up a new mandate without any interruption to your SeniorEase subscription coverage. Our team is also happy to assist you over the phone or by email if needed.</p>
                   </div>
                 </div>
               </main>
@@ -560,7 +560,7 @@ async function startServer() {
                   <h2 style="font-size: 1.5rem; color: #1e293b; margin-top: 0; margin-bottom: 20px; font-weight: bold;">Contact Information</h2>
                   <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Telephone Support:</strong> <a href="tel:+443304010019" style="color: #0d9488; text-decoration: none; font-weight: 600;">+44 (0) 330 401 0019</a></p>
                   <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Email Support:</strong> <a href="mailto:support@senioreease.com" style="color: #0d9488; text-decoration: none; font-weight: 600;">support@senioreease.com</a></p>
-                  <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Business Address:</strong> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
+                  <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Business Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
                   <p style="font-size: 1.1rem; color: #334155; margin-bottom: 0;"><strong>Office Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM GMT</p>
                 </div>
               </main>
@@ -577,9 +577,9 @@ async function startServer() {
                 <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Terms & Conditions</h1>
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
                   <p style="margin: 5px 0 0 0;"><strong>Company Registration Number:</strong> [Pending — to be added upon incorporation]</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Registered/Trading Address:</strong> 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Registered/Trading Address:</strong> 160 City Road, Kemp House, London, EC1V 2NX</p>
                   <p style="margin: 5px 0 0 0;"><strong>Contact:</strong> support@senioreease.com | +44 (0) 330 401 0019</p>
                 </div>
                 <p>These Terms & Conditions ("Terms") govern your access to and use of the SeniorEase website (senioreease.com) and the digital technology learning and support services we provide ("Services"). By registering for an account, booking a session, or purchasing a subscription, you agree to be bound by these Terms. If you do not agree, please do not use our Services.</p>
@@ -633,7 +633,7 @@ async function startServer() {
                 <h2>12. Intellectual Property</h2>
                 <p>All website content, logos, branding, software, graphics, text, and training materials are owned by or licensed to SeniorEase and are protected by applicable intellectual property laws. You may not copy, reproduce, distribute, or modify any content without our prior written permission.</p>
                 <h2>13. Contact Us</h2>
-                <p>Questions about these Terms can be sent to:<br /><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
+                <p>Questions about these Terms can be sent to:<br /><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
               </main>
               ${footerHTML}
             </div>
@@ -649,11 +649,11 @@ async function startServer() {
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
                   <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
                   <p style="margin: 5px 0 0 0;"><strong>Email:</strong> privacy@senioreease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
                 </div>
-                <p>SeniorEase respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, store, protect, and share your personal data when you visit our website, create an account, purchase a subscription, receive technical support or training from us, or contact our support team.</p>
+                <p>SeniorEase respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, store, protect, and share your personal data when you visit our website, create an account, purchase a subscription, receive digital training or support from us, or contact our support team.</p>
                 <p>This policy applies to all users of senioreease.com and our associated Services, and is written to comply with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.</p>
                 <h2>1. Information We Collect</h2>
                 <p>We only collect the minimum information necessary to provide secure, reliable support. This includes:</p>
@@ -715,7 +715,7 @@ async function startServer() {
                 <h2>12. Changes to This Policy</h2>
                 <p>We may update this Privacy Policy from time to time. Material changes will be notified by email or via a notice on our website at least 14 days before they take effect. The "Effective Date" at the top of this page will always reflect the latest version.</p>
                 <h2>13. Contact Us</h2>
-                <p>If you have any questions about this Privacy Policy or how we handle your data:<br /><strong>Email:</strong> privacy@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
+                <p>If you have any questions about this Privacy Policy or how we handle your data:<br /><strong>Email:</strong> privacy@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
                 <p>You may also contact the ICO directly at ico.org.uk if you are not satisfied with our response.</p>
               </main>
               ${footerHTML}
@@ -731,7 +731,7 @@ async function startServer() {
                 <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Refund & Cancellation Policy</h1>
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
                   <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
                 </div>
                 <h2>1. Free Introductory Call</h2>
@@ -784,7 +784,7 @@ async function startServer() {
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
                   <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
                   <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
                 </div>
@@ -795,7 +795,7 @@ async function startServer() {
                 <ul>
                   <li><strong>Scheduled one-to-one tutoring sessions</strong> (smartphone, tablet, and computer support)</li>
                   <li><strong>Scam and fraud awareness training</strong></li>
-                  <li><strong>General technical support</strong> via phone and email</li>
+                  <li><strong>General customer support</strong> via phone and email</li>
                   <li><strong>Family progress notifications</strong> (where enabled)</li>
                 </ul>
                 <h2>3. Support Hours</h2>
@@ -807,7 +807,7 @@ async function startServer() {
                 <h2>4. Response Times</h2>
                 <ul>
                   <li><strong>General enquiry (email/phone):</strong> Within 1 business day</li>
-                  <li><strong>Technical support issue:</strong> Within 1 business day</li>
+                  <li><strong>Support request:</strong> Within 1 business day</li>
                   <li><strong>Urgent/safety-related concern (e.g. suspected scam in progress):</strong> Within 4 business hours</li>
                   <li><strong>Booking or rescheduling request:</strong> Within 1 business day</li>
                 </ul>
@@ -832,14 +832,14 @@ async function startServer() {
                 <h2>10. Reviews and Changes to This SLA</h2>
                 <p>This SLA is reviewed periodically and may be updated to reflect changes in our Services. Material changes will be communicated to active subscribers by email at least 14 days before they take effect.</p>
                 <h2>11. Contact Us</h2>
-                <p><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
+                <p><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
               </main>
               ${footerHTML}
             </div>
           `;
         } else if (normalizedPath === "/disclaimer") {
           pageTitle = "Disclaimer | SeniorEase";
-          pageDescription = "Important legal disclosures and disclaimers regarding SeniorEase technical support, educational materials, and third-party device guidance.";
+          pageDescription = "Important legal disclosures and disclaimers regarding SeniorEase subscriptions, educational materials, and third-party device guidance.";
           staticHTML = `
             <div style="font-family: system-ui, -apple-system, sans-serif; color: #1e293b; background-color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column;">
               ${getHeader("")}
@@ -848,7 +848,7 @@ async function startServer() {
                 <p style="font-size: 1.1rem; color: #475569;">This Disclaimer explains the scope and limitations of the services provided by SeniorEase.</p>
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
                   <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
@@ -894,7 +894,7 @@ async function startServer() {
                 <h2>7. Changes to This Disclaimer</h2>
                 <p>We may update this Disclaimer from time to time to reflect changes in our Services or applicable law. The "Effective Date" above will always reflect the most recent version.</p>
                 <h2>8. Contact Us</h2>
-                <p><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
+                <p><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
               </main>
               ${footerHTML}
             </div>
@@ -909,7 +909,7 @@ async function startServer() {
                 <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">GDPR Compliance</h1>
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
                   <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Email:</strong> privacy@senioreease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
@@ -950,7 +950,7 @@ async function startServer() {
                   <p style="margin: 0; font-size: 1.1rem;"><strong>Commitment to Accessibility, Privacy and Good Practice</strong></p>
                   <p style="margin: 8px 0 0 0;"><strong>Effective Date:</strong> 01 June 2026</p>
                   <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
                   <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
                 </div>
@@ -958,7 +958,7 @@ async function startServer() {
                   <p style="margin: 0;"><strong>Important:</strong> SeniorEase is an independent, privately operated digital technology support service. We are not part of, endorsed by, or affiliated with the NHS, any NHS trust, or any other public healthcare body. Any reference to health, wellbeing, or safeguarding on this page reflects our own internal standards and good practice, not a formal certification or partnership.</p>
                 </div>
                 <h2>1. Our Commitment</h2>
-                <p>At SeniorEase, we are committed to providing a safe, accessible, and user-friendly digital education and technical support service for senior citizens across the United Kingdom. Our services are designed around the principles of accessibility, privacy, transparency, and continuous improvement. We aim to help older adults use everyday technology with greater confidence through clear guidance provided by our trained support team.</p>
+                <p>At SeniorEase, we are committed to providing a safe, accessible, and user-friendly digital education and subscription service for senior citizens across the United Kingdom. Our services are designed around the principles of accessibility, privacy, transparency, and continuous improvement. We aim to help older adults use everyday technology with greater confidence through clear guidance provided by our trained support team.</p>
                 <h2>2. Accessibility Standards</h2>
                 <p>We design our website, communications, and training materials with accessibility in mind, including:</p>
                 <ul>
@@ -986,7 +986,7 @@ async function startServer() {
                 <h2>6. Continuous Improvement</h2>
                 <p>We review our practices periodically, incorporating customer feedback, to ensure our Services remain safe, accessible, and appropriate for the people we support. Suggestions can be sent to support@senioreease.com at any time.</p>
                 <h2>7. Contact Us</h2>
-                <p><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
+                <p><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
               </main>
               ${footerHTML}
             </div>

@@ -8,7 +8,7 @@ import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function Home() {
   usePageMeta(
-    "SeniorEase - Digital Tech Support & Learning for Seniors",
+    "SeniorEase - Digital Subscription & Learning for Seniors",
     "SeniorEase makes smartphone, tablet, and computer technology simple and accessible for older adults in the UK with friendly one-on-one guidance."
   );
 
@@ -229,7 +229,7 @@ Through our portal, you can request educate on common everyday tasks such as:</p
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-900 mb-2">Families who want extra reassurance for a parent or loved one</h3>
-                  <p className="text-gray-600">Give yourself peace of mind knowing your loved ones have a friendly, reliable place to turn for tech support.</p>
+                  <p className="text-gray-600">Give yourself peace of mind knowing your loved ones have a friendly, reliable place to turn for assistance.</p>
                 </div>
               </div>
 

@@ -17,7 +17,7 @@ export default function NHSStandards() {
             <p className="font-bold text-gray-900 text-lg mb-2">Commitment to Accessibility, Privacy and Good Practice</p>
             <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
             <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
-            <p className="font-semibold text-gray-900">Company Name: Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
+            <p className="font-semibold text-gray-900">Company Name: SeniorEase</p>
             <p className="font-semibold text-gray-900">Email: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
             <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
           </div>
@@ -33,7 +33,7 @@ export default function NHSStandards() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Our Commitment</h2>
             <p className="mb-4">
-              At SeniorEase, we are committed to providing a safe, accessible, and user-friendly digital education and technical support service for senior citizens across the United Kingdom.
+              At SeniorEase, we are committed to providing a safe, accessible, and user-friendly digital education and subscription service for senior citizens across the United Kingdom.
             </p>
             <p>
               Our services are designed around the principles of accessibility, privacy, transparency, and continuous improvement. We aim to help older adults use everyday technology with greater confidence through clear guidance provided by our trained support team.
@@ -120,7 +120,7 @@ export default function NHSStandards() {
               <p className="font-bold text-teal-900 mb-2">SeniorEase</p>
               <p><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-700 hover:underline">support@senioreease.com</a></p>
               <p><span className="font-semibold text-teal-800">Phone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
-              <p><span className="font-semibold text-teal-800">Address:</span> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
+              <p><span className="font-semibold text-teal-800">Address:</span> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
             </div>
           </section>
         </div>

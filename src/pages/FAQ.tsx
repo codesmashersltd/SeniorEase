@@ -8,7 +8,7 @@ import { usePageMeta } from '../hooks/usePageMeta';
 export default function FAQ() {
   usePageMeta(
     "Frequently Asked Questions | SeniorEase",
-    "Find clear answers to common questions about SeniorEase tech support, billing, device coverage, cancellations, and security training."
+    "Find clear answers to common questions about SeniorEase subscriptions, billing, device coverage, cancellations, and security training."
   );
   const [activeCategory, setActiveCategory] = useState<'all' | 'general' | 'direct-debit' | 'refunds'>('all');
 
@@ -46,7 +46,7 @@ export default function FAQ() {
   const refundCancellationFaqs = [
     {
       q: "What is your refund policy for monthly subscription plans?",
-      a: "We operate with a transparent, customer-first refund policy. Under the UK Consumer Contracts Regulations, new subscribers are entitled to a 14-day statutory cooling-off period. If you cancel within these 14 days and have not utilized our 1-on-1 tutoring or technical support helpline, you will receive a 100% full refund immediately. If services were used during this period, a pro-rata refund may be issued reflecting the active days of coverage."
+      a: "We operate with a transparent, customer-first refund policy. Under the UK Consumer Contracts Regulations, new subscribers are entitled to a 14-day statutory cooling-off period. If you cancel within these 14 days and have not utilized our 1-on-1 tutoring or customer support helpline, you will receive a 100% full refund immediately. If services were used during this period, a pro-rata refund may be issued reflecting the active days of coverage."
     },
     {
       q: "How do I request a cancellation or refund?",
@@ -54,7 +54,7 @@ export default function FAQ() {
     },
     {
       q: "How quickly are approved refunds processed?",
-      a: "Once approved by our billing team, refunds are initiated immediately. Depending on your bank or payment card provider, credited funds typically appear back in your original account or card within 3 to 5 business days. If you paid via GoCardless Direct Debit, your bank will process the refund directly to your bank account under UK banking protocols."
+      a: "Once approved by our billing team, refunds are initiated immediately. Depending on your bank or payment card provider, credited funds typically appear back in your original account or card within 3 to 5 business days. If you paid via Stripe Bacs Direct Debit, your bank will process the refund directly to your bank account under UK banking protocols."
     },
     {
       q: "What happens to my portal access after I cancel my subscription?",
@@ -70,30 +70,30 @@ export default function FAQ() {
     },
     {
       q: "What if an accidental duplicate payment or Direct Debit error occurs?",
-      a: "If a billing error or accidental duplicate collection occurs, you are fully protected. Under the UK Direct Debit Guarantee and our internal billing pledge, any erroneous charges made by SeniorEase or GoCardless will be refunded in full immediately upon notification."
+      a: "If a billing error or accidental duplicate collection occurs, you are fully protected. Under the UK Direct Debit Guarantee and our internal billing pledge, any erroneous charges made by SeniorEase or Stripe will be refunded in full immediately upon notification."
     }
   ];
 
   const directDebitFaqs = [
     {
       q: "When will payment be collected?",
-      a: "When you set up a Direct Debit mandate with SeniorEase through our secure partner GoCardless, your first monthly payment is typically collected within 3 to 5 working days after mandate confirmation. Subsequent monthly payments are automatically collected on or around the same date each month. You will always receive an automated email confirmation prior to any funds being debited from your bank account."
+      a: "When you set up a Direct Debit mandate with SeniorEase through our secure partner Stripe, your first monthly payment is typically collected within 3 to 5 working days after mandate confirmation. Subsequent monthly payments are automatically collected on or around the same date each month. You will always receive an automated email confirmation prior to any funds being debited from your bank account."
     },
     {
       q: "How do I cancel my subscription and Direct Debit?",
-      a: "Cancelling your subscription is simple, transparent, and hassle-free. You can cancel at any time through your SeniorEase online account dashboard or by emailing our customer support team at support@senioreease.com. When your subscription is cancelled, we immediately cancel your GoCardless Direct Debit mandate so no further automated billing occurs. Furthermore, you retain the absolute right under UK banking rules to cancel the Direct Debit instruction directly with your bank or building society at any time."
+      a: "Cancelling your subscription is simple, transparent, and hassle-free. You can cancel at any time through your SeniorEase online account dashboard or by emailing our customer support team at support@senioreease.com. When your subscription is cancelled, we immediately cancel your Stripe Bacs Direct Debit mandate so no further automated billing occurs. Furthermore, you retain the absolute right under UK banking rules to cancel the Direct Debit instruction directly with your bank or building society at any time."
     },
     {
       q: "Will I receive advance notice before collections?",
-      a: "Yes, absolutely! In strict accordance with the UK Direct Debit Guarantee and GoCardless banking protocols, you will always receive advance notification by email (typically 3 working days prior) before any payment is collected from your bank account. This advance notice clearly states the collection amount, due date, and mandate reference number, ensuring total financial clarity and peace of mind."
+      a: "Yes, absolutely! In strict accordance with the UK Direct Debit Guarantee and Stripe Bacs banking protocols, you will always receive advance notification by email (typically 3 working days prior) before any payment is collected from your bank account. This advance notice clearly states the collection amount, due date, and mandate reference number, ensuring total financial clarity and peace of mind."
     },
     {
       q: "What is the Direct Debit Guarantee?",
-      a: "The Direct Debit Guarantee is offered by all UK banks and building societies that accept instructions to pay Direct Debits. It protects you against incorrect payments: if an error is made in the payment of your Direct Debit by SeniorEase, GoCardless, or your bank, you are entitled to a full and immediate refund of the amount paid from your bank or building society. Additionally, if you receive a refund you are not entitled to, you must pay it back when requested."
+      a: "The Direct Debit Guarantee is offered by all UK banks and building societies that accept instructions to pay Direct Debits. It protects you against incorrect payments: if an error is made in the payment of your Direct Debit by SeniorEase, Stripe, or your bank, you are entitled to a full and immediate refund of the amount paid from your bank or building society. Additionally, if you receive a refund you are not entitled to, you must pay it back when requested."
     },
     {
       q: "Can I change my bank details or payment method later?",
-      a: "Yes! If you change your bank account or wish to switch your payment method (for example, moving from debit card billing via Stripe to Direct Debit via GoCardless, or vice versa), simply log into your SeniorEase dashboard and visit the 'Billing & Payment Methods' section. From there, you can securely update your bank details or set up a new mandate without any interruption to your tech support coverage. Our team is also happy to assist you over the phone or by email if needed."
+      a: "Yes! If you change your bank account or wish to switch your payment method (for example, moving from debit card billing via Stripe to Bacs Direct Debit via Stripe, or vice versa), simply log into your SeniorEase dashboard and visit the 'Billing & Payment Methods' section. From there, you can securely update your bank details or set up a new mandate without any interruption to your SeniorEase subscription coverage. Our team is also happy to assist you over the phone or by email if needed."
     }
   ];
 
@@ -231,7 +231,7 @@ export default function FAQ() {
                   <div className="w-10 h-10 bg-teal-100 text-teal-700 rounded-xl flex items-center justify-center font-bold">
                     <HelpCircle size={22} />
                   </div>
-                  <h2 className="text-2xl font-extrabold text-gray-900">General Platform & Tech Support FAQs</h2>
+                  <h2 className="text-2xl font-extrabold text-gray-900">General Platform & Subscription FAQs</h2>
                 </div>
               )}
               <div className="space-y-6">
@@ -305,7 +305,7 @@ export default function FAQ() {
                   </div>
                   <div>
                     <h2 className="text-2xl font-extrabold text-gray-900">Direct Debit & Payment FAQs</h2>
-                    <p className="text-sm text-gray-500">Secure automated billing powered by GoCardless & protected by the UK Direct Debit Guarantee</p>
+                    <p className="text-sm text-gray-500">Secure automated billing powered by Stripe & protected by the UK Direct Debit Guarantee</p>
                   </div>
                 </div>
               )}
@@ -320,7 +320,7 @@ export default function FAQ() {
                     <span>Protected by the UK Direct Debit Guarantee</span>
                   </h3>
                   <p className="text-teal-100 text-sm md:text-base leading-relaxed">
-                    All Direct Debit collections are processed securely by <strong>GoCardless</strong> and are fully protected by the UK Consumer Direct Debit Guarantee. You receive advance notice prior to any collection, and you are entitled to an immediate refund from your bank in the unlikely event of any error.
+                    All Direct Debit collections are processed securely by <strong>Stripe</strong> and are fully protected by the UK Consumer Direct Debit Guarantee. You receive advance notice prior to any collection, and you are entitled to an immediate refund from your bank in the unlikely event of any error.
                   </p>
                 </div>
               </div>

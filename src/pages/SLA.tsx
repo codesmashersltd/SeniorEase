@@ -15,7 +15,7 @@ export default function SLA() {
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-2">
             <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
             <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
-            <p className="font-semibold text-gray-900">Company Name: Silverbridge Technologies Ltd. (Trading as SeniorEase)</p>
+            <p className="font-semibold text-gray-900">Company Name: SeniorEase</p>
             <p className="font-semibold text-gray-900">Email: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
             <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
           </div>
@@ -49,7 +49,7 @@ export default function SLA() {
             <ul className="list-disc pl-6 space-y-2">
               <li><strong className="text-gray-900">Scheduled one-to-one tutoring sessions</strong> (smartphone, tablet, and computer support)</li>
               <li><strong className="text-gray-900">Scam and fraud awareness training</strong></li>
-              <li><strong className="text-gray-900">General technical support</strong> via phone and email</li>
+              <li><strong className="text-gray-900">General customer support</strong> via phone and email</li>
               <li><strong className="text-gray-900">Family progress notifications</strong> (where enabled)</li>
             </ul>
           </section>
@@ -83,7 +83,7 @@ export default function SLA() {
                     <td className="px-6 py-4">Within 1 business day</td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 font-medium text-gray-900">Technical support issue</td>
+                    <td className="px-6 py-4 font-medium text-gray-900">Support request</td>
                     <td className="px-6 py-4">Within 1 business day</td>
                   </tr>
                   <tr>
@@ -178,7 +178,7 @@ export default function SLA() {
               <p className="font-bold text-teal-900 mb-2">SeniorEase</p>
               <p><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-700 hover:underline">support@senioreease.com</a></p>
               <p><span className="font-semibold text-teal-800">Phone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
-              <p><span className="font-semibold text-teal-800">Address:</span> SeniorEase, 167-169 Great Portland Street, 5th Floor, London, W1W 5PF</p>
+              <p><span className="font-semibold text-teal-800">Address:</span> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
             </div>
           </section>
         </div>

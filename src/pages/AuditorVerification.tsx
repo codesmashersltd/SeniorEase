@@ -294,7 +294,7 @@ export default function AuditorVerification() {
                       <span>Checkout &amp; Account Flows</span>
                     </div>
                     <p className="text-xs text-gray-500 mb-4">
-                      Test live Stripe / GoCardless pricing plans, interactive modals, and user portal.
+                      Test live Stripe card & BACS Direct Debit pricing plans, interactive modals, and user portal.
                     </p>
                     <ul className="space-y-3 text-sm font-semibold">
                       <li>
@@ -412,7 +412,7 @@ export default function AuditorVerification() {
                 <div className="space-y-4">
                   <div>
                     <span className="text-xs font-bold uppercase tracking-wider text-gray-400 block mb-1">Company Name</span>
-                    <strong className="text-xl text-gray-900">Silverbridge Technologies Ltd.</strong>
+                    <strong className="text-xl text-gray-900">SeniorEase</strong>
                   </div>
                   <div>
                     <span className="text-xs font-bold uppercase tracking-wider text-gray-400 block mb-1">Trading Name</span>
@@ -441,8 +441,8 @@ export default function AuditorVerification() {
                     <span className="text-xs font-bold uppercase tracking-wider text-gray-400 block mb-1">Registered Office Address</span>
                     <p className="text-gray-700 leading-relaxed">
                       SeniorEase UK Support<br />
-                      167-169 Great Portland Street, 5th Floor<br />
-                      London, W1W 5PF, United Kingdom
+                      160 City Road, Kemp House<br />
+                      London, EC1V 2NX, United Kingdom
                     </p>
                   </div>
                   <div>

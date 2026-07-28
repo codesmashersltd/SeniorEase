@@ -36,13 +36,13 @@ export default function Layout() {
     "email": "support@senioreease.com",
     "telephone": "+443304010019",
     "description": "UK Digital Technology Learning & Support Platform for Seniors. We provide smartphone, tablet, computer, and anti-scam assistance.",
-    "disambiguatingDescription": "SeniorEase is a digital technology education and technical support platform for older adults in the United Kingdom. It is an independent SaaS tech support service and is distinct from and not affiliated with any US or international senior living community discovery platforms or residential care directories.",
+    "disambiguatingDescription": "SeniorEase is a digital technology education and digital education platform for older adults in the United Kingdom. It is an independent SeniorEase subscription service and is distinct from and not affiliated with any US or international senior living community discovery platforms or residential care directories.",
     "knowsAbout": ["Digital Technology Support for Seniors", "Smartphone Learning", "Scam Awareness", "Tablet Training", "Online Banking Help"],
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "167-169 Great Portland Street, 5th Floor",
+      "streetAddress": "160 City Road, Kemp House",
       "addressLocality": "London",
-      "postalCode": "W1W 5PF",
+      "postalCode": "EC1V 2NX",
       "addressCountry": "GB"
     },
     "sameAs": [
@@ -238,9 +238,9 @@ export default function Layout() {
                 <p className="flex flex-col gap-0.5">
                   <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Address</span>
                   <span className="leading-relaxed text-gray-300">
-                    167-169 Great Portland Street<br />
-                    5th Floor<br />
-                    London, W1W 5PF
+                    160 City Road<br />
+                    Kemp House<br />
+                    London, EC1V 2NX
                   </span>
                 </p>
                 <p className="flex flex-col gap-0.5">
@@ -263,9 +263,9 @@ export default function Layout() {
 
           <div className="pt-8 border-t border-gray-800 text-center md:text-left text-gray-300 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
-              <p>&copy; {new Date().getFullYear()} Silverbridge Technologies Ltd. Trading as SeniorEase. All rights reserved.</p>
+              <p>&copy; {new Date().getFullYear()} SeniorEase. All rights reserved.</p>
               <p className="text-xs text-gray-400 mt-1.5 max-w-xl leading-relaxed">
-                <strong className="text-teal-400">Important Notice:</strong> SeniorEase (senioreease.com) is a digital technology education and technical support service for older adults. We are an independent UK technology support platform and are <span className="underline decoration-teal-500">not affiliated</span> with any senior living, residential care homes, or property discovery platforms.
+                <strong className="text-teal-400">Important Notice:</strong> SeniorEase (senioreease.com) is a digital technology education and subscription service for older adults. We are an independent UK platform and are <span className="underline decoration-teal-500">not affiliated</span> with any senior living, residential care homes, or property discovery platforms.
               </p>
             </div>
             <div className="max-w-2xl text-xs text-gray-400 text-center md:text-right space-y-2">

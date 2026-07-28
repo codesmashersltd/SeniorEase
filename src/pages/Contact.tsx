@@ -154,9 +154,9 @@ export default function Contact() {
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">Address</h3>
                     <p className="text-gray-600 leading-relaxed">
-                      167-169 Great Portland Street<br />
-                      5th Floor<br />
-                      London, W1W 5PF
+                      160 City Road<br />
+                      Kemp House<br />
+                      London, EC1V 2NX
                     </p>
                   </div>
                 </div>
