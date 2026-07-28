@@ -31,9 +31,9 @@ export default function Layout() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "SeniorEase",
-    "url": "https://www.senioreease.com",
-    "logo": "https://www.senioreease.com/logo.svg",
-    "email": "support@senioreease.com",
+    "url": "https://www.seniorease.com",
+    "logo": "https://www.seniorease.com/logo.svg",
+    "email": "support@seniorease.com",
     "telephone": "+443304010019",
     "description": "UK Digital Technology Learning & Support Platform for Seniors. We provide smartphone, tablet, computer, and anti-scam assistance.",
     "disambiguatingDescription": "SeniorEase is a digital technology education and digital education platform for older adults in the United Kingdom. It is an independent SeniorEase subscription service and is distinct from and not affiliated with any US or international senior living community discovery platforms or residential care directories.",
@@ -46,7 +46,7 @@ export default function Layout() {
       "addressCountry": "GB"
     },
     "sameAs": [
-      "https://www.senioreease.com"
+      "https://www.seniorease.com"
     ]
   };
 
@@ -249,7 +249,7 @@ export default function Layout() {
                 </p>
                 <p className="flex flex-col gap-0.5">
                   <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Email</span>
-                  <a href="mailto:support@senioreease.com" className="hover:text-white text-gray-200 transition-colors break-all">support@senioreease.com</a>
+                  <a href="mailto:support@seniorease.com" className="hover:text-white text-gray-200 transition-colors break-all">support@seniorease.com</a>
                 </p>
               </div>
             </div>
@@ -265,7 +265,7 @@ export default function Layout() {
             <div>
               <p>&copy; {new Date().getFullYear()} SeniorEase. All rights reserved.</p>
               <p className="text-xs text-gray-400 mt-1.5 max-w-xl leading-relaxed">
-                <strong className="text-teal-400">Important Notice:</strong> SeniorEase (senioreease.com) is a digital technology education and subscription service for older adults. We are an independent UK platform and are <span className="underline decoration-teal-500">not affiliated</span> with any senior living, residential care homes, or property discovery platforms.
+                <strong className="text-teal-400">Important Notice:</strong> SeniorEase (seniorease.com) is a digital technology education and subscription service for older adults. We are an independent UK platform and are <span className="underline decoration-teal-500">not affiliated</span> with any senior living, residential care homes, or property discovery platforms.
               </p>
             </div>
             <div className="max-w-2xl text-xs text-gray-400 text-center md:text-right space-y-2">

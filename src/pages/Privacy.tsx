@@ -15,9 +15,9 @@ export default function Privacy() {
         <div className="prose prose-teal max-w-none text-gray-600 space-y-8">
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-2">
             <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
-            <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
+            <p className="font-semibold text-gray-900">Website: <a href="https://www.seniorease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.com</a></p>
             <p className="font-semibold text-gray-900">Company Name: SeniorEase</p>
-            <p className="font-semibold text-gray-900">Email: <a href="mailto:privacy@senioreease.com" className="text-teal-600 hover:underline">privacy@senioreease.com</a></p>
+            <p className="font-semibold text-gray-900">Email: <a href="mailto:privacy@seniorease.com" className="text-teal-600 hover:underline">privacy@seniorease.com</a></p>
             <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
           </div>
 
@@ -36,7 +36,7 @@ export default function Privacy() {
               <li>contact our support team.</li>
             </ul>
             <p className="font-semibold text-gray-900 bg-teal-50/50 p-4 rounded-xl border border-teal-100/50">
-              This policy applies to all users of senioreease.com and our associated Services, and is written to comply with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.
+              This policy applies to all users of seniorease.com and our associated Services, and is written to comply with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.
             </p>
           </section>
 
@@ -82,7 +82,7 @@ export default function Privacy() {
               <li><strong className="text-gray-900">Legal obligation:</strong> where we must retain records for tax, accounting, or regulatory purposes</li>
             </ul>
             <p className="text-gray-700 bg-gray-50 p-4 rounded-xl border border-gray-100">
-              You may withdraw consent at any time by contacting <a href="mailto:privacy@senioreease.com" className="text-teal-600 hover:underline font-medium">privacy@senioreease.com</a>; this will not affect the lawfulness of processing carried out before withdrawal.
+              You may withdraw consent at any time by contacting <a href="mailto:privacy@seniorease.com" className="text-teal-600 hover:underline font-medium">privacy@seniorease.com</a>; this will not affect the lawfulness of processing carried out before withdrawal.
             </p>
           </section>
 
@@ -96,7 +96,7 @@ export default function Privacy() {
               <li>limited to training/session summaries — not full session content or sensitive personal disclosures.</li>
             </ul>
             <p>
-              This feature can be switched off at any time by contacting <a href="mailto:privacy@senioreease.com" className="text-teal-600 hover:underline font-medium">privacy@senioreease.com</a>.
+              This feature can be switched off at any time by contacting <a href="mailto:privacy@seniorease.com" className="text-teal-600 hover:underline font-medium">privacy@seniorease.com</a>.
             </p>
           </section>
 
@@ -151,7 +151,7 @@ export default function Privacy() {
               <li>Lodge a complaint with the Information Commissioner's Office (ICO) at <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline">ico.org.uk</a> if you believe your data has been mishandled</li>
             </ul>
             <p>
-              To exercise any of these rights, contact <a href="mailto:privacy@senioreease.com" className="text-teal-600 hover:underline font-medium">privacy@senioreease.com</a>. We aim to respond within one month, as required by law.
+              To exercise any of these rights, contact <a href="mailto:privacy@seniorease.com" className="text-teal-600 hover:underline font-medium">privacy@seniorease.com</a>. We aim to respond within one month, as required by law.
             </p>
           </section>
 
@@ -200,7 +200,7 @@ export default function Privacy() {
             </p>
             <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100/50 space-y-1">
               <p className="font-bold text-teal-900 mb-2">SeniorEase</p>
-              <p><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:privacy@senioreease.com" className="text-teal-700 hover:underline">privacy@senioreease.com</a></p>
+              <p><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:privacy@seniorease.com" className="text-teal-700 hover:underline">privacy@seniorease.com</a></p>
               <p><span className="font-semibold text-teal-800">Phone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
               <p><span className="font-semibold text-teal-800">Address:</span> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
             </div>

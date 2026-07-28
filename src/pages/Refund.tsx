@@ -14,9 +14,9 @@ export default function Refund() {
         <div className="prose prose-teal max-w-none text-gray-600 space-y-8">
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-1">
             <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
-            <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
+            <p className="font-semibold text-gray-900">Website: <a href="https://www.seniorease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.com</a></p>
             <p className="font-semibold text-gray-900">Company Name: SeniorEase</p>
-            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
+            <p className="font-semibold text-gray-900">Email: <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline">support@seniorease.com</a></p>
             <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
           </div>
 
@@ -34,7 +34,7 @@ export default function Refund() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Cancelling a Subscription</h2>
             <ul className="list-disc pl-6 space-y-2">
-              <li>You may cancel your subscription at any time by emailing <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline font-medium">support@senioreease.com</a>, calling <a href="tel:+443304010019" className="text-teal-600 hover:underline font-medium">+44 (0) 330 401 0019</a>, or through your account dashboard (once available).</li>
+              <li>You may cancel your subscription at any time by emailing <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline font-medium">support@seniorease.com</a>, calling <a href="tel:+443304010019" className="text-teal-600 hover:underline font-medium">+44 (0) 330 401 0019</a>, or through your account dashboard (once available).</li>
               <li>Cancellations take effect at the end of the current paid billing period. You will continue to have access to your Services until that date, and no further payments will be taken afterward.</li>
               <li>We do not charge cancellation fees.</li>
             </ul>
@@ -49,7 +49,7 @@ export default function Refund() {
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>If you request that support begins immediately within the 14-day window and later cancel, we may deduct a reasonable amount reflecting the sessions or support already provided.</li>
-              <li>To exercise this right, contact us at <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline font-medium">support@senioreease.com</a> within 14 days of purchase.</li>
+              <li>To exercise this right, contact us at <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline font-medium">support@seniorease.com</a> within 14 days of purchase.</li>
             </ul>
           </section>
 
@@ -91,7 +91,7 @@ export default function Refund() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Disputing a Charge</h2>
             <p>
-              If you believe a charge is incorrect, please contact us first at <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline font-medium">support@senioreease.com</a> before raising a dispute with your bank or card provider — most issues can be resolved directly and more quickly this way. We aim to acknowledge all billing queries within 2 business days.
+              If you believe a charge is incorrect, please contact us first at <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline font-medium">support@seniorease.com</a> before raising a dispute with your bank or card provider — most issues can be resolved directly and more quickly this way. We aim to acknowledge all billing queries within 2 business days.
             </p>
           </section>
 
@@ -122,8 +122,8 @@ export default function Refund() {
             </p>
             <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100/50">
               <p className="font-bold text-teal-900 mb-2">SeniorEase</p>
-              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.senioreease.com" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
-              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-700 hover:underline">support@senioreease.com</a></p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Website:</span> <a href="https://www.seniorease.com" className="text-teal-700 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.com</a></p>
+              <p className="mb-1"><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@seniorease.com" className="text-teal-700 hover:underline">support@seniorease.com</a></p>
               <p className="mb-3"><span className="font-semibold text-teal-800">Telephone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
               <p className="font-semibold text-teal-900 mt-2">Business Hours:</p>
               <p className="text-teal-800">Monday to Friday</p>

@@ -444,7 +444,7 @@ export default function Safeguarding() {
                     </p>
                   </div>
                   <a 
-                    href="mailto:safeguarding@senioreease.com" 
+                    href="mailto:safeguarding@seniorease.com" 
                     className="w-full py-2.5 bg-teal-700 text-white text-center rounded-xl font-bold text-sm hover:bg-teal-800 transition-colors shadow-sm block"
                   >
                     Email Safeguarding

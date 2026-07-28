@@ -50,7 +50,7 @@ export default function FAQ() {
     },
     {
       q: "How do I request a cancellation or refund?",
-      a: "You can request a cancellation or refund at any time with zero hassle. Simply log into your SeniorEase 'My Account' dashboard and click 'Cancel Subscription', or reach out directly to our UK customer care team via email at support@senioreease.com or by telephone. We process all requests promptly without restrictive retention scripts or hidden hoops."
+      a: "You can request a cancellation or refund at any time with zero hassle. Simply log into your SeniorEase 'My Account' dashboard and click 'Cancel Subscription', or reach out directly to our UK customer care team via email at support@seniorease.com or by telephone. We process all requests promptly without restrictive retention scripts or hidden hoops."
     },
     {
       q: "How quickly are approved refunds processed?",
@@ -81,7 +81,7 @@ export default function FAQ() {
     },
     {
       q: "How do I cancel my subscription and Direct Debit?",
-      a: "Cancelling your subscription is simple, transparent, and hassle-free. You can cancel at any time through your SeniorEase online account dashboard or by emailing our customer support team at support@senioreease.com. When your subscription is cancelled, we immediately cancel your Stripe Bacs Direct Debit mandate so no further automated billing occurs. Furthermore, you retain the absolute right under UK banking rules to cancel the Direct Debit instruction directly with your bank or building society at any time."
+      a: "Cancelling your subscription is simple, transparent, and hassle-free. You can cancel at any time through your SeniorEase online account dashboard or by emailing our customer support team at support@seniorease.com. When your subscription is cancelled, we immediately cancel your Stripe Bacs Direct Debit mandate so no further automated billing occurs. Furthermore, you retain the absolute right under UK banking rules to cancel the Direct Debit instruction directly with your bank or building society at any time."
     },
     {
       q: "Will I receive advance notice before collections?",

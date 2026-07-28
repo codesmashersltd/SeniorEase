@@ -37,8 +37,8 @@ export default function Disclaimer() {
             <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-2" id="disclaimer-metadata">
               <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
               <p className="font-semibold text-gray-900">Company Name: SeniorEase</p>
-              <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
-              <p className="font-semibold text-gray-900">Email: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a></p>
+              <p className="font-semibold text-gray-900">Website: <a href="https://www.seniorease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.com</a></p>
+              <p className="font-semibold text-gray-900">Email: <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline">support@seniorease.com</a></p>
               <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
             </div>
 
@@ -47,7 +47,7 @@ export default function Disclaimer() {
             <section id="disclaimer-section-1">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Introduction &amp; Brand Identity Notice</h2>
               <p className="mb-4">
-                SeniorEase (senioreease.com) is an independent UK digital technology learning and support SaaS service for older adults.
+                SeniorEase (seniorease.com) is an independent UK digital technology learning and support SaaS service for older adults.
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
                 <li>We are not affiliated with any senior living provider, residential care home, or property discovery platform, including any similarly named business or service operating under the "SeniorEase" name elsewhere.</li>
@@ -159,7 +159,7 @@ export default function Disclaimer() {
               </p>
               <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100/50 space-y-1" id="disclaimer-contact-box">
                 <p className="font-bold text-teal-900 mb-2">SeniorEase</p>
-                <p><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-700 hover:underline">support@senioreease.com</a></p>
+                <p><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@seniorease.com" className="text-teal-700 hover:underline">support@seniorease.com</a></p>
                 <p><span className="font-semibold text-teal-800">Phone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
                 <p><span className="font-semibold text-teal-800">Address:</span> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
               </div>

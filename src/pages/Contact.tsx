@@ -11,7 +11,7 @@ import { usePageMeta } from '../hooks/usePageMeta';
 export default function Contact() {
   usePageMeta(
     "Contact Support | SeniorEase - Here to Assist You",
-    "Get in touch with the SeniorEase support team. Phone us on +44 330 401 0019, email support@senioreease.com, or book an introductory call."
+    "Get in touch with the SeniorEase support team. Phone us on +44 330 401 0019, email support@seniorease.com, or book an introductory call."
   );
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -177,7 +177,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">Email</h3>
-                    <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline font-medium">support@senioreease.com</a>
+                    <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline font-medium">support@seniorease.com</a>
                   </div>
                 </div>
 

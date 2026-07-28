@@ -19,12 +19,12 @@ export default function Terms() {
             <p className="font-semibold text-gray-900">Company Registration Number: [Pending — to be added upon incorporation]</p>
             <p className="font-semibold text-gray-900">Registered/Trading Address: 160 City Road, Kemp House, London, EC1V 2NX</p>
             <p className="font-semibold text-gray-900">
-              Contact: <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline">support@senioreease.com</a> | <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a>
+              Contact: <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline">support@seniorease.com</a> | <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a>
             </p>
           </div>
 
           <p className="text-lg leading-relaxed text-gray-700">
-            These Terms & Conditions ("Terms") govern your access to and use of the SeniorEase website (<a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">senioreease.com</a>) and the digital technology learning and support services we provide ("Services"). By registering for an account, booking a session, or purchasing a subscription, you agree to be bound by these Terms. If you do not agree, please do not use our Services.
+            These Terms & Conditions ("Terms") govern your access to and use of the SeniorEase website (<a href="https://www.seniorease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">seniorease.com</a>) and the digital technology learning and support services we provide ("Services"). By registering for an account, booking a session, or purchasing a subscription, you agree to be bound by these Terms. If you do not agree, please do not use our Services.
           </p>
 
           <hr className="border-gray-200" />
@@ -94,7 +94,7 @@ export default function Terms() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Family Notifications</h2>
             <p>
-              Where enabled, SeniorEase may share training logs and learning progress with a nominated family member or carer, solely for the purpose of providing reassurance and support. This feature requires the explicit consent of the senior customer and can be switched off at any time by contacting <a href="mailto:support@senioreease.com" className="text-teal-600 hover:underline font-medium">support@senioreease.com</a>.
+              Where enabled, SeniorEase may share training logs and learning progress with a nominated family member or carer, solely for the purpose of providing reassurance and support. This feature requires the explicit consent of the senior customer and can be switched off at any time by contacting <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline font-medium">support@seniorease.com</a>.
             </p>
           </section>
 
@@ -180,7 +180,7 @@ export default function Terms() {
             </p>
             <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100/50 space-y-1">
               <p className="font-bold text-teal-900 mb-2">SeniorEase</p>
-              <p><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@senioreease.com" className="text-teal-700 hover:underline">support@senioreease.com</a></p>
+              <p><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:support@seniorease.com" className="text-teal-700 hover:underline">support@seniorease.com</a></p>
               <p><span className="font-semibold text-teal-800">Phone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
               <p><span className="font-semibold text-teal-800">Address:</span> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
             </div>

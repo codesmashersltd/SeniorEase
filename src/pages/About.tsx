@@ -108,7 +108,7 @@ export default function About() {
           <div>
             <h3 className="text-sm font-bold text-teal-200 uppercase tracking-wider mb-1">Brand Identity Notice</h3>
             <p className="text-xs sm:text-sm text-teal-100 leading-relaxed">
-              <strong>SeniorEase (senioreease.com)</strong> is a dedicated software (SaaS) and digital technology education platform for older adults in the United Kingdom. We provide friendly assistance, smartphone learning, and anti-scam awareness. <span className="underline decoration-teal-400 font-semibold">We are NOT affiliated</span> with any senior living, retirement home, care home discovery platforms, or residential property directories.
+              <strong>SeniorEase (seniorease.com)</strong> is a dedicated software (SaaS) and digital technology education platform for older adults in the United Kingdom. We provide friendly assistance, smartphone learning, and anti-scam awareness. <span className="underline decoration-teal-400 font-semibold">We are NOT affiliated</span> with any senior living, retirement home, care home discovery platforms, or residential property directories.
             </p>
           </div>
         </div>

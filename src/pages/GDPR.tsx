@@ -37,8 +37,8 @@ export default function GDPR() {
             <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-2" id="gdpr-metadata">
               <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
               <p className="font-semibold text-gray-900">Company Name: SeniorEase</p>
-              <p className="font-semibold text-gray-900">Website: <a href="https://www.senioreease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.senioreease.com</a></p>
-              <p className="font-semibold text-gray-900">Email: <a href="mailto:privacy@senioreease.com" className="text-teal-600 hover:underline">privacy@senioreease.com</a></p>
+              <p className="font-semibold text-gray-900">Website: <a href="https://www.seniorease.com" className="text-teal-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.seniorease.com</a></p>
+              <p className="font-semibold text-gray-900">Email: <a href="mailto:privacy@seniorease.com" className="text-teal-600 hover:underline">privacy@seniorease.com</a></p>
               <p className="font-semibold text-gray-900">Telephone: <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a></p>
             </div>
 
@@ -77,7 +77,7 @@ export default function GDPR() {
               </p>
               <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100/50 space-y-1 mb-4" id="gdpr-contact-box">
                 <p className="font-bold text-teal-900 mb-1">SeniorEase Data Protection</p>
-                <p><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:privacy@senioreease.com" className="text-teal-700 hover:underline">privacy@senioreease.com</a></p>
+                <p><span className="font-semibold text-teal-800">Email:</span> <a href="mailto:privacy@seniorease.com" className="text-teal-700 hover:underline">privacy@seniorease.com</a></p>
                 <p><span className="font-semibold text-teal-800">Phone:</span> <a href="tel:+443304010019" className="text-teal-700 hover:underline">+44 (0) 330 401 0019</a></p>
               </div>
               <p className="text-gray-700 leading-relaxed">

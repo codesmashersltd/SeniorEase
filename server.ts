@@ -85,7 +85,7 @@ async function startServer() {
           pending_invoice_items_behavior: "include",
           currency: "gbp",
           description: `Welcome to SeniorEase! Your Unique Customer ID is: ${customerId || 'N/A'}.\nYour secure temporary password for your account dashboard is: Welcome2026! (you can change this after logging in).\n\nWe have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your SeniorEase subscription.`,
-          footer: `SeniorEase Subscription | Support Email: support@senioreease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${customerId || 'N/A'}`,
+          footer: `SeniorEase Subscription | Support Email: support@seniorease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${customerId || 'N/A'}`,
           metadata: {
             customerId: customerId || "N/A",
             planName: planName || "",
@@ -95,11 +95,11 @@ async function startServer() {
         // 4. Finalize the invoice to generate the hosted payment URL
         const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id);
 
-        // 5. Send the invoice email directly to the customer via Stripe (using support@senioreease.com sender domain)
+        // 5. Send the invoice email directly to the customer via Stripe (using support@seniorease.com sender domain)
         let sentInvoice = finalizedInvoice;
         try {
           sentInvoice = await stripe.invoices.sendInvoice(finalizedInvoice.id);
-          console.log(`[Stripe] Successfully sent invoice email to ${customerEmail} from support@senioreease.com for Invoice ID: ${sentInvoice.id}`);
+          console.log(`[Stripe] Successfully sent invoice email to ${customerEmail} from support@seniorease.com for Invoice ID: ${sentInvoice.id}`);
         } catch (emailErr: any) {
           console.warn("[Stripe] Could not send invoice email automatically:", emailErr.message);
         }
@@ -250,7 +250,7 @@ async function startServer() {
               </div>
               <p>&copy; 2026 SeniorEase. All rights reserved.</p>
               <p style="margin-top: 10px; font-size: 0.8rem; color: #64748b; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.5;">
-                <strong style="color: #2dd4bf;">Important Notice:</strong> SeniorEase (senioreease.com) is a digital technology learning and support SaaS service for older adults. We are an independent UK technology support platform and are <span style="text-decoration: underline; color: #99f6e4;">not affiliated</span> with any senior living, residential care homes, or property discovery platforms.
+                <strong style="color: #2dd4bf;">Important Notice:</strong> SeniorEase (seniorease.com) is a digital technology learning and support SaaS service for older adults. We are an independent UK technology support platform and are <span style="text-decoration: underline; color: #99f6e4;">not affiliated</span> with any senior living, residential care homes, or property discovery platforms.
               </p>
               <p style="margin-top: 15px; display: flex; justify-content: center; flex-wrap: wrap; gap: 15px;">
                 <a href="/terms" style="color: #0d9488; text-decoration: none;">Terms & Conditions</a>
@@ -508,7 +508,7 @@ async function startServer() {
                   </div>
                   <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
                     <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">Can I cancel or change plans?</h3>
-                    <p style="color: #475569; margin-bottom: 0;">Yes, absolutely! You can cancel, upgrade, or downgrade your subscription at any time. Simply sign into your dashboard, click "Cancel Subscription", or email support@senioreease.com and we will take care of it immediately.</p>
+                    <p style="color: #475569; margin-bottom: 0;">Yes, absolutely! You can cancel, upgrade, or downgrade your subscription at any time. Simply sign into your dashboard, click "Cancel Subscription", or email support@seniorease.com and we will take care of it immediately.</p>
                   </div>
                   <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
                     <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">Who is this service designed for?</h3>
@@ -526,7 +526,7 @@ async function startServer() {
                   </div>
                   <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
                     <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">How do I cancel my subscription and Direct Debit?</h3>
-                    <p style="color: #475569; margin-bottom: 0;">Cancelling your subscription is simple, transparent, and hassle-free. You can cancel at any time through your SeniorEase online account dashboard or by emailing our customer support team at support@senioreease.com. When your subscription is cancelled, we immediately cancel your Stripe Bacs Direct Debit mandate so no further automated billing occurs. Furthermore, you retain the absolute right under UK banking rules to cancel the Direct Debit instruction directly with your bank or building society at any time.</p>
+                    <p style="color: #475569; margin-bottom: 0;">Cancelling your subscription is simple, transparent, and hassle-free. You can cancel at any time through your SeniorEase online account dashboard or by emailing our customer support team at support@seniorease.com. When your subscription is cancelled, we immediately cancel your Stripe Bacs Direct Debit mandate so no further automated billing occurs. Furthermore, you retain the absolute right under UK banking rules to cancel the Direct Debit instruction directly with your bank or building society at any time.</p>
                   </div>
                   <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
                     <h3 style="color: #0d9488; margin-top: 0; font-weight: bold;">Will I receive advance notice before collections?</h3>
@@ -547,7 +547,7 @@ async function startServer() {
           `;
         } else if (normalizedPath === "/contact") {
           pageTitle = "Contact Support | SeniorEase - Here to Assist You";
-          pageDescription = "Get in touch with the SeniorEase support team. Phone us on +44 330 401 0019, email support@senioreease.com, or book an introductory call.";
+          pageDescription = "Get in touch with the SeniorEase support team. Phone us on +44 330 401 0019, email support@seniorease.com, or book an introductory call.";
           staticHTML = `
             <div style="font-family: system-ui, -apple-system, sans-serif; color: #1e293b; background-color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column;">
               ${getHeader("contact")}
@@ -559,7 +559,7 @@ async function startServer() {
                 <div style="background: white; padding: 35px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
                   <h2 style="font-size: 1.5rem; color: #1e293b; margin-top: 0; margin-bottom: 20px; font-weight: bold;">Contact Information</h2>
                   <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Telephone Support:</strong> <a href="tel:+443304010019" style="color: #0d9488; text-decoration: none; font-weight: 600;">+44 (0) 330 401 0019</a></p>
-                  <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Email Support:</strong> <a href="mailto:support@senioreease.com" style="color: #0d9488; text-decoration: none; font-weight: 600;">support@senioreease.com</a></p>
+                  <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Email Support:</strong> <a href="mailto:support@seniorease.com" style="color: #0d9488; text-decoration: none; font-weight: 600;">support@seniorease.com</a></p>
                   <p style="font-size: 1.1rem; color: #334155; margin-bottom: 15px;"><strong>Business Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
                   <p style="font-size: 1.1rem; color: #334155; margin-bottom: 0;"><strong>Office Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM GMT</p>
                 </div>
@@ -580,9 +580,9 @@ async function startServer() {
                   <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
                   <p style="margin: 5px 0 0 0;"><strong>Company Registration Number:</strong> [Pending — to be added upon incorporation]</p>
                   <p style="margin: 5px 0 0 0;"><strong>Registered/Trading Address:</strong> 160 City Road, Kemp House, London, EC1V 2NX</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Contact:</strong> support@senioreease.com | +44 (0) 330 401 0019</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Contact:</strong> support@seniorease.com | +44 (0) 330 401 0019</p>
                 </div>
-                <p>These Terms & Conditions ("Terms") govern your access to and use of the SeniorEase website (senioreease.com) and the digital technology learning and support services we provide ("Services"). By registering for an account, booking a session, or purchasing a subscription, you agree to be bound by these Terms. If you do not agree, please do not use our Services.</p>
+                <p>These Terms & Conditions ("Terms") govern your access to and use of the SeniorEase website (seniorease.com) and the digital technology learning and support services we provide ("Services"). By registering for an account, booking a session, or purchasing a subscription, you agree to be bound by these Terms. If you do not agree, please do not use our Services.</p>
                 <h2>1. About Our Services</h2>
                 <p>SeniorEase is a Software as a Service (SaaS) platform providing digital technology education and support for older adults in the United Kingdom, including but not limited to:</p>
                 <ul>
@@ -615,7 +615,7 @@ async function startServer() {
                   <li>Not share account access with individuals outside your household without our consent.</li>
                 </ul>
                 <h2>6. Family Notifications</h2>
-                <p>Where enabled, SeniorEase may share training logs and learning progress with a nominated family member or carer, solely for the purpose of providing reassurance and support. This feature requires the explicit consent of the senior customer and can be switched off at any time by contacting support@senioreease.com.</p>
+                <p>Where enabled, SeniorEase may share training logs and learning progress with a nominated family member or carer, solely for the purpose of providing reassurance and support. This feature requires the explicit consent of the senior customer and can be switched off at any time by contacting support@seniorease.com.</p>
                 <h2>7. Limitation of Liability</h2>
                 <ul>
                   <li>SeniorEase provides technology education and guidance on a reasonable-skill-and-care basis but does not guarantee specific outcomes (e.g. complete elimination of scam risk).</li>
@@ -633,7 +633,7 @@ async function startServer() {
                 <h2>12. Intellectual Property</h2>
                 <p>All website content, logos, branding, software, graphics, text, and training materials are owned by or licensed to SeniorEase and are protected by applicable intellectual property laws. You may not copy, reproduce, distribute, or modify any content without our prior written permission.</p>
                 <h2>13. Contact Us</h2>
-                <p>Questions about these Terms can be sent to:<br /><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
+                <p>Questions about these Terms can be sent to:<br /><strong>Email:</strong> support@seniorease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
               </main>
               ${footerHTML}
             </div>
@@ -648,13 +648,13 @@ async function startServer() {
                 <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Privacy Policy</h1>
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.seniorease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> privacy@senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> privacy@seniorease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
                 </div>
                 <p>SeniorEase respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, store, protect, and share your personal data when you visit our website, create an account, purchase a subscription, receive digital training or support from us, or contact our support team.</p>
-                <p>This policy applies to all users of senioreease.com and our associated Services, and is written to comply with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.</p>
+                <p>This policy applies to all users of seniorease.com and our associated Services, and is written to comply with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.</p>
                 <h2>1. Information We Collect</h2>
                 <p>We only collect the minimum information necessary to provide secure, reliable support. This includes:</p>
                 <ul>
@@ -683,9 +683,9 @@ async function startServer() {
                   <li><strong>Legitimate interests:</strong> to improve our Services, prevent fraud, and maintain the security of our systems</li>
                   <li><strong>Legal obligation:</strong> where we must retain records for tax, accounting, or regulatory purposes</li>
                 </ul>
-                <p>You may withdraw consent at any time by contacting privacy@senioreease.com; this will not affect the lawfulness of processing carried out before withdrawal.</p>
+                <p>You may withdraw consent at any time by contacting privacy@seniorease.com; this will not affect the lawfulness of processing carried out before withdrawal.</p>
                 <h2>4. Family and Carer Notifications</h2>
-                <p>Where enabled, we share training progress and session summaries with a nominated family member or carer. This is only done with the explicit, informed consent of the senior customer at the time of sign-up; and limited to training/session summaries — not full session content or sensitive personal disclosures. This feature can be switched off at any time by contacting privacy@senioreease.com.</p>
+                <p>Where enabled, we share training progress and session summaries with a nominated family member or carer. This is only done with the explicit, informed consent of the senior customer at the time of sign-up; and limited to training/session summaries — not full session content or sensitive personal disclosures. This feature can be switched off at any time by contacting privacy@seniorease.com.</p>
                 <h2>5. Sharing Your Information</h2>
                 <p>We do not sell your personal data. We share information only with:</p>
                 <ul>
@@ -705,7 +705,7 @@ async function startServer() {
                 </ul>
                 <h2>8. Your Rights</h2>
                 <p>Under UK GDPR, you have the right to access the personal data we hold about you, request correction of inaccurate data, request erasure of your data ("right to be forgotten"), object to or restrict certain processing, request data portability, withdraw consent at any time, or lodge a complaint with the Information Commissioner's Office (ICO) at ico.org.uk if you believe your data has been mishandled.</p>
-                <p>To exercise any of these rights, contact privacy@senioreease.com. We aim to respond within one month, as required by law.</p>
+                <p>To exercise any of these rights, contact privacy@seniorease.com. We aim to respond within one month, as required by law.</p>
                 <h2>9. Cookies</h2>
                 <p>Our website uses cookies to support core functionality and, where applicable, analytics. You can control or disable cookies through your browser settings. For details on the specific cookies we use, see our Cookie Policy (or the cookie banner presented on first visit).</p>
                 <h2>10. Children's Privacy</h2>
@@ -715,7 +715,7 @@ async function startServer() {
                 <h2>12. Changes to This Policy</h2>
                 <p>We may update this Privacy Policy from time to time. Material changes will be notified by email or via a notice on our website at least 14 days before they take effect. The "Effective Date" at the top of this page will always reflect the latest version.</p>
                 <h2>13. Contact Us</h2>
-                <p>If you have any questions about this Privacy Policy or how we handle your data:<br /><strong>Email:</strong> privacy@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
+                <p>If you have any questions about this Privacy Policy or how we handle your data:<br /><strong>Email:</strong> privacy@seniorease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
                 <p>You may also contact the ICO directly at ico.org.uk if you are not satisfied with our response.</p>
               </main>
               ${footerHTML}
@@ -732,13 +732,13 @@ async function startServer() {
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
                   <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@seniorease.com</p>
                 </div>
                 <h2>1. Free Introductory Call</h2>
                 <p>Our free introductory call carries no charge and no obligation to continue. No refund is applicable as no payment is taken.</p>
                 <h2>2. Cancelling a Subscription</h2>
                 <ul>
-                  <li>You may cancel your subscription at any time by emailing support@senioreease.com, calling +44 (0) 330 401 0019, or through your account dashboard (once available).</li>
+                  <li>You may cancel your subscription at any time by emailing support@seniorease.com, calling +44 (0) 330 401 0019, or through your account dashboard (once available).</li>
                   <li>Cancellations take effect at the end of the current paid billing period. You will continue to have access to your Services until that date, and no further payments will be taken afterward.</li>
                   <li>We do not charge cancellation fees.</li>
                 </ul>
@@ -746,7 +746,7 @@ async function startServer() {
                 <p>In line with the UK Consumer Contracts Regulations 2013, if you are a consumer purchasing a subscription remotely (e.g. online or by phone), you have the right to cancel within <strong>14 days</strong> of your purchase for a full refund, provided the Service has not been fully delivered within that period with your express consent to begin immediately.</p>
                 <ul>
                   <li>If you request that support begins immediately within the 14-day window and later cancel, we may deduct a reasonable amount reflecting the sessions or support already provided.</li>
-                  <li>To exercise this right, contact us at support@senioreease.com within 14 days of purchase.</li>
+                  <li>To exercise this right, contact us at support@seniorease.com within 14 days of purchase.</li>
                 </ul>
                 <h2>4. Refunds Outside the Cooling-Off Period</h2>
                 <p>After the 14-day cooling-off period, subscription fees are generally non-refundable for the current billing period, except in the following cases:</p>
@@ -763,7 +763,7 @@ async function startServer() {
                 <h2>6. Family/Third-Party Purchasers</h2>
                 <p>Where a subscription is purchased by a family member on behalf of a senior relative, refund and cancellation requests may be made by either the purchaser or the service recipient, provided identity can be reasonably confirmed.</p>
                 <h2>7. Disputing a Charge</h2>
-                <p>If you believe a charge is incorrect, please contact us first at support@senioreease.com before raising a dispute with your bank or card provider — most issues can be resolved directly and more quickly this way. We aim to acknowledge all billing queries within 2 business days.</p>
+                <p>If you believe a charge is incorrect, please contact us first at support@seniorease.com before raising a dispute with your bank or card provider — most issues can be resolved directly and more quickly this way. We aim to acknowledge all billing queries within 2 business days.</p>
                 <h2>8. Changes to This Policy</h2>
                 <p>We may update this policy from time to time. Any changes will be posted on this page with a revised effective date, and material changes affecting existing subscribers will be communicated by email at least 14 days in advance.</p>
                 <div style="background: #fffbeb; border: 1px solid #fde68a; padding: 15px; border-radius: 12px; margin-top: 30px; font-style: italic; color: #92400e; font-size: 0.9rem;">
@@ -783,9 +783,9 @@ async function startServer() {
                 <h1 style="font-size: 2.8rem; font-weight: 800; color: #0f172a;">Service Level Agreement (SLA)</h1>
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.seniorease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@seniorease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
                 </div>
                 <h2>1. Introduction</h2>
@@ -824,7 +824,7 @@ async function startServer() {
                 <p>This SLA does not guarantee or cover: faults or limitations of the customer's own device, software, or internet connection; issues arising from third-party apps or services outside SeniorEase's control (e.g. WhatsApp, Zoom, the customer's email provider); complete prevention of scams or fraud — we provide training and guidance, not a guarantee of outcome; delays caused by circumstances outside our reasonable control (e.g. network outages, extreme weather).</p>
                 <h2>8. Escalation Process</h2>
                 <p>If a customer is not satisfied with the resolution of a support request:<br />
-                1. Contact support@senioreease.com referencing the original request.<br />
+                1. Contact support@seniorease.com referencing the original request.<br />
                 2. If unresolved within 5 business days, the matter will be escalated to a senior member of the support team for review.<br />
                 3. If still unresolved, the customer may raise the matter formally in writing, and SeniorEase will respond with a final position within 10 business days.</p>
                 <h2>9. Remedies for Missed Commitments</h2>
@@ -832,7 +832,7 @@ async function startServer() {
                 <h2>10. Reviews and Changes to This SLA</h2>
                 <p>This SLA is reviewed periodically and may be updated to reflect changes in our Services. Material changes will be communicated to active subscribers by email at least 14 days before they take effect.</p>
                 <h2>11. Contact Us</h2>
-                <p><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
+                <p><strong>Email:</strong> support@seniorease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
               </main>
               ${footerHTML}
             </div>
@@ -849,12 +849,12 @@ async function startServer() {
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
                   <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.seniorease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@seniorease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
                 </div>
                 <h2>1. Introduction & Brand Identity Notice</h2>
-                <p>SeniorEase (senioreease.com) is an independent UK digital technology learning and support SaaS service for older adults.</p>
+                <p>SeniorEase (seniorease.com) is an independent UK digital technology learning and support SaaS service for older adults.</p>
                 <ul>
                   <li>We are not affiliated with any senior living provider, residential care home, or property discovery platform, including any similarly named business or service operating under the "SeniorEase" name elsewhere.</li>
                   <li>We are not part of, endorsed by, or affiliated with the NHS, any NHS trust, or any other public healthcare body. Any reference to health, wellbeing, or safeguarding standards on our website reflects our own internal practices, not a formal certification, partnership, or endorsement.</li>
@@ -894,7 +894,7 @@ async function startServer() {
                 <h2>7. Changes to This Disclaimer</h2>
                 <p>We may update this Disclaimer from time to time to reflect changes in our Services or applicable law. The "Effective Date" above will always reflect the most recent version.</p>
                 <h2>8. Contact Us</h2>
-                <p><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
+                <p><strong>Email:</strong> support@seniorease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
               </main>
               ${footerHTML}
             </div>
@@ -910,8 +910,8 @@ async function startServer() {
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
                   <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> privacy@senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.seniorease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> privacy@seniorease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
                 </div>
                 <p style="font-size: 1.1rem; color: #475569;">This page summarises how SeniorEase complies with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. For the full legal detail on what we collect, why, and how, please see our <a href="/privacy" style="color: #0d9488; text-decoration: none; font-weight: 600;">Privacy Policy</a>.</p>
@@ -927,7 +927,7 @@ async function startServer() {
                 </ul>
                 <h2>3. Data Protection Contact</h2>
                 <p>For any question about how your data is handled, or to exercise your rights under UK GDPR:</p>
-                <p><strong>Email:</strong> privacy@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019</p>
+                <p><strong>Email:</strong> privacy@seniorease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019</p>
                 <p>We aim to acknowledge data protection queries within 5 business days and resolve formal requests within one calendar month, as required by law.</p>
                 <h2>4. Your Right to Complain</h2>
                 <p>If you're ever unhappy with how we've handled your personal data, we'd like the chance to put it right directly — but you also have the right to complain to the UK's independent regulator:</p>
@@ -949,9 +949,9 @@ async function startServer() {
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0; font-size: 1.1rem;"><strong>Commitment to Accessibility, Privacy and Good Practice</strong></p>
                   <p style="margin: 8px 0 0 0;"><strong>Effective Date:</strong> 01 June 2026</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Website:</strong> https://www.seniorease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@senioreease.com</p>
+                  <p style="margin: 5px 0 0 0;"><strong>Email:</strong> support@seniorease.com</p>
                   <p style="margin: 5px 0 0 0;"><strong>Telephone:</strong> +44 (0) 330 401 0019</p>
                 </div>
                 <div style="background: #fffbeb; padding: 15px 20px; border-radius: 12px; border: 1px solid #fde68a; color: #78350f; margin-bottom: 25px;">
@@ -967,7 +967,7 @@ async function startServer() {
                   <li>Patient, jargon-free verbal explanations during support sessions</li>
                   <li>Flexibility to accommodate hearing, vision, or mobility considerations on request</li>
                 </ul>
-                <p>We welcome feedback on how we can make our Services more accessible — contact support@senioreease.com with any suggestions.</p>
+                <p>We welcome feedback on how we can make our Services more accessible — contact support@seniorease.com with any suggestions.</p>
                 <h2>3. Safeguarding and Vulnerable Adults</h2>
                 <p>We recognise that many of our customers may be vulnerable due to age, isolation, or unfamiliarity with technology. Because of this:</p>
                 <ul>
@@ -984,9 +984,9 @@ async function startServer() {
                   <li>Staff conduct is expected to reflect patience, respect, and clarity at all times, particularly given the nature of our customer base.</li>
                 </ul>
                 <h2>6. Continuous Improvement</h2>
-                <p>We review our practices periodically, incorporating customer feedback, to ensure our Services remain safe, accessible, and appropriate for the people we support. Suggestions can be sent to support@senioreease.com at any time.</p>
+                <p>We review our practices periodically, incorporating customer feedback, to ensure our Services remain safe, accessible, and appropriate for the people we support. Suggestions can be sent to support@seniorease.com at any time.</p>
                 <h2>7. Contact Us</h2>
-                <p><strong>Email:</strong> support@senioreease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
+                <p><strong>Email:</strong> support@seniorease.com<br /><strong>Phone:</strong> +44 (0) 330 401 0019<br /><strong>Address:</strong> SeniorEase, 160 City Road, Kemp House, London, EC1V 2NX</p>
               </main>
               ${footerHTML}
             </div>
@@ -1021,7 +1021,7 @@ async function startServer() {
         );
 
         // 5. Replace og:url tag if present
-        const fullUrl = `https://www.senioreease.com${normalizedPath === "/" ? "" : normalizedPath}`;
+        const fullUrl = `https://www.seniorease.com${normalizedPath === "/" ? "" : normalizedPath}`;
         modifiedHtml = modifiedHtml.replace(
           /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/gi,
           `<meta property="og:url" content="${fullUrl}" />`
