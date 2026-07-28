@@ -578,7 +578,6 @@ async function startServer() {
                 <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
                   <p style="margin: 0;"><strong>Effective Date:</strong> 01 June 2026</p>
                   <p style="margin: 5px 0 0 0;"><strong>Company Name:</strong> SeniorEase</p>
-                  <p style="margin: 5px 0 0 0;"><strong>Company Registration Number:</strong> [Pending — to be added upon incorporation]</p>
                   <p style="margin: 5px 0 0 0;"><strong>Registered/Trading Address:</strong> 160 City Road, Kemp House, London, EC1V 2NX</p>
                   <p style="margin: 5px 0 0 0;"><strong>Contact:</strong> support@seniorease.com | +44 (0) 330 401 0019</p>
                 </div>

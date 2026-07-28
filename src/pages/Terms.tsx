@@ -16,7 +16,6 @@ export default function Terms() {
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-2">
             <p className="font-semibold text-gray-900">Effective Date: 01 June 2026</p>
             <p className="font-semibold text-gray-900">Company Name: SeniorEase</p>
-            <p className="font-semibold text-gray-900">Company Registration Number: [Pending — to be added upon incorporation]</p>
             <p className="font-semibold text-gray-900">Registered/Trading Address: 160 City Road, Kemp House, London, EC1V 2NX</p>
             <p className="font-semibold text-gray-900">
               Contact: <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline">support@seniorease.com</a> | <a href="tel:+443304010019" className="text-teal-600 hover:underline">+44 (0) 330 401 0019</a>
