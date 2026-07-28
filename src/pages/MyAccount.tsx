@@ -391,7 +391,7 @@ export default function MyAccount() {
                 <h1 className="text-3xl font-bold text-white mb-2 text-center">My Account</h1>
                 <p className="text-teal-100/80 text-center mb-8 text-sm">Enter your credentials to access your account.</p>
                 
-                <form onSubmit={handleLogin} className="space-y-6">
+                <form onSubmit={handleLogin} className="space-y-6" autoComplete="off">
                   <div>
                     <label htmlFor="customerName" className="block text-sm font-medium text-teal-100 mb-2">
                       Full Name
@@ -401,6 +401,7 @@ export default function MyAccount() {
                       id="customerName"
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
+                      autoComplete="off"
                       className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/25 text-white placeholder-teal-100/40 focus:bg-white/15 focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all outline-none"
                       placeholder="e.g. John Doe"
                     />
@@ -414,6 +415,7 @@ export default function MyAccount() {
                       id="customerId"
                       value={customerId}
                       onChange={(e) => setCustomerId(e.target.value)}
+                      autoComplete="off"
                       className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/25 text-white placeholder-teal-100/40 focus:bg-white/15 focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all outline-none"
                       placeholder="e.g. SE-12345"
                     />
@@ -427,6 +429,7 @@ export default function MyAccount() {
                       id="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      autoComplete="new-password"
                       className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/25 text-white placeholder-teal-100/40 focus:bg-white/15 focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all outline-none"
                       placeholder="••••••••"
                     />

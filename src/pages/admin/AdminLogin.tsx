@@ -155,9 +155,6 @@ export default function AdminLogin() {
                     <li>Scroll down to <strong className="font-bold text-white">Authorized domains</strong>.</li>
                     <li>Click <strong className="font-bold text-white">Add domain</strong> and add <code className="bg-red-900/80 px-1 py-0.5 rounded font-mono text-white">{unauthorizedDomain}</code>.</li>
                   </ol>
-                  <p className="pt-2 border-t border-red-500/30 text-[11px] text-red-300 italic">
-                    💡 <strong>Immediate Workaround:</strong> Switch to the <strong>"Email & Password"</strong> tab above to sign in instantly with default credentials (default username: <code className="bg-red-900/80 px-1 py-0.5 rounded font-mono font-bold text-white">Administrator</code>, password: <code className="bg-red-900/80 px-1 py-0.5 rounded font-mono font-bold text-white">123456</code>).
-                  </p>
                 </div>
               )}
             </div>
@@ -167,13 +164,14 @@ export default function AdminLogin() {
         {/* Forms */}
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
           {activeTab === 'email' ? (
-            <form onSubmit={handleCustomLogin} className="space-y-6">
+            <form onSubmit={handleCustomLogin} className="space-y-6" autoComplete="off">
               <div className="space-y-2">
                 <label className="text-sm font-bold text-teal-100">Email Address</label>
                 <div className="relative group">
                   <input
                     type="text"
-                    placeholder="Administrator"
+                    placeholder="Admin Email / Username"
+                    autoComplete="off"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full h-14 bg-white/10 border border-white/25 rounded-xl pl-12 pr-4 text-sm text-white placeholder-teal-100/40 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all"
@@ -189,6 +187,7 @@ export default function AdminLogin() {
                   <input
                     type="password"
                     placeholder="••••••••"
+                    autoComplete="new-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full h-14 bg-white/10 border border-white/25 rounded-xl pl-12 pr-4 text-sm text-white placeholder-teal-100/40 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all"
