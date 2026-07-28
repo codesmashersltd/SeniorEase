@@ -302,7 +302,7 @@ export default function MyAccount() {
   };
 
   return (
-    <div className={`min-h-screen ${!isLoggedIn ? 'bg-gradient-to-br from-slate-900 via-slate-950 to-teal-950 py-12 md:py-20 flex items-center justify-center relative overflow-hidden' : 'bg-gray-50 py-24'}`}>
+    <div className={`min-h-screen ${!isLoggedIn ? 'bg-gradient-to-br from-slate-900 via-slate-950 to-teal-950 py-8 sm:py-12 lg:py-20 flex flex-col justify-start lg:justify-center relative overflow-x-hidden' : 'bg-gray-50 py-8 sm:py-12 lg:py-24'}`}>
       {/* Background glow and image when in login mode */}
       {!isLoggedIn && (
         <>
@@ -377,7 +377,7 @@ export default function MyAccount() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.1 }}
-                className="bg-slate-900/60 sm:bg-slate-900/50 backdrop-blur-xl p-8 sm:p-10 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] border border-white/20 w-full text-white"
+                className="bg-slate-900/60 sm:bg-slate-900/50 backdrop-blur-xl p-6 sm:p-10 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] border border-white/20 w-full text-white"
               >
             <div className="flex flex-col items-center mb-8">
               <div className="w-16 h-16 bg-gradient-to-br from-teal-500/30 to-emerald-500/20 text-teal-300 border border-teal-400/30 rounded-2xl flex items-center justify-center mb-3 shadow-inner">
@@ -631,10 +631,10 @@ export default function MyAccount() {
             {/* Right Column: Secure Dashboard Services, Payments & Safeguarding */}
             <div className="lg:col-span-8 space-y-8">
               {/* Top Navigation Tabs */}
-              <div className="bg-white p-2 rounded-2xl border border-gray-200 shadow-sm flex flex-wrap gap-2">
+              <div className="bg-white p-2 rounded-2xl border border-gray-200 shadow-sm grid grid-cols-1 sm:grid-cols-3 gap-2">
                 <button
                   onClick={() => setActiveTab('services')}
-                  className={`flex-1 min-w-[140px] py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
+                  className={`py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
                     activeTab === 'services'
                       ? 'bg-teal-600 text-white shadow-md'
                       : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
@@ -645,7 +645,7 @@ export default function MyAccount() {
                 </button>
                 <button
                   onClick={() => setActiveTab('billing')}
-                  className={`flex-1 min-w-[140px] py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
+                  className={`py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
                     activeTab === 'billing'
                       ? 'bg-teal-600 text-white shadow-md'
                       : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
@@ -656,7 +656,7 @@ export default function MyAccount() {
                 </button>
                 <button
                   onClick={() => setActiveTab('safeguarding')}
-                  className={`flex-1 min-w-[140px] py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
+                  className={`py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
                     activeTab === 'safeguarding'
                       ? 'bg-teal-600 text-white shadow-md'
                       : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
