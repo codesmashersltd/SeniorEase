@@ -68,9 +68,9 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const userEmail = ((formData.get('email') as string) || '').trim();
-    const userPhone = ((formData.get('phone') as string) || '').trim();
-    const userName = ((formData.get('fullName') as string) || 'No Name Provided').trim();
+    const userEmail = (formData.get('email') as string) || '';
+    const userPhone = (formData.get('phone') as string) || '';
+    const userName = (formData.get('fullName') as string) || 'No Name Provided';
     const userMessage = ((formData.get('message') as string) || '').trim();
     setEmail(userEmail);
     
