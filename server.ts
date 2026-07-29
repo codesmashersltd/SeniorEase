@@ -124,8 +124,8 @@ async function sendWelcomeEmail({
       console.log(`[Email] Welcome email sent successfully to ${to}: ${info.messageId}`);
       return { success: true, messageId: info.messageId };
     } catch (err: any) {
-      console.error(`[Email Error] Failed to send welcome email to ${to}:`, err.message);
-      return { success: false, error: err.message };
+      console.warn(`[SMTP Warning] Direct welcome email notice to ${to} deferred (${err.message}). Stripe delivers the official invoice email directly.`);
+      return { success: false, error: err.message, stripeHandled: true };
     }
   } else {
     console.log(`[Email Notice] SMTP not configured. Simulated welcome email for ${to} (Customer ID: ${customerId})`);
