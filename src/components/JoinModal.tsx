@@ -259,21 +259,12 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                 </>
               )}
               
-              {checkoutUrl ? (
-                <button
-                  onClick={() => window.location.href = checkoutUrl}
-                  className="mt-4 w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md flex items-center justify-center gap-2"
-                >
-                  Proceed to Payment <ShieldCheck size={20} />
-                </button>
-              ) : (
-                <button
-                  onClick={handleClose}
-                  className="mt-4 w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md"
-                >
-                  Done
-                </button>
-              )}
+              <button
+                onClick={handleClose}
+                className="mt-4 w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md cursor-pointer text-base"
+              >
+                Done
+              </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
