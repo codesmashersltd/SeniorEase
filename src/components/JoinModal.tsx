@@ -104,16 +104,40 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
 
       console.log('Attempting to add ticket:', ticketPayload);
 
-      // Save ticket in Firestore so custom messages appear in Admin Dashboard under Support Tickets
+      const defaultTempPassword = 'Welcome2026!';
+
+      // 1. First, call our background Stripe & Email integration endpoint to guarantee Invoice & Email dispatch!
+      let checkoutUrlResult = '';
+      try {
+        const response = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            planName: activePlan.name,
+            planPrice: activePlan.price,
+            customerEmail: userEmail,
+            customerId: newId,
+            fullName: userName,
+            tempPassword: defaultTempPassword
+          })
+        });
+        const data = await response.json();
+        if (data.url) {
+          checkoutUrlResult = data.url;
+          setCheckoutUrl(data.url);
+        }
+      } catch (checkoutErr) {
+        console.error('Checkout API call failed:', checkoutErr);
+      }
+
+      // 2. Save ticket in Firestore so custom messages appear in Admin Dashboard under Support Tickets
       try {
         await addDoc(collection(db, 'tickets'), ticketPayload);
       } catch (err: any) {
-        handleFirestoreError(err, OperationType.CREATE, 'tickets');
+        console.warn('Firestore tickets write warning:', err);
       }
 
-      const defaultTempPassword = 'Welcome2026!';
-
-      // Save to Customers collection in Firestore so user can log in to /my-account immediately
+      // 3. Save to Customers collection in Firestore so user can log in to /my-account immediately
       try {
         await addDoc(collection(db, 'customers'), {
           id: newId,
@@ -128,10 +152,10 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
           createdAt: serverTimestamp()
         });
       } catch (err: any) {
-        handleFirestoreError(err, OperationType.CREATE, 'customers');
+        console.warn('Firestore customers write warning:', err);
       }
 
-      // Save to New Joinees collection for Admin Dashboard tracking
+      // 4. Save to New Joinees collection for Admin Dashboard tracking
       try {
         await addDoc(collection(db, 'new_joinees'), {
           customerId: newId,
@@ -146,28 +170,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
           createdAt: serverTimestamp()
         });
       } catch (err: any) {
-        handleFirestoreError(err, OperationType.CREATE, 'new_joinees');
-      }
-
-      // Call our background Stripe & Email integration endpoint
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          planName: activePlan.name,
-          planPrice: activePlan.price,
-          customerEmail: userEmail,
-          customerId: newId,
-          fullName: userName,
-          tempPassword: defaultTempPassword
-        })
-      });
-      
-      const data = await response.json();
-      
-      if (data.url) {
-        // A real session/invoice was created via Stripe, capture the URL
-        setCheckoutUrl(data.url);
+        console.warn('Firestore new_joinees write warning:', err);
       }
 
       setIsSubmitting(false);

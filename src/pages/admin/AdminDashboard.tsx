@@ -496,7 +496,7 @@ export default function AdminDashboard() {
       alert('Please generate a temporary password first.');
       return;
     }
-    if (window.confirm(`Activate ${joinee.name} as a permanent customer?`)) {
+    if (window.confirm(`Activate ${joinee.name} as a permanent customer and send official Stripe Invoice & Welcome Email?`)) {
       try {
         // 1. Add to customers
         await addDoc(collection(db, 'customers'), {
@@ -512,7 +512,26 @@ export default function AdminDashboard() {
         });
         // 2. Remove from new_joinees
         await deleteDoc(doc(db, 'new_joinees', joinee.id));
-        alert('Customer activated successfully.');
+
+        // 3. Dispatch Stripe Invoice & Welcome Email automatically
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            planName: joinee.plan || 'Family Care',
+            planPrice: joinee.price || '£29.99',
+            customerEmail: joinee.email,
+            customerId: joinee.customerId,
+            fullName: joinee.name,
+            tempPassword: joinee.tempPassword
+          })
+        });
+        const checkoutData = await res.json();
+        let msg = `Customer ${joinee.name} activated successfully!`;
+        if (checkoutData.status === 'success') {
+          msg += ` Stripe Invoice & Welcome Email dispatched to ${joinee.email}.`;
+        }
+        alert(msg);
       } catch (err: any) {
         alert('Error activating customer: ' + err.message);
       }
@@ -522,9 +541,24 @@ export default function AdminDashboard() {
   const resendInvoiceAndEmail = async (item: any) => {
     const email = item.email;
     const name = item.name || 'Valued Customer';
-    const customerId = item.customerId || item.id || 'N/A';
-    const planName = item.plan || 'Family Care';
-    const planPrice = item.price || item.amount || '£29.99';
+    let customerId = item.customerId || item.id || 'N/A';
+    if (item.ticketId) customerId = item.ticketId;
+
+    let planName = item.plan || 'Family Care';
+    if (!item.plan && item.enquiryType && item.enquiryType.includes('Selected Plan:')) {
+      planName = item.enquiryType.replace('Selected Plan:', '').trim();
+    }
+
+    let planPrice = item.price || item.amount || '£29.99';
+    if (!item.price && item.message && item.message.includes('at £')) {
+      const match = item.message.match(/at\s+(£[0-9.]+)/);
+      if (match) planPrice = match[1];
+    } else if (!item.price && item.message && item.message.includes('at £9.99')) {
+      planPrice = '£9.99';
+    } else if (!item.price && item.message && item.message.includes('at £17.99')) {
+      planPrice = '£17.99';
+    }
+
     const tempPassword = item.tempPassword || item.password || 'Welcome2026!';
 
     if (!email) {
@@ -551,9 +585,9 @@ export default function AdminDashboard() {
       });
       const data = await res.json();
       if (data.status === 'success') {
-        let msg = `✅ Welcome Email & Invoice processed for ${name} (${email})!`;
-        if (data.invoice_id) msg += `\nInvoice ID: ${data.invoice_id}`;
-        if (data.url) msg += `\nStripe Payment Link: ${data.url}`;
+        let msg = `✅ Welcome Email & Stripe Invoice processed for ${name} (${email})!`;
+        if (data.invoice_id) msg += `\nStripe Invoice ID: ${data.invoice_id}`;
+        if (data.url) msg += `\nStripe Invoice URL: ${data.url}`;
         if (data.stripeError) msg += `\nNote on Stripe: ${data.stripeError}`;
         alert(msg);
       } else {
@@ -1169,7 +1203,7 @@ This evidence bundle certifies that the digital subscription services were reque
                                 )}
                               </td>
                               <td className="px-6 py-4 text-right whitespace-nowrap">
-                                <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div className="flex justify-end gap-2 transition-opacity">
                                   {(activeTab === 'customers' || activeTab === 'new-joinees' || activeTab === 'renewals') && (
                                     <>
                                       <button 
