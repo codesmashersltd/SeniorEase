@@ -36,6 +36,18 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
   const [email, setEmail] = useState('');
   const [checkoutUrl, setCheckoutUrl] = useState('');
   const [consentChecked, setConsentChecked] = useState(false);
+  const [selectedPlanState, setSelectedPlanState] = useState<{ name: string; price: string }>(
+    plan || { name: 'Family Care', price: '£29.99' }
+  );
+
+  // Keep selectedPlanState in sync when plan prop changes
+  React.useEffect(() => {
+    if (plan) {
+      setSelectedPlanState(plan);
+    }
+  }, [plan]);
+
+  const activePlan = plan || selectedPlanState;
 
   const handleFirestoreError = (error: unknown, operationType: OperationType, path: string | null) => {
     const errInfo: FirestoreErrorInfo = {
@@ -56,9 +68,9 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const userEmail = (formData.get('email') as string) || '';
-    const userPhone = (formData.get('phone') as string) || '';
-    const userName = (formData.get('fullName') as string) || 'No Name Provided';
+    const userEmail = ((formData.get('email') as string) || '').trim();
+    const userPhone = ((formData.get('phone') as string) || '').trim();
+    const userName = ((formData.get('fullName') as string) || 'No Name Provided').trim();
     const userMessage = ((formData.get('message') as string) || '').trim();
     setEmail(userEmail);
     
@@ -69,7 +81,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
       const newId = `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
       setCustomerId(newId);
 
-      const defaultMessage = plan ? `User wants to purchase ${plan.name} at ${plan.price}` : 'Intro call requested';
+      const defaultMessage = `User registered for ${activePlan.name} at ${activePlan.price}`;
       const finalMessage = userMessage ? `${userMessage} (${defaultMessage})` : defaultMessage;
 
       const ticketPayload = {
@@ -77,7 +89,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
         name: userName,
         email: userEmail,
         phone: userPhone,
-        enquiryType: plan ? `Selected Plan: ${plan.name}` : 'Book Intro Call',
+        enquiryType: `Selected Plan: ${activePlan.name}`,
         message: finalMessage,
         status: 'Open',
         source: 'Web',
@@ -102,66 +114,60 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
       const defaultTempPassword = 'Welcome2026!';
 
       // Save to Customers collection in Firestore so user can log in to /my-account immediately
-      if (plan) {
-        try {
-          await addDoc(collection(db, 'customers'), {
-            id: newId,
-            name: userName,
-            email: userEmail,
-            phone: userPhone,
-            plan: plan.name,
-            password: defaultTempPassword,
-            mustChangePassword: true,
-            status: 'Active',
-            createdAt: serverTimestamp()
-          });
-        } catch (err: any) {
-          handleFirestoreError(err, OperationType.CREATE, 'customers');
-        }
+      try {
+        await addDoc(collection(db, 'customers'), {
+          id: newId,
+          name: userName,
+          email: userEmail,
+          phone: userPhone,
+          plan: activePlan.name,
+          price: activePlan.price,
+          password: defaultTempPassword,
+          mustChangePassword: true,
+          status: 'Active',
+          createdAt: serverTimestamp()
+        });
+      } catch (err: any) {
+        handleFirestoreError(err, OperationType.CREATE, 'customers');
+      }
 
-        // Save to New Joinees collection for Admin Dashboard tracking
-        try {
-          await addDoc(collection(db, 'new_joinees'), {
-            customerId: newId,
-            name: userName,
-            email: userEmail,
-            phone: userPhone,
-            plan: plan.name,
-            price: plan.price,
-            message: finalMessage,
-            tempPassword: defaultTempPassword,
-            status: 'Pending Payment',
-            createdAt: serverTimestamp()
-          });
-        } catch (err: any) {
-          handleFirestoreError(err, OperationType.CREATE, 'new_joinees');
-        }
+      // Save to New Joinees collection for Admin Dashboard tracking
+      try {
+        await addDoc(collection(db, 'new_joinees'), {
+          customerId: newId,
+          name: userName,
+          email: userEmail,
+          phone: userPhone,
+          plan: activePlan.name,
+          price: activePlan.price,
+          message: finalMessage,
+          tempPassword: defaultTempPassword,
+          status: 'Pending Payment',
+          createdAt: serverTimestamp()
+        });
+      } catch (err: any) {
+        handleFirestoreError(err, OperationType.CREATE, 'new_joinees');
       }
 
       // Call our background Stripe & Email integration endpoint
-      if (plan) {
-        const response = await fetch('/api/checkout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            planName: plan.name,
-            planPrice: plan.price,
-            customerEmail: userEmail,
-            customerId: newId,
-            fullName: userName,
-            tempPassword: defaultTempPassword
-          })
-        });
-        
-        const data = await response.json();
-        
-        if (data.url) {
-          // A real session/invoice was created via Stripe, capture the URL
-          setCheckoutUrl(data.url);
-        }
-      } else {
-        // Fallback delay for non-plan "free call" requests
-        await new Promise(resolve => setTimeout(resolve, 800));
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          planName: activePlan.name,
+          planPrice: activePlan.price,
+          customerEmail: userEmail,
+          customerId: newId,
+          fullName: userName,
+          tempPassword: defaultTempPassword
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (data.url) {
+        // A real session/invoice was created via Stripe, capture the URL
+        setCheckoutUrl(data.url);
       }
 
       setIsSubmitting(false);
@@ -269,25 +275,51 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
               <p className="text-gray-600 mb-6">
-                {plan ? "Please fill in your details below. After submitting this form, we'll review your registration and email you a secure Stripe payment link. Your subscription begins only after successful payment." : 'Please fill in your details below. Our team will contact you shortly to schedule your free setup call.'}
+                Please fill in your details below. After submitting this form, your software profile will be activated, and an official Stripe invoice and welcome email with login credentials will be sent to your email.
               </p>
 
-              {plan && (
-                <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 mb-6 flex justify-between items-center">
+              {/* Plan Selection Card or Picker */}
+              {plan ? (
+                <div className="bg-teal-50/70 p-4 rounded-xl border border-teal-200 mb-6 flex justify-between items-center shadow-xs">
                   <div>
-                    <p className="text-sm text-gray-500 font-medium">Selected Plan</p>
-                    <p className="font-bold text-gray-900">{plan.name}</p>
+                    <p className="text-xs text-teal-700 font-semibold uppercase tracking-wider">Selected Plan</p>
+                    <p className="font-bold text-gray-900 text-base">{activePlan.name}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-gray-500 font-medium">Price</p>
-                    <p className="font-bold text-teal-600">{plan.price}/mo</p>
+                    <p className="text-xs text-teal-700 font-semibold uppercase tracking-wider">Price</p>
+                    <p className="font-extrabold text-teal-700 text-lg">{activePlan.price}<span className="text-xs font-normal text-gray-600">/mo</span></p>
+                  </div>
+                </div>
+              ) : (
+                <div className="mb-6">
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">Select Subscription Plan</label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { name: 'Essential Care', price: '£9.99' },
+                      { name: 'Plus Care', price: '£17.99' },
+                      { name: 'Family Care', price: '£29.99' }
+                    ].map((p) => (
+                      <button
+                        key={p.name}
+                        type="button"
+                        onClick={() => setSelectedPlanState(p)}
+                        className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                          activePlan.name === p.name
+                            ? 'border-teal-600 bg-teal-50/90 text-teal-900 font-bold ring-2 ring-teal-600 shadow-sm'
+                            : 'border-gray-200 bg-white hover:border-gray-300 text-gray-700'
+                        }`}
+                      >
+                        <div className="font-bold text-xs sm:text-sm">{p.name}</div>
+                        <div className="text-teal-700 font-extrabold text-sm mt-0.5">{p.price}<span className="text-[10px] font-normal text-gray-500">/mo</span></div>
+                      </button>
+                    ))}
                   </div>
                 </div>
               )}
 
               <div>
                 <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
-                <input required type="text" id="fullName" name="fullName" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow" placeholder="e.g. John Smith" />
+                <input required type="text" id="fullName" name="fullName" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow" placeholder="e.g. Yash Kr" />
               </div>
 
               <div>
@@ -316,109 +348,93 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                 </div>
               </div>
 
-              {!plan && (
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Message / What would you like help with? <span className="text-gray-400 font-normal">(Optional)</span>
-                  </label>
-                  <textarea 
-                    id="message" 
-                    name="message" 
-                    rows={3}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow text-sm" 
-                    placeholder="Tell us what digital services or support you would like to opt for (e.g. smartphone help, online banking setup, scam awareness)..." 
-                  />
-                </div>
-              )}
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1.5">
+                  Message / Special Notes <span className="text-gray-400 font-normal">(Optional)</span>
+                </label>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  rows={2}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow text-sm" 
+                  placeholder="Tell us any specific tech support preferences or questions..." 
+                />
+              </div>
 
-              <div className="pt-4 space-y-5">
-                {plan && (
-                  <div className="space-y-4">
-                    {/* Billing Summary Box */}
-                    <div className="bg-teal-50/60 p-4 rounded-xl border border-teal-100 text-sm">
-                      <span className="font-bold text-teal-900 block mb-2">Billing Summary</span>
-                      <div className="space-y-1.5 font-medium text-gray-700 text-xs">
-                        <div className="flex justify-between">
-                          <span>Today's charge:</span>
-                          <span className="font-bold text-teal-800">{plan.price}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Billing frequency:</span>
-                          <span>Monthly</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Auto-renew:</span>
-                          <span className="text-teal-700 font-semibold">Yes</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Cancel anytime:</span>
-                          <span className="text-teal-700 font-semibold">Yes</span>
-                        </div>
+              <div className="pt-2 space-y-4">
+                <div className="space-y-4">
+                  {/* Billing Summary Box */}
+                  <div className="bg-teal-50/60 p-4 rounded-xl border border-teal-100 text-sm">
+                    <span className="font-bold text-teal-900 block mb-2">Billing Summary</span>
+                    <div className="space-y-1.5 font-medium text-gray-700 text-xs">
+                      <div className="flex justify-between">
+                        <span>Plan & Charge:</span>
+                        <span className="font-bold text-teal-800">{activePlan.name} ({activePlan.price}/mo)</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Billing frequency:</span>
+                        <span>Monthly Recurring</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Cancel anytime:</span>
+                        <span className="text-teal-700 font-semibold">Yes</span>
                       </div>
                     </div>
+                  </div>
 
-                    {/* Detailed billing disclosures */}
-                    <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 text-xs text-gray-600 space-y-2.5 leading-relaxed">
-                      <p>
-                        <span className="font-bold text-gray-900">Billing Terms: </span>
-                        Your first payment of <span className="font-bold text-gray-950">{plan.price}</span> is due after you receive your secure payment link. Future payments will automatically renew every month on the same date unless cancelled.
-                      </p>
-                      <p>
-                        <span className="font-bold text-gray-900">Cancellation Policy: </span>
-                        You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline">support@seniorease.com</a>. Cancellation takes effect at the end of the current billing period. No further recurring payments will be taken.
-                      </p>
-                      <p>
-                        Your membership begins once your first payment has been successfully processed. If paying by BACS Direct Debit, your membership will be activated once the payment has been successfully processed and confirmed. You'll receive a confirmation email and receipt after every successful payment.
-                      </p>
-                      <p className="text-[10px] text-gray-500 border-t border-gray-200 pt-2">
-                        <span className="font-bold text-gray-700 block mb-0.5">Disclaimer & Identity Notice:</span>
-                        SeniorEase provides software learning and subscriptions for senior citizens in the UK. We are NOT affiliated with any senior living, retirement home, or residential care discovery platforms. We do not provide medical, emergency, legal, financial, or regulated care services.
-                      </p>
-                    </div>
-
-                    {/* Bold Subscription Statement */}
-                    <p className="text-sm font-bold text-gray-950">
-                      Subscription: {plan.price}/month, billed automatically every month until cancelled.
+                  {/* Detailed billing disclosures */}
+                  <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 text-xs text-gray-600 space-y-2.5 leading-relaxed">
+                    <p>
+                      <span className="font-bold text-gray-900">Billing Terms: </span>
+                      Your first payment of <span className="font-bold text-gray-950">{activePlan.price}</span> is billed via your official Stripe invoice sent directly to your email address. Future payments will automatically renew every month on the same date unless cancelled.
                     </p>
-
-                    {/* Mandatory Consent Checkbox */}
-                    <div className="flex items-start gap-2.5">
-                      <input 
-                        required
-                        type="checkbox" 
-                        id="consentCheckbox"
-                        name="consentCheckbox"
-                        checked={consentChecked}
-                        onChange={(e) => setConsentChecked(e.target.checked)}
-                        className="mt-1 h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500 cursor-pointer"
-                      />
-                      <label htmlFor="consentCheckbox" className="text-xs font-semibold text-gray-700 select-none cursor-pointer leading-tight">
-                        I understand this is a recurring monthly subscription and I authorize automatic payments.
-                      </label>
-                    </div>
-
-                    {/* Direct links to legal pages */}
-                    <p className="text-xs text-gray-500 font-medium pl-6.5">
-                      By subscribing, you agree to our{' '}
-                      <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline font-semibold">Terms & Conditions</a>,{' '}
-                      <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline font-semibold">Privacy Policy</a>, and{' '}
-                      <a href="/refund" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline font-semibold">Refund Policy</a>.
+                    <p>
+                      <span className="font-bold text-gray-900">Cancellation Policy: </span>
+                      You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline">support@seniorease.com</a>.
+                    </p>
+                    <p className="text-[10px] text-gray-500 border-t border-gray-200 pt-2">
+                      <span className="font-bold text-gray-700 block mb-0.5">Disclaimer & Identity Notice:</span>
+                      SeniorEase provides software learning and subscriptions for senior citizens in the UK. We do not provide medical, emergency, legal, financial, or regulated care services.
                     </p>
                   </div>
-                )}
+
+                  {/* Mandatory Consent Checkbox */}
+                  <div className="flex items-start gap-2.5">
+                    <input 
+                      required
+                      type="checkbox" 
+                      id="consentCheckbox"
+                      name="consentCheckbox"
+                      checked={consentChecked}
+                      onChange={(e) => setConsentChecked(e.target.checked)}
+                      className="mt-1 h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500 cursor-pointer"
+                    />
+                    <label htmlFor="consentCheckbox" className="text-xs font-semibold text-gray-700 select-none cursor-pointer leading-tight">
+                      I understand this is a recurring monthly subscription ({activePlan.name} - {activePlan.price}/month) and authorize automatic billing.
+                    </label>
+                  </div>
+
+                  {/* Direct links to legal pages */}
+                  <p className="text-xs text-gray-500 font-medium pl-6">
+                    By subscribing, you agree to our{' '}
+                    <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline font-semibold">Terms & Conditions</a>,{' '}
+                    <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline font-semibold">Privacy Policy</a>, and{' '}
+                    <a href="/refund" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline font-semibold">Refund Policy</a>.
+                  </p>
+                </div>
 
                 <button 
                   type="submit" 
-                  disabled={isSubmitting || (!!plan && !consentChecked)}
-                  className="w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  disabled={isSubmitting || !consentChecked}
+                  className="w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer text-base"
                 >
                   {isSubmitting ? (
                     <>
                       <Loader2 className="animate-spin" size={20} />
-                      Processing...
+                      Activating Profile & Sending Email...
                     </>
                   ) : (
-                    plan ? `Register for ${plan.price}/month` : 'Request Free Call'
+                    `Register for ${activePlan.name} (${activePlan.price}/mo)`
                   )}
                 </button>
 
