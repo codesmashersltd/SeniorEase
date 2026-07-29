@@ -268,6 +268,12 @@ async function sendWelcomeEmail({
   planPrice: string;
   invoiceUrl?: string;
 }) {
+  const cleanTo = (to || "").trim();
+  if (!cleanTo) {
+    console.warn("[SMTP Warning] sendWelcomeEmail called with empty recipient email.");
+    return { success: false, error: "Recipient email address is missing or empty." };
+  }
+
   const transporter = getTransporter();
   const smtpUser = (process.env.SMTP_USER || "").trim();
   const from = process.env.SMTP_FROM || `"Senior Ease Support" <${smtpUser || "support@senioreease.com"}>`;
@@ -277,6 +283,34 @@ async function sendWelcomeEmail({
   }
   const cleanAppUrl = baseAppUrl.replace(/\/$/, "");
   const loginUrl = `${cleanAppUrl}/account`;
+  const displayPrice = planPrice.startsWith("£") ? planPrice : `£${planPrice}`;
+
+  const textContent = `
+Dear ${name},
+
+Thank you for subscribing to Senior Ease! Your account and digital support profile have been activated. Please find your official PDF Invoice attached to this email.
+
+🔑 YOUR LOGIN CREDENTIALS
+----------------------------------------
+Unique Customer ID: ${customerId}
+Temporary Password: ${tempPassword}
+
+Use your Unique Customer ID and Temporary Password to sign in at our account dashboard:
+${loginUrl}
+
+📋 SUBSCRIPTION PLAN SUMMARY
+----------------------------------------
+Plan Selected: ${planName}
+Amount: ${displayPrice}/month
+Invoice Attachment: SeniorEase_Invoice_${customerId}.pdf
+
+If you have any questions or require guidance, our UK support team is here to help.
+Email: ${smtpUser || 'support@senioreease.com'}
+Phone: +44 (0) 330 401 0019
+
+Senior Ease Digital Ltd
+Kemp House, 160 City Road, London EC1V 2NX
+`.trim();
 
   const htmlContent = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; color: #1e293b; line-height: 1.6; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
@@ -299,7 +333,7 @@ async function sendWelcomeEmail({
         <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 18px; border-radius: 12px; margin: 24px 0;">
           <h3 style="margin: 0 0 10px 0; color: #334155; font-size: 16px;">📋 Subscription Plan Summary</h3>
           <p style="margin: 6px 0;"><strong>Plan Selected:</strong> ${planName}</p>
-          <p style="margin: 6px 0;"><strong>Amount:</strong> ${planPrice}/month</p>
+          <p style="margin: 6px 0;"><strong>Amount:</strong> ${displayPrice}/month</p>
           <p style="margin: 6px 0;"><strong>Invoice Attachment:</strong> SeniorEase_Invoice_${customerId}.pdf</p>
         </div>
 
@@ -330,7 +364,7 @@ async function sendWelcomeEmail({
       try {
         const pdfBuffer = await generateInvoicePDFBuffer({
           name,
-          to,
+          to: cleanTo,
           phone,
           address,
           city,
@@ -353,15 +387,17 @@ async function sendWelcomeEmail({
 
       const info = await transporter.sendMail({
         from,
-        to,
+        replyTo: smtpUser || "support@senioreease.com",
+        to: cleanTo,
         subject: `Welcome to Senior Ease - Invoice & Credentials (Customer ID: ${customerId})`,
+        text: textContent,
         html: htmlContent,
         attachments,
       });
-      console.log(`[SMTP Success] Invoice PDF and welcome email sent to ${to}: ${info.messageId}`);
+      console.log(`[SMTP Success] Invoice PDF and welcome email sent to ${cleanTo}: ${info.messageId}`);
       return { success: true, messageId: info.messageId };
     } catch (err: any) {
-      console.error(`[SMTP Error] Failed to send email via SMTP to ${to}:`, err.message);
+      console.error(`[SMTP Error] Failed to send email via SMTP to ${cleanTo}:`, err.message);
       return { success: false, error: err.message };
     }
   } else {
