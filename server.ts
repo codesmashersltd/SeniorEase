@@ -29,10 +29,11 @@ function getStripe(): Stripe {
 }
 
 function getTransporter() {
-  const host = process.env.SMTP_HOST;
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
-  const port = parseInt(process.env.SMTP_PORT || "587", 10);
+  const host = (process.env.SMTP_HOST || "").trim();
+  const user = (process.env.SMTP_USER || "").trim();
+  const pass = (process.env.SMTP_PASS || "").trim();
+  const portStr = (process.env.SMTP_PORT || "465").trim();
+  const port = parseInt(portStr, 10);
 
   if (host && user && pass) {
     return nodemailer.createTransport({
@@ -40,6 +41,7 @@ function getTransporter() {
       port,
       secure: port === 465,
       auth: { user, pass },
+      tls: { rejectUnauthorized: false }
     });
   }
   return null;
@@ -63,7 +65,8 @@ async function sendWelcomeEmail({
   invoiceUrl?: string;
 }) {
   const transporter = getTransporter();
-  const from = process.env.SMTP_FROM || `"Senior Ease Support" <support@seniorease.com>`;
+  const smtpUser = (process.env.SMTP_USER || "").trim();
+  const from = process.env.SMTP_FROM || `"Senior Ease Support" <${smtpUser || "support@senioreease.com"}>`;
   const appUrl = process.env.APP_URL || "https://seniorease.com";
   const loginUrl = `${appUrl}/my-account`;
 
@@ -103,7 +106,7 @@ async function sendWelcomeEmail({
         </div>
 
         <p style="font-size: 13px; color: #64748b; margin-top: 24px;">If you have any questions or require guidance, our UK support team is here to help.</p>
-        <p style="font-size: 13px; color: #64748b; margin: 0;"><strong>Email:</strong> <a href="mailto:support@seniorease.com" style="color: #0d9488;">support@seniorease.com</a> | <strong>Phone:</strong> +44 (0) 330 401 0019</p>
+        <p style="font-size: 13px; color: #64748b; margin: 0;"><strong>Email:</strong> <a href="mailto:${smtpUser || 'support@senioreease.com'}" style="color: #0d9488;">${smtpUser || 'support@senioreease.com'}</a> | <strong>Phone:</strong> +44 (0) 330 401 0019</p>
       </div>
 
       <div style="border-top: 1px solid #e2e8f0; padding-top: 16px; text-align: center; font-size: 11px; color: #94a3b8;">
@@ -118,18 +121,18 @@ async function sendWelcomeEmail({
       const info = await transporter.sendMail({
         from,
         to,
-        subject: `Welcome to Senior Ease - Your Unique Customer ID: ${customerId}`,
+        subject: `Welcome to Senior Ease - Invoice & Credentials (Customer ID: ${customerId})`,
         html: htmlContent,
       });
-      console.log(`[Email] Welcome email sent successfully to ${to}: ${info.messageId}`);
+      console.log(`[SMTP Success] Invoice and welcome email sent to ${to}: ${info.messageId}`);
       return { success: true, messageId: info.messageId };
     } catch (err: any) {
-      console.warn(`[SMTP Warning] Direct welcome email notice to ${to} deferred (${err.message}). Stripe delivers the official invoice email directly.`);
-      return { success: false, error: err.message, stripeHandled: true };
+      console.error(`[SMTP Error] Failed to send email via SMTP to ${to}:`, err.message);
+      return { success: false, error: err.message };
     }
   } else {
-    console.log(`[Email Notice] SMTP not configured. Simulated welcome email for ${to} (Customer ID: ${customerId})`);
-    return { success: true, simulated: true };
+    console.warn(`[SMTP Warning] SMTP transporter is not configured.`);
+    return { success: false, error: "SMTP credentials (SMTP_HOST, SMTP_USER, SMTP_PASS) are missing or not set in Environment Variables." };
   }
 }
 

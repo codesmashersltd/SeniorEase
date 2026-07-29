@@ -585,10 +585,15 @@ export default function AdminDashboard() {
       });
       const data = await res.json();
       if (data.status === 'success') {
-        let msg = `✅ Welcome Email & Stripe Invoice processed for ${name} (${email})!`;
-        if (data.invoice_id) msg += `\nStripe Invoice ID: ${data.invoice_id}`;
-        if (data.url) msg += `\nStripe Invoice URL: ${data.url}`;
-        if (data.stripeError) msg += `\nNote on Stripe: ${data.stripeError}`;
+        let msg = `Welcome Email & Stripe Invoice processed for ${name} (${email})!\n`;
+        if (data.emailResult?.success) {
+          msg += `\n✉️ EMAIL STATUS: Sent successfully via SMTP to ${email}!`;
+        } else if (data.emailResult?.error) {
+          msg += `\n⚠️ EMAIL STATUS FAILED: ${data.emailResult.error}\n(Please check your SMTP_USER & SMTP_PASS in Settings -> Environment Variables)`;
+        }
+        if (data.invoice_id) msg += `\n\nStripe Invoice ID: ${data.invoice_id}`;
+        if (data.url) msg += `\nStripe Invoice Link: ${data.url}`;
+        if (data.stripeError) msg += `\nNote on Stripe Direct Send: ${data.stripeError}`;
         alert(msg);
       } else {
         alert(`Error: ${data.message || 'Failed to dispatch email/invoice'}`);
