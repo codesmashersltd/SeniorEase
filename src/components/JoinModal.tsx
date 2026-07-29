@@ -228,24 +228,18 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                     <p className="text-gray-600 mb-4 text-sm">
                       Thank you for subscribing! We are provisioning your software profile right now.
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                      <div className="bg-white p-3.5 rounded-xl border border-gray-200">
+                    <div className="mb-6">
+                      <div className="bg-white p-4 rounded-xl border border-gray-200 text-center sm:text-left">
                         <span className="text-xs text-gray-500 font-medium block mb-1">Unique Customer ID:</span>
-                        <span className="font-mono text-lg font-bold text-teal-700 bg-teal-50 px-3 py-1 rounded border border-teal-200 inline-block">
+                        <span className="font-mono text-xl font-bold text-teal-700 bg-teal-50 px-4 py-1.5 rounded-lg border border-teal-200 inline-block">
                           {customerId}
-                        </span>
-                      </div>
-                      <div className="bg-white p-3.5 rounded-xl border border-gray-200">
-                        <span className="text-xs text-gray-500 font-medium block mb-1">Temporary Password:</span>
-                        <span className="font-mono text-lg font-bold text-teal-700 bg-teal-50 px-3 py-1 rounded border border-teal-200 inline-block">
-                          Welcome2026!
                         </span>
                       </div>
                     </div>
                     <div className="flex gap-4 p-4 bg-white rounded-xl border border-gray-100 shadow-sm">
                       <ShieldCheck className="text-teal-500 shrink-0" size={24} />
                       <p className="text-sm text-gray-600 leading-relaxed m-0">
-                        We have dispatched an official welcome email to <span className="font-semibold text-gray-900">{email}</span> containing your Customer ID (<span className="font-semibold text-teal-700">{customerId}</span>), temporary password (<span className="font-semibold text-teal-700">Welcome2026!</span>), and your Stripe invoice link.
+                        We have dispatched an official welcome email to <span className="font-semibold text-gray-900">{email}</span> containing your Unique Customer ID (<span className="font-semibold text-teal-700">{customerId}</span>), login credentials, and your Stripe invoice link.
                       </p>
                     </div>
                   </div>
@@ -259,21 +253,12 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                 </>
               )}
               
-              {checkoutUrl ? (
-                <button
-                  onClick={() => window.location.href = checkoutUrl}
-                  className="mt-4 w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md flex items-center justify-center gap-2"
-                >
-                  Proceed to Payment <ShieldCheck size={20} />
-                </button>
-              ) : (
-                <button
-                  onClick={handleClose}
-                  className="mt-4 w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md"
-                >
-                  Done
-                </button>
-              )}
+              <button
+                onClick={handleClose}
+                className="mt-4 w-full bg-teal-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-teal-700 transition-colors shadow-md flex items-center justify-center gap-2 cursor-pointer text-base"
+              >
+                Done
+              </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -349,19 +334,6 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                   <label htmlFor="postcode" className="block text-sm font-medium text-gray-700 mb-1.5">Postcode</label>
                   <input required type="text" id="postcode" name="postcode" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow" placeholder="SW1A 1AA" />
                 </div>
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Message / Special Notes <span className="text-gray-400 font-normal">(Optional)</span>
-                </label>
-                <textarea 
-                  id="message" 
-                  name="message" 
-                  rows={2}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-shadow text-sm" 
-                  placeholder="Tell us any specific tech support preferences or questions..." 
-                />
               </div>
 
               <div className="pt-2 space-y-4">

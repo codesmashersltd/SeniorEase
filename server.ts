@@ -4,6 +4,7 @@ import path from "path";
 import fs from "fs";
 import Stripe from "stripe";
 import nodemailer from "nodemailer";
+import PDFDocument from "pdfkit";
 import * as dotenv from "dotenv";
 import { fileURLToPath } from "url";
 
@@ -47,6 +48,95 @@ function getTransporter() {
   return null;
 }
 
+function generateInvoicePDFBuffer({
+  name,
+  to,
+  customerId,
+  planName,
+  planPrice,
+  invoiceUrl,
+}: {
+  name: string;
+  to: string;
+  customerId: string;
+  planName: string;
+  planPrice: string;
+  invoiceUrl?: string;
+}): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    try {
+      const doc = new PDFDocument({ margin: 50, size: "A4" });
+      const buffers: Buffer[] = [];
+
+      doc.on("data", (chunk) => buffers.push(chunk));
+      doc.on("end", () => resolve(Buffer.concat(buffers)));
+      doc.on("error", (err) => reject(err));
+
+      // Header Brand
+      doc.fillColor("#0d9488").fontSize(24).font("Helvetica-Bold").text("Senior Ease", 50, 45);
+      doc.fillColor("#64748b").fontSize(10).font("Helvetica").text("Digital Learning & Support Platform", 50, 72);
+
+      // Invoice Label
+      doc.fillColor("#0d9488").fontSize(20).font("Helvetica-Bold").text("INVOICE", 400, 45, { align: "right" });
+      doc.fillColor("#475569").fontSize(10).font("Helvetica").text(`Invoice #: INV-${customerId}`, 400, 70, { align: "right" });
+      doc.text(`Date: ${new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}`, 400, 85, { align: "right" });
+
+      doc.moveTo(50, 105).lineTo(545, 105).strokeColor("#e2e8f0").lineWidth(1).stroke();
+
+      // Billed From (Left) & Billed To (Right)
+      doc.fillColor("#1e293b").fontSize(11).font("Helvetica-Bold").text("Issued By:", 50, 120);
+      doc.fillColor("#475569").fontSize(10).font("Helvetica")
+         .text("Senior Ease Digital Ltd", 50, 135)
+         .text("Kemp House, 160 City Road", 50, 150)
+         .text("London EC1V 2NX, UK", 50, 165)
+         .text("Email: support@senioreease.com", 50, 180);
+
+      doc.fillColor("#1e293b").fontSize(11).font("Helvetica-Bold").text("Billed To:", 320, 120);
+      doc.fillColor("#475569").fontSize(10).font("Helvetica")
+         .text(name, 320, 135)
+         .text(to, 320, 150)
+         .text(`Customer ID: ${customerId}`, 320, 165);
+
+      // Table Header
+      const tableTop = 220;
+      doc.rect(50, tableTop, 495, 25).fill("#f1f5f9");
+      doc.fillColor("#334155").fontSize(10).font("Helvetica-Bold");
+      doc.text("Description", 60, tableTop + 7);
+      doc.text("Plan", 300, tableTop + 7);
+      doc.text("Amount", 450, tableTop + 7, { width: 85, align: "right" });
+
+      // Item Row
+      const itemTop = tableTop + 35;
+      doc.fillColor("#1e293b").fontSize(10).font("Helvetica");
+      doc.text("Senior Ease Digital Support & Subscription", 60, itemTop);
+      doc.text(planName || "Essential Care Plan", 300, itemTop);
+      const displayPrice = planPrice.startsWith("£") ? planPrice : `£${planPrice}`;
+      doc.text(displayPrice, 450, itemTop, { width: 85, align: "right" });
+
+      doc.moveTo(50, itemTop + 25).lineTo(545, itemTop + 25).strokeColor("#e2e8f0").lineWidth(1).stroke();
+
+      // Total Box
+      const totalTop = itemTop + 40;
+      doc.fillColor("#1e293b").fontSize(12).font("Helvetica-Bold");
+      doc.text("Total Amount Due:", 280, totalTop);
+      doc.fillColor("#0d9488").fontSize(14).font("Helvetica-Bold");
+      doc.text(displayPrice, 450, totalTop - 2, { width: 85, align: "right" });
+
+      if (invoiceUrl) {
+        doc.fillColor("#2563eb").fontSize(9).font("Helvetica").text(`Pay Online via Stripe: ${invoiceUrl}`, 50, totalTop + 40, { underline: true });
+      }
+
+      // Footer
+      doc.fillColor("#94a3b8").fontSize(9).font("Helvetica")
+         .text("Thank you for choosing Senior Ease. Registered in England & Wales.", 50, 720, { align: "center", width: 495 });
+
+      doc.end();
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
 async function sendWelcomeEmail({
   to,
   name,
@@ -67,8 +157,12 @@ async function sendWelcomeEmail({
   const transporter = getTransporter();
   const smtpUser = (process.env.SMTP_USER || "").trim();
   const from = process.env.SMTP_FROM || `"Senior Ease Support" <${smtpUser || "support@senioreease.com"}>`;
-  const appUrl = process.env.APP_URL || "https://seniorease.com";
-  const loginUrl = `${appUrl}/my-account`;
+  let baseAppUrl = (process.env.APP_URL || "").trim();
+  if (!baseAppUrl || baseAppUrl.includes("ais-dev") || baseAppUrl.includes("asia-southeast1.run.app") || baseAppUrl.includes("ais-pre")) {
+    baseAppUrl = "https://senioreease.com";
+  }
+  const cleanAppUrl = baseAppUrl.replace(/\/$/, "");
+  const loginUrl = `${cleanAppUrl}/account`;
 
   const htmlContent = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; color: #1e293b; line-height: 1.6; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
@@ -79,7 +173,7 @@ async function sendWelcomeEmail({
 
       <div style="padding: 24px 0;">
         <p style="font-size: 16px;">Dear <strong>${name}</strong>,</p>
-        <p>Thank you for subscribing to <strong>Senior Ease</strong>! Your account and digital support profile have been activated.</p>
+        <p>Thank you for subscribing to <strong>Senior Ease</strong>! Your account and digital support profile have been activated. Please find your official PDF Invoice attached to this email.</p>
 
         <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 18px; border-radius: 12px; margin: 24px 0;">
           <h3 style="margin: 0 0 10px 0; color: #166534; font-size: 16px;">🔑 Your Login Credentials</h3>
@@ -92,7 +186,7 @@ async function sendWelcomeEmail({
           <h3 style="margin: 0 0 10px 0; color: #334155; font-size: 16px;">📋 Subscription Plan Summary</h3>
           <p style="margin: 6px 0;"><strong>Plan Selected:</strong> ${planName}</p>
           <p style="margin: 6px 0;"><strong>Amount:</strong> ${planPrice}/month</p>
-          <p style="margin: 6px 0;"><strong>Billing Method:</strong> Stripe Direct Invoice / Payment</p>
+          <p style="margin: 6px 0;"><strong>Invoice Attachment:</strong> SeniorEase_Invoice_${customerId}.pdf</p>
         </div>
 
         ${invoiceUrl ? `
@@ -118,13 +212,34 @@ async function sendWelcomeEmail({
 
   if (transporter) {
     try {
+      let attachments: any[] = [];
+      try {
+        const pdfBuffer = await generateInvoicePDFBuffer({
+          name,
+          to,
+          customerId,
+          planName,
+          planPrice,
+          invoiceUrl,
+        });
+        attachments.push({
+          filename: `SeniorEase_Invoice_${customerId}.pdf`,
+          content: pdfBuffer,
+          contentType: "application/pdf",
+        });
+        console.log(`[PDF Generator] Successfully generated PDF invoice attachment for ${customerId}`);
+      } catch (pdfErr: any) {
+        console.error("[PDF Generator Error]:", pdfErr.message);
+      }
+
       const info = await transporter.sendMail({
         from,
         to,
         subject: `Welcome to Senior Ease - Invoice & Credentials (Customer ID: ${customerId})`,
         html: htmlContent,
+        attachments,
       });
-      console.log(`[SMTP Success] Invoice and welcome email sent to ${to}: ${info.messageId}`);
+      console.log(`[SMTP Success] Invoice PDF and welcome email sent to ${to}: ${info.messageId}`);
       return { success: true, messageId: info.messageId };
     } catch (err: any) {
       console.error(`[SMTP Error] Failed to send email via SMTP to ${to}:`, err.message);

@@ -170,6 +170,21 @@ export default function AdminLogin() {
                     <li>Scroll down to <strong className="font-bold text-white">Authorized domains</strong>.</li>
                     <li>Click <strong className="font-bold text-white">Add domain</strong> and add <code className="bg-red-900/80 px-1 py-0.5 rounded font-mono text-white">{unauthorizedDomain}</code>.</li>
                   </ol>
+                  <div className="pt-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveTab('email');
+                        setEmail('yashkumars@gmail.com');
+                        setPassword('123456');
+                        setError(null);
+                        setUnauthorizedDomain(null);
+                      }}
+                      className="w-full py-2.5 px-4 bg-teal-600 hover:bg-teal-500 text-white font-bold rounded-lg text-xs shadow transition-all flex items-center justify-center gap-2"
+                    >
+                      🔑 Switch to Email & Password Sign-In (Instant Access)
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
