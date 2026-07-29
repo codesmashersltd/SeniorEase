@@ -185,11 +185,10 @@ async function startServer() {
             }
           });
 
-          // 2. Create Stripe Invoice FIRST with send_invoice collection method and auto_advance: true
+          // 2. Create Stripe Invoice FIRST with send_invoice collection method
           const invoice = await stripe.invoices.create({
             customer: customer.id,
             collection_method: "send_invoice",
-            auto_advance: true,
             days_until_due: 7,
             currency: "gbp",
             description: `Welcome to Senior Ease!\nYour Unique Customer ID is: ${customerId || 'N/A'}.\nYour secure temporary password for your account dashboard is: ${tempPassword} (you can change this after logging in).\n\nWe have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your Senior Ease subscription.`,
@@ -209,11 +208,11 @@ async function startServer() {
             description: `${planName || 'Senior Ease Plan'} - Monthly Subscription Coverage (${planPrice || '£29.99'}/mo) (Customer ID: ${customerId || 'N/A'})`,
           });
 
-          // 4. Finalize the invoice to open state with auto_advance: true
-          const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id, { auto_advance: true });
+          // 4. Finalize the invoice to open state
+          const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id);
           invoiceId = finalizedInvoice.id;
 
-          // 5. Send the invoice email directly to customer via Stripe (POST /v1/invoices/{invoice_id}/send)
+          // 5. Send the invoice email directly to customer via Stripe
           let sentInvoice = finalizedInvoice;
           try {
             sentInvoice = await stripe.invoices.sendInvoice(finalizedInvoice.id);
