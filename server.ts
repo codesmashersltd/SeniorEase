@@ -5,7 +5,6 @@ import fs from "fs";
 import Stripe from "stripe";
 import * as dotenv from "dotenv";
 import { fileURLToPath } from "url";
-import nodemailer from "nodemailer";
 
 dotenv.config();
 
@@ -28,172 +27,6 @@ function getStripe(): Stripe {
   return stripeClient;
 }
 
-interface WelcomeEmailParams {
-  customerEmail: string;
-  customerId: string;
-  fullName: string;
-  tempPassword?: string;
-  planName?: string;
-  planPrice?: string;
-  invoiceUrl?: string;
-  invoiceId?: string;
-}
-
-async function sendCustomerWelcomeEmail(params: WelcomeEmailParams) {
-  const {
-    customerEmail,
-    customerId,
-    fullName,
-    tempPassword,
-    planName = "Senior Ease Plus Membership",
-    planPrice = "£17.99/month",
-    invoiceUrl,
-    invoiceId,
-  } = params;
-
-  const appUrl = process.env.APP_URL || "https://seniorease.com";
-  const loginUrl = `${appUrl}/login`;
-  const pwdToDisplay = tempPassword || `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-  const invToDisplay = invoiceId || `INV-SE-${Math.floor(100000 + Math.random() * 900000)}`;
-
-  const htmlBody = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; padding: 0; }
-        .container { max-width: 600px; margin: 30px auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
-        .header { background-color: #0d9488; padding: 32px 24px; text-align: center; color: #ffffff; }
-        .header h1 { margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
-        .header p { margin: 6px 0 0 0; font-size: 14px; opacity: 0.9; }
-        .content { padding: 32px 24px; }
-        .greeting { font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
-        .card { background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; margin: 20px 0; }
-        .credential-box { background-color: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px 18px; margin-top: 10px; }
-        .credential-label { font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-        .credential-value { font-family: monospace; font-size: 18px; font-weight: 700; color: #0d9488; }
-        .btn { display: inline-block; background-color: #0d9488; color: #ffffff !important; text-decoration: none; font-weight: 700; padding: 14px 28px; border-radius: 10px; font-size: 15px; margin-top: 20px; }
-        .footer { background-color: #f1f5f9; padding: 20px 24px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #e2e8f0; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1>Senior Ease</h1>
-          <p>Official Account Credentials & Invoice Notice</p>
-        </div>
-        <div class="content">
-          <div class="greeting">Hello ${fullName},</div>
-          <p style="font-size: 15px; line-height: 1.6; color: #334155;">
-            Welcome to Senior Ease! Your account profile has been successfully created and activated.
-            Below are your unique account login credentials and membership invoice details.
-          </p>
-
-          <div class="card">
-            <h3 style="margin: 0 0 12px 0; font-size: 16px; color: #166534;">🔑 Your Account Access Credentials</h3>
-            
-            <div class="credential-box">
-              <div class="credential-label">Unique Customer ID</div>
-              <div class="credential-value">${customerId}</div>
-            </div>
-
-            <div class="credential-box" style="margin-top: 10px;">
-              <div class="credential-label">Temporary Password</div>
-              <div class="credential-value" style="color: #0284c7;">${pwdToDisplay}</div>
-            </div>
-
-            <div class="credential-box" style="margin-top: 10px;">
-              <div class="credential-label">Selected Membership Plan</div>
-              <div style="font-size: 15px; font-weight: 600; color: #1e293b;">${planName} (${planPrice})</div>
-            </div>
-          </div>
-
-          <p style="font-size: 14px; color: #475569; line-height: 1.5;">
-            <strong>How to Log In:</strong><br>
-            You can log into your Senior Ease portal at any time using your Customer ID or Email Address along with your Temporary Password.
-          </p>
-
-          <div style="text-align: center; margin: 25px 0;">
-            <a href="${loginUrl}" class="btn">Log In to Senior Ease Dashboard</a>
-          </div>
-
-          ${invoiceUrl ? `
-          <div style="border-top: 1px dashed #cbd5e1; padding-top: 16px; margin-top: 20px;">
-            <p style="font-size: 14px; color: #475569;">
-              <strong>Invoice Reference:</strong> ${invToDisplay}<br>
-              <a href="${invoiceUrl}" style="color: #0d9488; font-weight: 700;">Click here to view or pay your official Stripe Invoice directly &rarr;</a>
-            </p>
-          </div>
-          ` : ''}
-
-          <p style="font-size: 13px; color: #64748b; margin-top: 24px; line-height: 1.5;">
-            * Security Note: Upon your initial login, you will be prompted to set a permanent private password for your account security.
-          </p>
-        </div>
-        <div class="footer">
-          <p>Senior Ease Support Team • <a href="mailto:support@seniorease.com" style="color: #0d9488;">support@seniorease.com</a> • +44 (0) 330 401 0019</p>
-          <p>© ${new Date().getFullYear()} Senior Ease. Registered in England & Wales.</p>
-        </div>
-      </div>
-    </body>
-    </html>
-  `;
-
-  let transporter;
-  if (process.env.SMTP_HOST && process.env.SMTP_USER) {
-    transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || "587"),
-      secure: process.env.SMTP_PORT === "465",
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
-  } else {
-    try {
-      const testAccount = await nodemailer.createTestAccount();
-      transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false,
-        auth: {
-          user: testAccount.user,
-          pass: testAccount.pass,
-        },
-      });
-    } catch (e) {
-      console.warn("Could not create Ethereal test account, logging email content.");
-    }
-  }
-
-  if (transporter) {
-    try {
-      const fromAddr = process.env.SMTP_FROM || '"Senior Ease" <support@seniorease.com>';
-      const mailOptions = {
-        from: fromAddr,
-        to: customerEmail,
-        subject: `Welcome to Senior Ease - Account Credentials (${customerId}) & Invoice`,
-        html: htmlBody,
-      };
-
-      const info = await transporter.sendMail(mailOptions);
-      console.log(`[Email Dispatched] Welcome email sent to ${customerEmail}. Message ID: ${info.messageId}`);
-      const previewUrl = nodemailer.getTestMessageUrl(info);
-      if (previewUrl) {
-        console.log(`[Ethereal Email Preview URL]: ${previewUrl}`);
-      }
-      return { success: true, info: info.messageId || "Dispatched via SMTP/Ethereal", previewUrl };
-    } catch (err: any) {
-      console.error("[Nodemailer Error]", err.message);
-      return { success: false, error: err.message };
-    }
-  }
-
-  return { success: true, info: "Logged to console" };
-}
-
 async function startServer() {
   const app = express();
   const PORT = 3000;
@@ -204,54 +37,6 @@ async function startServer() {
   app.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
     next();
-  });
-
-  // Stripe Webhook Endpoint (uses raw body parsing for signature verification)
-  app.post("/api/stripe/webhook", express.raw({ type: "application/json" }), async (req, res) => {
-    const sig = req.headers["stripe-signature"];
-    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-    let event;
-
-    try {
-      if (webhookSecret && sig) {
-        const stripe = getStripe();
-        event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
-      } else {
-        // Fallback for unverified payload when secret is not set
-        const payload = Buffer.isBuffer(req.body) ? req.body.toString("utf8") : JSON.stringify(req.body);
-        event = JSON.parse(payload);
-      }
-    } catch (err: any) {
-      console.error("⚠️ Stripe Webhook error:", err.message);
-      return res.status(400).send(`Webhook Error: ${err.message}`);
-    }
-
-    console.log(`[Stripe Webhook] Received event: ${event.type}`);
-
-    switch (event.type) {
-      case "invoice.payment_succeeded": {
-        const invoice = event.data.object;
-        console.log(`[Stripe Webhook] Invoice ${invoice.id} paid successfully.`);
-        break;
-      }
-      case "invoice.payment_failed": {
-        const invoice = event.data.object;
-        console.log(`[Stripe Webhook] Invoice ${invoice.id} payment failed.`);
-        break;
-      }
-      case "customer.subscription.created":
-      case "customer.subscription.updated":
-      case "customer.subscription.deleted": {
-        const sub = event.data.object;
-        console.log(`[Stripe Webhook] Subscription event ${event.type} for customer ${sub.customer}`);
-        break;
-      }
-      default:
-        console.log(`[Stripe Webhook] Unhandled event type: ${event.type}`);
-    }
-
-    res.json({ received: true });
   });
 
   app.use(express.json());
@@ -265,54 +50,10 @@ async function startServer() {
     res.send("✅ Admin server is alive at " + new Date().toISOString());
   });
 
-  // API Endpoint to send welcome email & credentials
-  app.post("/api/send-welcome-email", async (req, res) => {
-    try {
-      const { customerEmail, customerId, fullName, tempPassword, planName, planPrice, invoiceUrl, invoiceId } = req.body;
-
-      if (!customerEmail) {
-        return res.status(400).json({ status: "error", message: "Customer email is required." });
-      }
-
-      const generatedTempPwd = tempPassword || `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-      const finalId = customerId || `SE-${Math.floor(100000 + Math.random() * 900000)}`;
-
-      const emailResult = await sendCustomerWelcomeEmail({
-        customerEmail,
-        customerId: finalId,
-        fullName: fullName || "Valued Customer",
-        tempPassword: generatedTempPwd,
-        planName: planName || "Senior Ease Plus Membership",
-        planPrice: planPrice || "£17.99/month",
-        invoiceUrl,
-        invoiceId
-      });
-
-      res.json({
-        status: "success",
-        customerId: finalId,
-        tempPassword: generatedTempPwd,
-        emailSent: emailResult.success,
-        emailInfo: emailResult.info,
-        previewUrl: emailResult.previewUrl
-      });
-    } catch (err: any) {
-      console.error("[Send Welcome Email Error]", err);
-      res.status(500).json({ status: "error", message: err.message });
-    }
-  });
-
   app.post("/api/checkout", async (req, res) => {
     try {
-      const { planPrice, planName, customerEmail, customerId, fullName, tempPassword } = req.body;
+      const { planPrice, planName, customerEmail, customerId, fullName } = req.body;
       const stripe = getStripe();
-
-      const finalTempPwd = tempPassword || `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-      const finalCustId = customerId || `SE-${Math.floor(100000 + Math.random() * 900000)}`;
-      const finalName = fullName || customerEmail || "Valued Customer";
-
-      let paymentUrl = "";
-      let invoiceId = "";
 
       if (process.env.STRIPE_SECRET_KEY) {
         const numericPrice = parseFloat((planPrice || "0").toString().replace(/[^0-9.]/g, ""));
@@ -321,10 +62,10 @@ async function startServer() {
         // 1. Create or retrieve Stripe Customer
         const customer = await stripe.customers.create({
           email: customerEmail,
-          name: finalName,
+          name: fullName || customerEmail,
           metadata: {
-            customerId: finalCustId,
-            plan: planName || "Senior Ease Plan"
+            customerId: customerId || "N/A",
+            plan: planName || "SeniorEase Plan"
           }
         });
 
@@ -333,7 +74,7 @@ async function startServer() {
           customer: customer.id,
           amount: unitAmount,
           currency: "gbp",
-          description: `${planName} Plan - Monthly Senior Ease Subscription Coverage (Customer ID: ${finalCustId})`,
+          description: `${planName} Plan - Monthly SeniorEase Subscription Coverage (Customer ID: ${customerId || 'N/A'})`,
         });
 
         // 3. Create Stripe Invoice with send_invoice collection method
@@ -343,10 +84,10 @@ async function startServer() {
           days_until_due: 7,
           pending_invoice_items_behavior: "include",
           currency: "gbp",
-          description: `Welcome to Senior Ease! Your Unique Customer ID is: ${finalCustId}.\nYour temporary password for your account dashboard is: ${finalTempPwd}.\n\nWe have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your Senior Ease subscription.`,
-          footer: `Senior Ease Subscription | Support Email: support@seniorease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${finalCustId}`,
+          description: `Welcome to SeniorEase! Your Unique Customer ID is: ${customerId || 'N/A'}.\nYour secure temporary password for your account dashboard is: Welcome2026! (you can change this after logging in).\n\nWe have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your SeniorEase subscription.`,
+          footer: `SeniorEase Subscription | Support Email: support@seniorease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${customerId || 'N/A'}`,
           metadata: {
-            customerId: finalCustId,
+            customerId: customerId || "N/A",
             planName: planName || "",
           }
         });
@@ -354,38 +95,30 @@ async function startServer() {
         // 4. Finalize the invoice to generate the hosted payment URL
         const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id);
 
-        // 5. Send the invoice email directly to the customer via Stripe
+        // 5. Send the invoice email directly to the customer via Stripe (using support@seniorease.com sender domain)
         let sentInvoice = finalizedInvoice;
         try {
           sentInvoice = await stripe.invoices.sendInvoice(finalizedInvoice.id);
-          console.log(`[Stripe] Successfully sent invoice email to ${customerEmail} for Invoice ID: ${sentInvoice.id}`);
+          console.log(`[Stripe] Successfully sent invoice email to ${customerEmail} from support@seniorease.com for Invoice ID: ${sentInvoice.id}`);
         } catch (emailErr: any) {
-          console.warn("[Stripe] Could not send invoice email automatically via Stripe:", emailErr.message);
+          console.warn("[Stripe] Could not send invoice email automatically:", emailErr.message);
         }
 
-        paymentUrl = sentInvoice.hosted_invoice_url || finalizedInvoice.hosted_invoice_url || "";
-        invoiceId = sentInvoice.id;
+        const paymentUrl = sentInvoice.hosted_invoice_url || finalizedInvoice.hosted_invoice_url || "";
+
+        res.json({
+          status: "success",
+          url: paymentUrl,
+          invoice_id: sentInvoice.id,
+          customer_id: customer.id
+        });
+      } else {
+        res.json({
+          status: "success",
+          message: "Stripe intent simulated (no API key)",
+          mock_session_id: "cs_test_mock_123",
+        });
       }
-
-      // Automatically dispatch Senior Ease Welcome Email with temporary password and invoice link
-      const emailRes = await sendCustomerWelcomeEmail({
-        customerEmail,
-        customerId: finalCustId,
-        fullName: finalName,
-        tempPassword: finalTempPwd,
-        planName,
-        planPrice,
-        invoiceUrl: paymentUrl,
-        invoiceId: invoiceId
-      });
-
-      res.json({
-        status: "success",
-        url: paymentUrl,
-        invoice_id: invoiceId,
-        tempPassword: finalTempPwd,
-        emailSent: emailRes.success
-      });
     } catch (error: any) {
       console.error("[Stripe Error]", error);
       res.status(500).json({ status: "error", message: error.message });

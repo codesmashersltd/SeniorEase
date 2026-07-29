@@ -33,7 +33,6 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [customerId, setCustomerId] = useState('');
-  const [tempPassword, setTempPassword] = useState('');
   const [email, setEmail] = useState('');
   const [checkoutUrl, setCheckoutUrl] = useState('');
   const [consentChecked, setConsentChecked] = useState(false);
@@ -68,9 +67,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
     try {
       const ticketId = `TKT-${Math.floor(100000 + Math.random() * 900000)}`;
       const newId = `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-      const autoTempPass = `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
       setCustomerId(newId);
-      setTempPassword(autoTempPass);
 
       const defaultMessage = plan ? `User wants to purchase ${plan.name} at ${plan.price}` : 'Intro call requested';
       const finalMessage = userMessage ? `${userMessage} (${defaultMessage})` : defaultMessage;
@@ -102,7 +99,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
         handleFirestoreError(err, OperationType.CREATE, 'tickets');
       }
 
-      // Save to New Joinees collection for Admin Dashboard with auto-generated tempPassword
+      // Save to New Joinees collection for Admin Dashboard
       if (plan) {
         try {
           await addDoc(collection(db, 'new_joinees'), {
@@ -112,9 +109,8 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
             phone: userPhone,
             plan: plan.name,
             price: plan.price,
-            tempPassword: autoTempPass,
             message: finalMessage,
-            status: 'Password Generated',
+            status: 'Pending',
             createdAt: serverTimestamp()
           });
         } catch (err: any) {
@@ -122,7 +118,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
         }
       }
 
-      // Call our background Stripe & Welcome Email integration endpoint
+      // Call our background Stripe integration endpoint
       if (plan) {
         const response = await fetch('/api/checkout', {
           method: 'POST',
@@ -132,17 +128,19 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
             planPrice: plan.price,
             customerEmail: userEmail,
             customerId: newId,
-            fullName: userName,
-            tempPassword: autoTempPass
+            fullName: userName
           })
         });
         
         const data = await response.json();
         
         if (data.url) {
+          // A real session was created via Stripe, capture the URL but DO NOT REDIRECT YET
+          // so the user can see their Setup instructions and customer ID first!
           setCheckoutUrl(data.url);
         }
       } else {
+        // Fallback delay for non-plan "free call" requests
         await new Promise(resolve => setTimeout(resolve, 800));
       }
 
@@ -159,7 +157,6 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
     setIsSuccess(false);
     setIsSubmitting(false);
     setCustomerId('');
-    setTempPassword('');
     setEmail('');
     setCheckoutUrl('');
     setConsentChecked(false);
@@ -200,26 +197,18 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">Registration Received!</h3>
                   <div className="bg-gray-50 rounded-xl p-6 mb-6 text-left border border-gray-100">
                     <p className="text-gray-600 mb-4 text-sm">
-                      Thank you for subscribing! Your software profile and access credentials have been provisioned.
+                      Thank you for subscribing! We are provisioning your software profile right now.
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                      <div>
-                        <span className="text-xs text-gray-500 font-semibold block mb-1">Unique Customer ID:</span>
-                        <span className="font-mono text-lg font-bold text-teal-700 bg-teal-100/50 px-3 py-1.5 rounded-lg border border-teal-200 inline-block">
-                          {customerId}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-xs text-gray-500 font-semibold block mb-1">Temporary Password:</span>
-                        <span className="font-mono text-lg font-bold text-sky-700 bg-sky-100/50 px-3 py-1.5 rounded-lg border border-sky-200 inline-block">
-                          {tempPassword}
-                        </span>
-                      </div>
+                    <div className="mb-6">
+                      <span className="text-sm text-gray-500 font-medium block mb-2">Your Unique Customer ID:</span>
+                      <span className="font-mono text-xl font-bold text-teal-700 bg-teal-100/50 px-4 py-2 rounded-lg border border-teal-200 inline-block">
+                        {customerId}
+                      </span>
                     </div>
                     <div className="flex gap-4 p-4 bg-white rounded-xl border border-gray-100 shadow-sm">
                       <ShieldCheck className="text-teal-500 shrink-0" size={24} />
                       <p className="text-sm text-gray-600 leading-relaxed m-0">
-                        An email has been sent to <span className="font-semibold text-gray-900">{email}</span> containing your temporary password, login portal link, and membership invoice details.
+                        We have sent an email to <span className="font-semibold text-gray-900">{email}</span> with your secure temporary password and a Stripe invoice to activate your plan.
                       </p>
                     </div>
                   </div>
