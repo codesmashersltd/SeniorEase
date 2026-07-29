@@ -3,6 +3,7 @@ import { createServer as createViteServer } from "vite";
 import path from "path";
 import fs from "fs";
 import Stripe from "stripe";
+import nodemailer from "nodemailer";
 import * as dotenv from "dotenv";
 import { fileURLToPath } from "url";
 
@@ -25,6 +26,111 @@ function getStripe(): Stripe {
     });
   }
   return stripeClient;
+}
+
+function getTransporter() {
+  const host = process.env.SMTP_HOST;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  const port = parseInt(process.env.SMTP_PORT || "587", 10);
+
+  if (host && user && pass) {
+    return nodemailer.createTransport({
+      host,
+      port,
+      secure: port === 465,
+      auth: { user, pass },
+    });
+  }
+  return null;
+}
+
+async function sendWelcomeEmail({
+  to,
+  name,
+  customerId,
+  tempPassword,
+  planName,
+  planPrice,
+  invoiceUrl
+}: {
+  to: string;
+  name: string;
+  customerId: string;
+  tempPassword: string;
+  planName: string;
+  planPrice: string;
+  invoiceUrl?: string;
+}) {
+  const transporter = getTransporter();
+  const from = process.env.SMTP_FROM || `"Senior Ease Support" <support@seniorease.com>`;
+  const appUrl = process.env.APP_URL || "https://seniorease.com";
+  const loginUrl = `${appUrl}/my-account`;
+
+  const htmlContent = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; color: #1e293b; line-height: 1.6; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
+      <div style="text-align: center; padding-bottom: 20px; border-bottom: 2px solid #0d9488;">
+        <h1 style="color: #0d9488; margin: 0; font-size: 26px; font-weight: bold;">Senior Ease</h1>
+        <p style="color: #64748b; margin: 6px 0 0 0; font-size: 14px;">Official Welcome & Account Credentials</p>
+      </div>
+
+      <div style="padding: 24px 0;">
+        <p style="font-size: 16px;">Dear <strong>${name}</strong>,</p>
+        <p>Thank you for subscribing to <strong>Senior Ease</strong>! Your account and digital support profile have been activated.</p>
+
+        <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 18px; border-radius: 12px; margin: 24px 0;">
+          <h3 style="margin: 0 0 10px 0; color: #166534; font-size: 16px;">🔑 Your Login Credentials</h3>
+          <p style="margin: 6px 0;"><strong>Unique Customer ID:</strong> <span style="font-family: monospace; font-size: 18px; color: #0d9488; font-weight: bold; background-color: #ccfbf1; padding: 2px 8px; border-radius: 4px;">${customerId}</span></p>
+          <p style="margin: 6px 0;"><strong>Temporary Password:</strong> <span style="font-family: monospace; font-size: 18px; color: #0d9488; font-weight: bold; background-color: #ccfbf1; padding: 2px 8px; border-radius: 4px;">${tempPassword}</span></p>
+          <p style="margin: 10px 0 0 0; font-size: 12px; color: #15803d; font-style: italic;">Use your Unique Customer ID and Temporary Password to sign in at our account dashboard.</p>
+        </div>
+
+        <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 18px; border-radius: 12px; margin: 24px 0;">
+          <h3 style="margin: 0 0 10px 0; color: #334155; font-size: 16px;">📋 Subscription Plan Summary</h3>
+          <p style="margin: 6px 0;"><strong>Plan Selected:</strong> ${planName}</p>
+          <p style="margin: 6px 0;"><strong>Amount:</strong> ${planPrice}/month</p>
+          <p style="margin: 6px 0;"><strong>Billing Method:</strong> Stripe Direct Invoice / Payment</p>
+        </div>
+
+        ${invoiceUrl ? `
+          <div style="text-align: center; margin: 28px 0;">
+            <a href="${invoiceUrl}" target="_blank" style="background-color: #0d9488; color: #ffffff; padding: 14px 28px; text-decoration: none; font-weight: bold; font-size: 16px; border-radius: 8px; display: inline-block; box-shadow: 0 4px 6px -1px rgba(13, 148, 136, 0.3);">View & Pay Stripe Invoice</a>
+          </div>
+        ` : ''}
+
+        <div style="text-align: center; margin: 20px 0;">
+          <a href="${loginUrl}" target="_blank" style="background-color: #1e293b; color: #ffffff; padding: 12px 24px; text-decoration: none; font-weight: bold; font-size: 14px; border-radius: 8px; display: inline-block;">Access Account Portal</a>
+        </div>
+
+        <p style="font-size: 13px; color: #64748b; margin-top: 24px;">If you have any questions or require guidance, our UK support team is here to help.</p>
+        <p style="font-size: 13px; color: #64748b; margin: 0;"><strong>Email:</strong> <a href="mailto:support@seniorease.com" style="color: #0d9488;">support@seniorease.com</a> | <strong>Phone:</strong> +44 (0) 330 401 0019</p>
+      </div>
+
+      <div style="border-top: 1px solid #e2e8f0; padding-top: 16px; text-align: center; font-size: 11px; color: #94a3b8;">
+        &copy; ${new Date().getFullYear()} Senior Ease. Registered in England & Wales.<br/>
+        Kemp House, 160 City Road, London EC1V 2NX
+      </div>
+    </div>
+  `;
+
+  if (transporter) {
+    try {
+      const info = await transporter.sendMail({
+        from,
+        to,
+        subject: `Welcome to Senior Ease - Your Unique Customer ID: ${customerId}`,
+        html: htmlContent,
+      });
+      console.log(`[Email] Welcome email sent successfully to ${to}: ${info.messageId}`);
+      return { success: true, messageId: info.messageId };
+    } catch (err: any) {
+      console.error(`[Email Error] Failed to send welcome email to ${to}:`, err.message);
+      return { success: false, error: err.message };
+    }
+  } else {
+    console.log(`[Email Notice] SMTP not configured. Simulated welcome email for ${to} (Customer ID: ${customerId})`);
+    return { success: true, simulated: true };
+  }
 }
 
 async function startServer() {
@@ -52,8 +158,10 @@ async function startServer() {
 
   app.post("/api/checkout", async (req, res) => {
     try {
-      const { planPrice, planName, customerEmail, customerId, fullName } = req.body;
+      const { planPrice, planName, customerEmail, customerId, fullName, tempPassword = "Welcome2026!" } = req.body;
       const stripe = getStripe();
+      let paymentUrl = "";
+      let invoiceId = "";
 
       if (process.env.STRIPE_SECRET_KEY) {
         const numericPrice = parseFloat((planPrice || "0").toString().replace(/[^0-9.]/g, ""));
@@ -65,7 +173,7 @@ async function startServer() {
           name: fullName || customerEmail,
           metadata: {
             customerId: customerId || "N/A",
-            plan: planName || "SeniorEase Plan"
+            plan: planName || "Senior Ease Plan"
           }
         });
 
@@ -74,7 +182,7 @@ async function startServer() {
           customer: customer.id,
           amount: unitAmount,
           currency: "gbp",
-          description: `${planName} Plan - Monthly SeniorEase Subscription Coverage (Customer ID: ${customerId || 'N/A'})`,
+          description: `${planName} Plan - Monthly Senior Ease Subscription Coverage (Customer ID: ${customerId || 'N/A'})`,
         });
 
         // 3. Create Stripe Invoice with send_invoice collection method
@@ -84,8 +192,8 @@ async function startServer() {
           days_until_due: 7,
           pending_invoice_items_behavior: "include",
           currency: "gbp",
-          description: `Welcome to SeniorEase! Your Unique Customer ID is: ${customerId || 'N/A'}.\nYour secure temporary password for your account dashboard is: Welcome2026! (you can change this after logging in).\n\nWe have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your SeniorEase subscription.`,
-          footer: `SeniorEase Subscription | Support Email: support@seniorease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${customerId || 'N/A'}`,
+          description: `Welcome to Senior Ease!\nYour Unique Customer ID is: ${customerId || 'N/A'}.\nYour secure temporary password for your account dashboard is: ${tempPassword} (you can change this after logging in).\n\nWe have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your Senior Ease subscription.`,
+          footer: `Senior Ease Subscription | Support Email: support@seniorease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${customerId || 'N/A'}`,
           metadata: {
             customerId: customerId || "N/A",
             planName: planName || "",
@@ -94,36 +202,63 @@ async function startServer() {
 
         // 4. Finalize the invoice to generate the hosted payment URL
         const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id);
+        invoiceId = finalizedInvoice.id;
 
-        // 5. Send the invoice email directly to the customer via Stripe (using support@seniorease.com sender domain)
+        // 5. Send the invoice email directly to the customer via Stripe
         let sentInvoice = finalizedInvoice;
         try {
           sentInvoice = await stripe.invoices.sendInvoice(finalizedInvoice.id);
-          console.log(`[Stripe] Successfully sent invoice email to ${customerEmail} from support@seniorease.com for Invoice ID: ${sentInvoice.id}`);
+          console.log(`[Stripe] Successfully sent invoice email to ${customerEmail} for Invoice ID: ${sentInvoice.id}`);
         } catch (emailErr: any) {
           console.warn("[Stripe] Could not send invoice email automatically:", emailErr.message);
         }
 
-        const paymentUrl = sentInvoice.hosted_invoice_url || finalizedInvoice.hosted_invoice_url || "";
-
-        res.json({
-          status: "success",
-          url: paymentUrl,
-          invoice_id: sentInvoice.id,
-          customer_id: customer.id
-        });
-      } else {
-        res.json({
-          status: "success",
-          message: "Stripe intent simulated (no API key)",
-          mock_session_id: "cs_test_mock_123",
-        });
+        paymentUrl = sentInvoice.hosted_invoice_url || finalizedInvoice.hosted_invoice_url || "";
       }
+
+      // Send direct Welcome & Login Credentials Email
+      const emailResult = await sendWelcomeEmail({
+        to: customerEmail,
+        name: fullName || customerEmail,
+        customerId: customerId || "N/A",
+        tempPassword: tempPassword,
+        planName: planName || "Senior Ease Membership",
+        planPrice: planPrice || "£17.99",
+        invoiceUrl: paymentUrl
+      });
+
+      res.json({
+        status: "success",
+        url: paymentUrl,
+        invoice_id: invoiceId,
+        customerId,
+        tempPassword,
+        emailResult
+      });
     } catch (error: any) {
-      console.error("[Stripe Error]", error);
+      console.error("[Checkout Error]", error);
       res.status(500).json({ status: "error", message: error.message });
     }
   });
+
+  app.post("/api/send-welcome-email", async (req, res) => {
+    try {
+      const { email, name, customerId, tempPassword = "Welcome2026!", planName = "Senior Ease Membership", planPrice = "£17.99", invoiceUrl } = req.body;
+      const result = await sendWelcomeEmail({
+        to: email,
+        name: name || email,
+        customerId: customerId || "N/A",
+        tempPassword,
+        planName,
+        planPrice,
+        invoiceUrl
+      });
+      res.json({ status: "success", result });
+    } catch (err: any) {
+      res.status(500).json({ status: "error", message: err.message });
+    }
+  });
+
 
   // ── Static / SPA Serving ──────────────────────────────────────────────────
   let distPath = "";
