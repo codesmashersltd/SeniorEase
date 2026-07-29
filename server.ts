@@ -209,11 +209,11 @@ async function startServer() {
             description: `${planName || 'Senior Ease Plan'} - Monthly Subscription Coverage (${planPrice || '£29.99'}/mo) (Customer ID: ${customerId || 'N/A'})`,
           });
 
-          // 4. Finalize the invoice to open state
-          const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id);
+          // 4. Finalize the invoice to open state with auto_advance: true
+          const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id, { auto_advance: true });
           invoiceId = finalizedInvoice.id;
 
-          // 5. Send the invoice email directly to customer via Stripe
+          // 5. Send the invoice email directly to customer via Stripe (POST /v1/invoices/{invoice_id}/send)
           let sentInvoice = finalizedInvoice;
           try {
             sentInvoice = await stripe.invoices.sendInvoice(finalizedInvoice.id);
