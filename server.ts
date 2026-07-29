@@ -185,10 +185,11 @@ async function startServer() {
             }
           });
 
-          // 2. Create Stripe Invoice FIRST with send_invoice collection method
+          // 2. Create Stripe Invoice FIRST with send_invoice collection method and auto_advance: true
           const invoice = await stripe.invoices.create({
             customer: customer.id,
             collection_method: "send_invoice",
+            auto_advance: true,
             days_until_due: 7,
             currency: "gbp",
             description: `Welcome to Senior Ease!\nYour Unique Customer ID is: ${customerId || 'N/A'}.\nYour secure temporary password for your account dashboard is: ${tempPassword} (you can change this after logging in).\n\nWe have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your Senior Ease subscription.`,
