@@ -170,7 +170,10 @@ async function startServer() {
       if (isRealStripeKey) {
         try {
           const numericPrice = parseFloat((planPrice || "0").toString().replace(/[^0-9.]/g, ""));
-          const unitAmount = Math.round(numericPrice * 100);
+          let unitAmount = Math.round(numericPrice * 100);
+          if (!unitAmount || unitAmount <= 0) {
+            unitAmount = 2999; // Default £29.99
+          }
 
           // 1. Create or retrieve Stripe Customer
           const customer = await stripe.customers.create({
