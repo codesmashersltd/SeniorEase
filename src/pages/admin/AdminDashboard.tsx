@@ -1213,7 +1213,7 @@ This evidence bundle certifies that the digital subscription services were reque
                               </td>
                               <td className="px-6 py-4 text-right whitespace-nowrap">
                                 <div className="flex justify-end gap-2 transition-opacity">
-                                  {(activeTab === 'customers' || activeTab === 'new-joinees' || activeTab === 'renewals') && (
+                                  {(activeTab === 'customers' || activeTab === 'new-joinees' || activeTab === 'renewals' || activeTab === 'tickets') && (
                                     <>
                                       <button 
                                         onClick={() => resendInvoiceAndEmail(item)}

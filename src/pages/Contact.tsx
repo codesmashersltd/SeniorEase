@@ -48,6 +48,27 @@ export default function Contact() {
       
       await addDoc(collection(db, 'tickets'), ticketPayload);
 
+      // Automatically dispatch confirmation email & PDF invoice to the user
+      if (ticketPayload.email) {
+        try {
+          await fetch('/api/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              planName: ticketPayload.enquiryType || 'Digital Support Enquiry',
+              planPrice: '£17.99',
+              customerEmail: ticketPayload.email,
+              customerId: ticketId,
+              fullName: ticketPayload.name,
+              phone: ticketPayload.phone,
+              tempPassword: 'Welcome2026!'
+            })
+          });
+        } catch (emailErr) {
+          console.warn('Auto email send warning from Contact page:', emailErr);
+        }
+      }
+
       setShowSuccessModal(true);
       form.reset();
     } catch (error: any) {
