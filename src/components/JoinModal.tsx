@@ -71,6 +71,9 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
     const userEmail = (formData.get('email') as string) || '';
     const userPhone = (formData.get('phone') as string) || '';
     const userName = (formData.get('fullName') as string) || 'No Name Provided';
+    const userAddress = (formData.get('address') as string) || '';
+    const userCity = (formData.get('city') as string) || '';
+    const userPostcode = (formData.get('postcode') as string) || '';
     const userMessage = ((formData.get('message') as string) || '').trim();
     setEmail(userEmail);
     
@@ -118,6 +121,10 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
             customerEmail: userEmail,
             customerId: newId,
             fullName: userName,
+            phone: userPhone,
+            address: userAddress,
+            city: userCity,
+            postcode: userPostcode,
             tempPassword: defaultTempPassword
           })
         });
@@ -144,6 +151,9 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
           name: userName,
           email: userEmail,
           phone: userPhone,
+          address: userAddress,
+          city: userCity,
+          postcode: userPostcode,
           plan: activePlan.name,
           price: activePlan.price,
           password: defaultTempPassword,
@@ -162,6 +172,9 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
           name: userName,
           email: userEmail,
           phone: userPhone,
+          address: userAddress,
+          city: userCity,
+          postcode: userPostcode,
           plan: activePlan.name,
           price: activePlan.price,
           message: finalMessage,

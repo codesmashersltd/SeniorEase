@@ -51,16 +51,26 @@ function getTransporter() {
 function generateInvoicePDFBuffer({
   name,
   to,
+  phone,
+  address,
+  city,
+  postcode,
   customerId,
   planName,
   planPrice,
+  tempPassword = "Welcome2026!",
   invoiceUrl,
 }: {
   name: string;
   to: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  postcode?: string;
   customerId: string;
   planName: string;
   planPrice: string;
+  tempPassword?: string;
   invoiceUrl?: string;
 }): Promise<Buffer> {
   return new Promise((resolve, reject) => {
@@ -72,63 +82,159 @@ function generateInvoicePDFBuffer({
       doc.on("end", () => resolve(Buffer.concat(buffers)));
       doc.on("error", (err) => reject(err));
 
-      // Header Brand
-      doc.fillColor("#0d9488").fontSize(24).font("Helvetica-Bold").text("Senior Ease", 50, 45);
-      doc.fillColor("#64748b").fontSize(10).font("Helvetica").text("Digital Learning & Support Platform", 50, 72);
-
-      // Invoice Label
-      doc.fillColor("#0d9488").fontSize(20).font("Helvetica-Bold").text("INVOICE", 400, 45, { align: "right" });
-      doc.fillColor("#475569").fontSize(10).font("Helvetica").text(`Invoice #: INV-${customerId}`, 400, 70, { align: "right" });
-      doc.text(`Date: ${new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}`, 400, 85, { align: "right" });
-
-      doc.moveTo(50, 105).lineTo(545, 105).strokeColor("#e2e8f0").lineWidth(1).stroke();
-
-      // Billed From (Left) & Billed To (Right)
-      doc.fillColor("#1e293b").fontSize(11).font("Helvetica-Bold").text("Issued By:", 50, 120);
-      doc.fillColor("#475569").fontSize(10).font("Helvetica")
-         .text("Senior Ease Digital Ltd", 50, 135)
-         .text("Kemp House, 160 City Road", 50, 150)
-         .text("London EC1V 2NX, UK", 50, 165)
-         .text("Email: support@senioreease.com", 50, 180);
-
-      doc.fillColor("#1e293b").fontSize(11).font("Helvetica-Bold").text("Billed To:", 320, 120);
-      doc.fillColor("#475569").fontSize(10).font("Helvetica")
-         .text(name, 320, 135)
-         .text(to, 320, 150)
-         .text(`Customer ID: ${customerId}`, 320, 165);
-
-      // Table Header
-      const tableTop = 220;
-      doc.rect(50, tableTop, 495, 25).fill("#f1f5f9");
-      doc.fillColor("#334155").fontSize(10).font("Helvetica-Bold");
-      doc.text("Description", 60, tableTop + 7);
-      doc.text("Plan", 300, tableTop + 7);
-      doc.text("Amount", 450, tableTop + 7, { width: 85, align: "right" });
-
-      // Item Row
-      const itemTop = tableTop + 35;
-      doc.fillColor("#1e293b").fontSize(10).font("Helvetica");
-      doc.text("Senior Ease Digital Support & Subscription", 60, itemTop);
-      doc.text(planName || "Essential Care Plan", 300, itemTop);
+      const fontRegular = "Helvetica";
+      const fontBold = "Helvetica-Bold";
       const displayPrice = planPrice.startsWith("£") ? planPrice : `£${planPrice}`;
-      doc.text(displayPrice, 450, itemTop, { width: 85, align: "right" });
+      const invoiceNumber = `INV-${customerId || "0001"}`;
 
-      doc.moveTo(50, itemTop + 25).lineTo(545, itemTop + 25).strokeColor("#e2e8f0").lineWidth(1).stroke();
+      // 1. Top Left Title
+      doc.fillColor("#000000").fontSize(26).font(fontBold).text("Invoice", 50, 40);
 
-      // Total Box
-      const totalTop = itemTop + 40;
-      doc.fillColor("#1e293b").fontSize(12).font("Helvetica-Bold");
-      doc.text("Total Amount Due:", 280, totalTop);
-      doc.fillColor("#0d9488").fontSize(14).font("Helvetica-Bold");
-      doc.text(displayPrice, 450, totalTop - 2, { width: 85, align: "right" });
+      // Invoice Details Block
+      let y = 78;
+      doc.fontSize(9.5).font(fontBold).fillColor("#000000");
+      doc.text("Invoice number", 50, y, { continued: true, width: 100 });
+      doc.font(fontRegular).fillColor("#1e293b").text(`  ${invoiceNumber}`);
 
-      if (invoiceUrl) {
-        doc.fillColor("#2563eb").fontSize(9).font("Helvetica").text(`Pay Online via Stripe: ${invoiceUrl}`, 50, totalTop + 40, { underline: true });
+      y += 15;
+      doc.font(fontBold).fillColor("#000000").text("Date of issue", 50, y, { continued: true, width: 100 });
+      const issueDate = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+      doc.font(fontRegular).fillColor("#1e293b").text(`  ${issueDate}`);
+
+      y += 15;
+      doc.font(fontBold).fillColor("#000000").text("Date due", 50, y, { continued: true, width: 100 });
+      const dueDateObj = new Date();
+      dueDateObj.setDate(dueDateObj.getDate() + 7);
+      const dueDate = dueDateObj.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+      doc.font(fontRegular).fillColor("#1e293b").text(`  ${dueDate}`);
+
+      // 2. Top Right Logo Badge (Teal rounded rectangle with white heart icon)
+      doc.save();
+      doc.roundedRect(485, 40, 50, 50, 10).fill("#0d9488");
+      // White Heart Icon path inside box
+      doc.fillColor("#ffffff");
+      doc.path("M 510 72 C 510 72, 494 62, 494 52 C 494 46, 498 42, 504 42 C 507 42, 510 44, 510 44 C 510 44, 513 42, 516 42 C 522 42, 526 46, 526 52 C 526 62, 510 72, 510 72 Z").fill();
+      doc.restore();
+
+      // 3. Address Columns (y = 145)
+      y = 145;
+      // Company Details (Left)
+      doc.fillColor("#000000").fontSize(9.5).font(fontBold).text("senioreease (@senioreease)", 50, y);
+      doc.font(fontRegular).fontSize(9).fillColor("#334155");
+      doc.text("160 city road", 50, y + 14);
+      doc.text("Kemp House", 50, y + 26);
+      doc.text("London, United Kingdom,", 50, y + 38);
+      doc.text("EC1V 2NX", 50, y + 50);
+      doc.text("United Kingdom", 50, y + 62);
+      doc.text("+44 7367 524129", 50, y + 74);
+      doc.text("support@senioreease.com", 50, y + 86);
+
+      // Customer Details (Right: Bill to)
+      doc.fillColor("#000000").fontSize(9.5).font(fontBold).text("Bill to", 280, y);
+      doc.font(fontRegular).fontSize(9).fillColor("#334155");
+      let custY = y + 14;
+      doc.text(name || "Valued Customer", 280, custY);
+      custY += 12;
+      doc.text(to, 280, custY);
+      custY += 12;
+      if (phone) {
+        doc.text(phone, 280, custY);
+        custY += 12;
+      }
+      if (address) {
+        doc.text(address, 280, custY);
+        custY += 12;
+      }
+      const cityPostcode = [city, postcode].filter(Boolean).join(", ");
+      if (cityPostcode) {
+        doc.text(cityPostcode, 280, custY);
+        custY += 12;
       }
 
-      // Footer
-      doc.fillColor("#94a3b8").fontSize(9).font("Helvetica")
-         .text("Thank you for choosing Senior Ease. Registered in England & Wales.", 50, 720, { align: "center", width: 495 });
+      // 4. Amount Due Banner
+      y = 265;
+      doc.fillColor("#000000").fontSize(18).font(fontBold).text(`${displayPrice} due ${dueDate}`, 50, y);
+
+      y += 24;
+      if (invoiceUrl) {
+        doc.fillColor("#2563eb").fontSize(10).font(fontRegular).text("Pay online", 50, y, { link: invoiceUrl, underline: true });
+      } else {
+        doc.fillColor("#2563eb").fontSize(10).font(fontRegular).text("Pay online", 50, y, { underline: true });
+      }
+
+      // 5. Software Profile & Login Message
+      y += 24;
+      doc.fillColor("#1e293b").fontSize(9.5).font(fontRegular);
+      doc.text("Welcome to Senior Ease!", 50, y);
+      y += 14;
+      doc.text(`Your Unique Customer ID is: ${customerId}.`, 50, y);
+      y += 14;
+      doc.text(`Your secure temporary password for your account dashboard is: ${tempPassword} (you can change this after logging in).`, 50, y);
+      y += 20;
+      doc.text(
+        "We have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your Senior Ease subscription.",
+        50,
+        y,
+        { width: 495 }
+      );
+      y += 32;
+
+      // 6. Items Table Header
+      const tableTop = y;
+      doc.moveTo(50, tableTop).lineTo(545, tableTop).strokeColor("#000000").lineWidth(0.75).stroke();
+
+      y = tableTop + 8;
+      doc.fillColor("#334155").fontSize(8.5).font(fontBold);
+      doc.text("Description", 50, y, { width: 310 });
+      doc.text("Qty", 370, y, { width: 30, align: "center" });
+      doc.text("Unit price", 410, y, { width: 60, align: "right" });
+      doc.text("Amount", 480, y, { width: 65, align: "right" });
+
+      y += 14;
+      doc.moveTo(50, y).lineTo(545, y).strokeColor("#000000").lineWidth(0.75).stroke();
+
+      y += 10;
+      doc.fillColor("#000000").fontSize(8.5).font(fontRegular);
+      const itemDesc = `${planName || "Plus"} - Monthly Subscription Coverage (${displayPrice}/mo) (Customer ID: ${customerId})`;
+      doc.text(itemDesc, 50, y, { width: 310 });
+      doc.text("1", 370, y, { width: 30, align: "center" });
+      doc.text(displayPrice, 410, y, { width: 60, align: "right" });
+      doc.text(displayPrice, 480, y, { width: 65, align: "right" });
+
+      y += 25;
+      doc.moveTo(50, y).lineTo(545, y).strokeColor("#e2e8f0").lineWidth(0.5).stroke();
+
+      // Totals Box (Right Aligned)
+      y += 10;
+      const totalXLabel = 350;
+      const totalXVal = 480;
+
+      // Subtotal
+      doc.fontSize(8.5).font(fontRegular).fillColor("#475569").text("Subtotal", totalXLabel, y);
+      doc.fillColor("#000000").text(displayPrice, totalXVal, y, { width: 65, align: "right" });
+      y += 14;
+      doc.moveTo(totalXLabel, y - 2).lineTo(545, y - 2).strokeColor("#f1f5f9").lineWidth(0.5).stroke();
+
+      // Total
+      doc.fillColor("#475569").text("Total", totalXLabel, y);
+      doc.fillColor("#000000").text(displayPrice, totalXVal, y, { width: 65, align: "right" });
+      y += 14;
+      doc.moveTo(totalXLabel, y - 2).lineTo(545, y - 2).strokeColor("#f1f5f9").lineWidth(0.5).stroke();
+
+      // Amount due
+      doc.fontSize(9).font(fontBold).fillColor("#000000").text("Amount due", totalXLabel, y);
+      doc.fontSize(9).font(fontBold).text(displayPrice, totalXVal, y, { width: 65, align: "right" });
+
+      // 7. Footer
+      doc.moveTo(50, 715).lineTo(545, 715).strokeColor("#e2e8f0").lineWidth(0.5).stroke();
+      doc.fontSize(8).font(fontRegular).fillColor("#64748b");
+      doc.text(
+        `Senior Ease Subscription | Support Email: support@senioreease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${customerId}`,
+        50,
+        725,
+        { width: 420 }
+      );
+      doc.text("Page 1 of 1", 485, 725, { width: 60, align: "right" });
 
       doc.end();
     } catch (err) {
@@ -140,6 +246,10 @@ function generateInvoicePDFBuffer({
 async function sendWelcomeEmail({
   to,
   name,
+  phone,
+  address,
+  city,
+  postcode,
   customerId,
   tempPassword,
   planName,
@@ -148,6 +258,10 @@ async function sendWelcomeEmail({
 }: {
   to: string;
   name: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  postcode?: string;
   customerId: string;
   tempPassword: string;
   planName: string;
@@ -217,9 +331,14 @@ async function sendWelcomeEmail({
         const pdfBuffer = await generateInvoicePDFBuffer({
           name,
           to,
+          phone,
+          address,
+          city,
+          postcode,
           customerId,
           planName,
           planPrice,
+          tempPassword,
           invoiceUrl,
         });
         attachments.push({
@@ -276,7 +395,7 @@ async function startServer() {
 
   app.post("/api/checkout", async (req, res) => {
     try {
-      const { planPrice, planName, customerEmail, customerId, fullName, tempPassword = "Welcome2026!" } = req.body;
+      const { planPrice, planName, customerEmail, customerId, fullName, phone, address, city, postcode, tempPassword = "Welcome2026!" } = req.body;
       const stripe = getStripe();
       let paymentUrl = "";
       let invoiceId = "";
@@ -297,6 +416,13 @@ async function startServer() {
           const customer = await stripe.customers.create({
             email: customerEmail,
             name: fullName || customerEmail,
+            phone: phone || undefined,
+            address: (address || city || postcode) ? {
+              line1: address || undefined,
+              city: city || undefined,
+              postal_code: postcode || undefined,
+              country: "GB",
+            } : undefined,
             metadata: {
               customerId: customerId || "N/A",
               plan: planName || "Senior Ease Plan"
@@ -310,7 +436,7 @@ async function startServer() {
             days_until_due: 7,
             currency: "gbp",
             description: `Welcome to Senior Ease!\nYour Unique Customer ID is: ${customerId || 'N/A'}.\nYour secure temporary password for your account dashboard is: ${tempPassword} (you can change this after logging in).\n\nWe have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your Senior Ease subscription.`,
-            footer: `Senior Ease Subscription | Support Email: support@seniorease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${customerId || 'N/A'}`,
+            footer: `Senior Ease Subscription | Support Email: support@senioreease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${customerId || 'N/A'}`,
             metadata: {
               customerId: customerId || "N/A",
               planName: planName || "",
@@ -349,10 +475,14 @@ async function startServer() {
         console.log(`[Stripe Notice] No valid STRIPE_SECRET_KEY provided (key='${rawKey || 'none'}'). Skipping live Stripe API call.`);
       }
 
-      // Send direct Welcome & Login Credentials Email
+      // Send direct Welcome & Login Credentials Email with PDF Attachment
       const emailResult = await sendWelcomeEmail({
         to: customerEmail,
         name: fullName || customerEmail,
+        phone,
+        address,
+        city,
+        postcode,
         customerId: customerId || "N/A",
         tempPassword: tempPassword,
         planName: planName || "Senior Ease Membership",
@@ -377,10 +507,14 @@ async function startServer() {
 
   app.post("/api/send-welcome-email", async (req, res) => {
     try {
-      const { email, name, customerId, tempPassword = "Welcome2026!", planName = "Senior Ease Membership", planPrice = "£17.99", invoiceUrl } = req.body;
+      const { email, name, phone, address, city, postcode, customerId, tempPassword = "Welcome2026!", planName = "Senior Ease Membership", planPrice = "£17.99", invoiceUrl } = req.body;
       const result = await sendWelcomeEmail({
         to: email,
         name: name || email,
+        phone,
+        address,
+        city,
+        postcode,
         customerId: customerId || "N/A",
         tempPassword,
         planName,

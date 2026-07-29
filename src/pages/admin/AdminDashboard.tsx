@@ -580,6 +580,10 @@ export default function AdminDashboard() {
           customerEmail: email,
           customerId,
           fullName: name,
+          phone: item.phone || '',
+          address: item.address || '',
+          city: item.city || '',
+          postcode: item.postcode || '',
           tempPassword
         })
       });
