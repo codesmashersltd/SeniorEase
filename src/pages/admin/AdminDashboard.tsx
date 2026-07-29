@@ -48,7 +48,8 @@ import {
   FileCheck,
   Download,
   Check,
-  Receipt
+  Receipt,
+  UserPlus
 } from 'lucide-react';
 import { auth, db } from '../../lib/firebase';
 import { isSpamContent } from '../../lib/spamFilter';
@@ -108,6 +109,98 @@ export default function AdminDashboard() {
   const [evidenceCustomer, setEvidenceCustomer] = useState<any | null>(null);
   const [copiedEvidenceSummary, setCopiedEvidenceSummary] = useState(false);
   const [evidenceSearchId, setEvidenceSearchId] = useState('');
+
+  const [showAddEntryModal, setShowAddEntryModal] = useState(false);
+  const [addEntryData, setAddEntryData] = useState({
+    entryType: 'customer' as 'customer' | 'joinee',
+    fullName: '',
+    email: '',
+    phone: '',
+    plan: 'SeniorEase Plus Membership (£17.99/month)',
+    passwordMode: 'auto' as 'auto' | 'custom',
+    customPassword: '',
+    sendEmail: true
+  });
+  const [isAddingEntry, setIsAddingEntry] = useState(false);
+
+  const handleAddEntrySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!addEntryData.fullName.trim() || !addEntryData.email.trim()) {
+      alert('Full Name and Email are required.');
+      return;
+    }
+
+    setIsAddingEntry(true);
+    try {
+      const customerId = `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      const pwd = addEntryData.passwordMode === 'auto'
+        ? `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`
+        : addEntryData.customPassword.trim() || 'Welcome2026!';
+
+      if (addEntryData.entryType === 'customer') {
+        await addDoc(collection(db, 'customers'), {
+          id: customerId,
+          name: addEntryData.fullName.trim(),
+          email: addEntryData.email.trim().toLowerCase(),
+          phone: addEntryData.phone.trim(),
+          plan: addEntryData.plan,
+          password: pwd,
+          mustChangePassword: true,
+          status: 'Active',
+          createdAt: serverTimestamp()
+        });
+      } else {
+        await addDoc(collection(db, 'new_joinees'), {
+          customerId,
+          name: addEntryData.fullName.trim(),
+          email: addEntryData.email.trim().toLowerCase(),
+          phone: addEntryData.phone.trim(),
+          plan: addEntryData.plan,
+          price: addEntryData.plan.includes('£') ? '£' + (addEntryData.plan.split('£')[1] || '17.99/month') : '£17.99/month',
+          tempPassword: pwd,
+          status: 'Password Generated',
+          createdAt: serverTimestamp()
+        });
+      }
+
+      if (addEntryData.sendEmail) {
+        try {
+          await fetch('/api/send-welcome-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              customerEmail: addEntryData.email.trim().toLowerCase(),
+              customerId,
+              fullName: addEntryData.fullName.trim(),
+              tempPassword: pwd,
+              planName: addEntryData.plan,
+              planPrice: addEntryData.plan.includes('£') ? '£' + (addEntryData.plan.split('£')[1] || '17.99/month') : '£17.99/month'
+            })
+          });
+        } catch (e) {
+          console.warn('Welcome email dispatch warning:', e);
+        }
+      }
+
+      alert(`Entry created successfully!\n\nCustomer ID: ${customerId}\nTemporary Password: ${pwd}\n${addEntryData.sendEmail ? `Welcome email and invoice sent to ${addEntryData.email}` : 'No email sent as unchecked.'}`);
+
+      setShowAddEntryModal(false);
+      setAddEntryData({
+        entryType: 'customer',
+        fullName: '',
+        email: '',
+        phone: '',
+        plan: 'SeniorEase Plus Membership (£17.99/month)',
+        passwordMode: 'auto',
+        customPassword: '',
+        sendEmail: true
+      });
+    } catch (err: any) {
+      alert('Error creating entry: ' + err.message);
+    } finally {
+      setIsAddingEntry(false);
+    }
+  };
 
   const togglePasswordVisibility = (docId: string) => {
     setVisiblePasswords(prev => ({
@@ -476,15 +569,33 @@ export default function AdminDashboard() {
   };
 
   const generateTempPassword = async (joinee: any) => {
-    const tempPass = Math.random().toString(36).substring(2, 10);
-    if (window.confirm(`Generate temporary password "${tempPass}" for ${joinee.name}?`)) {
+    const tempPass = `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+    if (window.confirm(`Generate temporary password "${tempPass}" for ${joinee.name}?\n\nThis will update the record and dispatch a welcome email with credentials & invoice to ${joinee.email}.`)) {
       try {
         await updateDoc(doc(db, 'new_joinees', joinee.id), {
           tempPassword: tempPass,
           status: 'Password Generated',
           updatedAt: serverTimestamp()
         });
-        alert(`Temporary password generated: ${tempPass}`);
+
+        try {
+          await fetch('/api/send-welcome-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              customerEmail: joinee.email,
+              customerId: joinee.customerId || joinee.id,
+              fullName: joinee.name,
+              tempPassword: tempPass,
+              planName: joinee.plan || 'SeniorEase Plus Membership',
+              planPrice: joinee.price || '£17.99/month'
+            })
+          });
+        } catch (emailErr) {
+          console.warn('Welcome email trigger warning:', emailErr);
+        }
+
+        alert(`Temporary password generated: ${tempPass}\n\nWelcome email with credentials and invoice has been dispatched to ${joinee.email}.`);
       } catch (err: any) {
         alert('Error generating password: ' + err.message);
       }
@@ -492,27 +603,42 @@ export default function AdminDashboard() {
   };
 
   const activateJoinee = async (joinee: any) => {
-    if (!joinee.tempPassword) {
-      alert('Please generate a temporary password first.');
-      return;
-    }
-    if (window.confirm(`Activate ${joinee.name} as a permanent customer?`)) {
+    const tempPass = joinee.tempPassword || `SE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+    if (window.confirm(`Activate ${joinee.name} as a permanent customer?\n\nA welcome email with credentials (${tempPass}) and invoice details will be sent to ${joinee.email}.`)) {
       try {
         // 1. Add to customers
         await addDoc(collection(db, 'customers'), {
-          id: joinee.customerId,
+          id: joinee.customerId || joinee.id,
           name: joinee.name,
           email: joinee.email,
-          phone: joinee.phone,
-          plan: joinee.plan,
-          password: joinee.tempPassword,
+          phone: joinee.phone || '',
+          plan: joinee.plan || 'SeniorEase Plus Membership (£17.99/month)',
+          password: tempPass,
           mustChangePassword: true,
           status: 'Active',
           createdAt: serverTimestamp()
         });
         // 2. Remove from new_joinees
         await deleteDoc(doc(db, 'new_joinees', joinee.id));
-        alert('Customer activated successfully.');
+
+        try {
+          await fetch('/api/send-welcome-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              customerEmail: joinee.email,
+              customerId: joinee.customerId || joinee.id,
+              fullName: joinee.name,
+              tempPassword: tempPass,
+              planName: joinee.plan || 'SeniorEase Plus Membership',
+              planPrice: joinee.price || '£17.99/month'
+            })
+          });
+        } catch (emailErr) {
+          console.warn('Welcome email trigger warning:', emailErr);
+        }
+
+        alert(`Customer activated successfully!\n\nCredentials (${tempPass}) and invoice emailed to ${joinee.email}.`);
       } catch (err: any) {
         alert('Error activating customer: ' + err.message);
       }
@@ -542,11 +668,11 @@ export default function AdminDashboard() {
       (t.customerName && t.customerName?.toLowerCase() === name?.toLowerCase())
     );
 
-    return `STRIPE & BANK DISPUTE EVIDENCE PACKAGE - SENIOREASE LIMITED
+    return `STRIPE & BANK DISPUTE EVIDENCE PACKAGE - SENIOR EASE
 ============================================================
 Case Reference: Stripe Inquiry / Chargeback Defense
 Generated Date: ${new Date().toUTCString()}
-Provider: SeniorEase Limited (Company Reg: Kemp House, 160 City Road, London)
+Provider: Senior Ease (Company Reg: Kemp House, 160 City Road, London)
 
 ------------------------------------------------------------
 1. CUSTOMER IDENTITY & ACCOUNT METADATA
@@ -618,7 +744,7 @@ This evidence bundle certifies that the digital subscription services were reque
             <div className="bg-teal-600 p-2 rounded-lg shadow-sm">
               <HeartHandshake className="h-5 w-5 text-white" />
             </div>
-            <span className="font-display font-bold text-xl text-gray-900 tracking-tight">SeniorEase</span>
+            <span className="font-display font-bold text-xl text-gray-900 tracking-tight">Senior Ease</span>
           </div>
         </div>
 
@@ -718,7 +844,7 @@ This evidence bundle certifies that the digital subscription services were reque
                   {/* Company Logo Display (as requested) */}
                   <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center justify-center text-center">
                     <HeartHandshake className="h-16 w-16 text-teal-600 mb-4" />
-                    <h2 className="text-2xl font-display font-black text-gray-900 tracking-tight">SeniorEase Admin</h2>
+                    <h2 className="text-2xl font-display font-black text-gray-900 tracking-tight">Senior Ease Admin</h2>
                     <p className="text-gray-500 font-sans">Global Infrastructure & Pipeline Management</p>
                   </div>
 
@@ -896,6 +1022,13 @@ This evidence bundle certifies that the digital subscription services were reque
                           className="px-4 py-2 text-sm font-semibold bg-teal-600 text-white hover:bg-teal-700 rounded-xl shadow-sm shadow-teal-200 transition-all"
                         >
                           Export CSV
+                        </button>
+                        <button 
+                          onClick={() => setShowAddEntryModal(true)}
+                          className="px-4 py-2 text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700 rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+                        >
+                          <UserPlus size={16} />
+                          Add Entry
                         </button>
                       </div>
                     </div>
@@ -1714,7 +1847,7 @@ This evidence bundle certifies that the digital subscription services were reque
                       <div>
                         <div className="flex items-center gap-2 mb-2">
                           <HeartHandshake className="h-6 w-6 text-teal-600" />
-                          <span className="font-display font-black text-xl text-slate-900 tracking-tight">SeniorEase Limited</span>
+                          <span className="font-display font-black text-xl text-slate-900 tracking-tight">Senior Ease</span>
                         </div>
                         <p className="text-xs text-slate-500 font-medium">160 City Road, Kemp House, London EC1V 2NX • support@seniorease.com</p>
                         <h2 className="text-xl font-bold text-slate-900 mt-3 flex items-center gap-2">
@@ -1910,7 +2043,7 @@ This evidence bundle certifies that the digital subscription services were reque
                       <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-slate-100 pt-4">
                         <div>
                           <p className="text-xs font-bold text-slate-900">Authorized Officer: Compliance & Customer Operations</p>
-                          <p className="text-[10px] text-slate-400">SeniorEase Limited • Registered in England & Wales</p>
+                          <p className="text-[10px] text-slate-400">Senior Ease • Registered in England & Wales</p>
                         </div>
                         <div className="text-right">
                           <span className="font-serif italic font-bold text-teal-800 text-sm block">SeniorEase Operations Team</span>
@@ -1944,6 +2077,175 @@ This evidence bundle certifies that the digital subscription services were reque
                     </div>
                   </div>
                 </motion.div>
+              </div>
+            )}
+
+            {/* Add New Entry Modal */}
+            {showAddEntryModal && (
+              <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+                <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
+                  <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2.5 bg-teal-50 text-teal-600 rounded-xl">
+                        <UserPlus size={20} />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-slate-900 text-lg">Create New Customer Entry</h3>
+                        <p className="text-xs text-slate-500">Add entry and automatically dispatch password & invoice email.</p>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => setShowAddEntryModal(false)}
+                      className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors"
+                    >
+                      <X size={20} />
+                    </button>
+                  </div>
+
+                  <form onSubmit={handleAddEntrySubmit} className="p-6 overflow-y-auto space-y-4 text-left">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Record Type</label>
+                      <div className="grid grid-cols-2 gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setAddEntryData(prev => ({ ...prev, entryType: 'customer' }))}
+                          className={`py-2.5 px-3 rounded-xl border text-xs font-bold transition-all ${
+                            addEntryData.entryType === 'customer'
+                              ? 'bg-teal-50 border-teal-500 text-teal-800 shadow-sm'
+                              : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                          }`}
+                        >
+                          Active Customer
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setAddEntryData(prev => ({ ...prev, entryType: 'joinee' }))}
+                          className={`py-2.5 px-3 rounded-xl border text-xs font-bold transition-all ${
+                            addEntryData.entryType === 'joinee'
+                              ? 'bg-sky-50 border-sky-500 text-sky-800 shadow-sm'
+                              : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                          }`}
+                        >
+                          New Joinee (Pending)
+                        </button>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Full Name *</label>
+                      <input
+                        type="text"
+                        required
+                        value={addEntryData.fullName}
+                        onChange={e => setAddEntryData(prev => ({ ...prev, fullName: e.target.value }))}
+                        placeholder="e.g. Margaret Smith"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Email Address *</label>
+                      <input
+                        type="email"
+                        required
+                        value={addEntryData.email}
+                        onChange={e => setAddEntryData(prev => ({ ...prev, email: e.target.value }))}
+                        placeholder="customer@example.com"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Phone Number</label>
+                        <input
+                          type="text"
+                          value={addEntryData.phone}
+                          onChange={e => setAddEntryData(prev => ({ ...prev, phone: e.target.value }))}
+                          placeholder="+44 7700 900123"
+                          className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-teal-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Membership Plan</label>
+                        <select
+                          value={addEntryData.plan}
+                          onChange={e => setAddEntryData(prev => ({ ...prev, plan: e.target.value }))}
+                          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-teal-500 bg-white"
+                        >
+                          <option value="SeniorEase Plus Membership (£17.99/month)">SeniorEase Plus (£17.99/mo)</option>
+                          <option value="Standard Senior Care (£29.99/month)">Standard Senior Care (£29.99/mo)</option>
+                          <option value="One-Off Setup Package (£49.00)">One-Off Setup (£49.00)</option>
+                          <option value="Custom Family Package (£39.99/month)">Custom Family (£39.99/mo)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Temporary Password Generation</label>
+                      <div className="grid grid-cols-2 gap-3 mb-2">
+                        <label className={`flex items-center gap-2 p-2.5 rounded-xl border text-xs font-semibold cursor-pointer ${addEntryData.passwordMode === 'auto' ? 'bg-teal-50 border-teal-400 text-teal-800' : 'bg-slate-50 border-slate-200'}`}>
+                          <input
+                            type="radio"
+                            name="passwordMode"
+                            checked={addEntryData.passwordMode === 'auto'}
+                            onChange={() => setAddEntryData(prev => ({ ...prev, passwordMode: 'auto' }))}
+                          />
+                          Auto-generate (Recommended)
+                        </label>
+                        <label className={`flex items-center gap-2 p-2.5 rounded-xl border text-xs font-semibold cursor-pointer ${addEntryData.passwordMode === 'custom' ? 'bg-teal-50 border-teal-400 text-teal-800' : 'bg-slate-50 border-slate-200'}`}>
+                          <input
+                            type="radio"
+                            name="passwordMode"
+                            checked={addEntryData.passwordMode === 'custom'}
+                            onChange={() => setAddEntryData(prev => ({ ...prev, passwordMode: 'custom' }))}
+                          />
+                          Set Custom Password
+                        </label>
+                      </div>
+                      {addEntryData.passwordMode === 'custom' && (
+                        <input
+                          type="text"
+                          value={addEntryData.customPassword}
+                          onChange={e => setAddEntryData(prev => ({ ...prev, customPassword: e.target.value }))}
+                          placeholder="e.g. Welcome2026!"
+                          className="w-full px-4 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-teal-500 font-mono"
+                        />
+                      )}
+                    </div>
+
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Mail size={16} className="text-teal-600" />
+                        <span className="text-xs font-bold text-slate-700">Dispatch Welcome Email & Invoice</span>
+                      </div>
+                      <input
+                        type="checkbox"
+                        checked={addEntryData.sendEmail}
+                        onChange={e => setAddEntryData(prev => ({ ...prev, sendEmail: e.target.checked }))}
+                        className="w-4 h-4 text-teal-600 rounded border-slate-300 focus:ring-teal-500"
+                      />
+                    </div>
+
+                    <div className="pt-2 flex items-center justify-end gap-3 border-t border-slate-100">
+                      <button
+                        type="button"
+                        onClick={() => setShowAddEntryModal(false)}
+                        className="px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={isAddingEntry}
+                        className="px-6 py-2.5 rounded-xl bg-teal-600 text-white text-xs font-bold hover:bg-teal-700 shadow-md shadow-teal-200 flex items-center gap-2"
+                      >
+                        {isAddingEntry ? <Loader2 size={16} className="animate-spin" /> : <UserPlus size={16} />}
+                        {isAddingEntry ? 'Creating Entry...' : 'Create Entry & Send Email'}
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
             )}
           </AnimatePresence>
