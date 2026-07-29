@@ -12,80 +12,80 @@ export default function HowItWorks() {
   const steps = [
     {
       icon: <MousePointerClick className="w-10 h-10 text-teal-600" />,
-      title: "Step 1 – Choose Your SaaS Plan & Secure Setup",
-      description: "Select the software subscription tier that best matches the support level you or your senior loved one needs. Whether looking for occasional tech learning, scam alerting, or comprehensive family safeguarding, our UK platform provides instant online registration.",
-      timeframe: "Instant online activation (under 3 minutes)",
-      whatYouNeed: "Email address & payment method (Card or BACS Direct Debit via Stripe)",
-      highlights: "14-Day Statutory Money-Back Guarantee • Zero Lock-In Contracts • UK GDPR Compliant",
+      title: "Step 1 – Choose Your Support Plan & Simple Registration",
+      description: "Select the SeniorEase subscription plan that best matches the support level you or your senior loved one needs (Essential £9.99/mo, Plus £17.99/mo, or Family Care £29.99/mo). Fill in basic contact details in seconds.",
+      timeframe: "Instant online registration (under 2 minutes)",
+      whatYouNeed: "Full Name, Email Address & Phone Number",
+      highlights: "14-Day Money-Back Guarantee • Zero Lock-In Contracts • Automated Customer Record Setup",
       bullets: [
-        "Review our transparent, month-to-month pricing tiers.",
-        "Select between Essential SaaS, Plus SaaS, or Family Portal.",
-        "Sign up securely through our automated checkout with full consumer protection."
+        "Browse transparent, month-to-month subscription tiers.",
+        "Click 'Register' and enter your contact details.",
+        "Your member account and initial ticket profile are created instantly."
       ]
     },
     {
       icon: <PlayCircle className="w-10 h-10 text-teal-600" />,
-      title: "Step 2 – Instant Portal Access & Welcome Kit",
-      description: "Once registered, you will instantly receive your unique Portal Access ID and secure login credentials via automated email, unlocking your personal self-service dashboard.",
-      timeframe: "Within 60 seconds of checkout confirmation",
-      whatYouNeed: "Any device with a web browser (iPad, Smartphone, Laptop, PC)",
-      highlights: "Automated Receipt • Link Authorized Caregivers • 24/7 Portal Visibility",
+      title: "Step 2 – Automated Stripe Invoice & Email Dispatch",
+      description: "Once registered, our integrated Stripe billing engine automatically generates your official subscription invoice and delivers a secure payment link straight to your email inbox.",
+      timeframe: "Delivered to your email inbox instantly",
+      whatYouNeed: "Access to your email inbox to open your official Stripe invoice",
+      highlights: "Automated Stripe Billing • Secure Payment Link • Instant Receipt & Account Setup",
       bullets: [
-        "Log in to 'My Account' using your secure credentials and temporary PIN.",
-        "Review your automated welcome email and download official subscription receipts.",
-        "Link trusted family members or caregivers for shared visibility and reassurance."
+        "Check your email inbox for your official SeniorEase Stripe invoice.",
+        "Complete payment securely via Credit/Debit Card or UK Direct Debit handled directly by Stripe.",
+        "Receive your temporary login credentials (default password: Welcome2026!) for instant portal access."
       ]
     },
     {
       icon: <Laptop className="w-10 h-10 text-teal-600" />,
-      title: "Step 3 – Initial Guided Onboarding & Device Check",
-      description: "Upon logging into your dashboard for the first time, complete a brief, friendly software onboarding process to help our UK care coordinators tailor our support to your exact devices.",
-      timeframe: "10–15 minutes at your own relaxed pace",
-      whatYouNeed: "Your primary devices (e.g., iPhone, Android, Tablet, Windows PC)",
-      highlights: "No Technical Jargon • Tailored Learning Roadmap • Scam Vulnerability Audit",
+      title: "Step 3 – Instant Portal Access & Account Self-Service",
+      description: "Log in to your dedicated 'My Account' portal anytime using your email and password. Enjoy full control over your profile, security settings, and subscription status.",
+      timeframe: "24/7 self-service dashboard access",
+      whatYouNeed: "Any smartphone, tablet, iPad, laptop, or desktop computer",
+      highlights: "Change Password • View Active Plan • Cancel or Pause Subscription • Login Audit Logs",
       bullets: [
-        "Select the devices you use daily and highlight your primary learning goals.",
-        "Complete a 5-minute digital health check to identify potential security vulnerabilities.",
-        "Get introduced to your assigned UK Senior Tech Coordinator."
+        "Sign in to /my-account using your email and initial password.",
+        "Change your password securely under the 'Change Password' section.",
+        "Manage your subscription status (including cancellation requests or plan updates) with full transparency."
       ]
     },
     {
       icon: <PhoneCall className="w-10 h-10 text-teal-600" />,
-      title: "Step 4 – Request Support & 1-on-1 Tutoring",
-      description: "Whenever you encounter a confusing error message, suspicious email, or want to learn how to use an everyday app like WhatsApp or online banking, file a ticket in seconds.",
-      timeframe: "24/7 ticket submission; appointments booked at your convenience",
-      whatYouNeed: "Your phone or computer with internet connection",
-      highlights: "Patient UK Tutors • Repeat Explanations Without Frustration • Screen-Share Guidance",
+      title: "Step 4 – File Support Requests & 1-on-1 UK Tutoring",
+      description: "Whenever you encounter a tech issue, confusing device error, or want to learn how to use apps like WhatsApp, online banking, or video calls, submit a ticket directly from your portal.",
+      timeframe: "24/7 ticket submission; prompt UK specialist response",
+      whatYouNeed: "Your smartphone, tablet, or PC",
+      highlights: "Patient UK Tech Tutors • No Jargon • Step-by-Step Screen & Phone Assistance",
       bullets: [
-        "Easily submit requests directly from the web portal, email, or one-click WhatsApp helpline.",
-        "Track the progress of your digital support ticket in real-time.",
-        "Connect via phone or scheduled video calls for patient, step-by-step instruction."
+        "Easily submit support tickets from your My Account portal or helpline.",
+        "Track ticket status and admin responses in real-time.",
+        "Connect with friendly, patient UK specialists trained in senior digital guidance."
       ]
     },
     {
       icon: <ShieldAlert className="w-10 h-10 text-teal-600" />,
       title: "Step 5 – Proactive Scam Prevention & Safeguarding",
-      description: "Technology is not just about convenience; it is about staying safe from sophisticated online fraudsters. We act as an active digital shield for vulnerable seniors.",
-      timeframe: "Continuous 24/7 proactive monitoring & weekly security bulletins",
-      whatYouNeed: "No software installation needed; alerts delivered via SMS & email",
-      highlights: "Vulnerable Adult Safeguarding Charter Active • SMS Phishing Blocking • Scam Alert Monitoring",
+      description: "We act as a digital safety net against online fraudsters and phishing scams targeting UK seniors. Forward suspicious emails or texts for expert verification.",
+      timeframe: "Continuous proactive monitoring & scam alerts",
+      whatYouNeed: "Forward any suspicious email or text to our verification desk",
+      highlights: "Safeguarding Protocol • SMS & Email Scam Alerts • Expert Fraud Verification Desk",
       bullets: [
-        "Receive real-time alerts warning about emerging UK telephone and email scams.",
-        "Forward suspicious text messages or emails to our security desk for verification.",
-        "Implement caregiver connection controls to prevent unauthorized financial transactions."
+        "Receive timely scam warnings about common UK phone and digital fraud tactics.",
+        "Forward suspicious messages to our team before clicking links or sharing info.",
+        "Keep remote family members reassured with centralized safety oversight."
       ]
     },
     {
       icon: <Award className="w-10 h-10 text-teal-600" />,
-      title: "Step 6 – Long-Term Digital Mastery & Family Peace of Mind",
-      description: "Over time, our SaaS platform transforms seniors from feeling overwhelmed into confident, independent digital citizens, while giving remote family members total reassurance.",
-      timeframe: "Ongoing monthly progress & skill empowerment",
-      whatYouNeed: "Desire to learn and stay connected with loved ones",
-      highlights: "Monthly Family Reassurance Digests • 1-Click Pause/Cancel • Full Data Privacy",
+      title: "Step 6 – Complete Flexibility & Peace of Mind",
+      description: "SeniorEase combines digital empowerment with zero hassle. Enjoy complete control over your subscription with transparent billing and no hidden commitments.",
+      timeframe: "Ongoing empowerment & complete consumer freedom",
+      whatYouNeed: "A desire to stay confident and safe online",
+      highlights: "1-Click Cancellation • UK Consumer Direct Debit Guarantee • 100% Data Privacy",
       bullets: [
-        "Access an expanding library of senior-friendly, large-font digital guides.",
-        "Authorized family members receive monthly progress summaries and resolution digests.",
-        "Enjoy total flexibility with month-to-month billing—pause or cancel anytime with zero hassle."
+        "Access senior-friendly digital learning guides and tips.",
+        "Authorized caregivers or family members can monitor support history.",
+        "Cancel or adjust your subscription anytime from your dashboard."
       ]
     }
   ];
