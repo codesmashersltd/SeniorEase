@@ -182,20 +182,11 @@ async function startServer() {
             }
           });
 
-          // 2. Create invoice item for the selected plan
-          await stripe.invoiceItems.create({
-            customer: customer.id,
-            amount: unitAmount,
-            currency: "gbp",
-            description: `${planName || 'Senior Ease Plan'} - Monthly Subscription Coverage (Customer ID: ${customerId || 'N/A'})`,
-          });
-
-          // 3. Create Stripe Invoice with send_invoice collection method
+          // 2. Create Stripe Invoice FIRST with send_invoice collection method
           const invoice = await stripe.invoices.create({
             customer: customer.id,
             collection_method: "send_invoice",
             days_until_due: 7,
-            pending_invoice_items_behavior: "include",
             currency: "gbp",
             description: `Welcome to Senior Ease!\nYour Unique Customer ID is: ${customerId || 'N/A'}.\nYour secure temporary password for your account dashboard is: ${tempPassword} (you can change this after logging in).\n\nWe have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your Senior Ease subscription.`,
             footer: `Senior Ease Subscription | Support Email: support@seniorease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${customerId || 'N/A'}`,
@@ -205,17 +196,27 @@ async function startServer() {
             }
           });
 
-          // 4. Finalize the invoice to generate the hosted payment URL
+          // 3. Attach line item directly to the newly created invoice.id
+          await stripe.invoiceItems.create({
+            customer: customer.id,
+            invoice: invoice.id,
+            amount: unitAmount,
+            currency: "gbp",
+            description: `${planName || 'Senior Ease Plan'} - Monthly Subscription Coverage (${planPrice || '£29.99'}/mo) (Customer ID: ${customerId || 'N/A'})`,
+          });
+
+          // 4. Finalize the invoice to open state
           const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id);
           invoiceId = finalizedInvoice.id;
 
-          // 5. Send the invoice email directly to the customer via Stripe
+          // 5. Send the invoice email directly to customer via Stripe
           let sentInvoice = finalizedInvoice;
           try {
             sentInvoice = await stripe.invoices.sendInvoice(finalizedInvoice.id);
             console.log(`[Stripe] Successfully sent invoice email to ${customerEmail} for Invoice ID: ${sentInvoice.id}`);
           } catch (emailErr: any) {
             console.warn("[Stripe] Could not send invoice email automatically:", emailErr.message);
+            stripeError = emailErr.message;
           }
 
           paymentUrl = sentInvoice.hosted_invoice_url || finalizedInvoice.hosted_invoice_url || "";
