@@ -519,6 +519,51 @@ export default function AdminDashboard() {
     }
   };
 
+  const resendInvoiceAndEmail = async (item: any) => {
+    const email = item.email;
+    const name = item.name || 'Valued Customer';
+    const customerId = item.customerId || item.id || 'N/A';
+    const planName = item.plan || 'Family Care';
+    const planPrice = item.price || item.amount || '£29.99';
+    const tempPassword = item.tempPassword || item.password || 'Welcome2026!';
+
+    if (!email) {
+      alert('No email address found for this user.');
+      return;
+    }
+
+    if (!window.confirm(`Dispatch Stripe Invoice & Welcome Credentials Email to ${name} (${email}) for plan "${planName}" at ${planPrice}?`)) {
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          planName,
+          planPrice,
+          customerEmail: email,
+          customerId,
+          fullName: name,
+          tempPassword
+        })
+      });
+      const data = await res.json();
+      if (data.status === 'success') {
+        let msg = `✅ Welcome Email & Invoice processed for ${name} (${email})!`;
+        if (data.invoice_id) msg += `\nInvoice ID: ${data.invoice_id}`;
+        if (data.url) msg += `\nStripe Payment Link: ${data.url}`;
+        if (data.stripeError) msg += `\nNote on Stripe: ${data.stripeError}`;
+        alert(msg);
+      } else {
+        alert(`Error: ${data.message || 'Failed to dispatch email/invoice'}`);
+      }
+    } catch (err: any) {
+      alert('Failed to connect to backend: ' + err.message);
+    }
+  };
+
   const generateDisputeText = (cust: any) => {
     if (!cust) return '';
     const name = cust.name || cust.customerName || 'Valued Customer';
@@ -1126,14 +1171,24 @@ This evidence bundle certifies that the digital subscription services were reque
                               <td className="px-6 py-4 text-right whitespace-nowrap">
                                 <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                   {(activeTab === 'customers' || activeTab === 'new-joinees' || activeTab === 'renewals') && (
-                                    <button 
-                                      onClick={() => setEvidenceCustomer(item)}
-                                      className="px-2.5 py-1 text-teal-700 bg-teal-50/80 hover:bg-teal-100 border border-teal-200 rounded-lg transition-all flex items-center gap-1 text-xs font-bold cursor-pointer shadow-sm"
-                                      title="Generate 1-Click Stripe Dispute Evidence Package"
-                                    >
-                                      <ShieldCheck size={14} className="text-teal-600" />
-                                      <span>Evidence Package</span>
-                                    </button>
+                                    <>
+                                      <button 
+                                        onClick={() => resendInvoiceAndEmail(item)}
+                                        className="px-2.5 py-1 text-indigo-700 bg-indigo-50/80 hover:bg-indigo-100 border border-indigo-200 rounded-lg transition-all flex items-center gap-1 text-xs font-bold cursor-pointer shadow-sm"
+                                        title="Dispatch Stripe Invoice & Welcome Credentials Email"
+                                      >
+                                        <Mail size={14} className="text-indigo-600" />
+                                        <span>Send Email & Invoice</span>
+                                      </button>
+                                      <button 
+                                        onClick={() => setEvidenceCustomer(item)}
+                                        className="px-2.5 py-1 text-teal-700 bg-teal-50/80 hover:bg-teal-100 border border-teal-200 rounded-lg transition-all flex items-center gap-1 text-xs font-bold cursor-pointer shadow-sm"
+                                        title="Generate 1-Click Stripe Dispute Evidence Package"
+                                      >
+                                        <ShieldCheck size={14} className="text-teal-600" />
+                                        <span>Evidence Package</span>
+                                      </button>
+                                    </>
                                   )}
                                   {activeTab === 'new-joinees' && (
                                     <>

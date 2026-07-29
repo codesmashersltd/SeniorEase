@@ -162,58 +162,69 @@ async function startServer() {
       const stripe = getStripe();
       let paymentUrl = "";
       let invoiceId = "";
+      let stripeError = null;
 
-      if (process.env.STRIPE_SECRET_KEY) {
-        const numericPrice = parseFloat((planPrice || "0").toString().replace(/[^0-9.]/g, ""));
-        const unitAmount = Math.round(numericPrice * 100);
+      const rawKey = process.env.STRIPE_SECRET_KEY;
+      const isRealStripeKey = rawKey && rawKey.startsWith("sk_") && !rawKey.includes("your_stripe_secret_key");
 
-        // 1. Create or retrieve Stripe Customer
-        const customer = await stripe.customers.create({
-          email: customerEmail,
-          name: fullName || customerEmail,
-          metadata: {
-            customerId: customerId || "N/A",
-            plan: planName || "Senior Ease Plan"
-          }
-        });
-
-        // 2. Create invoice item for the selected plan
-        await stripe.invoiceItems.create({
-          customer: customer.id,
-          amount: unitAmount,
-          currency: "gbp",
-          description: `${planName} Plan - Monthly Senior Ease Subscription Coverage (Customer ID: ${customerId || 'N/A'})`,
-        });
-
-        // 3. Create Stripe Invoice with send_invoice collection method
-        const invoice = await stripe.invoices.create({
-          customer: customer.id,
-          collection_method: "send_invoice",
-          days_until_due: 7,
-          pending_invoice_items_behavior: "include",
-          currency: "gbp",
-          description: `Welcome to Senior Ease!\nYour Unique Customer ID is: ${customerId || 'N/A'}.\nYour secure temporary password for your account dashboard is: ${tempPassword} (you can change this after logging in).\n\nWe have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your Senior Ease subscription.`,
-          footer: `Senior Ease Subscription | Support Email: support@seniorease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${customerId || 'N/A'}`,
-          metadata: {
-            customerId: customerId || "N/A",
-            planName: planName || "",
-          }
-        });
-
-        // 4. Finalize the invoice to generate the hosted payment URL
-        const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id);
-        invoiceId = finalizedInvoice.id;
-
-        // 5. Send the invoice email directly to the customer via Stripe
-        let sentInvoice = finalizedInvoice;
+      if (isRealStripeKey) {
         try {
-          sentInvoice = await stripe.invoices.sendInvoice(finalizedInvoice.id);
-          console.log(`[Stripe] Successfully sent invoice email to ${customerEmail} for Invoice ID: ${sentInvoice.id}`);
-        } catch (emailErr: any) {
-          console.warn("[Stripe] Could not send invoice email automatically:", emailErr.message);
-        }
+          const numericPrice = parseFloat((planPrice || "0").toString().replace(/[^0-9.]/g, ""));
+          const unitAmount = Math.round(numericPrice * 100);
 
-        paymentUrl = sentInvoice.hosted_invoice_url || finalizedInvoice.hosted_invoice_url || "";
+          // 1. Create or retrieve Stripe Customer
+          const customer = await stripe.customers.create({
+            email: customerEmail,
+            name: fullName || customerEmail,
+            metadata: {
+              customerId: customerId || "N/A",
+              plan: planName || "Senior Ease Plan"
+            }
+          });
+
+          // 2. Create invoice item for the selected plan
+          await stripe.invoiceItems.create({
+            customer: customer.id,
+            amount: unitAmount,
+            currency: "gbp",
+            description: `${planName || 'Senior Ease Plan'} - Monthly Subscription Coverage (Customer ID: ${customerId || 'N/A'})`,
+          });
+
+          // 3. Create Stripe Invoice with send_invoice collection method
+          const invoice = await stripe.invoices.create({
+            customer: customer.id,
+            collection_method: "send_invoice",
+            days_until_due: 7,
+            pending_invoice_items_behavior: "include",
+            currency: "gbp",
+            description: `Welcome to Senior Ease!\nYour Unique Customer ID is: ${customerId || 'N/A'}.\nYour secure temporary password for your account dashboard is: ${tempPassword} (you can change this after logging in).\n\nWe have provisioned your software profile. Please click the payment link below or pay this invoice online to activate your Senior Ease subscription.`,
+            footer: `Senior Ease Subscription | Support Email: support@seniorease.com | Phone: +44 (0) 330 401 0019 | Customer ID: ${customerId || 'N/A'}`,
+            metadata: {
+              customerId: customerId || "N/A",
+              planName: planName || "",
+            }
+          });
+
+          // 4. Finalize the invoice to generate the hosted payment URL
+          const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id);
+          invoiceId = finalizedInvoice.id;
+
+          // 5. Send the invoice email directly to the customer via Stripe
+          let sentInvoice = finalizedInvoice;
+          try {
+            sentInvoice = await stripe.invoices.sendInvoice(finalizedInvoice.id);
+            console.log(`[Stripe] Successfully sent invoice email to ${customerEmail} for Invoice ID: ${sentInvoice.id}`);
+          } catch (emailErr: any) {
+            console.warn("[Stripe] Could not send invoice email automatically:", emailErr.message);
+          }
+
+          paymentUrl = sentInvoice.hosted_invoice_url || finalizedInvoice.hosted_invoice_url || "";
+        } catch (sErr: any) {
+          console.error("[Stripe API Call Failed]:", sErr.message);
+          stripeError = sErr.message;
+        }
+      } else {
+        console.log(`[Stripe Notice] No valid STRIPE_SECRET_KEY provided (key='${rawKey || 'none'}'). Skipping live Stripe API call.`);
       }
 
       // Send direct Welcome & Login Credentials Email
@@ -223,7 +234,7 @@ async function startServer() {
         customerId: customerId || "N/A",
         tempPassword: tempPassword,
         planName: planName || "Senior Ease Membership",
-        planPrice: planPrice || "£17.99",
+        planPrice: planPrice || "£29.99",
         invoiceUrl: paymentUrl
       });
 
@@ -233,6 +244,7 @@ async function startServer() {
         invoice_id: invoiceId,
         customerId,
         tempPassword,
+        stripeError,
         emailResult
       });
     } catch (error: any) {
