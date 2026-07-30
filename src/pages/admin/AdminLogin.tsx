@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 import { Mail, Key, AlertCircle, Loader2 } from 'lucide-react';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth, db } from '../../lib/firebase';
-import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
 import adminBgImage from '../../assets/images/senior_tech_support_hero_1784467941699.jpg';
 
 export default function AdminLogin() {
@@ -55,6 +55,13 @@ export default function AdminLogin() {
 
       if (isValidAdminUser && isValidAdminPass) {
         localStorage.setItem('admin_access', 'true');
+        addDoc(collection(db, 'loginLogs'), {
+          customerName: 'Administrator',
+          customerId: 'ADMIN-PORTAL',
+          email: normalizedInput.includes('@') ? normalizedInput : 'admin@seniorease.com',
+          source: 'Admin Portal Login',
+          timestamp: serverTimestamp()
+        }).catch(err => console.warn('Admin log write warning:', err));
         navigate('/admin/dashboard');
       } else {
         setError('Invalid credentials. Please use admin / 123456 or your configured password.');
@@ -97,6 +104,13 @@ export default function AdminLogin() {
 
       if (adminDoc.exists() || isSuperAdmin || isEmailAdmin) {
         localStorage.setItem('admin_access', 'true');
+        addDoc(collection(db, 'loginLogs'), {
+          customerName: user.displayName || 'Administrator',
+          customerId: 'ADMIN-GOOGLE',
+          email: userEmail,
+          source: 'Admin Google Auth Login',
+          timestamp: serverTimestamp()
+        }).catch(err => console.warn('Admin Google log write warning:', err));
         navigate('/admin/dashboard');
       } else {
         await auth.signOut();

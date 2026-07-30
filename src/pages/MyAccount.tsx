@@ -101,7 +101,8 @@ export default function MyAccount() {
         await addDoc(collection(db, 'loginLogs'), {
           customerName: 'Demo User',
           customerId: 'DEMO',
-          source: 'Web Dashboard (Demo)',
+          email: 'demo@seniorease.com',
+          source: 'Web Dashboard Login (Demo)',
           timestamp: serverTimestamp()
         });
         setError('');
@@ -160,7 +161,8 @@ export default function MyAccount() {
       await addDoc(collection(db, 'loginLogs'), {
         customerName: customerName,
         customerId: customerId,
-        source: 'Web Dashboard',
+        email: customerData.email || '',
+        source: 'Web Dashboard Login',
         timestamp: serverTimestamp()
       });
 

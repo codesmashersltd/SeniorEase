@@ -196,6 +196,19 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
         console.warn('Firestore new_joinees write warning:', err);
       }
 
+      // 5. Save to Security Logs (loginLogs) so registration event is captured
+      try {
+        await addDoc(collection(db, 'loginLogs'), {
+          customerName: userName,
+          customerId: newId,
+          email: userEmail,
+          source: `New Account Created (${activePlan.name} - ${paymentMethod === 'bacs' ? 'BACS 7-Day Trial' : 'Card'})`,
+          timestamp: serverTimestamp()
+        });
+      } catch (err: any) {
+        console.warn('Firestore security log write warning:', err);
+      }
+
       setIsSubmitting(false);
       setIsSuccess(true);
     } catch (err: any) {

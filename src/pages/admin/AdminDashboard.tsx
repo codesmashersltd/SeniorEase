@@ -196,6 +196,14 @@ export default function AdminDashboard() {
         });
       }
 
+      await addDoc(collection(db, 'loginLogs'), {
+        customerName: customer.name || 'User',
+        customerId: customer.customerId || customer.id || cleanedId,
+        email: customer.email || '',
+        source: `Admin Action: Password Reset (${newPass})`,
+        timestamp: serverTimestamp()
+      });
+
       setResetStatus({
         success: true,
         message: `Successfully set password to "${newPass}" for ${customer.name} (${customer.customerId || customer.id || cleanedId}).`
@@ -515,6 +523,7 @@ export default function AdminDashboard() {
       await addDoc(collection(db, 'loginLogs'), {
         customerName: item.name || 'User',
         customerId: item.customerId || item.id || 'N/A',
+        email: item.email || '',
         source: `Admin Action: Status changed to "${newStatus}"${reason ? ` (Reason: ${reason})` : ''}`,
         timestamp: serverTimestamp()
       });
@@ -562,6 +571,15 @@ export default function AdminDashboard() {
         });
         // 2. Remove from new_joinees
         await deleteDoc(doc(db, 'new_joinees', joinee.id));
+
+        // 2b. Add security log entry
+        await addDoc(collection(db, 'loginLogs'), {
+          customerName: joinee.name,
+          customerId: joinee.customerId,
+          email: joinee.email,
+          source: 'Admin Action: Activated Joinee to Permanent Customer Account',
+          timestamp: serverTimestamp()
+        });
 
         // 3. Dispatch Stripe Invoice & Welcome Email automatically
         const res = await fetch('/api/checkout', {
@@ -639,6 +657,13 @@ export default function AdminDashboard() {
       });
       const data = await res.json();
       if (data.status === 'success') {
+        addDoc(collection(db, 'loginLogs'), {
+          customerName: name,
+          customerId: customerId,
+          email: email,
+          source: `Admin Action: Evidence Package & Invoice Dispatched (${planName})`,
+          timestamp: serverTimestamp()
+        }).catch(() => {});
         let msg = `Welcome Email & Stripe Invoice processed for ${name} (${email})!\n`;
         if (data.emailResult?.success) {
           msg += `\n✉️ EMAIL STATUS: Sent successfully via SMTP to ${email}!`;
