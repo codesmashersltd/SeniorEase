@@ -408,20 +408,25 @@ export default function AdminDashboard() {
   };
 
   const toggleSelectAll = (items: any[]) => {
-    if (selectedIds.length === items.length) {
+    const itemDocIds = items.map(item => item.docId || item.id);
+    const allSelected = itemDocIds.length > 0 && itemDocIds.every(id => selectedIds.includes(id));
+    if (allSelected) {
       setSelectedIds([]);
     } else {
-      setSelectedIds(items.map(item => item.id));
+      setSelectedIds(itemDocIds);
     }
   };
 
   const bulkDelete = async (col: string) => {
     if (selectedIds.length === 0) return;
-    if (window.confirm(`Are you sure you want to delete ${selectedIds.length} records?`)) {
+    const count = selectedIds.length;
+    if (window.confirm(`Are you sure you want to delete ${count} selected record${count > 1 ? 's' : ''}?`)) {
       try {
-        const promises = selectedIds.map(id => deleteDoc(doc(db, col, id)));
+        const targetCol = col === 'renewals' ? 'customers' : (col === 'logs' ? 'loginLogs' : (col === 'new-joinees' ? 'new_joinees' : col));
+        const promises = selectedIds.map(id => deleteDoc(doc(db, targetCol, id)));
         await Promise.all(promises);
         setSelectedIds([]);
+        alert(`Successfully deleted ${count} record${count > 1 ? 's' : ''}.`);
       } catch (err: any) {
         alert('Error performing bulk delete: ' + err.message);
       }
@@ -1092,11 +1097,12 @@ This evidence bundle certifies that the digital subscription services were reque
                               onClick={() => toggleSelectAll(getCurrentItems())}
                               className="text-gray-400 hover:text-teal-600 transition-colors"
                             >
-                              {selectedIds.length > 0 && selectedIds.length === getCurrentItems().length ? (
-                                <CheckSquare size={18} />
-                              ) : (
-                                <Square size={18} />
-                              )}
+                              {(() => {
+                                const currentItems = getCurrentItems();
+                                const currentDocIds = currentItems.map((item: any) => item.docId || item.id);
+                                const isAllSelected = currentDocIds.length > 0 && currentDocIds.every(id => selectedIds.includes(id));
+                                return isAllSelected ? <CheckSquare size={18} /> : <Square size={18} />;
+                              })()}
                             </button>
                           </th>
                           <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">
@@ -1116,16 +1122,19 @@ This evidence bundle certifies that the digital subscription services were reque
                       </thead>
                       <tbody className="divide-y divide-gray-100">
                         {getCurrentItems()
-                          .map((item: any, idx: number) => (
-                            <tr key={item.id} className={`group transition-colors ${selectedIds.includes(item.id) ? 'bg-teal-50/50' : 'hover:bg-gray-50/50'}`}>
-                              <td className="px-6 py-4">
-                                <button 
-                                  onClick={() => toggleSelect(item.id)}
-                                  className={`${selectedIds.includes(item.id) ? 'text-teal-600' : 'text-gray-300'} hover:text-teal-500 transition-colors`}
-                                >
-                                  {selectedIds.includes(item.id) ? <CheckSquare size={18} /> : <Square size={18} />}
-                                </button>
-                              </td>
+                          .map((item: any, idx: number) => {
+                            const itemId = item.docId || item.id;
+                            const isSelected = selectedIds.includes(itemId);
+                            return (
+                              <tr key={itemId} className={`group transition-colors ${isSelected ? 'bg-teal-50/50' : 'hover:bg-gray-50/50'}`}>
+                                <td className="px-6 py-4">
+                                  <button 
+                                    onClick={() => toggleSelect(itemId)}
+                                    className={`${isSelected ? 'text-teal-600' : 'text-gray-300'} hover:text-teal-500 transition-colors`}
+                                  >
+                                    {isSelected ? <CheckSquare size={18} /> : <Square size={18} />}
+                                  </button>
+                                </td>
                               <td className="px-6 py-4 whitespace-nowrap">
                                 {activeTab === 'tickets' ? (
                                   <span className="text-xs font-mono font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded inline-block min-w-[70px] text-center border border-teal-100">
@@ -1376,7 +1385,8 @@ This evidence bundle certifies that the digital subscription services were reque
                                 </div>
                               </td>
                             </tr>
-                          ))}
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>

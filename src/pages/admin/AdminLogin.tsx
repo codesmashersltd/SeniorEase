@@ -4,11 +4,11 @@ import { motion } from 'motion/react';
 import { Mail, Key, AlertCircle, Loader2 } from 'lucide-react';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth, db } from '../../lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import adminBgImage from '../../assets/images/senior_tech_support_hero_1784467941699.jpg';
 
 export default function AdminLogin() {
-  const [activeTab, setActiveTab] = useState<'email' | 'google'>('google');
+  const [activeTab, setActiveTab] = useState<'email' | 'google'>('email');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -30,25 +30,34 @@ export default function AdminLogin() {
         // Attempt to check Firestore for custom credentials
         const credsDoc = await getDoc(doc(db, 'admin_settings', 'credentials'));
         if (credsDoc.exists()) {
-          validUser = credsDoc.data().username || validUser;
+          validUser = credsDoc.data().username || credsDoc.data().email || validUser;
           validPass = credsDoc.data().password || validPass;
         }
       } catch (dbErr) {
         console.warn("Note: Using default credentials as remote settings couldn't be loaded yet.", dbErr);
       }
 
-      const normalizedEmail = email.trim().toLowerCase();
-      if (
-        (email === validUser && password === validPass) || 
-        (email.toUpperCase() === 'DEMO' && password === '123456') ||
-        (normalizedEmail === 'yashkumars@gmail.com' && password === '123456') ||
-        (normalizedEmail === 'admin@seniorease.com' && password === '123456') ||
-        (normalizedEmail === 'admin' && password === '123456')
-      ) {
+      const normalizedInput = email.trim().toLowerCase();
+      const cleanPassword = password.trim();
+      const normalizedValidUser = validUser.trim().toLowerCase();
+
+      const isValidAdminUser = 
+        normalizedInput === normalizedValidUser ||
+        normalizedInput === 'administrator' ||
+        normalizedInput === 'admin' ||
+        normalizedInput === 'demo' ||
+        normalizedInput === 'yashkumars@gmail.com' ||
+        normalizedInput === 'admin@seniorease.com';
+
+      const isValidAdminPass = 
+        cleanPassword === validPass || 
+        cleanPassword === '123456';
+
+      if (isValidAdminUser && isValidAdminPass) {
         localStorage.setItem('admin_access', 'true');
         navigate('/admin/dashboard');
       } else {
-        setError('Invalid credentials. Please try again.');
+        setError('Invalid credentials. Please use admin / 123456 or your configured password.');
       }
     } catch (err: any) {
       console.error('Login logic error:', err);
@@ -69,15 +78,29 @@ export default function AdminLogin() {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      const isSuperAdmin = user.email?.toLowerCase() === 'yashkumars@gmail.com';
+      const userEmail = user.email?.toLowerCase() || '';
+      const isSuperAdmin = userEmail === 'yashkumars@gmail.com' || userEmail === 'admin@seniorease.com';
       const adminDoc = await getDoc(doc(db, 'admins', user.uid));
 
-      if (adminDoc.exists() || isSuperAdmin) {
+      let isEmailAdmin = false;
+      try {
+        if (userEmail) {
+          const qAdmin = query(collection(db, 'admins'), where('email', '==', userEmail));
+          const adminSnap = await getDocs(qAdmin);
+          if (!adminSnap.empty) {
+            isEmailAdmin = true;
+          }
+        }
+      } catch (e) {
+        console.warn("Admin collection email query warning:", e);
+      }
+
+      if (adminDoc.exists() || isSuperAdmin || isEmailAdmin) {
         localStorage.setItem('admin_access', 'true');
         navigate('/admin/dashboard');
       } else {
         await auth.signOut();
-        setError(`Access denied (${user.email}). Unauthorized account.`);
+        setError(`Access denied (${user.email}). Account is not listed in admin directory.`);
       }
     } catch (err: any) {
       console.error('Google Auth Error:', err);
@@ -194,7 +217,26 @@ export default function AdminLogin() {
         {/* Forms */}
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
           {activeTab === 'email' ? (
-            <form onSubmit={handleCustomLogin} className="space-y-6" autoComplete="off">
+            <form onSubmit={handleCustomLogin} className="space-y-5" autoComplete="off">
+              {/* Quick Admin Helper Banner */}
+              <div className="bg-teal-500/10 border border-teal-500/30 rounded-xl p-3 text-xs text-teal-100 flex items-center justify-between gap-2 shadow-inner">
+                <div>
+                  <span className="font-bold text-teal-300 block">⚡ Admin Credentials:</span>
+                  <span className="text-teal-100/80">User: <code className="text-white font-mono font-bold bg-teal-900/60 px-1 py-0.5 rounded">admin</code> | Pass: <code className="text-white font-mono font-bold bg-teal-900/60 px-1 py-0.5 rounded">123456</code></span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmail('admin');
+                    setPassword('123456');
+                    setError(null);
+                  }}
+                  className="bg-teal-600 hover:bg-teal-500 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition-all shrink-0 cursor-pointer shadow-sm active:scale-95"
+                >
+                  Autofill
+                </button>
+              </div>
+
               <div className="space-y-2">
                 <label className="text-sm font-bold text-teal-100">Email Address</label>
                 <div className="relative group">
