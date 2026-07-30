@@ -51,7 +51,10 @@ import {
   FileCheck,
   Download,
   Check,
-  Receipt
+  Receipt,
+  CreditCard,
+  DollarSign,
+  CheckCircle
 } from 'lucide-react';
 import { auth, db } from '../../lib/firebase';
 import { isSpamContent } from '../../lib/spamFilter';
@@ -82,6 +85,8 @@ import {
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<'overview' | 'customers' | 'new-joinees' | 'renewals' | 'tickets' | 'logs' | 'system'>('overview');
   const [ticketFilter, setTicketFilter] = useState<'all' | 'Open' | 'Pending' | 'In Progress' | 'Closed'>('all');
+  const [paymentFilter, setPaymentFilter] = useState<'all' | 'Payment Collected' | 'Payment In Progress' | 'Payment Pending' | 'Payment Overdue' | 'Refunded'>('all');
+  const [paymentModalItem, setPaymentModalItem] = useState<any | null>(null);
   const [data, setData] = useState<{
     customers: any[];
     newJoinees: any[];
@@ -331,10 +336,15 @@ export default function AdminDashboard() {
       if (activeTab === 'tickets' && ticketFilter !== 'all') {
         return item.status === ticketFilter;
       }
+      if (paymentFilter !== 'all' && (activeTab === 'customers' || activeTab === 'new-joinees' || activeTab === 'renewals')) {
+        const itemPayStatus = item.paymentStatus || (item.paymentMethod === 'bacs' ? 'Payment Pending' : 'Payment Collected');
+        if (itemPayStatus !== paymentFilter) return false;
+      }
       return true;
     }).filter((item: any) => {
       if (!searchTerm || !item) return true;
       const search = searchTerm.toLowerCase();
+      const itemPayStatus = item.paymentStatus || (item.paymentMethod === 'bacs' ? 'Payment Pending' : 'Payment Collected');
       return (
         item.email?.toLowerCase()?.includes(search) ||
         item.name?.toLowerCase()?.includes(search) ||
@@ -344,6 +354,7 @@ export default function AdminDashboard() {
         item.ticketId?.toLowerCase()?.includes(search) ||
         item.customerId?.toLowerCase()?.includes(search) ||
         item.status?.toLowerCase()?.includes(search) ||
+        itemPayStatus.toLowerCase()?.includes(search) ||
         item.phone?.includes(search) ||
         item.id?.toLowerCase()?.includes(search)
       );
@@ -352,7 +363,6 @@ export default function AdminDashboard() {
 
   const handleExportCSV = () => {
     const currentItems = getCurrentItems();
-
     if (currentItems.length === 0) {
       alert('No data to export.');
       return;
@@ -363,9 +373,9 @@ export default function AdminDashboard() {
     if (activeTab === 'tickets') {
       headers = ['Ticket ID', 'Name', 'Email', 'Subject', 'Source', 'Status', 'Date'];
     } else if (activeTab === 'new-joinees') {
-      headers = ['Customer ID', 'Name', 'Email', 'Phone', 'Plan', 'Price', 'Status', 'Date'];
-    } else if (activeTab === 'customers') {
-      headers = ['ID', 'Name', 'Email', 'Phone', 'Plan', 'Status', 'Date'];
+      headers = ['Customer ID', 'Name', 'Email', 'Phone', 'Plan', 'Price', 'Account Status', 'Payment Status', 'Payment Method', 'Date'];
+    } else if (activeTab === 'customers' || activeTab === 'renewals') {
+      headers = ['ID', 'Name', 'Email', 'Phone', 'Plan', 'Account Status', 'Payment Status', 'Payment Method', 'Date'];
     } else {
       headers = ['ID', 'Name', 'Email', 'Details', 'Date'];
     }
@@ -375,15 +385,16 @@ export default function AdminDashboard() {
     currentItems.forEach((item: any) => {
       let row: string[] = [];
       const date = item.createdAt?.seconds || item.timestamp?.seconds 
-        ? new Date((item.createdAt?.seconds || item.timestamp?.seconds) * 1000).toLocaleString() 
+        ? new Date((item.createdAt?.seconds || item.timestamp?.seconds) * 1000).toLocaleString('en-GB') 
         : 'N/A';
+      const payStatus = item.paymentStatus || (item.paymentMethod === 'bacs' ? 'Payment Pending' : 'Payment Collected');
 
       if (activeTab === 'tickets') {
         row = [item.ticketId || '', item.name || '', item.email || '', item.subject || '', item.source || '', item.status || '', date];
       } else if (activeTab === 'new-joinees') {
-        row = [item.customerId || '', item.name || '', item.email || '', item.phone || '', item.plan || '', item.price || '', item.status || '', date];
-      } else if (activeTab === 'customers') {
-        row = [item.id || '', item.name || '', item.email || '', item.phone || '', item.plan || '', item.status || '', date];
+        row = [item.customerId || '', item.name || '', item.email || '', item.phone || '', item.plan || '', item.price || '', item.status || 'Active', payStatus, item.paymentMethod || 'Card', date];
+      } else if (activeTab === 'customers' || activeTab === 'renewals') {
+        row = [item.id || '', item.name || '', item.email || '', item.phone || '', item.plan || '', item.status || 'Active', payStatus, item.paymentMethod || 'Card', date];
       } else {
         row = [item.id || '', item.name || item.customerName || '', item.email || '', (item.message || item.source || '').replace(/,/g, ';'), date];
       }
@@ -531,6 +542,39 @@ export default function AdminDashboard() {
       alert(`Account status for ${item.name} successfully updated to "${newStatus}"!`);
     } catch (err: any) {
       alert('Error updating user status: ' + err.message);
+    }
+  };
+
+  const handlePaymentStatusChange = async (item: any, newPaymentStatus: string, collectionName?: string) => {
+    const targetDocId = item.docId || item.id;
+    const targetCollection = collectionName || (activeTab === 'new-joinees' ? 'new_joinees' : 'customers');
+    const confirmMsg = `Update payment status for ${item.name || item.customerName || 'Customer'} to "${newPaymentStatus}"?`;
+
+    if (!window.confirm(confirmMsg)) return;
+
+    try {
+      await updateDoc(doc(db, targetCollection, targetDocId), {
+        paymentStatus: newPaymentStatus,
+        paymentUpdatedAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+
+      // Write security audit log
+      await addDoc(collection(db, 'loginLogs'), {
+        customerName: item.name || item.customerName || 'User',
+        customerId: item.customerId || item.id || 'N/A',
+        email: item.email || '',
+        source: `Admin Action: Payment status updated to "${newPaymentStatus}"`,
+        timestamp: serverTimestamp()
+      });
+
+      if (paymentModalItem && (paymentModalItem.docId || paymentModalItem.id) === targetDocId) {
+        setPaymentModalItem((prev: any) => prev ? { ...prev, paymentStatus: newPaymentStatus } : null);
+      }
+
+      alert(`Payment status for ${item.name || item.customerName || 'User'} updated to "${newPaymentStatus}"!`);
+    } catch (err: any) {
+      alert('Error updating payment status: ' + err.message);
     }
   };
 
@@ -1111,6 +1155,40 @@ This evidence bundle certifies that the digital subscription services were reque
                         })}
                       </div>
                     )}
+
+                    {(activeTab === 'customers' || activeTab === 'new-joinees' || activeTab === 'renewals') && (
+                      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 -mb-2">
+                        {[
+                          { id: 'all', label: 'All Payments', color: 'text-gray-600', bg: 'bg-gray-50' },
+                          { id: 'Payment Collected', label: 'Payment Collected', color: 'text-emerald-700', bg: 'bg-emerald-50' },
+                          { id: 'Payment In Progress', label: 'In Progress', color: 'text-blue-700', bg: 'bg-blue-50' },
+                          { id: 'Payment Pending', label: 'Payment Pending', color: 'text-amber-700', bg: 'bg-amber-50' },
+                          { id: 'Payment Overdue', label: 'Payment Overdue', color: 'text-rose-700', bg: 'bg-rose-50' },
+                        ].map((filter) => {
+                          const list = activeTab === 'renewals' ? data.customers : (activeTab === 'new-joinees' ? data.newJoinees : data.customers);
+                          const count = filter.id === 'all' 
+                            ? list.length 
+                            : list.filter(item => (item.paymentStatus || (item.paymentMethod === 'bacs' ? 'Payment Pending' : 'Payment Collected')) === filter.id).length;
+                          return (
+                            <button
+                              key={filter.id}
+                              onClick={() => setPaymentFilter(filter.id as any)}
+                              className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
+                                paymentFilter === filter.id 
+                                  ? 'border-teal-500 bg-teal-50/40 shadow-xs font-bold' 
+                                  : 'border-gray-100 bg-white hover:border-gray-200'
+                              }`}
+                            >
+                              <p className={`text-[10px] font-black uppercase tracking-wider mb-1 ${filter.color}`}>{filter.label}</p>
+                              <p className="text-xl font-black text-gray-900">{count}</p>
+                              {paymentFilter === filter.id && (
+                                <motion.div layoutId="payment-tab" className="h-1 w-8 bg-teal-600 rounded-full mt-2" />
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
 
                   <div className="overflow-x-auto">
@@ -1137,11 +1215,14 @@ This evidence bundle certifies that the digital subscription services were reque
                             {activeTab === 'tickets' ? 'Identity' : (activeTab === 'new-joinees' ? 'Registration Details' : 'Details')}
                           </th>
                           <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">
-                            {activeTab === 'tickets' ? 'Source' : (activeTab === 'renewals' ? 'Renewal Date' : (activeTab === 'new-joinees' ? 'Plan' : 'Status'))}
+                            {activeTab === 'tickets' ? 'Source' : (activeTab === 'renewals' ? 'Renewal Date' : (activeTab === 'new-joinees' ? 'Plan' : 'Account Status'))}
                           </th>
                           <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">
-                            {activeTab === 'tickets' ? 'Status' : (activeTab === 'new-joinees' ? 'Temp Pass' : 'Date')}
+                            {activeTab === 'tickets' ? 'Status' : (activeTab === 'customers' || activeTab === 'new-joinees' || activeTab === 'renewals' ? 'Payment Option & Status' : 'Date')}
                           </th>
+                          {(activeTab === 'customers' || activeTab === 'new-joinees' || activeTab === 'renewals') && (
+                            <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Date</th>
+                          )}
                           <th className="px-6 py-4 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Actions</th>
                         </tr>
                       </thead>
@@ -1304,11 +1385,55 @@ This evidence bundle certifies that the digital subscription services were reque
                                     <option value="Pending">Pending</option>
                                     <option value="Closed">Closed</option>
                                   </select>
-                                ) : activeTab === 'new-joinees' ? (
-                                  <span className="text-xs font-mono font-bold text-gray-600 bg-gray-50 px-2 py-1 rounded">
-                                    {item.tempPassword || 'Not Set'}
-                                  </span>
+                                ) : (activeTab === 'customers' || activeTab === 'new-joinees' || activeTab === 'renewals') ? (
+                                  <div className="flex flex-col gap-1">
+                                    {(() => {
+                                      const currentPayStatus = item.paymentStatus || (item.paymentMethod === 'bacs' ? 'Payment Pending' : 'Payment Collected');
+                                      return (
+                                        <select
+                                          value={currentPayStatus}
+                                          onChange={(e) => handlePaymentStatusChange(item, e.target.value, activeTab === 'new-joinees' ? 'new_joinees' : 'customers')}
+                                          className={`px-2.5 py-1 text-[10px] font-black rounded-lg uppercase cursor-pointer border shadow-2xs transition-all ${
+                                            currentPayStatus === 'Payment Collected' ? 'bg-emerald-100 text-emerald-900 border-emerald-300 font-bold' :
+                                            currentPayStatus === 'Payment In Progress' ? 'bg-blue-100 text-blue-900 border-blue-300 font-bold' :
+                                            currentPayStatus === 'Payment Pending' ? 'bg-amber-100 text-amber-900 border-amber-300' :
+                                            currentPayStatus === 'Payment Overdue' ? 'bg-rose-100 text-rose-900 border-rose-300 font-bold' :
+                                            'bg-purple-100 text-purple-900 border-purple-300'
+                                          }`}
+                                        >
+                                          <option value="Payment Collected">🟢 Payment Collected</option>
+                                          <option value="Payment In Progress">🔵 Payment In Progress</option>
+                                          <option value="Payment Pending">⏳ Payment Pending</option>
+                                          <option value="Payment Overdue">🚨 Payment Overdue</option>
+                                          <option value="Refunded">🟣 Refunded / Waived</option>
+                                        </select>
+                                      );
+                                    })()}
+                                    <div className="flex items-center gap-1 text-[10px]">
+                                      {item.paymentMethod === 'bacs' || item.hasFreeTrial ? (
+                                        <span className="text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 font-medium">
+                                          🎁 BACS (7-Day Trial)
+                                        </span>
+                                      ) : (
+                                        <span className="text-slate-600 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200 font-medium">
+                                          💳 Card Payment
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
                                 ) : (
+                                  <div className="flex flex-col">
+                                    <span className="text-sm font-bold text-gray-900">
+                                      {item.createdAt?.seconds || item.timestamp?.seconds 
+                                        ? new Date((item.createdAt?.seconds || item.timestamp?.seconds) * 1000).toLocaleDateString('en-GB')
+                                        : 'Today'}
+                                    </span>
+                                  </div>
+                                )}
+                              </td>
+
+                              {(activeTab === 'customers' || activeTab === 'new-joinees' || activeTab === 'renewals') && (
+                                <td className="px-6 py-4 whitespace-nowrap">
                                   <div className="flex flex-col">
                                     <span className="text-sm font-bold text-gray-900">
                                       {item.createdAt?.seconds || item.timestamp?.seconds 
@@ -1321,12 +1446,21 @@ This evidence bundle certifies that the digital subscription services were reque
                                         : '00:00:00'}
                                     </span>
                                   </div>
-                                )}
-                              </td>
+                                </td>
+                              )}
+
                               <td className="px-6 py-4 text-right whitespace-nowrap">
                                 <div className="flex justify-end gap-2 transition-opacity">
                                   {(activeTab === 'customers' || activeTab === 'new-joinees' || activeTab === 'renewals' || activeTab === 'tickets') && (
                                     <>
+                                      <button 
+                                        onClick={() => setPaymentModalItem(item)}
+                                        className="px-2.5 py-1 text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 rounded-lg transition-all flex items-center gap-1 text-xs font-bold cursor-pointer shadow-sm"
+                                        title="Payment Options: Change Status, Collect Payment & Records"
+                                      >
+                                        <CreditCard size={14} className="text-emerald-600" />
+                                        <span>Payment Option</span>
+                                      </button>
                                       <button 
                                         onClick={() => resendInvoiceAndEmail(item)}
                                         className="px-2.5 py-1 text-indigo-700 bg-indigo-50/80 hover:bg-indigo-100 border border-indigo-200 rounded-lg transition-all flex items-center gap-1 text-xs font-bold cursor-pointer shadow-sm"
@@ -2170,6 +2304,136 @@ This evidence bundle certifies that the digital subscription services were reque
                       >
                         <Printer size={16} />
                         Print / Save as PDF
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            )}
+
+            {/* Payment Options & Status Control Modal */}
+            {paymentModalItem && (
+              <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-lg w-full overflow-hidden"
+                >
+                  <div className="bg-slate-900 text-white p-6 flex items-center justify-between border-b border-slate-800">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-2xl bg-teal-500/20 text-teal-400 flex items-center justify-center font-bold">
+                        <CreditCard size={22} />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-mono font-bold text-teal-400 bg-teal-950 px-2 py-0.5 rounded border border-teal-800">
+                            {paymentModalItem.id || paymentModalItem.customerId || 'SE-CUSTOMER'}
+                          </span>
+                          <span className="text-[10px] font-bold bg-teal-500/20 text-teal-300 px-2 py-0.5 rounded uppercase">
+                            Payment Control
+                          </span>
+                        </div>
+                        <h3 className="text-lg font-bold text-white mt-0.5">Payment Option & Status</h3>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setPaymentModalItem(null)}
+                      className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-full transition-all cursor-pointer"
+                    >
+                      <X size={20} />
+                    </button>
+                  </div>
+
+                  <div className="p-6 space-y-6 text-slate-900">
+                    {/* Customer Overview Box */}
+                    <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <p className="text-sm font-bold text-slate-900">{paymentModalItem.name || paymentModalItem.customerName || 'Customer'}</p>
+                          <p className="text-xs text-slate-500">{paymentModalItem.email || 'No Email'}</p>
+                        </div>
+                        <span className="text-xs font-bold font-mono text-teal-700 bg-teal-50 px-2 py-1 rounded border border-teal-100">
+                          {paymentModalItem.plan || 'SeniorEase Plus (£17.99/mo)'}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-200/60">
+                        <span className="text-slate-500 font-medium">Payment Method:</span>
+                        <span className="font-bold text-slate-800 flex items-center gap-1">
+                          {paymentModalItem.paymentMethod === 'bacs' || paymentModalItem.hasFreeTrial ? '🎁 BACS Direct Debit (7-Day Trial)' : '💳 Credit / Debit Card'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Interactive Payment Status Control */}
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                        Set Payment Status
+                      </label>
+                      <select
+                        value={paymentModalItem.paymentStatus || (paymentModalItem.paymentMethod === 'bacs' ? 'Payment Pending' : 'Payment Collected')}
+                        onChange={(e) => handlePaymentStatusChange(paymentModalItem, e.target.value, activeTab === 'new-joinees' ? 'new_joinees' : 'customers')}
+                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-teal-500 cursor-pointer"
+                      >
+                        <option value="Payment Collected">🟢 Payment Collected (Active & Settled)</option>
+                        <option value="Payment In Progress">🔵 Payment In Progress (BACS Processing)</option>
+                        <option value="Payment Pending">⏳ Payment Pending (Awaiting Direct Debit)</option>
+                        <option value="Payment Overdue">🚨 Payment Overdue (Immediate Follow Up)</option>
+                        <option value="Refunded">🟣 Refunded / Waived</option>
+                      </select>
+                    </div>
+
+                    {/* Quick 1-Click Status Action Buttons */}
+                    <div className="space-y-2">
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Quick Actions</p>
+                      <div className="grid grid-cols-2 gap-2">
+                        <button
+                          onClick={() => handlePaymentStatusChange(paymentModalItem, 'Payment Collected', activeTab === 'new-joinees' ? 'new_joinees' : 'customers')}
+                          className="px-3 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                        >
+                          <CheckCircle size={15} className="text-emerald-600" />
+                          Payment Collected
+                        </button>
+                        <button
+                          onClick={() => handlePaymentStatusChange(paymentModalItem, 'Payment In Progress', activeTab === 'new-joinees' ? 'new_joinees' : 'customers')}
+                          className="px-3 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-300 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                        >
+                          <Clock size={15} className="text-blue-600" />
+                          Payment In Progress
+                        </button>
+                        <button
+                          onClick={() => handlePaymentStatusChange(paymentModalItem, 'Payment Pending', activeTab === 'new-joinees' ? 'new_joinees' : 'customers')}
+                          className="px-3 py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                        >
+                          <AlertCircle size={15} className="text-amber-600" />
+                          Payment Pending
+                        </button>
+                        <button
+                          onClick={() => handlePaymentStatusChange(paymentModalItem, 'Payment Overdue', activeTab === 'new-joinees' ? 'new_joinees' : 'customers')}
+                          className="px-3 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-300 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                        >
+                          <ShieldAlert size={15} className="text-rose-600" />
+                          Payment Overdue
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Secondary Actions */}
+                    <div className="pt-4 border-t border-slate-200 flex flex-col gap-2">
+                      <button
+                        onClick={() => {
+                          resendInvoiceAndEmail(paymentModalItem);
+                        }}
+                        className="w-full py-3 px-4 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+                      >
+                        <Mail size={16} />
+                        Dispatch Email & Invoice to Customer
+                      </button>
+                      <button
+                        onClick={() => setPaymentModalItem(null)}
+                        className="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all cursor-pointer text-center"
+                      >
+                        Done & Close
                       </button>
                     </div>
                   </div>
