@@ -36,6 +36,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
   const [email, setEmail] = useState('');
   const [checkoutUrl, setCheckoutUrl] = useState('');
   const [consentChecked, setConsentChecked] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<'bacs' | 'card'>('bacs');
   const [selectedPlanState, setSelectedPlanState] = useState<{ name: string; price: string }>(
     plan || { name: 'Family Care', price: '£29.99' }
   );
@@ -108,6 +109,7 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
       console.log('Attempting to add ticket:', ticketPayload);
 
       const defaultTempPassword = 'Welcome2026!';
+      const isBacs = paymentMethod === 'bacs';
 
       // 1. First, call our background Stripe & Email integration endpoint to guarantee Invoice & Email dispatch!
       let checkoutUrlResult = '';
@@ -125,6 +127,8 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
             address: userAddress,
             city: userCity,
             postcode: userPostcode,
+            paymentMethod: paymentMethod,
+            hasFreeTrial: isBacs,
             tempPassword: defaultTempPassword
           })
         });
@@ -156,6 +160,9 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
           postcode: userPostcode,
           plan: activePlan.name,
           price: activePlan.price,
+          paymentMethod: paymentMethod,
+          hasFreeTrial: isBacs,
+          trialDays: isBacs ? 7 : 0,
           password: defaultTempPassword,
           mustChangePassword: true,
           status: 'Active',
@@ -177,9 +184,12 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
           postcode: userPostcode,
           plan: activePlan.name,
           price: activePlan.price,
+          paymentMethod: paymentMethod,
+          hasFreeTrial: isBacs,
+          trialDays: isBacs ? 7 : 0,
           message: finalMessage,
           tempPassword: defaultTempPassword,
-          status: 'Pending Payment',
+          status: isBacs ? '7-Day Free Trial (BACS)' : 'Pending Payment',
           createdAt: serverTimestamp()
         });
       } catch (err: any) {
@@ -349,33 +359,105 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                 </div>
               </div>
 
+              {/* Payment Method & 7-Day Free Trial Selection */}
+              <div className="pt-1">
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  Payment Method & Trial Offer
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('bacs')}
+                    className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer relative ${
+                      paymentMethod === 'bacs'
+                        ? 'border-emerald-600 bg-emerald-50/90 ring-2 ring-emerald-600 shadow-sm'
+                        : 'border-gray-200 bg-white hover:border-gray-300'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-bold text-xs uppercase text-emerald-900 tracking-wider">
+                        BACS Direct Debit
+                      </span>
+                      <span className="bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-tight">
+                        7 Days Free
+                      </span>
+                    </div>
+                    <p className="text-xs text-emerald-800 font-medium leading-tight m-0">
+                      Mandate collected upfront (£0 today). 7-day free trial starts immediately before pack begins.
+                    </p>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('card')}
+                    className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
+                      paymentMethod === 'card'
+                        ? 'border-teal-600 bg-teal-50/90 ring-2 ring-teal-600 shadow-sm'
+                        : 'border-gray-200 bg-white hover:border-gray-300'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-bold text-xs uppercase text-gray-900 tracking-wider">
+                        Credit / Debit Card
+                      </span>
+                      <span className="text-[10px] font-bold text-gray-500">
+                        Stripe
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-600 font-medium leading-tight m-0">
+                      Standard card payment. Monthly subscription starts immediately via Stripe invoice.
+                    </p>
+                  </button>
+                </div>
+              </div>
+
               <div className="pt-2 space-y-4">
                 <div className="space-y-4">
                   {/* Billing Summary Box */}
-                  <div className="bg-teal-50/60 p-4 rounded-xl border border-teal-100 text-sm">
-                    <span className="font-bold text-teal-900 block mb-2">Billing Summary</span>
+                  <div className={`p-4 rounded-xl border text-sm ${paymentMethod === 'bacs' ? 'bg-emerald-50/80 border-emerald-200' : 'bg-teal-50/60 border-teal-100'}`}>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-bold text-gray-900">Billing Summary</span>
+                      {paymentMethod === 'bacs' && (
+                        <span className="bg-emerald-600 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full">
+                          £0 Charged Today
+                        </span>
+                      )}
+                    </div>
                     <div className="space-y-1.5 font-medium text-gray-700 text-xs">
                       <div className="flex justify-between">
-                        <span>Plan & Charge:</span>
-                        <span className="font-bold text-teal-800">{activePlan.name} ({activePlan.price}/mo)</span>
+                        <span>Plan & Rate:</span>
+                        <span className="font-bold text-gray-900">{activePlan.name} ({activePlan.price}/mo)</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Billing frequency:</span>
-                        <span>Monthly Recurring</span>
+                        <span>Payment Method:</span>
+                        <span className="font-bold text-gray-900">{paymentMethod === 'bacs' ? 'BACS Direct Debit' : 'Credit/Debit Card'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Trial Status:</span>
+                        <span className={`font-bold ${paymentMethod === 'bacs' ? 'text-emerald-700' : 'text-gray-600'}`}>
+                          {paymentMethod === 'bacs' ? '7 Days Free Trial Active' : 'Standard Activation'}
+                        </span>
                       </div>
                       <div className="flex justify-between">
                         <span>Cancel anytime:</span>
-                        <span className="text-teal-700 font-semibold">Yes</span>
+                        <span className="text-teal-700 font-semibold">Yes (0 Days Lock-in)</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Detailed billing disclosures */}
                   <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 text-xs text-gray-600 space-y-2.5 leading-relaxed">
-                    <p>
-                      <span className="font-bold text-gray-900">Billing Terms: </span>
-                      Your first payment of <span className="font-bold text-gray-950">{activePlan.price}</span> is billed via your official Stripe invoice sent directly to your email address. Future payments will automatically renew every month on the same date unless cancelled.
-                    </p>
+                    {paymentMethod === 'bacs' ? (
+                      <p>
+                        <span className="font-bold text-emerald-800">🎁 7-Day Free Trial & BACS Mandate Terms: </span>
+                        You are setting up a UK BACS Direct Debit Mandate upfront today (<span className="font-bold text-gray-900">£0 charged today</span>). Your 7-day free trial starts immediately. The BACS mandate will be processed to clear payment before the trial ends, after which your regular <span className="font-bold text-gray-900">{activePlan.price}/month</span> plan begins. Cancel anytime during the 7 days with £0 charged.
+                      </p>
+                    ) : (
+                      <p>
+                        <span className="font-bold text-gray-900">Billing Terms: </span>
+                        Your payment of <span className="font-bold text-gray-950">{activePlan.price}</span> is billed via your official Stripe invoice sent directly to your email address. Future payments will automatically renew every month unless cancelled.
+                      </p>
+                    )}
                     <p>
                       <span className="font-bold text-gray-900">Cancellation Policy: </span>
                       You can cancel your subscription at any time from your account dashboard or by emailing <a href="mailto:support@seniorease.com" className="text-teal-600 hover:underline">support@seniorease.com</a>.
@@ -398,7 +480,11 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                       className="mt-1 h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500 cursor-pointer"
                     />
                     <label htmlFor="consentCheckbox" className="text-xs font-semibold text-gray-700 select-none cursor-pointer leading-tight">
-                      I understand this is a recurring monthly subscription ({activePlan.name} - {activePlan.price}/month) and authorize automatic billing.
+                      {paymentMethod === 'bacs' ? (
+                        `I authorize the BACS Direct Debit mandate setup today with a 7-day free trial (£0 charged today, then ${activePlan.price}/month after 7 days).`
+                      ) : (
+                        `I understand this is a recurring monthly subscription (${activePlan.name} - ${activePlan.price}/month) and authorize automatic billing.`
+                      )}
                     </label>
                   </div>
 
@@ -422,7 +508,9 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                       Activating Profile & Sending Email...
                     </>
                   ) : (
-                    `Register for ${activePlan.name} (${activePlan.price}/mo)`
+                    paymentMethod === 'bacs'
+                      ? `🎁 Start 7-Day Free Trial (${activePlan.name} - £0 Today)`
+                      : `Register for ${activePlan.name} (${activePlan.price}/mo)`
                   )}
                 </button>
 

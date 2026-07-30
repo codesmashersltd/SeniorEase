@@ -254,7 +254,9 @@ async function sendWelcomeEmail({
   tempPassword,
   planName,
   planPrice,
-  invoiceUrl
+  invoiceUrl,
+  paymentMethod = 'card',
+  hasFreeTrial = false
 }: {
   to: string;
   name: string;
@@ -267,6 +269,8 @@ async function sendWelcomeEmail({
   planName: string;
   planPrice: string;
   invoiceUrl?: string;
+  paymentMethod?: string;
+  hasFreeTrial?: boolean;
 }) {
   const cleanTo = (to || "").trim();
   if (!cleanTo) {
@@ -284,12 +288,18 @@ async function sendWelcomeEmail({
   const cleanAppUrl = baseAppUrl.replace(/\/$/, "");
   const loginUrl = `${cleanAppUrl}/account`;
   const displayPrice = planPrice.startsWith("£") ? planPrice : `£${planPrice}`;
+  const isBacsTrial = paymentMethod === 'bacs' || hasFreeTrial;
 
   const textContent = `
 Dear ${name},
 
 Thank you for subscribing to Senior Ease! Your account and digital support profile have been activated. Please find your official PDF Invoice attached to this email.
 
+${isBacsTrial ? `🎁 7-DAY FREE TRIAL ACTIVATED (BACS DIRECT DEBIT)
+----------------------------------------
+Your UK BACS Direct Debit Mandate has been recorded upfront (£0 charged today).
+Your 7-day free trial starts today. Payment clearance via your BACS mandate will process before trial end, after which your regular ${displayPrice}/month subscription pack begins. You may cancel anytime during the 7-day trial with £0 charged.
+` : ''}
 🔑 YOUR LOGIN CREDENTIALS
 ----------------------------------------
 Unique Customer ID: ${customerId}
@@ -301,9 +311,14 @@ ${loginUrl}
 📋 SUBSCRIPTION PLAN SUMMARY
 ----------------------------------------
 Plan Selected: ${planName}
-Amount: ${displayPrice}/month
+Monthly Rate: ${displayPrice}/month
+Payment Method: ${isBacsTrial ? 'UK BACS Direct Debit (7-Day Free Trial)' : 'Credit / Debit Card'}
+Charge Today: ${isBacsTrial ? '£0.00 (Trial Active)' : displayPrice}
 Invoice Attachment: SeniorEase_Invoice_${customerId}.pdf
 
+${isBacsTrial ? `The Direct Debit Guarantee:
+This Guarantee is offered by all banks and building societies that accept instructions to pay Direct Debits. If an error is made in the payment of your Direct Debit, you are entitled to a full and immediate refund.
+` : ''}
 If you have any questions or require guidance, our UK support team is here to help.
 Email: ${smtpUser || 'support@senioreease.com'}
 Phone: +44 (0) 330 401 0019
@@ -323,6 +338,18 @@ Kemp House, 160 City Road, London EC1V 2NX
         <p style="font-size: 16px;">Dear <strong>${name}</strong>,</p>
         <p>Thank you for subscribing to <strong>Senior Ease</strong>! Your account and digital support profile have been activated. Please find your official PDF Invoice attached to this email.</p>
 
+        ${isBacsTrial ? `
+          <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0; padding: 18px; border-radius: 12px; margin: 20px 0;">
+            <div style="display: inline-block; background-color: #059669; color: #ffffff; font-size: 11px; font-weight: bold; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;">
+              🎁 7-Day Free Trial Active
+            </div>
+            <h3 style="margin: 0 0 8px 0; color: #065f46; font-size: 16px; font-weight: bold;">UK BACS Direct Debit Mandate Upfront (£0 Charged Today)</h3>
+            <p style="margin: 0; font-size: 13px; color: #047857; leading-height: 1.5;">
+              Your BACS Direct Debit mandate has been collected upfront today allowing payment clearance before your trial ends. Your 7-day free trial starts immediately. Once the trial ends, your monthly pack (${displayPrice}/mo) begins. Cancel anytime during trial with £0 charged.
+            </p>
+          </div>
+        ` : ''}
+
         <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 18px; border-radius: 12px; margin: 24px 0;">
           <h3 style="margin: 0 0 10px 0; color: #166534; font-size: 16px;">🔑 Your Login Credentials</h3>
           <p style="margin: 6px 0;"><strong>Unique Customer ID:</strong> <span style="font-family: monospace; font-size: 18px; color: #0d9488; font-weight: bold; background-color: #ccfbf1; padding: 2px 8px; border-radius: 4px;">${customerId}</span></p>
@@ -333,19 +360,27 @@ Kemp House, 160 City Road, London EC1V 2NX
         <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 18px; border-radius: 12px; margin: 24px 0;">
           <h3 style="margin: 0 0 10px 0; color: #334155; font-size: 16px;">📋 Subscription Plan Summary</h3>
           <p style="margin: 6px 0;"><strong>Plan Selected:</strong> ${planName}</p>
-          <p style="margin: 6px 0;"><strong>Amount:</strong> ${displayPrice}/month</p>
+          <p style="margin: 6px 0;"><strong>Monthly Rate:</strong> ${displayPrice}/month</p>
+          <p style="margin: 6px 0;"><strong>Payment Method:</strong> ${isBacsTrial ? 'UK BACS Direct Debit (7-Day Trial)' : 'Credit / Debit Card'}</p>
+          <p style="margin: 6px 0;"><strong>Charge Today:</strong> ${isBacsTrial ? '<span style="color: #059669; font-weight: bold;">£0.00 (Trial Active)</span>' : displayPrice}</p>
           <p style="margin: 6px 0;"><strong>Invoice Attachment:</strong> SeniorEase_Invoice_${customerId}.pdf</p>
         </div>
 
         ${invoiceUrl ? `
           <div style="text-align: center; margin: 28px 0;">
-            <a href="${invoiceUrl}" target="_blank" style="background-color: #0d9488; color: #ffffff; padding: 14px 28px; text-decoration: none; font-weight: bold; font-size: 16px; border-radius: 8px; display: inline-block; box-shadow: 0 4px 6px -1px rgba(13, 148, 136, 0.3);">View & Pay Stripe Invoice</a>
+            <a href="${invoiceUrl}" target="_blank" style="background-color: #0d9488; color: #ffffff; padding: 14px 28px; text-decoration: none; font-weight: bold; font-size: 16px; border-radius: 8px; display: inline-block; box-shadow: 0 4px 6px -1px rgba(13, 148, 136, 0.3);">View Stripe Invoice</a>
           </div>
         ` : ''}
 
         <div style="text-align: center; margin: 20px 0;">
           <a href="${loginUrl}" target="_blank" style="background-color: #1e293b; color: #ffffff; padding: 12px 24px; text-decoration: none; font-weight: bold; font-size: 14px; border-radius: 8px; display: inline-block;">Access Account Portal</a>
         </div>
+
+        ${isBacsTrial ? `
+          <div style="background-color: #f8fafc; border: 1px border-dashed #cbd5e1; padding: 12px; border-radius: 8px; margin-top: 20px; font-size: 11px; color: #64748b;">
+            <strong>The Direct Debit Guarantee:</strong> This Guarantee is offered by all banks and building societies that accept instructions to pay Direct Debits. If an error is made in the payment of your Direct Debit, you are entitled to a full and immediate refund.
+          </div>
+        ` : ''}
 
         <p style="font-size: 13px; color: #64748b; margin-top: 24px;">If you have any questions or require guidance, our UK support team is here to help.</p>
         <p style="font-size: 13px; color: #64748b; margin: 0;"><strong>Email:</strong> <a href="mailto:${smtpUser || 'support@senioreease.com'}" style="color: #0d9488;">${smtpUser || 'support@senioreease.com'}</a> | <strong>Phone:</strong> +44 (0) 330 401 0019</p>
@@ -431,7 +466,7 @@ async function startServer() {
 
   app.post("/api/checkout", async (req, res) => {
     try {
-      const { planPrice, planName, customerEmail, customerId, fullName, phone, address, city, postcode, tempPassword = "Welcome2026!" } = req.body;
+      const { planPrice, planName, customerEmail, customerId, fullName, phone, address, city, postcode, paymentMethod = 'bacs', hasFreeTrial, tempPassword = "Welcome2026!" } = req.body;
       const stripe = getStripe();
       let paymentUrl = "";
       let invoiceId = "";
@@ -523,7 +558,9 @@ async function startServer() {
         tempPassword: tempPassword,
         planName: planName || "Senior Ease Membership",
         planPrice: planPrice || "£29.99",
-        invoiceUrl: paymentUrl
+        invoiceUrl: paymentUrl,
+        paymentMethod,
+        hasFreeTrial: hasFreeTrial !== undefined ? hasFreeTrial : (paymentMethod === 'bacs')
       });
 
       res.json({

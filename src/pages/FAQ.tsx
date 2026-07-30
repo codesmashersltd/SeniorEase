@@ -76,6 +76,10 @@ export default function FAQ() {
 
   const directDebitFaqs = [
     {
+      q: "How does the 7-day free trial work with BACS Direct Debit?",
+      a: "When you select UK BACS Direct Debit for any of our subscription plans, you receive an immediate 7-day free trial (£0 charged today). We collect your BACS Direct Debit Mandate upfront today to allow UK bank clearance before the trial ends. Your 7-day free trial begins immediately. Once the trial period finishes, your chosen monthly subscription pack begins. You can cancel anytime during the 7 days with £0 charged."
+    },
+    {
       q: "When will payment be collected?",
       a: "When you set up a Direct Debit mandate with SeniorEase through our secure partner Stripe, your first monthly payment is typically collected within 3 to 5 working days after mandate confirmation. Subsequent monthly payments are automatically collected on or around the same date each month. You will always receive an automated email confirmation prior to any funds being debited from your bank account."
     },

@@ -212,6 +212,27 @@ export default function Pricing() {
       {/* Pricing Cards */}
       <section className="py-24 bg-gray-50">
         <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+          
+          {/* 7-Day Free Trial BACS Banner */}
+          <div className="mb-12 max-w-4xl mx-auto bg-gradient-to-r from-emerald-600 via-teal-700 to-emerald-800 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-emerald-400/30 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4 text-center sm:text-left">
+              <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-3xl shrink-0">
+                🎁
+              </div>
+              <div>
+                <div className="inline-block bg-emerald-400 text-slate-950 text-xs font-black uppercase tracking-wider px-3 py-0.5 rounded-full mb-1 shadow-xs">
+                  Offer on All Plans
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-white">
+                  Get 7 Days Free Trial with BACS Direct Debit!
+                </h3>
+                <p className="text-sm text-emerald-100 font-medium mt-1 leading-relaxed">
+                  Pay via UK BACS Direct Debit and your 7-day free trial starts immediately. We collect your Direct Debit mandate upfront (£0 charged today) to allow payment clearance before your trial ends and your monthly pack begins.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <motion.div 
             variants={staggerContainer}
             initial="hidden"
@@ -226,6 +247,13 @@ export default function Pricing() {
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
               className="bg-white rounded-3xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-200 p-8 flex flex-col relative"
             >
+              {/* Free Trial Badge */}
+              <div className="mb-3">
+                <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-300">
+                  🎁 7-Day Free Trial via BACS
+                </span>
+              </div>
+
               <div className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2 uppercase tracking-wide">Essential Care</h2>
                 <div className="flex items-baseline gap-1 mb-4">
@@ -285,6 +313,11 @@ export default function Pricing() {
               </motion.div>
               
               <div className="mb-8 mt-2">
+                <div className="mb-2">
+                  <span className="inline-flex items-center gap-1 bg-emerald-400 text-slate-950 text-xs font-black px-3 py-1 rounded-full shadow-sm">
+                    🎁 7-Day Free Trial via BACS
+                  </span>
+                </div>
                 <h2 className="text-2xl font-bold text-white mb-2 uppercase tracking-wide">Plus Care</h2>
                 <div className="flex items-baseline gap-1 mb-4">
                   <span className="text-4xl font-bold text-white">£17.99</span>
@@ -335,6 +368,13 @@ export default function Pricing() {
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
               className="bg-white rounded-3xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-200 p-8 flex flex-col relative"
             >
+              {/* Free Trial Badge */}
+              <div className="mb-3">
+                <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-300">
+                  🎁 7-Day Free Trial via BACS
+                </span>
+              </div>
+
               <div className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2 uppercase tracking-wide">Family Care</h2>
                 <div className="flex items-baseline gap-1 mb-4">

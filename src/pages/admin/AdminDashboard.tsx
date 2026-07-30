@@ -1159,8 +1159,17 @@ This evidence bundle certifies that the digital subscription services were reque
                                     <span className="text-[10px] font-black px-2 py-1 rounded-lg bg-teal-50 text-teal-600 uppercase w-fit">
                                       {item.plan}
                                     </span>
+                                    {item.paymentMethod === 'bacs' || item.hasFreeTrial ? (
+                                      <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-300 w-fit">
+                                        🎁 BACS (7-Day Trial)
+                                      </span>
+                                    ) : (
+                                      <span className="text-[10px] font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full w-fit">
+                                        💳 Card
+                                      </span>
+                                    )}
                                     {item.price && (
-                                      <span className="text-[10px] font-bold text-teal-700 px-2">
+                                      <span className="text-[10px] font-bold text-teal-700 px-1">
                                         Amount: {item.price}
                                       </span>
                                     )}
