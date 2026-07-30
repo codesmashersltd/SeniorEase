@@ -882,7 +882,7 @@ This evidence bundle certifies that the digital subscription services were reque
                   <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center justify-center text-center">
                     <HeartHandshake className="h-16 w-16 text-teal-600 mb-4" />
                     <h2 className="text-2xl font-display font-black text-gray-900 tracking-tight">Senior Ease Admin</h2>
-                    <p className="text-gray-500 font-sans">Global Infrastructure & Pipeline Management</p>
+                    <p className="text-gray-500 font-sans font-medium text-sm mt-1">Senior's Tech Education & Customer Management</p>
                   </div>
 
                   {/* 1-Click Stripe Dispute Evidence Generator Banner */}
