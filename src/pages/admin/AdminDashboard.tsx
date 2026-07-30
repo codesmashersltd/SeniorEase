@@ -17,6 +17,9 @@ import {
   CheckCircle2,
   AlertCircle,
   UserCheck,
+  UserX,
+  Ban,
+  ShieldAlert,
   MoreVertical,
   Trash2,
   ExternalLink,
@@ -472,6 +475,48 @@ export default function AdminDashboard() {
       alert('Primary credentials updated successfully.');
     } catch (err: any) {
       alert('Error updating credentials: ' + err.message);
+    }
+  };
+
+  const handleUserStatusChange = async (item: any, newStatus: string, collectionName: string = 'customers') => {
+    let reason = item.statusReason || '';
+    if (newStatus === 'Deactivated' || newStatus === 'Suspended') {
+      const inputReason = window.prompt(
+        `Specify reason for DEACTIVATING / SUSPENDING user "${item.name || 'User'}" (e.g., Misleading details, Chargeback/Dispute, Terms violation):`,
+        reason || "Misleading Information / Dispute"
+      );
+      if (inputReason === null) return; // User cancelled prompt
+      reason = inputReason.trim();
+    }
+
+    const isDeactivating = newStatus === 'Deactivated' || newStatus === 'Suspended';
+    const confirmMsg = isDeactivating
+      ? `Are you sure you want to DEACTIVATE / SUSPEND account for ${item.name} (${item.email})?\n\nThis will block their access to the user portal immediately.\nReason: ${reason || 'Not specified'}`
+      : `Reactivate account for ${item.name} (${item.email})?`;
+
+    if (!window.confirm(confirmMsg)) return;
+
+    try {
+      const targetDocId = item.docId || item.id;
+      const targetCollection = collectionName || (activeTab === 'new-joinees' ? 'new_joinees' : 'customers');
+
+      await updateDoc(doc(db, targetCollection, targetDocId), {
+        status: newStatus,
+        statusReason: reason,
+        updatedAt: serverTimestamp()
+      });
+
+      // Log action in system logs
+      await addDoc(collection(db, 'loginLogs'), {
+        customerName: item.name || 'User',
+        customerId: item.customerId || item.id || 'N/A',
+        source: `Admin Action: Status changed to "${newStatus}"${reason ? ` (Reason: ${reason})` : ''}`,
+        timestamp: serverTimestamp()
+      });
+
+      alert(`Account status for ${item.name} successfully updated to "${newStatus}"!`);
+    } catch (err: any) {
+      alert('Error updating user status: ' + err.message);
     }
   };
 
@@ -1174,14 +1219,38 @@ This evidence bundle certifies that the digital subscription services were reque
                                       </span>
                                     )}
                                   </div>
-                                ) : item.status ? (
-                                  <span className={`px-2 py-1 text-[10px] font-black rounded-lg uppercase ${
-                                    item.status === 'Open' ? 'bg-orange-50 text-orange-600' : 'bg-emerald-50 text-emerald-600'
-                                  }`}>
-                                    {item.status}
-                                  </span>
                                 ) : (
-                                  <span className="text-gray-300 text-xs">—</span>
+                                  <div className="flex flex-col gap-1">
+                                    {(activeTab === 'customers' || activeTab === 'renewals' || activeTab === 'new-joinees') ? (
+                                      <select
+                                        value={item.status || 'Active'}
+                                        onChange={(e) => handleUserStatusChange(item, e.target.value, activeTab === 'new-joinees' ? 'new_joinees' : 'customers')}
+                                        className={`px-2 py-1 text-[10px] font-black rounded-lg uppercase cursor-pointer border shadow-2xs transition-all ${
+                                          (item.status === 'Deactivated' || item.status === 'Suspended') ? 'bg-rose-100 text-rose-800 border-rose-300 font-bold' :
+                                          item.status === 'Pending' || item.status?.includes('Pending') ? 'bg-amber-100 text-amber-800 border-amber-300' :
+                                          'bg-emerald-100 text-emerald-800 border-emerald-300'
+                                        }`}
+                                      >
+                                        <option value="Active">● Active</option>
+                                        <option value="Deactivated">⛔ Deactivated</option>
+                                        <option value="Suspended">🛑 Suspended</option>
+                                        <option value="Pending Payment">⏳ Pending Payment</option>
+                                      </select>
+                                    ) : item.status ? (
+                                      <span className={`px-2 py-1 text-[10px] font-black rounded-lg uppercase ${
+                                        item.status === 'Open' ? 'bg-orange-50 text-orange-600' : 'bg-emerald-50 text-emerald-600'
+                                      }`}>
+                                        {item.status}
+                                      </span>
+                                    ) : (
+                                      <span className="text-gray-300 text-xs">—</span>
+                                    )}
+                                    {item.statusReason && (
+                                      <span className="text-[10px] text-rose-700 font-medium italic max-w-[140px] truncate" title={`Reason: ${item.statusReason}`}>
+                                        Reason: {item.statusReason}
+                                      </span>
+                                    )}
+                                  </div>
                                 )}
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap">
@@ -1240,6 +1309,25 @@ This evidence bundle certifies that the digital subscription services were reque
                                         <ShieldCheck size={14} className="text-teal-600" />
                                         <span>Evidence Package</span>
                                       </button>
+                                      {item.status === 'Deactivated' || item.status === 'Suspended' ? (
+                                        <button 
+                                          onClick={() => handleUserStatusChange(item, 'Active', activeTab === 'new-joinees' ? 'new_joinees' : 'customers')}
+                                          className="px-2.5 py-1 text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 rounded-lg transition-all flex items-center gap-1 text-xs font-bold cursor-pointer shadow-sm"
+                                          title="Reactivate User Account"
+                                        >
+                                          <UserCheck size={14} className="text-emerald-600" />
+                                          <span>Activate</span>
+                                        </button>
+                                      ) : (
+                                        <button 
+                                          onClick={() => handleUserStatusChange(item, 'Deactivated', activeTab === 'new-joinees' ? 'new_joinees' : 'customers')}
+                                          className="px-2.5 py-1 text-rose-800 bg-rose-50 hover:bg-rose-100 border border-rose-300 rounded-lg transition-all flex items-center gap-1 text-xs font-bold cursor-pointer shadow-sm"
+                                          title="Deactivate or suspend user under misleading / dispute circumstances"
+                                        >
+                                          <UserX size={14} className="text-rose-600" />
+                                          <span>Deactivate</span>
+                                        </button>
+                                      )}
                                     </>
                                   )}
                                   {activeTab === 'new-joinees' && (

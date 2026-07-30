@@ -130,6 +130,13 @@ export default function MyAccount() {
       const customerData = doc.data();
       setDocId(doc.id);
       
+      // Strict status check for deactivated / suspended accounts
+      if (customerData.status === 'Deactivated' || customerData.status === 'Suspended') {
+        setError(`Your account has been deactivated / suspended by administration.${customerData.statusReason ? ` Reason: ${customerData.statusReason}.` : ''} Please contact support at support@seniorease.com.`);
+        setLoading(false);
+        return;
+      }
+
       // Strict password and name validation
       if (customerData.password !== password.trim()) {
         setError('Invalid password. Please check your credentials.');
