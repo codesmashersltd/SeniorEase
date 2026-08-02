@@ -834,7 +834,7 @@ export default function MyAccount() {
                       </button>
                     </div>
 
-                    <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col justify-between">
+                    <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col justify-between relative overflow-hidden">
                       <div>
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-2.5">
@@ -842,7 +842,10 @@ export default function MyAccount() {
                               <Building2 size={20} />
                             </div>
                             <div>
-                              <h4 className="font-bold text-gray-900">Bacs Direct Debit</h4>
+                              <div className="flex items-center gap-1.5">
+                                <h4 className="font-bold text-gray-900">Bacs Direct Debit</h4>
+                                <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full uppercase">⭐ Recommended</span>
+                              </div>
                               <p className="text-xs text-gray-500">UK Bank Account Transfer</p>
                             </div>
                           </div>
@@ -855,10 +858,17 @@ export default function MyAccount() {
                             <span>UK Bacs Scheme (via Stripe)</span>
                           </div>
                         </div>
-                        <div className="bg-teal-50/70 p-3 rounded-xl border border-teal-100 text-[11px] text-teal-900 mb-4 flex items-start gap-2">
-                          <ShieldCheck size={16} className="text-teal-600 shrink-0 mt-0.5" />
-                          <div>
-                            <span className="font-bold">Direct Debit Guarantee:</span> Protected by UK Banking Standards. Your bank will refund any error immediately. <span className="underline cursor-pointer font-medium hover:text-teal-700" onClick={() => alert("The Direct Debit Guarantee\n\n• This Guarantee is offered by all banks and building societies that accept instructions to pay Direct Debits.\n\n• If there are any changes to the amount, date or frequency of your Direct Debit, SeniorEase will notify you 10 working days in advance of your account being debited or as otherwise agreed.\n\n• If an error is made in the payment of your Direct Debit, by SeniorEase or your bank or building society, you are entitled to a full and immediate refund of the amount paid from your bank or building society.\n\n• You can cancel a Direct Debit at any time by simply contacting your bank or building society. Written confirmation may be required. Please also notify us.")}>Read Full Guarantee</span>
+                        <div className="bg-teal-50/90 p-3.5 rounded-xl border border-teal-200/80 text-[11px] text-teal-950 mb-4 space-y-1.5">
+                          <div className="flex items-start gap-1.5">
+                            <ShieldCheck size={16} className="text-teal-600 shrink-0 mt-0.5" />
+                            <div>
+                              <span className="font-bold block text-teal-900 mb-0.5">Highlighted Security &amp; Guarantee:</span>
+                              "Your payments are protected by the UK Direct Debit Guarantee. If a payment is made in error, you're entitled to an immediate refund from your bank."
+                            </div>
+                          </div>
+                          <div className="pt-1.5 border-t border-teal-200/60 text-teal-900">
+                            <span className="font-bold block mb-0.5">💡 Why We Recommend Direct Debit:</span>
+                            "BACS Direct Debit helps us reduce payment processing costs, allowing us to keep our subscription prices affordable while providing reliable support to seniors."
                           </div>
                         </div>
                       </div>
@@ -868,9 +878,9 @@ export default function MyAccount() {
                           setPaySuccessMsg('');
                           setShowPaymentModal(true);
                         }}
-                        className="w-full bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 py-2 rounded-xl text-xs font-bold transition-colors"
+                        className="w-full bg-teal-600 hover:bg-teal-700 text-white py-2.5 rounded-xl text-xs font-bold transition-colors shadow-sm"
                       >
-                        Pay with Bacs Direct Debit
+                        Pay with Bacs Direct Debit (Recommended)
                       </button>
                     </div>
                   </div>
@@ -1168,14 +1178,20 @@ export default function MyAccount() {
                       <button
                         type="button"
                         onClick={() => setPaymentMethod('Bacs Direct Debit')}
-                        className={`p-3.5 rounded-xl border text-left font-bold text-xs md:text-sm flex items-center gap-2 transition-all ${
+                        className={`p-3.5 rounded-xl border text-left font-bold text-xs md:text-sm flex flex-col justify-between transition-all relative ${
                           paymentMethod === 'Bacs Direct Debit'
-                            ? 'border-teal-600 bg-teal-50/80 text-teal-900 shadow-sm'
+                            ? 'border-emerald-600 bg-emerald-50/80 text-emerald-950 shadow-sm ring-1 ring-emerald-500'
                             : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'
                         }`}
                       >
-                        <Building2 size={18} className={paymentMethod === 'Bacs Direct Debit' ? 'text-teal-600' : 'text-gray-400'} />
-                        <span>Bacs Direct Debit</span>
+                        <div className="flex items-center justify-between w-full mb-1">
+                          <div className="flex items-center gap-2">
+                            <Building2 size={18} className={paymentMethod === 'Bacs Direct Debit' ? 'text-emerald-700' : 'text-gray-400'} />
+                            <span>Bacs Direct Debit</span>
+                          </div>
+                          <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-1.5 py-0.5 rounded-full uppercase">⭐ Recommended</span>
+                        </div>
+                        <span className="text-[10px] text-emerald-800 font-medium">Best for Monthly Membership</span>
                       </button>
                     </div>
                   </div>
@@ -1216,19 +1232,26 @@ export default function MyAccount() {
                       </div>
                     </div>
                   ) : (
-                    <div className="space-y-4 bg-gray-50 p-4 rounded-2xl border border-gray-200">
+                    <div className="space-y-3 bg-emerald-50/70 p-4 rounded-2xl border border-emerald-200">
                       <div>
-                        <label className="block text-xs font-bold text-gray-700 uppercase mb-1">UK Bacs Mandate Reference</label>
+                        <label className="block text-xs font-bold text-gray-800 uppercase mb-1">UK Bacs Mandate Reference</label>
                         <input
                           type="text"
                           value={paymentBacsRef}
                           onChange={(e) => setPaymentBacsRef(e.target.value)}
-                          className="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-teal-500 font-mono"
+                          className="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-emerald-500 font-mono"
                           required
                         />
                       </div>
-                      <div className="bg-teal-50/60 p-3 rounded-xl border border-teal-100 text-xs text-teal-800 leading-relaxed">
-                        <span className="font-bold">Bacs Direct Debit Guarantee:</span> Your Bacs Direct Debit payment is securely processed by Stripe and protected by the UK Direct Debit Guarantee scheme. Funds will be initiated from your linked bank account.
+                      <div className="bg-white p-3.5 rounded-xl border border-emerald-200 text-xs text-emerald-950 space-y-2 leading-relaxed shadow-2xs">
+                        <div>
+                          <span className="font-bold text-emerald-900 block mb-0.5">💡 Why We Recommend BACS Direct Debit:</span>
+                          "BACS Direct Debit helps us reduce payment processing costs, allowing us to keep our subscription prices affordable while providing reliable support to seniors."
+                        </div>
+                        <div className="pt-2 border-t border-emerald-100 text-emerald-900">
+                          <span className="font-bold block mb-0.5">🛡️ Highlighted Security Guarantee:</span>
+                          "Your payments are protected by the UK Direct Debit Guarantee. If a payment is made in error, you're entitled to an immediate refund from your bank."
+                        </div>
                       </div>
                     </div>
                   )}

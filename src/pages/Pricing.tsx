@@ -444,16 +444,22 @@ export default function Pricing() {
             {/* Direct Debit */}
             <motion.div 
               whileHover={{ y: -4, transition: { duration: 0.2 } }}
-              className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col relative overflow-hidden"
+              className="bg-white p-8 rounded-3xl border-2 border-teal-600 shadow-md hover:shadow-xl transition-all flex flex-col relative overflow-hidden"
             >
+              <div className="absolute top-0 right-0 bg-amber-400 text-slate-950 font-black text-xs uppercase px-4 py-1 rounded-bl-2xl shadow-xs tracking-wider flex items-center gap-1 z-20">
+                ⭐ Recommended • Best for Monthly Membership
+              </div>
               <div className="absolute top-0 right-0 w-32 h-32 bg-teal-50 rounded-bl-full -mr-8 -mt-8 -z-0"></div>
               <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6">
+                <div className="flex items-center gap-3 mb-6 mt-2">
                   <div className="w-12 h-12 bg-teal-100 text-teal-700 rounded-2xl flex items-center justify-center font-bold">
                     <Landmark size={24} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900">Pay by Direct Debit</h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-xl font-bold text-gray-900">Pay by BACS Direct Debit</h3>
+                      <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Most Popular</span>
+                    </div>
                     <p className="text-xs font-semibold text-teal-700 uppercase tracking-wider">Powered by Stripe</p>
                   </div>
                 </div>
@@ -465,7 +471,7 @@ export default function Pricing() {
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle2 size={18} className="text-teal-600 mt-0.5 shrink-0" />
-                    <span><strong>Protected by the Direct Debit Guarantee</strong>, offering full UK consumer banking protection.</span>
+                    <span><strong>Highlighted Security:</strong> Your payments are protected by the UK Direct Debit Guarantee. If a payment is made in error, you're entitled to an immediate refund from your bank.</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle2 size={18} className="text-teal-600 mt-0.5 shrink-0" />
@@ -476,6 +482,15 @@ export default function Pricing() {
                     <span><strong>Easy cancellation process:</strong> Cancel your Direct Debit mandate at any time directly through your bank or our dashboard.</span>
                   </li>
                 </ul>
+
+                <div className="bg-teal-50/90 border border-teal-200/80 p-4 rounded-2xl text-xs text-teal-950 leading-relaxed space-y-1.5">
+                  <p className="font-bold text-teal-900 flex items-center gap-1 text-xs">
+                    <span>💡 Why We Recommend BACS Direct Debit:</span>
+                  </p>
+                  <p className="text-teal-800">
+                    "BACS Direct Debit helps us reduce payment processing costs, allowing us to keep our subscription prices affordable while providing reliable support to seniors."
+                  </p>
+                </div>
               </div>
             </motion.div>
 

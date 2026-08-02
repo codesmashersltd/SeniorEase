@@ -387,15 +387,23 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                         : 'border-gray-200 bg-white hover:border-gray-300'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex flex-wrap items-center justify-between gap-1 mb-1">
                       <span className="font-bold text-xs uppercase text-emerald-900 tracking-wider">
                         BACS Direct Debit
                       </span>
+                      <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-tight shadow-xs">
+                        ⭐ Recommended
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5 mb-1.5">
                       <span className="bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-tight">
                         7 Days Free
                       </span>
+                      <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100/90 px-2 py-0.5 rounded-full">
+                        Best for Monthly Membership
+                      </span>
                     </div>
-                    <p className="text-xs text-emerald-800 font-medium leading-tight m-0">
+                    <p className="text-xs text-emerald-900 font-medium leading-tight m-0">
                       Mandate collected upfront (£0 today). 7-day free trial starts immediately before pack begins.
                     </p>
                   </button>
@@ -461,10 +469,23 @@ export default function JoinModal({ isOpen, onClose, plan }: JoinModalProps) {
                   {/* Detailed billing disclosures */}
                   <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 text-xs text-gray-600 space-y-2.5 leading-relaxed">
                     {paymentMethod === 'bacs' ? (
-                      <p>
-                        <span className="font-bold text-emerald-800">🎁 7-Day Free Trial & BACS Mandate Terms: </span>
-                        You are setting up a UK BACS Direct Debit Mandate upfront today (<span className="font-bold text-gray-900">£0 charged today</span>). Your 7-day free trial starts immediately. The BACS mandate will be processed to clear payment before the trial ends, after which your regular <span className="font-bold text-gray-900">{activePlan.price}/month</span> plan begins. Cancel anytime during the 7 days with £0 charged.
-                      </p>
+                      <div className="space-y-2">
+                        <p>
+                          <span className="font-bold text-emerald-800">🎁 7-Day Free Trial & BACS Mandate Terms: </span>
+                          You are setting up a UK BACS Direct Debit Mandate upfront today (<span className="font-bold text-gray-900">£0 charged today</span>). Your 7-day free trial starts immediately. The BACS mandate will be processed to clear payment before the trial ends, after which your regular <span className="font-bold text-gray-900">{activePlan.price}/month</span> plan begins. Cancel anytime during the 7 days with £0 charged.
+                        </p>
+                        <div className="bg-emerald-50/90 p-3 rounded-lg border border-emerald-200 text-xs text-emerald-950 space-y-1.5 mt-1">
+                          <p className="font-bold flex items-center gap-1 text-emerald-900">
+                            <span>⭐ Why We Recommend BACS Direct Debit:</span>
+                          </p>
+                          <p className="text-emerald-800 leading-snug">
+                            "BACS Direct Debit helps us reduce payment processing costs, allowing us to keep our subscription prices affordable while providing reliable support to seniors."
+                          </p>
+                          <p className="font-medium text-emerald-900 pt-1.5 border-t border-emerald-200/80 leading-snug">
+                            🛡️ <strong>Highlighted Security:</strong> Your payments are protected by the UK Direct Debit Guarantee. If a payment is made in error, you're entitled to an immediate refund from your bank.
+                          </p>
+                        </div>
+                      </div>
                     ) : (
                       <p>
                         <span className="font-bold text-gray-900">Billing Terms: </span>
